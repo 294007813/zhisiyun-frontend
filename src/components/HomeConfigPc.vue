@@ -1,42 +1,46 @@
 <template>
 <div class="pc-config">
     <div class="head">已添加模块 <span>* 长按<b>“拖拽”</b>模块进行排序布局</span></div>
-    <div class="drag-body">
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="drag-block">
-            <p class="title">基本信息模块<b>(固定模块)</b></p>
-            <div class="button">
-                <a class="conf">配置</a>
-                <a class="hide">隐藏</a>
-            </div>
-        </div>
+    <div class="drag-body" ref="dragbody">
+        <div class="row" v-for="ind in showlinenum" :key="ind"></div>
+<!--        <div class="drag-block">-->
+<!--            <p class="title">基本信息模块<b>(固定模块)</b></p>-->
+<!--            <div class="button">-->
+<!--                <a class="conf">配置</a>-->
+<!--                <a class="hide">隐藏</a>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <template v-for="(item, key) in list">
-            <div v-if="item.show" :class="['drag-block',[item.size]]" :key="key">
+        <div v-for="(item, key) in list"  :key="key" :class="['drag-block',[item.size]]"
+             v-if="item.show && bemounted"
+             :style="{top: item.row* 160 +'px', left: blockWidth*blockstyle[item.size].full* item.col + 'px',
+            width: blockWidth* blockstyle[item.size].full+ 'px'}">
+            <div class="content">
                 <p class="title">{{item.title}}<b v-if="item.suntitle">{{item.suntitle}}</b></p>
                 <div class="button">
                     <a class="conf">配置</a>
                     <a class="hide" v-if="!item.need">隐藏</a>
                 </div>
             </div>
-        </template>
+        </div>
 
     </div>
     <div class="head">未添加模块</div>
     <div class="disable-body">
-        <template v-for="(item, key) in list">
-            <div v-if="!item.show && !item.need" :class="['drag-block',[item.size]]" :key="key">
-                <p class="title">{{item.title}}<b v-if="item.suntitle">{{item.suntitle}}</b></p>
-                <div class="button">
-<!--                    <a class="conf">配置</a>-->
-                    <a class="hide">显示</a>
-                </div>
-            </div>
-        </template>
+        <div class="row" v-for="(val, ind) in hidelinenum" :key="ind">
+
+<!--        <template v-for="(item, key) in list">-->
+<!--            <div v-if="!item.show && !item.need && bemounted" :class="['drag-block',[item.size]]" :key="key"-->
+<!--                 :style="{top: item.row* 160 +'px', left: blockWidth*blockstyle[item.size]* item.col + 'px',-->
+<!--                 width: blockstyle[item.size].width}">-->
+<!--                <p class="title">{{item.title}}<b v-if="item.suntitle">{{item.suntitle}}</b></p>-->
+<!--                <div class="button">-->
+<!--&lt;!&ndash;                    <a class="conf">配置</a>&ndash;&gt;-->
+<!--                    <a class="hide">显示</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </template>-->
+        </div>
     </div>
 </div>
 </template>
@@ -119,11 +123,103 @@ export default {
                     title: "常用应用模块",
                     row: 6, col: 0, size: "long", show: false
                 },
-            }
+            },
+            blockstyle: {
+                small:{
+                    full: 1/3,
+                    width: '33%',
+                },
+                half: {
+                    full: 1/2,
+                    width: '50%',
+                },
+                long: {
+                    full: 1,
+                    width: '100%',
+                },
+            },
+            bemounted: false
         }
     },
     computed:{
+        showlinenum(){
+            let num=0
+            for(let key in this.list){
+                var item= this.list[key]
+                if(item.show && item.row> num){
+                    num= item.row
+                }
+            }
+            return num+1
+        },
+        hidelinenum(){
+            let num=0
+            for(let key in this.list){
+                var item= this.list[key]
+                if(!item.show && item.row> num){
+                    num= item.row
+                }
+            }
+            return num+1
+        },
+        blockWidth(){
+            return this.$refs.dragbody.offsetWidth
 
+        }
+    },
+    mounted(){
+        this.bemounted= true
+        console.log(this.blockWidth)
+    },
+    directives:{
+        drag:{
+            inserted(el, binding) {
+                // console.log("order", el.attributes.order.value)
+                // console.log("el", el)
+                // console.log("el.offset", el.offsetTop, el.offsetLeft)
+                // let top= el.pageX + 'px'
+                // let left= el.pageY+ 'px'
+                // el.style.top= top
+                // el.style.left= left
+                el.parentNode.style.width= el.parentNode.offsetWidth+ 'px'
+                el.parentNode.style.height= el.parentNode.offsetHeight+ 'px'
+                // console.log("el.parentNode", el.parentNode)
+                el.onmousedown = function(e) {
+                    var disx = e.pageX - el.offsetLeft;
+                    var disy = e.pageY - el.offsetTop;
+                    el.parentNode.classList.add("move")
+
+                    var list= binding.value.blocks
+                    // console.log("binding", binding)
+
+                    document.onmousemove = function (e) {
+                        el.style.left = e.pageX - disx + 'px';
+                        el.style.top = e.pageY - disy + 'px';
+                        console.log("e", e)
+                        var obj= el.getClientRects()[0];
+                        var top= obj.top
+                        var left= obj.left
+                        for(let i in list){
+                            if(top> list[i].top && top< list[i].top+list[i].height && left >list[i].left && left< list[i].left+ list[i].width+ 20){
+                                var item= list[parseInt(el.attributes.order.value)]
+                                list.splice(parseInt(el.attributes.order.value), 1)
+                                list.splice(i+1,0, item )
+                                break
+                            }
+                        }
+                    }
+                    document.onmouseup = function (e) {
+                        el.style.top = 0
+                        el.style.left = 0
+                        document.onmouseup = document.onmousemove = null
+
+                        el.parentNode.classList.remove("move")
+                        console.log("list",list)
+                    }
+                    e.preventDefault();
+                }
+            }
+        }
     }
 
 }
@@ -148,7 +244,7 @@ export default {
             }
         }
     }
-    .drag-body{
+    .drag-body, .disable-body{
         margin-top: 20px;
         min-width: 800px;
         width: 100%;
@@ -156,16 +252,32 @@ export default {
         .row{
             height: 160px;
         }
+        .small .content{
+            width: 96%;
+        }
+        .half .content{
+            width: 97%;
+        }
+        .long .content{
+            width: 99%;
+        }
         .drag-block{
-            padding: 20px;
-            width: 470px;
+            /*width: 470px;*/
             height: 140px;
             display: inline-block;
-            border: 1px solid #aaaaaa;
-            border-radius: 4px;
             position: absolute;
             top: 0;
             left: 0;
+            text-align: center;
+            .content{
+                text-align: left;
+                padding: 20px;
+                display: inline-block;
+                border: 1px solid #aaaaaa;
+                border-radius: 4px;
+                height: 100%;
+                position: relative;
+            }
             .title{
                 font-size: 20px;
                 b{
