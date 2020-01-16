@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .home-config{
     background-color: #f2f2f2;
     .head{

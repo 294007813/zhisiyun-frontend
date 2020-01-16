@@ -1,0 +1,21 @@
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import "../../../../node_modules/element-ui/packages/theme-chalk/src/index";
+@import "./dialog.scss";
+@import "./checkbox-button.scss";
+
+$black: #333333;
+$border-color: #333333;
+
+.el-checkbox-button.check-tag{
+  span{
+    display: block;
+    height: 36px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    padding: 0;
+    color: $black;
+    line-height: 34px;
+  }
+}
