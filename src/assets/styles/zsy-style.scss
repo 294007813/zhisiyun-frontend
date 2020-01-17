@@ -1,6 +1,4 @@
-$black: #333333;
-$border-color: #333333;
-$bg-color: #7f7f7f;
+@import "zsy-base";
 
 .cancel-btn,.confirm-btn{
   line-height: 34px;
@@ -11,6 +9,7 @@ $bg-color: #7f7f7f;
   margin-left: 10px;
   font-size: 14px;
   cursor: pointer;
+  text-align: center;
 }
 .cancel-btn{
   border-color: $bg-color;

@@ -3,12 +3,11 @@
         <div class="head">已添加模块 <span>* 长按<b>“拖拽”</b>模块进行排序布局</span></div>
         <div class="drag-body" ref="dragbody">
             <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-
             <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
                 <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
                      :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
                 :ref="'drag-'+citem.code">
-                    <div class="content" v-drag="{ movedone, item:citem, rowind, colind}">
+                    <div class="content" v-drag="{ cb: citem.fixed? false: movedone, item:citem, rowind, colind}">
                         <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                         <div class="button">
                             <a class="conf" @click="openModsetup">配置</a>
@@ -17,7 +16,6 @@
                     </div>
                 </div>
             </template>
-
         </div>
         <div class="head">未添加模块</div>
         <div class="disable-body">
@@ -57,7 +55,7 @@
 
 <script>
 export default {
-    name: "HomeConfigPc",
+    name: "StaffConfigPc",
     components: {
         DisableBlock:{
             template: `
@@ -381,61 +379,6 @@ export default {
         },
        
     },
-    directives: {
-        drag: {
-            bind(el, binding, vnode) {
-                let top = el.pageX + 'px'
-                let left = el.pageY + 'px'
-                let {moving, movedone, item, rowind, colind}= binding.value
-                let disx = null
-                let disy = null
-                let timer = null
-
-                function mousedown(e) {
-                    disx = e.pageX - el.offsetLeft;
-                    disy = e.pageY - el.offsetTop;
-                    el.classList.add("moving")
-                }
-
-                function mounemove(e) {
-                    // clearTimeout(timer)
-                    // timer = setTimeout(() => {
-                        // moving({x: e.pageX, y: e.pageY, item, rowind, colind })
-                        // mouseup(e)
-                        // movedone({e})
-                    // }, 400)
-                    el.style.left = e.pageX - disx + 'px';
-                    el.style.top = e.pageY - disy + 'px';
-                }
-
-                function mouseup(e) {
-                    el.classList.remove("moving")
-                    document.onmouseup = document.onmousemove = null
-                    movedone({x: e.pageX, y: e.pageY, item, rowind, colind })
-                    el.style.top = 0
-                    el.style.left = 0
-                }
-
-                el.onmousedown = function (e) {
-                    if (e.target.tagName == 'A' || item.fixed) {
-                        return
-                    }
-                    // timer= setTimeout(function () {
-                    mousedown(e)
-                    // },500)
-                    document.onmousemove = function (e) {
-                        mounemove(e)
-                    }
-                    document.onmouseup = function (e) {
-                        mouseup(e)
-                    }
-                    e.preventDefault();
-                    // e.stopPropagation();
-                }
-            }
-        }
-    }
-
 }
 </script>
 
@@ -520,49 +463,50 @@ $bg-color: #7f7f7f;
                 &:not(.moving){
                     /*transition: all .3s;*/
                 }
+
+                .title {
+                    font-size: 20px;
+
+                    b {
+                        color: #AAAAAA;
+                        font-weight: 400;
+                    }
+                }
+                .button {
+                    overflow: hidden;
+                    text-align: right;
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+
+                    a {
+                        display: inline-block;
+                        width: 86px;
+                        height: 40px;
+                        border-radius: 4px;
+                        margin-left: 30px;
+                        border: 1px solid #7F7F7F;
+                        text-align: center;
+                        background-color: #f2f2f2;
+                        color: #7F7F7F;
+                        line-height: 38px;
+                        cursor: pointer;
+                    }
+
+                    .conf {
+
+                    }
+
+                    .hide {
+                        background-color: #555555;
+                        color: white;
+                    }
+                }
             }
             &.fixed .content{
                 cursor: default;
             }
-            .title {
-                font-size: 20px;
 
-                b {
-                    color: #AAAAAA;
-                    font-weight: 400;
-                }
-            }
-
-            .button {
-                overflow: hidden;
-                text-align: right;
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
-
-                a {
-                    display: inline-block;
-                    width: 86px;
-                    height: 40px;
-                    border-radius: 4px;
-                    margin-left: 30px;
-                    border: 1px solid #7F7F7F;
-                    text-align: center;
-                    background-color: #f2f2f2;
-                    color: #7F7F7F;
-                    line-height: 38px;
-                    cursor: pointer;
-                }
-
-                .conf {
-
-                }
-
-                .hide {
-                    background-color: #555555;
-                    color: white;
-                }
-            }
         }
     }
 

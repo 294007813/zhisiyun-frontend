@@ -35,3 +35,11 @@ $bg-color: #7f7f7f;
   }
 }
 
+.el-tabs--top.zsy{
+  .el-tabs__header{
+    .el-tabs__nav-wrap:after{
+      display: none;
+    }
+  }
+}
+

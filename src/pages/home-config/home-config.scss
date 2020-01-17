@@ -1,0 +1,40 @@
+.home-config{
+  background-color: #f2f2f2;
+  .head{
+    padding: 14px 0 0 20px;
+    background-color: white;
+    position: relative;
+    >*{line-height: 34px}
+    h2{
+      font-weight: 700;
+      text-decoration: none;
+      color: #272727;
+      font-size: 16px;
+    }
+    p{
+      color: #000000a5;
+      font-size: 14px;
+    }
+    .button{
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      .btn{
+        width: 120px;
+        line-height: 36px;
+        margin-left: 20px;
+        &.update{
+          background-color: #7f7f7f;
+          border-color: #7f7f7f;
+        }
+      }
+    }
+
+  }
+  .main{
+    padding: 20px;
+    /*background-color: white;*/
+    /*min-height: 500px;*/
+  }
+}
