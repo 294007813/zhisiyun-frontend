@@ -5,14 +5,14 @@
             <div class="row" v-for="ind in showlinenum" :key="ind"></div>
 
             <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
-                <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size]]"
+                <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
                      :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
                 :ref="'drag-'+citem.code">
                     <div class="content" v-drag="{ movedone, item:citem, rowind, colind}">
                         <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                         <div class="button">
                             <a class="conf" @click="openModsetup">配置</a>
-                            <a class="hide" v-if="!citem.need" @click="tohide">隐藏</a>
+                            <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>
                         </div>
                     </div>
                 </div>
@@ -21,11 +21,8 @@
         </div>
         <div class="head">未添加模块</div>
         <div class="disable-body">
-        <disable-block :list="blockList.hide" :long="false"
-                       v-bind="{list: blockList.hide, long: false, bemounted, openModsetup, tohide}"></disable-block>
-        <disable-block :list="blockList.hide" :long="true"
-                       v-bind="{list: blockList.hide, long: false, bemounted, openModsetup, tohide}"></disable-block>
-    </div>
+            <disable-block v-for="ind in 2" :key="ind" :aaa="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
+       </div>
     
     <el-dialog
         :visible.sync="modsetupShow"
@@ -36,20 +33,21 @@
             <p class="msg">已添加可选项 <span>*点击选中的项目可在更新后的员工页面中默认显示</span></p>
             <el-checkbox-group v-model="modsetl.showval" class="show-list">
                 <div class="item"  v-for="(item, ind) in modsetl.show" :key="ind">
-                    <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>
                     <i class="fa fa-times-circle"></i>
+                    <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>
                 </div>
             </el-checkbox-group>
             <p class="msg">未添加可选项</p>
-            <ul class="show-list">
+            <ul class="hide-list">
                 <li v-for="(item, ind) in modsetl.hide">{{item.name}}
                     <i class="fa fa-plus-circle"></i>
                 </li>
             </ul>
-
         </div>
-
-        <span slot="footer" class="dialog-footer"></span>
+        <p slot="footer" class="footer">
+            <span class="cancel-btn">取消</span>
+            <span class="confirm-btn">确定</span>
+        </p>
     </el-dialog>
 
 </div>
@@ -63,21 +61,19 @@ export default {
     components: {
         DisableBlock:{
             template: `
-                <div>
-                <template v-for="(ritem, rowind) in list" v-if="bemounted">
-                <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['disable-block',{long: citem.long}]"
-                     v-if="long? citem.long: !citem.long">
-                    <div class="content">
-                        <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
-                        <div class="button">
-                            <a class="conf" @click="openModsetup">配置</a>
-                            <a class="hide" @click="tohide">显示</a>
+                <div v-if="bemounted">
+                    <div v-for="(citem, colind) in list" :key="citem.code" :class="['disable-block',{long: citem.long}]"
+                         v-if="long? citem.long: !citem.long">
+                        <div class="content">
+                            <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
+                            <div class="button">
+                                <a class="conf" @click="openModsetup">配置</a>
+                                <a class="hide" @click="toshow">显示</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                </template>
                 </div>`,
-            props: ['list', 'long', 'bemounted', 'openModsetup', 'tohide']
+            props: ['list', 'long', 'bemounted', 'openModsetup', 'toshow']
         }
     },
     data() {
@@ -88,7 +84,7 @@ export default {
                     [{
                         "title": "基本信息模块",
                         "subtitle": "(固定模块)",
-                        "need": true,
+                        "fixed": true,
                         "code": "base"
                     }, {
                         "title": "考勤信息模块",
@@ -149,26 +145,31 @@ export default {
                 ],
                 "hide": [
                     [{
-                        "title": "常用应用模块",
+                        "title": "常用应用模块4",
+                        "code": "common4",
+                        "long":true,
+                    },{
+                        "title": "常用应用模块1",
                         "code": "common1"
                     },{
-                        "title": "常用应用模块",
+                        "title": "常用应用模块2",
                         "code": "common2"
                     },{
                         "title": "常用应用模块22",
                         "code": "common22",
                         "long":true,
-                    }],
-                   [{
-                        "title": "常用应用模块",
-                        "code": "common3"
-                    }],
-                    [{
-                        "title": "常用应用模块",
-                        "code": "common4",
+                    },{
+                        "title": "常用应用模块5",
+                        "code": "common5",
                         "long":true,
-                    }]
-                ]
+                    },{
+                        "title": "常用应用模块3",
+                        "code": "common3"
+                    },{
+                        "title": "常用应用模块288",
+                        "code": "common288"
+                    },
+                ]]
             },
             modsetupShow: false,
             modsetl: {
@@ -244,8 +245,18 @@ export default {
         openModsetup(){
             this.modsetupShow= true
         },
-        tohide() {
-
+        tohide(rowind, colind, citem) {
+            let s= this.list.show, h= this.list.hide[0];
+            let item= s[rowind].splice(colind, 1)
+            if(!s[rowind].length){
+                s.splice(rowind, 1)
+            }
+            h.push(...item)
+        },
+        toshow(ind, hitem) {
+            let s= this.list.show, h= this.list.hide[0];
+            let item= h.splice(ind, 1)
+            s.push(item)
         },
         getMovePos({x, y, item, rowind, colind}){
             let left = x - this.bodyInfo.left, top = y - this.bodyInfo.top
@@ -373,18 +384,8 @@ export default {
     directives: {
         drag: {
             bind(el, binding, vnode) {
-                // console.log("vnode", vnode)
-                // console.log("order", el.attributes.order.value)
-                // console.log("el", el)
-                // console.log("el.offset", el.offsetTop, el.offsetLeft)
                 let top = el.pageX + 'px'
                 let left = el.pageY + 'px'
-                // el.style.top= top
-                // el.style.left= left
-
-                // el.parentNode.style.width= el.parentNode.offsetWidth+ 'px'
-                // el.parentNode.style.height= el.parentNode.offsetHeight+ 'px'
-                // console.log("el.parentNode", el.parentNode)
                 let {moving, movedone, item, rowind, colind}= binding.value
                 let disx = null
                 let disy = null
@@ -397,12 +398,12 @@ export default {
                 }
 
                 function mounemove(e) {
-                    clearTimeout(timer)
-                    timer = setTimeout(() => {
+                    // clearTimeout(timer)
+                    // timer = setTimeout(() => {
                         // moving({x: e.pageX, y: e.pageY, item, rowind, colind })
                         // mouseup(e)
                         // movedone({e})
-                    }, 400)
+                    // }, 400)
                     el.style.left = e.pageX - disx + 'px';
                     el.style.top = e.pageY - disy + 'px';
                 }
@@ -416,40 +417,16 @@ export default {
                 }
 
                 el.onmousedown = function (e) {
-                    if (e.target.tagName == 'A') {
+                    if (e.target.tagName == 'A' || item.fixed) {
                         return
                     }
                     // timer= setTimeout(function () {
                     mousedown(e)
                     // },500)
-
-
-                    // let list= binding.value.blocks
-                    // console.log("binding", binding)
-
                     document.onmousemove = function (e) {
                         mounemove(e)
-                        // console.log("e", e)
-                        // let obj= el.getClientRects()[0];
-                        // let top= obj.top
-                        // let left= obj.left
-                        // for(let i in list){
-                        //     if(top> list[i].top && top< list[i].top+list[i].height && left >list[i].left && left< list[i].left+ list[i].width+ 20){
-                        //         let item= list[parseInt(el.attributes.order.value)]
-                        //         list.splice(parseInt(el.attributes.order.value), 1)
-                        //         list.splice(i+1,0, item )
-                        //         break
-                        //     }
-                        // }
                     }
                     document.onmouseup = function (e) {
-                        // el.parentNode.style.pointer= "default"
-                        // el.style.top = 0
-                        // el.style.left = 0
-
-                        //
-                        // el.parentNode.classList.remove("move")
-                        // console.log("list",list)
                         mouseup(e)
                     }
                     e.preventDefault();
@@ -463,7 +440,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    $black: #333333;
+$black: #333333;
+$border-color: #333333;
+$bg-color: #7f7f7f;
 .pc-config {
     min-height: 500px;
     background-color: white;
@@ -542,7 +521,9 @@ export default {
                     /*transition: all .3s;*/
                 }
             }
-
+            &.fixed .content{
+                cursor: default;
+            }
             .title {
                 font-size: 20px;
 
@@ -599,10 +580,65 @@ export default {
             .msg{
                 font-size: 14px;
                 color: $black;
+                margin-bottom: 10px;
                 span{
                     margin-left: 10px;
                     color: #0000006d;
                     font-size: 12px;
+                }
+            }
+            .show-list{
+                margin-bottom: 10px;
+                .item{
+                    position: relative;
+                    display: inline-block;
+                    >i{
+                        position: absolute;
+                        top: -6px;
+                        font-size: 20px;
+                        right: -2px;
+                        background-color: white;
+                        border-radius: 8px;
+                        z-index: 10;
+                        overflow: hidden;
+                        cursor: pointer;
+                        display: none;
+                        color: $black;
+                    }
+                    &:hover >i{
+                        display: block;
+                    }
+                    .check-tag{
+                        cursor: default;
+                    }
+                }
+            }
+            .hide-list{
+                li{
+                    display: inline-block;
+                    height: 34px;
+                    line-height: 32px;
+                    width: 100px;
+                    text-align: center;
+                    border: 1px solid $border-color;
+                    border-radius: 4px;
+                    margin: 0 4px 10px 4px;
+                    color: $black;
+                    position: relative;
+                    cursor: default;
+                    font-weight: 500;
+                    >i{
+                        position: absolute;
+                        top: -8px;
+                        font-size: 20px;
+                        right: -6px;
+                        background-color: white;
+                        border-radius: 8px;
+                        z-index: 10;
+                        overflow: hidden;
+                        cursor: pointer;
+                        display: block;
+                    }
                 }
             }
         }

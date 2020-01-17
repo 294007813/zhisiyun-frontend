@@ -34,18 +34,21 @@
     padding: $--dialog-padding-primary;
     padding-bottom: 20px;
     border-bottom: 1px solid #e4e4e4;
+    position: relative;
   }
 
   @include e(headerbtn) {
+    font-size: 22px;
     position: absolute;
-    top: $--dialog-padding-primary;
+    //top: $--dialog-padding-primary;
+    top: 50%;
+    transform: translateY(-50%);
     right: $--dialog-padding-primary;
     padding: 0;
     background: transparent;
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: $--message-close-size;
 
     .el-dialog__close {
       color: $--color-info;
@@ -53,7 +56,8 @@
 
     &:focus, &:hover {
       .el-dialog__close {
-        color: $--color-primary;
+        //color: $--color-primary;
+        color: $--color-primary-zsy;
       }
     }
   }
@@ -73,9 +77,10 @@
 
   @include e(footer) {
     padding: $--dialog-padding-primary;
-    padding-top: 10px;
+    padding-top: 14px;
     text-align: right;
     box-sizing: border-box;
+    border-top: 1px solid #e4e4e4;
   }
 
   // 内容居中布局

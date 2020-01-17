@@ -17,6 +17,7 @@ $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 -------------------------- */
 /// color|1|Brand Color|0
 $--color-primary: #409EFF !default;
+$--color-primary-zsy: #333333 !default;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
@@ -371,7 +372,7 @@ $--message-padding: 15px 15px 15px 20px !default;
 /// color||Color|0
 $--message-close-icon-color: $--color-text-placeholder !default;
 /// height||Other|4
-$--message-close-size: 16px !default;
+$--message-close-size: 22x !default;
 /// color||Color|0
 $--message-close-hover-color: $--color-text-secondary !default;
 
