@@ -1,11 +1,13 @@
 <template>
 <div class="home-config">
     <div class="head">
-        <h2>员工首页PC端布局及设置</h2>
+        <h2>员工首页模块配置</h2>
+        <p>操作提示：● 列表页的操作提示信息  ● 好多提示信息内容写到这里</p>
         <div class="button">
-<!--            <span class="confirm-btn btn">保存</span>-->
-            <el-button type="primary" size="small">保存</el-button>
+            <span class="confirm-btn btn update">更新</span>
+            <span class="confirm-btn btn">保存</span>
         </div>
+
     </div>
     <div class="main">
         <config-pc></config-pc>

@@ -1,16 +1,17 @@
 import Vue from 'vue'
 
 //拖拽指令。 参数对象： {
-// cb: 拽结束后的回调，没有则不拖拽，
-// className： 拖拽时自动添加的class，结束后自动移除，如果不传则默认使用：'moving'
-// only：传入'x'则只能左右拖动，传入'y'则只能上下拖动，不传则自由拖动
+// cb|Function|: 拽结束后的回调，没有则不拖拽，
+// className|String|： 拖拽时自动添加的class，结束后自动移除，如果不传则默认使用：'moving'
+// only|String:'x','y'|：传入'x'则只能左右拖动，传入'y'则只能上下拖动，不传则自由拖动
+// exclude|String|：子元素css选择器，如果传如则点它不触发
 // }
 Vue.directive('drag', {
     bind(el, binding, vnode) {
         // let top = el.pageX + 'px'
         // let left = el.pageY + 'px'
         let params= binding.value
-        let {cb, only, className}= params
+        let {cb, only, className, exclude}= params
         let mx= only== 'x'||!only,  my= only== 'y'|| !only;
         let disx = null
         let disy = null
@@ -41,16 +42,38 @@ Vue.directive('drag', {
             el.style.left = 0
         }
 
+        function ex(e){
+            let doms= null, same= false
+            if(exclude){
+                doms= el.querySelectorAll(exclude)
+                doms.forEach(function (dom) {
+                    let l= e.path
+                    for(let i in l){
+                        if(el=== l[i]){
+                            break
+                        }
+                        if(dom=== l[i]){
+                            console.log("dom", dom)
+                            console.log("e(l[i])", l[i])
+                            same= true
+                            break
+                        }
+                    }
+                })
+            }
+            return same
+        }
+
         el.onmousedown = function (e) {
-            if (e.target.tagName == 'A' || !cb) {
+            if( ex(e)|| !cb){
                 return
             }
             mousedown(e)
-            document.onmousemove = function (e) {
-                mounemove(e)
+            document.onmousemove = function (me) {
+                mounemove(me)
             }
-            document.onmouseup = function (e) {
-                mouseup(e)
+            document.onmouseup = function (ue) {
+                mouseup(ue)
             }
             e.preventDefault();
             // e.stopPropagation();

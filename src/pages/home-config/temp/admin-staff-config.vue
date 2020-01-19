@@ -51,15 +51,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "./home-config.scss";
+.tbs{
+    min-height: 500px;
+    background-color: white;
+}
+</style>
+<style lang="scss">
 @import "~as/styles/zsy-base";
 .home-config{
-    .tbs{
-        min-height: 500px;
-        background-color: white;
-    }
-    /deep/ .tbs.zsy.el-tabs.el-tabs--top{
+    .tbs.zsy.el-tabs.el-tabs--top{
         .el-tabs__header.is-top{
             margin: 0 40px;
             .el-tabs__active-bar.is-top{

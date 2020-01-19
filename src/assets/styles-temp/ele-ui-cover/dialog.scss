@@ -32,6 +32,7 @@
 
   @include e(header) {
     padding: $--dialog-padding-primary;
+    padding-bottom: 20px;
     border-bottom: 1px solid #e4e4e4;
     position: relative;
   }
@@ -56,7 +57,7 @@
     &:focus, &:hover {
       .el-dialog__close {
         //color: $--color-primary;
-        color: $color-black;
+        color: $--color-primary-zsy;
       }
     }
   }
@@ -68,8 +69,7 @@
   }
 
   @include e(body) {
-    //padding: $--dialog-padding-primary ($--dialog-padding-primary + 10px);
-    padding: 0;
+    padding: $--dialog-padding-primary ($--dialog-padding-primary + 10px);
     color: $--color-text-regular;
     font-size: $--dialog-content-font-size;
     word-break: break-all;

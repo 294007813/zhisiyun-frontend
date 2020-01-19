@@ -1,25 +1,12 @@
-@import "zsy-base";
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import "../../../../node_modules/element-ui/packages/theme-chalk/src/index";
+@import "./dialog.scss";
+@import "./checkbox-button.scss";
+@import "./button.scss";
 
-//.cancel-btn,.confirm-btn{
-//  line-height: 34px;
-//  border: 1px solid transparent;
-//  padding: 0 20px;
-//  border-radius: 4px;
-//  display: inline-block;
-//  margin-left: 10px;
-//  font-size: 14px;
-//  cursor: pointer;
-//  text-align: center;
-//}
-//.cancel-btn{
-//  border-color: $bg-color;
-//  color: $color-black;
-//}
-//.confirm-btn{
-//  border-color: $color-black;
-//  background-color: $color-black;
-//  color: white;
-//}
+$black: #333333;
+$border-color: #333333;
+$bg-color: #7f7f7f;
 
 .el-checkbox-button.check-tag{
   display: inline-block;
@@ -31,11 +18,10 @@
     line-height: 32px;
     width: 100px;
     text-align: center;
-    border-left: 1px solid;
-    //border: 1px solid $border-color;
+    border: 1px solid $border-color;
     border-radius: 4px;
     padding: 0;
-    color: $color-black;
+    color: $black;
     box-shadow: none;
     &:hover{
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.349019607843137);
@@ -43,8 +29,8 @@
   }
   &.is-checked:first-child .el-checkbox-button__inner, &.is-checked .el-checkbox-button__inner{
     //border-left-color: $border-color;
-    //background-color: $bg-color;
-    //border-color: $color-primary;
+    background-color: $bg-color;
+    border-color: $bg-color;
     color: white;
   }
 }
@@ -56,3 +42,4 @@
     }
   }
 }
+

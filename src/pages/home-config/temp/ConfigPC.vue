@@ -1,44 +1,35 @@
 <template>
 <div class="pc-config">
-    <div class="head">已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></div>
-    <div class="drag-body" ref="dragbody">
-        <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
-            <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
-                 :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
-            :ref="'drag-'+citem.code">
-                <div class="content" v-drag="{ cb: citem.fixed? false: movedone, exclude: 'button', item:citem, rowind, colind}">
-                    <p class="title">{{citem.title}}<span v-if="citem.subtitle">{{citem.subtitle}}</span></p>
-                    <div class="button">
-<!--                        <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
-<!--                        <a class="conf" @click="openModsetup">配置</a>-->
-                        <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                   @click="tohide(rowind, colind, citem)">隐藏</el-button>
-                        <el-button type="primary" size="mini" round @click="openModsetup">配置</el-button>
+        <div class="head">已添加模块 <span>* 长按<b>“拖拽”</b>模块进行排序布局</span></div>
+        <div class="drag-body" ref="dragbody">
+            <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
+                <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
+                     :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
+                :ref="'drag-'+citem.code">
+                    <div class="content" v-drag="{ cb: citem.fixed? false: movedone, item:citem, rowind, colind}">
+                        <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
+                        <div class="button">
+                            <a class="conf" @click="openModsetup">配置</a>
+                            <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </template>
-        <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-    </div>
-
-
-    <div class="head">未添加模块</div>
-    <div class="disable-body">
-        <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
-    </div>
+            </template>
+            <div class="row" v-for="ind in showlinenum" :key="ind"></div>
+        </div>
+        <div class="head">未添加模块</div>
+        <div class="disable-body">
+            <disable-block v-for="ind in 2" :key="ind" :aaa="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
+       </div>
     
     <el-dialog
         :visible.sync="modsetupShow"
         custom-class="modsetup"
         width="600px">
-       <p slot="title" class="title">模块项目配置<span>已添加的可选项员工可自行配置</span></p>
+       <p slot="title" class="title">模块项目配置<b>已添加的可选项员工可自行配置</b></p>
         <div class="body">
-            <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
+            <p class="msg">已添加可选项 <span>*点击选中的项目可在更新后的员工页面中默认显示</span></p>
             <el-checkbox-group v-model="modsetl.showval" class="show-list">
-                <div class="item long">
-                    <i class="fa fa-times-circle"></i>
-                    <el-checkbox-button :label="111" class="check-tag">页签名称配置</el-checkbox-button>
-                </div>
                 <div class="item"  v-for="(item, ind) in modsetl.show" :key="ind">
                     <i class="fa fa-times-circle"></i>
                     <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>
@@ -46,15 +37,14 @@
             </el-checkbox-group>
             <p class="msg">未添加可选项</p>
             <ul class="hide-list">
-                <div class="item" v-for="(item, ind) in modsetl.hide">
-                    <div class="check-tag">{{item.name}}</div>
+                <li v-for="(item, ind) in modsetl.hide">{{item.name}}
                     <i class="fa fa-plus-circle"></i>
-                </div>
+                </li>
             </ul>
         </div>
         <p slot="footer" class="footer">
-            <el-button plain size="small">取消</el-button>
-            <el-button type="primary" size="small">确定</el-button>
+            <span class="cancel-btn">取消</span>
+            <span class="confirm-btn">确定</span>
         </p>
     </el-dialog>
 
@@ -75,8 +65,8 @@ export default {
                         <div class="content">
                             <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                             <div class="button">
-                                <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                           @click="toshow">显示</el-button>
+                                <a class="conf" @click="openModsetup">配置</a>
+                                <a class="hide" @click="toshow">显示</a>
                             </div>
                         </div>
                     </div>
@@ -206,7 +196,7 @@ export default {
         //     return this.list.hide.length
         // },
         lineHeight() {
-            return 80
+            return 160
         },
         // bodyInfo() {
         //     return this.bemounted && {
@@ -405,75 +395,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~as/styles/zsy-base";
-$bhv: 60;
-$phv: 20;
-$block-height: $bhv+px;
-$row-height: $bhv+$phv+px;
-@mixin content(){
-    .content {
-        background-color: white;
-        text-align: left;
-        /*padding: 20px;*/
-        display: inline-block;
-        border: 1px solid $color-line-light;
-        border-radius: 2px;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        cursor: grab;
-
-        &.moving {
-            cursor: grabbing;
-            background-color: #f2f2f2;
-            border-style: dashed;
-            box-shadow: 0 4px 9px 3px #adadad;
-            z-index: 1;
-        }
-        .title {
-            font-size: 14px;
-            left: 20px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .button {
-            overflow: hidden;
-            /*text-align: right;*/
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 10px;
-            /deep/ .is-plain{
-                &, &:focus, &:active{
-                background-color: white;
-                color: $color-primary;
-                }
-
-                &:hover{
-                    background-color: $color-primary;
-                    color: white;
-                }
-            }
-        }
-    }
-}
+$color-black: #333333;
+$border-color: #333333;
+$bg-color: #7f7f7f;
 .pc-config {
     min-height: 500px;
     background-color: white;
-    padding: 20px;
+    padding: 30px;
+
     .head {
-        padding-left: 10px;
-        font-size: 16px;
-        /*line-height: 30px;*/
-        border-left: 4px solid $color-primary;
+        font-size: 20px;
+        line-height: 30px;
+        margin-left: 10px;
 
         span {
-            margin-left: 10px;
-            font-size: 12px;
-            color: $color-gray;
+            float: right;
+            line-height: 30px;
+            font-size: 14px;
+            color: #7F7F7F;
+
             b {
-                color: red;
+                font-weight: 400;
+                color: black;
             }
         }
     }
@@ -486,132 +429,171 @@ $row-height: $bhv+$phv+px;
         position: relative;
         margin-bottom: 20px;
         .row {
-            height: $row-height;
+            height: 160px;
         }
+
+        /*.small .content {*/
+        /*    width: 96%;*/
+        /*}*/
+
+        /*.half .content {*/
+        /*    width: 97%;*/
+        /*}*/
+
+        /*.long .content {*/
+        /*    width: 99%;*/
+        /*}*/
 
         .drag-block{
             /*width: 470px;*/
-            height: $block-height;
+            height: 140px;
             display: inline-block;
             position: absolute;
             top: 0;
             left: 0;
+            text-align: center;
             transition: all .3s;
             padding: 0 10px;
-            @include content;
+            .content {
+                background-color: white;
+                text-align: left;
+                padding: 20px;
+                display: inline-block;
+                border: 1px solid #aaaaaa;
+                border-radius: 4px;
+                width: 100%;
+                height: 100%;
+                position: relative;
+                cursor: grab;
 
-            &.fixed .content{
-                cursor: default;
-                .title{
-                    color: $color-gray;
+                &.moving {
+                    cursor: grabbing;
+                    background-color: #f2f2f2;
+                    border-style: dashed;
+                    box-shadow: 0 4px 9px 3px #adadad;
+                    z-index: 1;
+                }
+                &:not(.moving){
+                    /*transition: all .3s;*/
+                }
+
+                .title {
+                    font-size: 20px;
+
+                    b {
+                        color: #AAAAAA;
+                        font-weight: 400;
+                    }
+                }
+                .button {
+                    overflow: hidden;
+                    text-align: right;
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+
+                    a {
+                        display: inline-block;
+                        width: 86px;
+                        height: 40px;
+                        border-radius: 4px;
+                        margin-left: 30px;
+                        border: 1px solid #7F7F7F;
+                        text-align: center;
+                        background-color: #f2f2f2;
+                        color: #7F7F7F;
+                        line-height: 38px;
+                        cursor: pointer;
+                    }
+
+                    .conf {
+
+                    }
+
+                    .hide {
+                        background-color: #555555;
+                        color: white;
+                    }
                 }
             }
-
-        }
-        /deep/ .disable-block{
-            height: $block-height;
-            display: inline-block;
-            padding: 0 10px;
-            width: 1/3*100%;
-            margin-bottom: 20px;
-            &.long{
-                width: 100%;
-            }
-            @include content;
-            .content{
-                background-color: $color-gray-light;
-                border: none;
+            &.fixed .content{
                 cursor: default;
             }
-        }
 
+        }
     }
 
-    @mixin checkbox(){
-        position: relative;
-        display: inline-block;
-        width: 25%;
-        padding: 0 10px;
-        &.long{
-            width: 100%;
-        }
-        >i{
-            position: absolute;
-            top: -8px;
-            font-size: 20px;
-            right: 2px;
-            background-color: white;
-            border-radius: 8px;
-            z-index: 10;
-            overflow: hidden;
-            cursor: pointer;
-            display: none;
-            color: $color-gray;
-        }
-        &:hover >i{
-            display: block;
-        }
-    }
     .modsetup{
         .title{
             color: $color-black;
             font-size: 14px;
-            margin-left: 10px;
-            span{
+            b{
                 font-weight: 400;
-                color: $color-gray;
+                color: #0000006d;
                 margin-left: 20px;
-                font-size: 12px;
             }
         }
         .body{
-            padding: 10px;
             .msg{
                 font-size: 14px;
                 color: $color-black;
-                margin: 0  0 10px 10px;
+                margin-bottom: 10px;
                 span{
                     margin-left: 10px;
-                    color: $color-gray;
+                    color: #0000006d;
                     font-size: 12px;
-                    b{
-                        color: red;
-                    }
                 }
             }
             .show-list{
                 margin-bottom: 10px;
                 .item{
-                   @include checkbox;
+                    position: relative;
+                    display: inline-block;
+                    >i{
+                        position: absolute;
+                        top: -6px;
+                        font-size: 20px;
+                        right: -2px;
+                        background-color: white;
+                        border-radius: 8px;
+                        z-index: 10;
+                        overflow: hidden;
+                        cursor: pointer;
+                        display: none;
+                        color: $color-black;
+                    }
+                    &:hover >i{
+                        display: block;
+                    }
                     .check-tag{
                         cursor: default;
-                        width: 100%;
-                        padding: 0;
-                        /deep/ .el-checkbox-button__inner{
-                            width: 100%;
-                            border-color: $color-line-light;
-                            border-radius: 0;
-                        }
-                        /deep/ &.is-checked:first-child .el-checkbox-button__inner, &.is-checked .el-checkbox-button__inner{
-                            color: white;
-                            background-color: $color-primary;
-                            border-color: $color-primary;
-                        }
                     }
                 }
             }
             .hide-list{
-                .item{
-                    @include checkbox;
-                    .check-tag{
-                        width: 100%;
-                        line-height: 32px;
-                        border: 1px solid $color-line-light;
-                        text-align: center;
-                        color: $color-black;
-                        cursor: default;
-                    }
-                    i{
+                li{
+                    display: inline-block;
+                    height: 34px;
+                    line-height: 32px;
+                    width: 100px;
+                    text-align: center;
+                    border: 1px solid $border-color;
+                    border-radius: 4px;
+                    margin: 0 4px 10px 4px;
+                    color: $color-black;
+                    position: relative;
+                    cursor: default;
+                    font-weight: 500;
+                    >i{
+                        position: absolute;
+                        top: -8px;
+                        font-size: 20px;
+                        right: -6px;
+                        background-color: white;
+                        border-radius: 8px;
+                        z-index: 10;
+                        overflow: hidden;
+                        cursor: pointer;
                         display: block;
                     }
                 }
@@ -620,4 +602,69 @@ $row-height: $bhv+$phv+px;
 
     }
 }
+</style>
+<style lang="scss">
+.pc-config{
+    .disable-block{
+        height: 140px;
+        display: inline-block;
+        padding: 0 10px;
+        width: 1/3*100%;
+        margin-bottom: 20px;
+        &.long{
+            width: 100%;
+        }
+        .content {
+            text-align: left;
+            padding: 20px;
+            display: inline-block;
+            border: 1px solid #aaaaaa;
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #F2F2F2;
+        }
+
+        .title {
+            font-size: 20px;
+            b {
+                color: #AAAAAA;
+                font-weight: 400;
+            }
+        }
+
+        .button {
+            overflow: hidden;
+            text-align: right;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+
+            a {
+                display: inline-block;
+                width: 86px;
+                height: 40px;
+                border-radius: 4px;
+                margin-left: 30px;
+                border: 1px solid #7F7F7F;
+                text-align: center;
+                background-color: #f2f2f2;
+                color: #7F7F7F;
+                line-height: 38px;
+                cursor: pointer;
+            }
+
+            .conf {
+
+            }
+
+            .hide {
+                background-color: #555555;
+                color: white;
+            }
+        }
+    }
+}
+
 </style>
