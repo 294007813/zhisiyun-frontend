@@ -396,8 +396,8 @@ export default {
 
 <style scoped lang="scss">
 $color-black: #333333;
-$border-color: #333333;
-$bg-color: #7f7f7f;
+$color-border: #333333;
+$color-bg: #7f7f7f;
 .pc-config {
     min-height: 500px;
     background-color: white;
@@ -577,7 +577,7 @@ $bg-color: #7f7f7f;
                     line-height: 32px;
                     width: 100px;
                     text-align: center;
-                    border: 1px solid $border-color;
+                    border: 1px solid $color-border;
                     border-radius: 4px;
                     margin: 0 4px 10px 4px;
                     color: $color-black;

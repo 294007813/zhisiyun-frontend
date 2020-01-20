@@ -405,7 +405,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~as/styles/zsy-base";
+
 $bhv: 60;
 $phv: 20;
 $block-height: $bhv+px;
@@ -444,17 +444,16 @@ $row-height: $bhv+$phv+px;
             top: 50%;
             transform: translateY(-50%);
             right: 10px;
-            /deep/ .is-plain{
+           /* /deep/ .is-plain{
                 &, &:focus, &:active{
                 background-color: white;
                 color: $color-primary;
                 }
-
                 &:hover{
                     background-color: $color-primary;
                     color: white;
                 }
-            }
+            }*/
         }
     }
 }

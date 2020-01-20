@@ -1,16 +1,17 @@
 <template>
 <div class="mobile-config">
-    <p class="msg">* 长按<b>“拖拽”</b>模块进行排序布局</p>
     <div class="left">
-        <p class="title">已添加模块</p>
+        <div class="title">
+            <h3>已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></h3>
+        </div>
         <ul class="drag-body" ref="dragbody">
             <li v-for="(item, ind) in blockList.show" :key="item.code" :class=" {fixed: item.fixed}"
                 :ref="'drag-'+item.code" :style="{top: item.top +'px'}">
-                <div class="content" v-drag="{ cb: item.fixed? false: movedone, item, rowind: ind, only: 'y'}">
+                <div class="content" v-drag="{ cb: item.fixed? false: movedone, item, rowind: ind, only: 'y', exclude: 'button'}">
                     <p class="name">{{item.title}} <b>{{item.subtitle}}</b></p>
                     <p class="button">
-                        <a class="conf">配置</a>
-                        <a class="hide" v-if="!item.fixed" @click="tohide(ind)">隐藏</a>
+                        <el-button type="primary" size="mini" round plain v-if="!item.fixed">隐藏</el-button>
+                        <el-button type="primary" size="mini" round >配置</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -19,13 +20,13 @@
         </ul>
     </div>
     <div class="right">
-        <p class="title">未添加模块</p>
+        <div class="title"><h3>未添加模块</h3></div>
         <ul class="hide-body">
             <li v-for="(item, ind) in blockList.hide" :key="item.code" >
                 <div class="content">
                     <p class="name">{{item.title}}</p>
                     <p class="button">
-                        <a class="show" @click="toshow(ind)">显示</a>
+                        <el-button type="primary" size="mini" round plain @click="toshow(ind)">显示</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -215,24 +216,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~as/styles/zsy-base";
+
+$bwith: 460px;
 .mobile-config{
     padding: 40px 0;
     background-color: white;
     overflow: hidden;
     position: relative;
-    .msg{
-        position: absolute;
-        top: 0;
-        right: 40px;
-        line-height: 30px;
-        font-size: 14px;
-        color: #7F7F7F;
-        b {
-            font-weight: 400;
-            color: black;
-        }
-    }
     .left, .right{
         width: 50%;
         float: left;
@@ -244,13 +234,29 @@ export default {
             margin-bottom: 20px;
             font-size: 20px;
             color: $color-black;
+            h3{
+                width: $bwith;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 400;
+                text-align: left;
+                span{
+                    font-size: 12px;
+                    margin-left: 10px;
+                    color: $color-gray;
+                    b{
+                        color: red;
+                    }
+                }
+            }
         }
         .drag-body, .hide-body{
             display: inline-block;
             min-height: 600px;
-            width: 460px;
-            padding: 0 20px 20px;
-            border: 1px solid $color-black;
+            width: $bwith;
+            padding-bottom: 20px;
+            /*padding: 0 20px 20px;*/
+            border: 1px solid $color-line-light;
             position: relative;
             .row {
                 height: 70px;
@@ -269,7 +275,8 @@ export default {
                     background-color: white;
                     text-align: left;
                     display: inline-block;
-                    border: 1px solid $color-black;
+                    //border: 1px solid $color-black;
+                    border: 1px solid transparent;
                     width: 100%;
                     height: 100%;
                     position: relative;
@@ -286,7 +293,7 @@ export default {
                     }
 
                     .name {
-                        font-size: 18px;
+                        font-size: 14px;
                         line-height: 48px;
                         margin-left: 20px;
                         b {
@@ -328,16 +335,18 @@ export default {
             }
         }
 
+        .drag-body{
+            background-color: $color-gray-light;
+        }
         .hide-body{
-            border: 0;
+            /*border: 0;*/
             li{
-                height: 50px;
-                margin-bottom: 20px;
+                /*height: 70px;*/
                 position: relative;
-                padding-top: 0;
+                /*padding: 20px 20px 0 20px;*/
                 .content{
-                    border-color: $color-line-light;
-                    background-color: $color-line-light;
+                    border-color: $color-gray-light;
+                    background-color: $color-gray-light;
                     cursor: default;
                     .button a{
                         border-color: $color-black;
@@ -349,7 +358,17 @@ export default {
         }
     }
     .left{
-        border-right: 1px solid $color-line-light;
+        &:after{
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 90%;
+            display: block;
+            right: 0;
+            border-right: 1px solid $color-line-light;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
 }
 </style>

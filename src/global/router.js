@@ -16,6 +16,10 @@ const routes = [
     {
         path: '/admin-staff-config',
         component: () => import('../pages/home-config/admin-staff-config.vue')
+    },
+    {
+        path: '/staff-home',
+        component: () => import('@/pages/staff-home.vue')
     }
 ]
 

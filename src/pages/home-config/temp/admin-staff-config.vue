@@ -59,7 +59,7 @@ export default {
 }
 </style>
 <style lang="scss">
-@import "~as/styles/zsy-base";
+
 .home-config{
     .tbs.zsy.el-tabs.el-tabs--top{
         .el-tabs__header.is-top{
@@ -74,7 +74,7 @@ export default {
                 min-width: 100px;
                 padding: 0 10px;
                 text-align: center;
-                color: $bg-color;
+                color: $color-bg;
                 line-height: 50px;
                 height: 50px;
                 &.is-active{
@@ -97,7 +97,7 @@ export default {
                 white-space: normal;
                 line-height: 24px;
                 font-size: 18px;
-                color: $bg-color;
+                color: $color-bg;
                 margin-bottom: 30px;
                 &.is-active{
                     color: $color-black;

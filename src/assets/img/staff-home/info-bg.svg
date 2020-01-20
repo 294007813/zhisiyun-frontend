@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="120px" viewBox="0 0 600 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>编组</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0,82.0234299 C77.4468085,77.4116708 134.468085,79.0587276 171.06383,86.9646004 C225.957447,98.8234095 340.851064,123.529262 416.170213,119.576326 C491.489362,115.623389 564.255319,99.0352977 600,102 C600,81.5764954 600,47.5764954 600,0 L0,0 L0,82.0234299 Z" id="path-1"></path>
+        <polygon id="path-3" points="0 35 68.5945399 0 111.304348 43"></polygon>
+        <polygon id="path-5" points="0 114 155.590062 0 290.434783 118"></polygon>
+        <polygon id="path-7" points="0 80 185.189441 0 362.608696 80"></polygon>
+    </defs>
+    <g id="员工首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="路径-2" fill="#DEEDFF" xlink:href="#path-1"></use>
+            <g id="编组-4" mask="url(#mask-2)">
+                <g transform="translate(189.565217, 75.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="路径-5" stroke="none" fill="#5464D8" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    <polygon id="路径-10" stroke="none" fill="#C1F3FF" fill-rule="evenodd" mask="url(#mask-4)" points="68.5945399 -1 63.4175935 17 37.5328615 50 -44.0040445 38"></polygon>
+                </g>
+            </g>
+            <g id="编组-3" mask="url(#mask-2)">
+                <g transform="translate(319.130435, 15.000000)">
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <use id="路径-8" stroke="none" fill="#5464D8" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    <polygon id="路径-9" stroke="none" fill="#C1F3FF" fill-rule="evenodd" mask="url(#mask-6)" points="151.700311 -9 165.962733 29 158.18323 23 165.962733 44 64.8291925 151 -92.0574534 110"></polygon>
+                </g>
+            </g>
+            <g id="编组-2" mask="url(#mask-2)">
+                <g transform="translate(177.391304, 49.000000)">
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <use id="路径-6" stroke="none" fill="#5464D8" fill-rule="evenodd" xlink:href="#path-7"></use>
+                    <polygon id="路径-7" stroke="none" fill="#C1F3FF" fill-rule="evenodd" mask="url(#mask-8)" points="178.714286 -9 202.024845 26 154.108696 91 -27.1956522 69"></polygon>
+                </g>
+            </g>
+            <path d="M56.0411363,88.0122973 C102.667753,69.3495884 147.567457,59.6849713 190.74025,59.0184459 C255.49944,58.018658 400.560024,98.0101771 467.909582,94.0110252 C512.809286,91.3449239 557.708991,92.0114492 602.608696,96.0106011 L602.608696,146 L49.5652174,127.004028 L56.0411363,88.0122973 Z" id="路径-3" fill="#FFFFFF" opacity="0.518577939" mask="url(#mask-2)"></path>
+            <path d="M258.26087,111.020408 C378.158694,84.3680619 451.477508,70.7087348 478.217311,70.0424262 C518.327015,69.0429632 593.370977,86.0338335 602.428007,86.0338335 C608.466027,86.0338335 608.466027,107.022556 602.428007,149 L258.26087,140.004833 L258.26087,111.020408 Z" id="路径-4" fill="#FFFFFF" opacity="0.487095424" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>

@@ -1,4 +1,4 @@
-@import "~as/styles/zsy-base";
+
 .home-config{
   background-color: #f2f2f2;
   padding: 20px;
@@ -33,6 +33,7 @@
 
   }
   .main{
-    margin-top: 20px;
+    //margin-top: 20px;
+    border-top: 20px solid $color-bg;
   }
 }

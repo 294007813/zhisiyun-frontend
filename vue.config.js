@@ -15,10 +15,15 @@ module.exports = {
             .set('pa', resolve('src/pages'))
             .set('st', resolve('src/store'))
     },
-
+    transpileDependencies: [
+        'vue-echarts',
+        'resize-detector'
+    ],
     css: {
         loaderOptions: {
-
+            sass: {
+                prependData: `@import "as/styles/zsy-base.scss";`
+            }
         },
     }
 }

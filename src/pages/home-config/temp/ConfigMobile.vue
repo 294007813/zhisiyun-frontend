@@ -215,7 +215,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~as/styles/zsy-base";
+
 .mobile-config{
     padding: 40px 0;
     background-color: white;
