@@ -1,0 +1,35 @@
+@import "~as/img/staff-home/iconfont/iconfont.css";
+$bl: 320;
+$blh: $bl+px;
+$bch: $bl - 40 +px;
+
+h5{
+  font-weight: 500;
+  font-size: 16px;
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  z-index: 1;
+}
+
+/deep/ .el-tabs.el-tabs--top{
+  .el-tabs__header{
+    margin: 0;
+    .el-tabs__nav-wrap{
+      &:after{
+        height: 1px;
+        background-color: $color-border;
+      }
+      .el-tabs__nav-scroll .el-tabs__nav{
+        margin: 0 20px;
+        float: right;
+        .el-tabs__item:not(.is-active){
+          color: $color-gray-dark;
+        }
+      }
+    }
+  }
+  .el-tabs__content .el-tab-pane{
+    height: $bch;
+  }
+}

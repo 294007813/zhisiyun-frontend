@@ -102,7 +102,7 @@ export default {
                         "code": "salary"}],
                     [{
                         "title": "待办事宜模块",
-                        "code": "needdo"
+                        "code": "gtasks"
                     }, {
                         "title": "绩效信息模块",
                         "code": "Perf"

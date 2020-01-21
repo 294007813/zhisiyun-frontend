@@ -19,7 +19,7 @@ const routes = [
     },
     {
         path: '/staff-home',
-        component: () => import('@/pages/staff-home.vue')
+        component: () => import('@/pages/staff-home')
     }
 ]
 
