@@ -3,6 +3,15 @@ $bl: 320;
 $blh: $bl+px;
 $bch: $bl - 40 +px;
 
+@mixin block(){
+  background-color: white;
+  height: $blh;
+  box-shadow:0 1px 2px 0 rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+  color: $color-black;
+}
+
 h5{
   font-weight: 500;
   font-size: 16px;

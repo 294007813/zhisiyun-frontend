@@ -5,7 +5,8 @@ import {
     Button,
     Tabs, TabPane,
     DatePicker,
-    Badge
+    Badge,
+    Input
 } from 'element-ui';
 
 Vue.component(Dialog.name, Dialog);
@@ -18,4 +19,5 @@ Vue.component(Tabs.name, Tabs);
 Vue.component(TabPane.name, TabPane);
 Vue.component(DatePicker.name, DatePicker);
 Vue.component(Badge.name, Badge);
+Vue.component(Input.name, Input);
 Vue.prototype.$MessageBox = MessageBox;

@@ -165,6 +165,7 @@ export default {
 <style scoped lang="scss">
 @import "common";
 .salary{
+    @include block;
     h5{
         i{
             font-size: 12px;

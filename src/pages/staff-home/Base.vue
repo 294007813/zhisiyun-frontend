@@ -25,6 +25,7 @@ export default {
 <style scoped lang="scss">
 @import "common";
 .base{
+    @include block;
     padding: 36px;
     >*{position: relative}
     .bg{

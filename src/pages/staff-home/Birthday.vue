@@ -1,10 +1,9 @@
 <template>
 <div class="birthday">
-    <h5>待办事宜</h5>
+    <h5>生日祝福墙</h5>
     <el-tabs v-model="activeTabs">
         <el-tab-pane label="今日(2位)" name="day">
             <swiper :options="day" class="day-swiper" ref="day" @someSwiperEvent="callback">
-                <!-- slides -->
                 <swiper-slide v-for="i in 3">
                     <div :class="{day: true, size}">
                         <div class="left">
@@ -75,6 +74,7 @@ export default {
 <style scoped lang="scss">
 @import "common";
 .birthday{
+    @include block;
     .day-swiper{
         height: 100%;
         .day{

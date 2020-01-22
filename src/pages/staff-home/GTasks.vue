@@ -42,6 +42,7 @@ export default {
 <style scoped lang="scss">
 @import "common";
 .gtasks{
+    @include block;
     .ul{
         padding: 0 20px;
         height: 100%;
@@ -50,6 +51,7 @@ export default {
             padding: 10px 0;
             border-bottom: 1px solid $color-border;
             position: relative;
+            &:last-child{ border: 0}
             p{
                 margin-bottom: 10px;
                 em{

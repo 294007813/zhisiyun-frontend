@@ -49,6 +49,7 @@ export default {
 <style scoped lang="scss">
 @import "common";
 .checkin{
+    @include block;
     padding: 6px 20px;
     ul{
         padding-top: 10px;

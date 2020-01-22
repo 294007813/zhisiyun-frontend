@@ -15,7 +15,27 @@
     <li class="border half">
         <birthday></birthday>
     </li>
-
+    <li class="border long">
+        <often></often>
+    </li>
+    <li class="border small">
+        <msg></msg>
+    </li>
+    <li class="border small">
+        <perf></perf>
+    </li>
+    <li class="border small">
+        <idea></idea>
+    </li>
+    <li class="border half">
+       <train></train>
+    </li>
+    <li class="border half">
+        <contract></contract>
+    </li>
+    <li class="border half">
+        <com-star></com-star>
+    </li>
 </div>
 </template>
 
@@ -25,9 +45,16 @@ import Checkin from "./Checkin";
 import Salary from "./Salary";
 import GTasks from "./GTasks";
 import Birthday from "./Birthday";
+import Often from "./Often";
+import Msg from "./Msg";
+import Perf from "./Perf";
+import Idea from "./Idea";
+import Train from "./Train";
+import Contract from "./Contract";
+import ComStar from "./ComStar";
 export default {
     name: "staff-home",
-    components: { BaseInfo, Checkin, Salary, GTasks, Birthday},
+    components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar},
     data(){
         return{
             ismounted: false,
@@ -50,14 +77,7 @@ export default {
         padding: 0 10px;
         margin-bottom: 20px;
         display: inline-block;
-        /deep/ >div{
-            background-color: white;
-            height: $blh;
-            box-shadow:0 1px 2px 0 rgba(0,0,0,0.12);
-            position: relative;
-            overflow: hidden;
-            color: $color-black;
-        }
+
         &.small{
             width: 1/3*100%;
         }
