@@ -1,7 +1,7 @@
 <template>
 <div class="contract">
     <ul class="to">
-        <h6>培训统计<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>合同<i class="iconfont iconyoujiantou"></i></h6>
         <li>
             <p><b>4</b>份</p>
             <span>已签合同</span>
@@ -12,7 +12,7 @@
         </li>
     </ul>
     <ul class="bo">
-        <h6>流程统计<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>协议<i class="iconfont iconyoujiantou"></i></h6>
         <li>
             <p><b>23</b>份</p>
             <span>已签协议</span>

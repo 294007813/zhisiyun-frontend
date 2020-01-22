@@ -3,7 +3,7 @@
     <h5>公司之星</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search" v-model="query"></el-input>
     <div class="db">
-        <swiper :options="op" class="day-swiper" ref="day">
+        <swiper :options="op" class="swiper" ref="day">
             <swiper-slide v-for="i in 3">
                 <div :class="{ssb: true, size}">
                     <div class="left">
@@ -20,8 +20,8 @@
                     </div>
                 </div>
             </swiper-slide>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
+<!--            <div class="swiper-button-prev" slot="button-prev"></div>-->
+<!--            <div class="swiper-button-next" slot="button-next"></div>-->
         </swiper>
     </div>
 </div>
@@ -38,7 +38,9 @@ export default {
     data(){
         return{
             query: '',
-            op:{}
+            op:{
+
+            }
         }
     }
 }
@@ -58,6 +60,7 @@ export default {
         padding-top: 40px;
         overflow: hidden;
         text-align: center;
+        height: 100%;
         &:before{
             content: "";
             display: block;
@@ -67,6 +70,30 @@ export default {
             background-color: $color-border;
             left: 0;
             top: 40px;
+        }
+        .swiper{
+            height: 100%;
+            width: 100%;
+            .ssb{
+                position: absolute;
+                top: 34px;
+                left: 10%;
+                right: 10%;
+                bottom: 34px;
+                border: 1px solid $color-gray;
+                border-radius:8px;
+                overflow: hidden;
+                .left{
+                    width: 30%;
+                    height: 100%;
+                    text-align: center;
+                    overflow: hidden;
+                }
+                .right{
+                    width: 70%;
+                    height: 100%;
+                }
+            }
         }
 
     }
