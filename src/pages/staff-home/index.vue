@@ -39,6 +39,9 @@
     <li class="border half">
         <skill-star></skill-star>
     </li>
+    <li class="border long">
+        <v-calendar></v-calendar>
+    </li>
 </div>
 </template>
 
@@ -56,9 +59,10 @@ import Train from "./Train";
 import Contract from "./Contract";
 import ComStar from "./ComStar";
 import SkillStar from "./SkillStar";
+import VCalendar from "./Calendar";
 export default {
     name: "staff-home",
-    components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar, SkillStar},
+    components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar, SkillStar, VCalendar},
     data(){
         return{
             ismounted: false,
