@@ -97,6 +97,7 @@ export default {
             width: 100%;
             height: auto;
             border: 1px solid $color-border;
+            object-fit: cover;
             margin-bottom: 10px;
         }
         p{

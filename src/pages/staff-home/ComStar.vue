@@ -11,13 +11,15 @@
                         <img src="~as/img/staff-home/head.png"/>
                         <p>周蒙奇</p>
                     </div>
-                    <div class="info">
-                        <p><label>工号：</label>0091</p>
-                        <p><label>部门/职位：</label>信息技术部/开发总监</p>
-                        <p><label>入职：</label>2019年01月</p>
-                        <p><label>生日：</label>09月08日</p>
-                        <p><label>星座：</label>双鱼座</p>
-                    </div>
+                    <ul class="info">
+                        <li><label>工号：</label>0091</li>
+                        <li><label>部门：</label>信息技术部</li>
+                        <li><label>职位：</label>开发总监</li>
+<!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
+                        <li><label>入职：</label>2019年01月</li>
+                        <li><label>生日：</label>09月08日</li>
+                        <li><label>星座：</label>双鱼座</li>
+                    </ul>
                 </div>
             </swiper-slide>
 <!--            <div class="swiper-button-prev" slot="button-prev"></div>-->
@@ -47,55 +49,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "common";
+@import "comstar&skillstar";
 .com-star{
-    @include block;
-    .query{
-        width: 200px;
-        position: absolute;
-        top: 6px;
-        right: 20px;
-    }
-    .db{
-        padding-top: 40px;
-        overflow: hidden;
-        text-align: center;
-        height: 100%;
-        &:before{
-            content: "";
-            display: block;
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            background-color: $color-border;
-            left: 0;
-            top: 40px;
+    @include style;
+    .db .swiper .ssb{
+        .left{
+            background-color: #EDF8FF;
+            i{
+                font-size: 12px;
+                width:54px;
+                height:20px;
+                background:linear-gradient(270deg,rgba(255,255,168,1) 0%,rgba(255,208,111,1) 100%);
+                box-shadow:0px 1px 2px 0px rgba(0,0,0,0.1);
+                border-radius:10px;
+                display: inline-block;
+                margin-top: 30px;
+                line-height: 20px;
+            }
         }
-        .swiper{
-            height: 100%;
-            width: 100%;
-            .ssb{
-                position: absolute;
-                top: 34px;
-                left: 10%;
-                right: 10%;
-                bottom: 34px;
-                border: 1px solid $color-gray;
-                border-radius:8px;
-                overflow: hidden;
-                .left{
-                    width: 30%;
-                    height: 100%;
-                    text-align: center;
-                    overflow: hidden;
-                }
-                .right{
-                    width: 70%;
-                    height: 100%;
+        .info{
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-content: space-around;
+            padding: 10px 20px;
+            li{
+                height: 20px;
+                line-height: 20px;
+                width: 50%;
+                font-size: 12px;
+                label{
+                    color: $color-gray;
                 }
             }
         }
-
     }
 }
+
+
 </style>

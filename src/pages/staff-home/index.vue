@@ -36,6 +36,9 @@
     <li class="border half">
         <com-star></com-star>
     </li>
+    <li class="border half">
+        <skill-star></skill-star>
+    </li>
 </div>
 </template>
 
@@ -52,9 +55,10 @@ import Idea from "./Idea";
 import Train from "./Train";
 import Contract from "./Contract";
 import ComStar from "./ComStar";
+import SkillStar from "./SkillStar";
 export default {
     name: "staff-home",
-    components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar},
+    components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar, SkillStar},
     data(){
         return{
             ismounted: false,
