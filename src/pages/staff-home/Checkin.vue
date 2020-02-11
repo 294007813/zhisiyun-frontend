@@ -3,30 +3,30 @@
         <ul class="sta">
             <h5>本月考勤统计<i class="iconfont iconyoujiantou"></i></h5>
             <li>
-                <p>23<b>天</b></p>
+                <p>{{kq.cq}}<b>天</b></p>
                 <span>出勤天数</span>
             </li>
             <li>
-                <p>0<b>天</b></p>
+                <p>{{kq.qj}}<b>天</b></p>
                 <span>请假</span>
             </li>
             <li>
-                <p>1<b>次</b></p>
+                <p>{{kq.cd}}<b>次</b></p>
                 <span>迟到早退</span>
             </li>
             <li>
-                <p>23<b>次</b></p>
+                <p>{{kq.qk}}<b>次</b></p>
                 <span>缺卡</span>
             </li>
         </ul>
         <ul class="balance">
             <h5>假期余额<i class="iconfont iconyoujiantou"></i></h5>
             <li>
-                <p>16<b>时</b></p>
+                <p>{{bl.year}}<b>时</b></p>
                 <span>年假余额</span>
             </li>
             <li>
-                <p>0<b>时</b></p>
+                <p>{{bl.exchange}}<b>时</b></p>
                 <span>调休假余额</span>
             </li>
         </ul>
@@ -42,7 +42,48 @@
 
 <script>
 export default {
-    name: "Checkin"
+    name: "Checkin",
+    data(){
+        return {
+            kq: {
+                //出勤
+                cq: 0,
+                //请假
+                qj: 0,
+                //迟到早退
+                cd: 0,
+                //缺卡
+                qk: 0,
+            },
+            bl: {},
+        }
+    },
+    mounted(){
+        this.getData()
+    },
+    methods:{
+        getData(){
+            // let mo= moment()
+            this.$axios.get("/api/feishu/wt/kqreport", {params:{
+                    // startdate: mo.format('YYYY-MM-01'),
+                    // enddate: mo.format('YYYY-MM-DD'),
+                    startdate: '2019-12-01',
+                    enddate: '2019-12-20',
+            }}).then(data=>{
+                for(let key in data){
+                    let item= data[key][0]
+                    item.is_job_day && !item.absenteeism && this.kq.cq++
+                    item.ask_for_leave && this.kq.qj++
+                    item.is_job_day && (item.is_come_late || item.is_leave_early) && this.kq.cd++
+                    item.is_job_day && (item.no_sign_in || item.no_sign_out) && this.kq.qk++
+
+                }
+            })
+            this.$axios.get("/api/feishu/wt/blancedata").then(data=>{
+                this.bl= data
+            })
+        }
+    }
 }
 </script>
 

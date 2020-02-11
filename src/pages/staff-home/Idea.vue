@@ -3,7 +3,7 @@
     <h5>意见箱</h5>
     <div>
         <img src="~as/img/staff-home/idea.svg">
-        <p>已有<b>3</b>条意见</p>
+        <p>已有<b>{{num}}</b>条意见</p>
         <el-button size="small" type="primary" plain class="but">投递意见</el-button>
     </div>
 </div>
@@ -12,7 +12,22 @@
 <script>
 export default {
     name: "Idea",
+    data(){
+        return{
+            num: 0
+        }
+    },
+    mounted(){
+        this.getData()
+    },
+    methods:{
+        getData(){
+            this.$axios.get("/api/employeesindexpage/suggestion_num").then(data=>{
+                this.num= data
 
+            })
+        }
+    }
 }
 </script>
 

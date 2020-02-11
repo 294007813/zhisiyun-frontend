@@ -1,27 +1,30 @@
 <template>
 <div class="msg">
-    <h5>消息动态 <el-badge :value="17" class="item" type="primary"></el-badge></h5>
+    <h5>消息动态 <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt">
             <ul class="ul">
-                <li v-for="i in 10">
-                    <p>xx小时前</p>
-                    <div>
-                        <img class="head" src="~as/img/staff-home/head.png"/>
-                        <span>管理员 ACD 将“xxxxxxxxxx内容1”调整为“xxxxxxxcccccx内容”</span>
-                    </div>
+                <li v-for="(item, i) in gt.list">
+                    <template>
+                        <p>{{item.create_tm}}小时前</p>
+                        <div>
+                            <img class="head" src="~as/img/staff-home/head.png"/>
+                            <span>{{item.msg}}</span>
+                        </div>
+                    </template>
                 </li>
-
             </ul>
         </el-tab-pane>
         <el-tab-pane label="已读" name="at">
             <ul class="ul at">
-                <li v-for="i in 10">
-                    <p>xx小时前</p>
-                    <div>
-                        <img class="head" src="~as/img/staff-home/head.png"/>
-                        <span>管理员 ACD 将“xxxxxxxxxx内容1”调整为“xxxxxxxcccccx内容”</span>
-                    </div>
+                <li v-for="(item, i) in at.list">
+                    <template>
+                        <p>{{item.create_tm}}小时前</p>
+                        <div>
+                            <img class="head" src="~as/img/staff-home/head.png"/>
+                            <span>{{item.msg}}</span>
+                        </div>
+                    </template>
                 </li>
             </ul>
         </el-tab-pane>
@@ -34,11 +37,22 @@ export default {
     name: "Msg",
     data(){
         return{
-            activeTabs: 'gt'
+            activeTabs: 'gt',
+            gt: {},
+            at: {},
         }
     },
+    mounted(){
+        this.getData()
+        this.getData(1)
+    },
     methods:{
-        tabClick(){}
+        tabClick(){},
+        getData(status= 0){
+            this.$axios.get("/api/feishu/news/newslist",{params:{status}}).then(data=>{
+                this[status? "at": "gt"]= data
+            })
+        },
     }
 }
 </script>

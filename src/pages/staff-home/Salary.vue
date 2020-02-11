@@ -3,16 +3,13 @@
     <h5>薪资信息<i class="iconfont iconyanjing"></i></h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
         <el-tab-pane label="月度" name="mon">
-            <div class="mon">
-                <p class="title">2019年</p>
-                <ul>
-                    <li><label>3月</label><p>10,000.00</p></li>
-                    <li><label>4月</label><p>10,000.00</p></li>
-                    <li><label>5月</label><p>10,000.00</p></li>
-                    <li><label>6月</label><p>10,000.00</p></li>
-                    <li><label>7月</label><p>10,000.00</p></li>
-                    <li><label>8月</label><p>10,000.00</p></li>
-                </ul>
+            <div class="mon" v-if="mon">
+                <template v-for="(arr, key) in mon">
+                    <p class="title">{{key}}年</p>
+                    <ul>
+                        <li v-for="(item, i) in arr"><label>{{item.mon}}月</label><p>{{item.amount}}</p></li>
+                    </ul>
+                </template>
             </div>
         </el-tab-pane>
         <el-tab-pane label="趋势" name="trend">
@@ -33,16 +30,11 @@
                     end-placeholder="结束月份">
             </el-date-picker>
 
-            <ul class="sta">
-
-                <li><label>累计发放</label><p>24个月</p></li>
-                <li><label>累计公司应缴公积金</label><p>21,000.00</p></li>
-                <li><label>累计发放</label><p>24个月</p></li>
-                <li><label>累计公司应缴公积金</label><p>21,000.00</p></li>
-                <li><label>累计发放</label><p>24个月</p></li>
-                <li><label>累计公司应缴公积金</label><p>21,000.00</p></li>
-                <li><label>累计发放</label><p>24个月</p></li>
-                <li><label>累计公司应缴公积金</label><p>21,000.00</p></li>
+            <ul class="sta" v-if="sta">
+                <template v-for="(item, key) in sta.huizong">
+                    <li><label>累计发放</label><p>{{sta.sum_month}} 个月</p></li>
+                    <li><label>{{item.name}}</label><p>{{item.count}}</p></li>
+                </template>
             </ul>
         </el-tab-pane>
     </el-tabs>
@@ -123,38 +115,83 @@ export default {
                     }
                 },
                 series: {
-                    name: 'Beijing AQI',
+                    name: '实发工资',
                     type: 'line',
                     data: salarytrendChart.map(function (item) {
                         return item[1];
                     }),
-                    markLine: {
-                        silent: true,
-                        data: [{
-                            yAxis: 50
-                        }, {
-                            yAxis: 100
-                        }, {
-                            yAxis: 150
-                        }, {
-                            yAxis: 200
-                        }, {
-                            yAxis: 300
-                        }]
-                    }
+                    // markLine: {
+                    //     silent: true,
+                    //     data: [{
+                    //         yAxis: 50
+                    //     }, {
+                    //         yAxis: 100
+                    //     }, {
+                    //         yAxis: 150
+                    //     }, {
+                    //         yAxis: 200
+                    //     }, {
+                    //         yAxis: 300
+                    //     }]
+                    // }
                 }
-            }
+            },
+            mon: null,
+            sta: null
         }
     },
     mounted() {
         this.ismounted= true
+        this.getMon()
+        this.getTrend()
+        this.getSta()
     },
     methods:{
+        getMon(){
+            this.$axios.get("/api/feishu/xc/allBaseinfo").then(data=>{
+                let arr= data.slice(-6)
+                this.mon= {}
+                arr.map(item=>{
+                    let {years, months}= this.$fun.moment(item.cpi.month).toObject()
+                    this.mon[years]? false: this.mon[years]= []
+                    this.mon[years].push({mon: months+1, amount: item.ci_items.length && (item.ci_items[0].amount ||0)})
+                })
+
+                let trend= data.slice(-18)
+                let xv=[], yv=[]
+                trend.map(item =>{
+                    xv.push(item.cpi.month)
+                    yv.push( item.ci_items.length && (item.ci_items[0].amount ||0))
+                })
+                this.trendChart.dataZoom[0].startValue= xv[xv.length-6]
+                this.trendChart.xAxis.data= xv
+                this.trendChart.series.data= yv
+            })
+        },
+        getTrend(){
+            this.$axios.post("/api/feishu/xc/totalinfo2",this.stadate &&{
+                start_date: this.stadate[0],
+                end_date: this.stadate[1],
+            }).then(data=>{
+                this.sta= data
+            })
+        },
+        getSta(){
+            this.$axios.post("/api/feishu/xc/totalinfo",{
+                start_date: "2019-6",
+                end_date: "2019-12",
+            }).then(data=>{
+
+            })
+        },
         salaryClick({name}){
             switch (name) {
                 case 'trend':{
                     this.showTrend= true;
                     break;
+                }
+                case 'sta':{
+
                 }
             }
         }
@@ -246,7 +283,7 @@ export default {
     }
     .sta{
         height: $bl - 40 - 30 +px;
-        padding: 10px;
+        padding: 0 10px;
         overflow: auto;
         background-color: white;
 

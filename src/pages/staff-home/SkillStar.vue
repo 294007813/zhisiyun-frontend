@@ -4,20 +4,16 @@
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search" v-model="query"></el-input>
     <div class="db">
         <swiper :options="op" class="swiper" ref="day">
-            <swiper-slide v-for="i in 3">
+            <swiper-slide v-for="(item, i) in list">
                 <div :class="{ssb: true, size}">
                     <div class="left">
-                        <img src="~as/img/staff-home/head.png"/>
-                        <p>周蒙奇</p>
-                        <span>开发部/开发总监</span>
+                        <img :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`"/>
+                        <p>{{item.people_name}}</p>
+                        <span>{{`${item.ou_name}/${item.position_name}`}}</span>
                     </div>
                     <ul class="info">
-                        <p><b>18</b>个赞 <i class="fa fa-thumbs-up"></i></p>
-                        <li>结果导向<b>6个赞</b></li>
-                        <li>领导力<b>6个赞</b></li>
-                        <li>技术大牛牛牛牛<b>6个赞</b></li>
-                        <li>结果导向<b>6个赞</b></li>
-                        <li>人品大大大大好<b>6个赞</b></li>
+                        <p><b>{{getStar(item)}}</b>个赞 <i class="fa fa-thumbs-up"></i></p>
+                        <li v-for="(sk, j) in item.my_skills">{{sk.skill.skill_name}}<b>{{sk.score}}个赞</b></li>
                     </ul>
                 </div>
             </swiper-slide>
@@ -41,7 +37,29 @@ export default {
             query: '',
             op:{
 
-            }
+            },
+            list:[]
+        }
+    },
+    mounted(){
+        this.getData()
+    },
+    methods:{
+        getData(){
+            this.$axios.get("/api/feishu/user/skilldata").then(data=>{
+                this.list= data
+
+            })
+        },
+        getStar(item){
+            let star=0
+            // item.position.competencies_client.map(it1=>{
+            //     star+= it1.praise_peoples_number
+            // })
+            item.my_skills.map(it1=>{
+                star+= it1.score
+            })
+            return star
         }
     }
 }

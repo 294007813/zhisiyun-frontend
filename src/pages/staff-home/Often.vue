@@ -2,9 +2,9 @@
 <div class="often">
     <h5>常用应用</h5>
     <ul>
-        <li v-for="(item, key) in list" :key="key">
-            <img :src="`/img/staff-home/${item.name}.png`"/><p>{{item.name}}</p></li>
-        <li class="add"></li>
+        <li v-for="(item, key) in list" :key="key" v-show="item.uf_status_pc==1">
+            <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
+        <li class="add" @click="add"></li>
     </ul>
 </div>
 </template>
@@ -41,8 +41,18 @@ export default {
             ]
         }
     },
+    mounted(){
+        this.getData()
+    },
     methods:{
+        getData(){
+            this.$axios.get("/api/feishu/index/myapp/list").then(data=>{
+                // this.list= data
+            })
+        },
+        add(){
 
+        }
     }
 }
 </script>

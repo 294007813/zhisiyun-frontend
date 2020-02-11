@@ -24,7 +24,32 @@
 <script>
 export default {
     name: "Contract",
-
+    data(){
+        return{
+            da:{
+                n1: 0,
+                h: '',
+                n2: 0
+            }
+        }
+    },
+    mounted(){
+        this.getTo()
+        this.getBo()
+    },
+    methods:{
+        getTo(){
+            this.$axios.get("/api/feishu/agreement/list").then(data=>{
+                this.da.n1= data.newContract.length
+                this.da.n2= data.newContractAgreement.length
+                if(this.da.n1){
+                    let date= data.newContract.effective_date
+                    this.$fun.moment().diff(date)
+                    this.da.h= ``
+                }
+            })
+        },
+    }
 }
 </script>
 

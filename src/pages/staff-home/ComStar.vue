@@ -4,21 +4,22 @@
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search" v-model="query"></el-input>
     <div class="db">
         <swiper :options="op" class="swiper" ref="day">
-            <swiper-slide v-for="i in 3">
+            <swiper-slide v-for="(it, i) in list">
                 <div :class="{ssb: true, size}">
                     <div class="left">
                         <i>NO.1</i>
-                        <img src="~as/img/staff-home/head.png"/>
-                        <p>周蒙奇</p>
+<!--                        <img src="~as/img/staff-home/head.png"/>-->
+                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>
+                        <p>{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">
-                        <li><label>工号：</label>0091</li>
-                        <li><label>部门：</label>信息技术部</li>
-                        <li><label>职位：</label>开发总监</li>
+                        <li><label>工号：</label>{{it.people.people_no}}</li>
+                        <li><label>部门：</label>{{it.people.ou_name}}</li>
+                        <li><label>职位：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
-                        <li><label>入职：</label>2019年01月</li>
-                        <li><label>生日：</label>09月08日</li>
-                        <li><label>星座：</label>双鱼座</li>
+                        <li><label>入职：</label>{{$fun.moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
+                        <li><label>生日：</label>{{$fun.moment(it.people.birthday).format("MM月DD日")}}</li>
+                        <li><label>星座：</label>{{it.people.zodiac}}</li>
                     </ul>
                 </div>
             </swiper-slide>
@@ -42,8 +43,19 @@ export default {
             query: '',
             op:{
 
-            }
+            },
+            list: []
         }
+    },
+    mounted(){
+        this.getData()
+    },
+    methods:{
+        getData(){
+            this.$axios.get("/api/feishu/user/stardata").then(data=>{
+                this.list= data
+            })
+        },
     }
 }
 </script>

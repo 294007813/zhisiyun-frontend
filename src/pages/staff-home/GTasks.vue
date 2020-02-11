@@ -1,22 +1,21 @@
 <template>
 <div class="gtasks">
-    <h5>待办事宜 <el-badge :value="17" class="item" type="primary"></el-badge></h5>
+    <h5>待办事宜 <el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt">
             <ul class="ul">
-                <li v-for="i in 10">
-                    <p>任务/流程名称<em>(延时提交)</em></p>
-                    <span>刚刚创建&nbsp;|&nbsp;限时3日10时</span>
+                <li v-for="(item, i) in gt.list">
+                    <p><em>{{item.title}}</em></p>
+                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
                     <b>人事事件</b>
                 </li>
-
             </ul>
         </el-tab-pane>
         <el-tab-pane label="已办" name="at">
             <ul class="ul at">
-                <li v-for="i in 10">
-                    <p>任务/流程名称<em>(延时提交)</em></p>
-                    <span>刚刚创建&nbsp;|&nbsp;限时3日10时</span>
+                <li v-for="(item, i) in at.list">
+                    <p><em>{{item.title}}</em></p>
+                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
                     <b>人事事件</b>
                 </li>
             </ul>
@@ -30,11 +29,27 @@ export default {
     name: "GTasks",
     data(){
         return{
-            activeTabs: 'gt'
+            activeTabs: 'gt',
+            gt: {},
+            at: {},
         }
     },
+    mounted(){
+        this.getGt()
+        this.getAt()
+    },
     methods:{
-        tabClick(){}
+        tabClick(){},
+        getGt(){
+            this.$axios.get("/api/feishu/news/todolist").then(data=>{
+                this.gt= data
+            })
+        },
+        getAt(){
+            this.$axios.get("/api/feishu/news/donelist").then(data=>{
+                this.at= data
+            })
+        }
     }
 }
 </script>

@@ -2,9 +2,10 @@
 <div class="birthday">
     <h5>生日祝福墙</h5>
     <el-tabs v-model="activeTabs">
-        <el-tab-pane label="今日(2位)" name="day">
-            <swiper :options="day" class="day-swiper" ref="day" @someSwiperEvent="callback">
-                <swiper-slide v-for="i in 3">
+        <el-tab-pane :label="`今日(${day.length||0}位)`" name="day">
+            <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
+                    class="day-swiper" ref="day" @someSwiperEvent="callback">
+                <swiper-slide v-for="(item, i) in day.peoples[0].items">
                     <div :class="{day: true, size}">
                         <div class="left">
                             <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
@@ -12,10 +13,10 @@
                             <p>今天是TA的生日</p>
                         </div>
                         <div class="photo">
-                            <img class="head" src="~as/img/staff-home/head.png"/>
+                            <img class="head" :src="`${baseApi}/gridfs/get/${item.avatar}`"/>
                             <img class="crown" src="~as/img/staff-home/crown.svg"/>
-                            <p>周若霖</p>
-                            <span>技术开发部/开发经理</span>
+                            <p>{{item.people_name}}</p>
+                            <span>{{`${item.ou_name}/${item.position_name}`}}</span>
                         </div>
                     </div>
                 </swiper-slide>
@@ -23,15 +24,16 @@
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
         </el-tab-pane>
-        <el-tab-pane label="本月(12位)" name="mon">
+        <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon">
             <p class="mon-title">2019年9月</p>
-            <swiper :options="mon"  class="mon-swiper"ref="mon" @someSwiperEvent="callback">
-                <swiper-slide class="mon-slide" v-for="i in 10 ">
+            <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
+                    class="mon-swiper"ref="mon" @someSwiperEvent="callback">
+                <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples">
                     <ul class="mon">
-                        <p class="title">3日<b>周四</b></p>
-                        <li  v-for="i in (parseInt(Math.random()*10+1)) ">
-                            <img class="head" src="~as/img/staff-home/head.png"/>
-                            <span>周若霖</span>
+                        <p class="title">{{$fun.moment(bd.end_date).format("D")}}日<b>周{{$fun.moment(bd.end_date).format("d")}}</b></p>
+                        <li  v-for="(item, j) in bd.items">
+                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>
+                            <span>{{item.people.people_name}}</span>
                         </li>
                     </ul>
                 </swiper-slide>
@@ -44,6 +46,7 @@
 </template>
 
 <script>
+    import {baseApi} from '~/proj-config'
 export default {
     name: "Birthday",
     props: {
@@ -54,19 +57,31 @@ export default {
     data(){
         return{
             activeTabs: 'day',
-            day:{
+            dayOptions:{
                 watchOverflow: true
             },
-            mon:{
+            monOptions:{
                 slidesPerView : "auto",
                 spaceBetween : 20,
                 slidesOffsetBefore : 20,
                 slidesOffsetAfter : 20,
             },
+            day: {},
+            mon: {},
+            baseApi
         }
     },
+    mounted(){
+        this.getData()
+        this.getData("month")
+    },
     methods:{
-        callback(){}
+        callback(){},
+        getData(month){
+            this.$axios.get("/api/feishu/user/birthdaydata",{params:{index: month||''}}).then(data=>{
+                month? this.mon=data: this.day= data
+            })
+        }
     }
 }
 </script>

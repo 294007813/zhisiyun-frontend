@@ -1,24 +1,59 @@
 <template>
-<div class="base">
+<div class="base" v-if="done">
     <img class="bg" src="~as/img/staff-home/info-bg.svg"/>
-    <h1 class="name"><p>周比利</p><span>001</span><a>正式</a></h1>
-    <div class="title">销售部/销售经理 <b>高级-L1-1</b></div>
-    <p><label>星座：</label>双鱼座</p>
-    <p><label>属相：</label>羊</p>
-    <p><label>生日：</label>02-15</p>
-    <p><label>入职日期：</label>2017-01-02 <span>下属：23人</span></p>
+    <h1 class="name"><p>{{info.people_name}}</p><span>{{info.people_no}}</span><a>{{es[info.employee_status||'H']}}</a></h1>
+    <div class="title">{{`${info.ou_name}/${info.position_name}`}}<b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b></div>
+    <p><label>星座：</label>{{info.zodiac.zodiac}}</p>
+    <p><label>属相：</label>{{info.zodiac.shengxiao}}</p>
+    <p><label>生日：</label>{{info.zodiac.shengri}}</p>
+    <p><label>入职日期：</label>{{start_service_date}} <span>下属：{{info.my_team}}人</span></p>
     <a>查看档案<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
-        <img src="~as/img/staff-home/head.png"/>
-        <p><i class="iconfont iconxunzhangtubiao"></i>3枚</p>
+        <img :src="avatar"/>
+        <p><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}枚</p>
     </div>
-
 </div>
 </template>
 
 <script>
+import {baseApi} from '~/proj-config'
+let es={
+    'H':'正式',
+    'P':'试用期',
+    'R':'已离职',
+    'L':'停薪留职',
+    'S':'供应链成员',
+}
 export default {
-    name: "Base"
+    name: "Base",
+    data(){
+        return{
+            info: {
+
+            },
+            es,
+            done: false
+        }
+    },
+    computed:{
+        start_service_date(){
+            return this.info.start_service_date && this.$fun.moment(this.info.start_service_date).format('YYYY-MM-DD');
+        },
+        avatar(){
+            return this.done && `${baseApi}/gridfs/get/${this.info.avatar}`
+        }
+    },
+    mounted(){
+        this.getData()
+    },
+    methods:{
+        getData(){
+            this.$axios.get("/api/feishu/base/info").then(data=>{
+                this.info= data[0]
+                this.done= true
+            })
+        }
+    }
 }
 </script>
 

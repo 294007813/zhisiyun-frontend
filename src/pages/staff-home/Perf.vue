@@ -39,8 +39,10 @@ export default {
                     {
                         name: '业务指标',
                         type: 'gauge',
-                        detail: {formatter: '{value}%'},
-                        data: [{value: 50, name: '完成率'}]
+                        detail: {formatter: '绩效分数{value}'},
+                        // detail: {value: 50, name: '良好'},
+                        data: [{value: 50, name: '良好'}]
+                        // data: [{formatter: '绩效分数{value}'}]
                     }
                 ]
             },
@@ -61,6 +63,8 @@ export default {
     },
     mounted() {
         this.ismounted= true
+        this.getTM()
+        this.getRange()
     },
     methods:{
         tabClick({name}){
@@ -70,6 +74,29 @@ export default {
                     break;
                 }
             }
+        },
+        getTM(){
+            this.$axios.get("/api/feishu/jx/onedata").then(data=>{
+                let od= {value: 0,  name: '良好'}
+                if(data.length){
+                    od= {value: data[0].ai_score, name: data[0].ai_grade}
+                }
+                this.nowChart.series[0].data= [od]
+            })
+        },
+        getRange(){
+            this.$axios.get("/api/feishu/jx/rangedatas").then(data=>{
+                data.sort((a, b)=>{
+                    return a.period_value< b.period_value
+                })
+                let xAxis= [],series=[]
+                data.map(item=>{
+                    xAxis.push(item.period_name)
+                    series.push(item.ai_score)
+                })
+                this.trendChart.xAxis.data=xAxis
+                this.trendChart.series.data=series
+            })
         }
     }
 }
