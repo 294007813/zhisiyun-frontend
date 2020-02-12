@@ -6,7 +6,7 @@ import {baseApi} from '~/proj-config'
 let axios= Axios.create({
     baseURL: baseApi,
     // withCredentials: true,
-    timeout: 10000,
+    timeout: 30000,
     // headers: {'Content-Type': 'application/json;charset=UTF-8'}
 });
 

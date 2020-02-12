@@ -13,10 +13,10 @@
                             <p>今天是TA的生日</p>
                         </div>
                         <div class="photo">
-                            <img class="head" :src="`${baseApi}/gridfs/get/${item.avatar}`"/>
+                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>
                             <img class="crown" src="~as/img/staff-home/crown.svg"/>
-                            <p>{{item.people_name}}</p>
-                            <span>{{`${item.ou_name}/${item.position_name}`}}</span>
+                            <p>{{item.people.people_name}}</p>
+                            <span>{{`${item.people.ou_name}/${item.people.position_name}`}}</span>
                         </div>
                     </div>
                 </swiper-slide>
@@ -151,6 +151,9 @@ export default {
                 }
                 span{
                     font-size: 12px;
+                    max-width: 100px;
+                    display: inline-block;
+                    white-space: normal;
                 }
             }
         }
