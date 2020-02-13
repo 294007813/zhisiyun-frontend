@@ -21,12 +21,15 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        const { data, code } = response.data;
-        if (code == 200) {
-            return data;
+        // console.log(response)
+
+        let { dataLevel } = response.config;
+        let { data, code } = response.data;
+        switch (dataLevel) {
+            case "all": {return response; break;}
+            case "api":  {return response.data; break;}
+            default: return data
         }
-        return response.data;
-        // return response;
     },
     error => {
         if (error && error.response) {
