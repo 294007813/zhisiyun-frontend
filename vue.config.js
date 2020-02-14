@@ -65,8 +65,8 @@ module.exports = {
                 // pathRewrite: {"^/api-proxy/": ''},
                 pathRewrite: function (path, req) {
                     let p= path.replace('/api-proxy/', '')
-                        // .replace('admin/', '')
-                    console.log("p", p)
+                    // .replace('admin/', '')
+                    // console.log("p", p)
                     return p
                 },
                 secure: false,

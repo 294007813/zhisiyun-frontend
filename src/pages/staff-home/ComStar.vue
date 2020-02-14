@@ -17,8 +17,8 @@
                         <li><label>部门：</label>{{it.people.ou_name}}</li>
                         <li><label>职位：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
-                        <li><label>入职：</label>{{$fun.moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
-                        <li><label>生日：</label>{{$fun.moment(it.people.birthday).format("MM月DD日")}}</li>
+                        <li><label>入职：</label>{{$f.moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
+                        <li><label>生日：</label>{{$f.moment(it.people.birthday).format("MM月DD日")}}</li>
                         <li><label>星座：</label>{{it.people.zodiac}}</li>
                     </ul>
                 </div>

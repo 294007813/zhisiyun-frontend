@@ -8,8 +8,4 @@ axios.post("/login", {
         // client: "001",
         // username: "0363",
         // password: "087373"
-    },{
-        baseUrl: "/lo-gin"
-    }).then(res => {
-    console.log("res", res);
-})
+    },{baseUrl: "/lo-gin"}).then(res => {})

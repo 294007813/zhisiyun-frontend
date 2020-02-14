@@ -44,7 +44,7 @@ export default {
                 this.da.n2= data.newContractAgreement.length
                 if(this.da.n1){
                     let date= data.newContract.effective_date
-                    this.$fun.moment().diff(date)
+                    this.$f.moment().diff(date)
                     this.da.h= ``
                 }
             })

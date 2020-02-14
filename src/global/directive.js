@@ -1,11 +1,13 @@
 import Vue from 'vue'
 
-//拖拽指令。 参数对象： {
-// cb|Function|: 拽结束后的回调，没有则不拖拽，
-// className|String|： 拖拽时自动添加的class，结束后自动移除，如果不传则默认使用：'moving'
-// only|String:'x','y'|：传入'x'则只能左右拖动，传入'y'则只能上下拖动，不传则自由拖动
-// exclude|String|：子元素css选择器，如果传如则点它不触发
-// }
+/**
+ * 拖拽指令。 参数对象： {
+ * cb|Function|: 拽结束后的回调，没有则不拖拽，
+ * className|String|： 拖拽时自动添加的class，结束后自动移除，如果不传则默认使用：'moving'
+ * only|String:'x','y'|：传入'x'则只能左右拖动，传入'y'则只能上下拖动，不传则自由拖动
+ * exclude|String|：子元素css选择器，如果传则点它不触发
+ * }
+**/
 Vue.directive('drag', {
     bind(el, binding, vnode) {
         // let top = el.pageX + 'px'

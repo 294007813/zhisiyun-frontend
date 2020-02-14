@@ -30,7 +30,7 @@
                     class="mon-swiper"ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples">
                     <ul class="mon">
-                        <p class="title">{{$fun.moment(bd.end_date).format("D")}}日<b>周{{$fun.moment(bd.end_date).format("d")}}</b></p>
+                        <p class="title">{{$f.moment(bd.end_date).format("D")}}日<b>周{{$f.moment(bd.end_date).format("d")}}</b></p>
                         <li  v-for="(item, j) in bd.items">
                             <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>
                             <span>{{item.people.people_name}}</span>

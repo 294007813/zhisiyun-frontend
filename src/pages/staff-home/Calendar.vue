@@ -73,10 +73,18 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="共享对象">
-
+                    <el-button type="primary" size="mini" @click="staffshow= true">选择</el-button>
+                    <li v-for="(item, i) in shareList" :key="i">
+                        <span>{{item.name}}</span> <i class="el-icon-error"></i>
+                    </li>
+                    <el-input v-show="shareList.length" v-model="form.name"
+                              placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="添加附件">
-
+                    <el-button type="primary" size="mini" @click="upfile">选择</el-button>
+                    <li v-for="(item, i) in fileList" :key="i">
+                        <span>{{item.filename}}</span> <i class="el-icon-delete-solid" @click="dfile(i)"></i>
+                    </li>
                 </el-form-item>
                 <el-form-item label="添加备注">
                     <el-input v-model="form.name" type="textarea"></el-input>
@@ -86,12 +94,11 @@
         <p slot="footer" class="footer">
             <el-button plain size="small">取消</el-button>
             <el-button type="danger" size="small">删除</el-button>
-            <el-button type="primary" size="small">保存</el-button>
+            <el-button type="primary" size="small" @click="save">保存</el-button>
         </p>
-
     </el-dialog>
 
-    <staff-select :visible="true"></staff-select>
+    <staff-select :visible="staffshow" @close="staffshow= false" @ok="getShare"></staff-select>
 </div>
 </template>
 
@@ -106,38 +113,40 @@ export default {
     data(){
         return{
             events: [
-                {
-                    start: '2020-2-12',
-                    end: '2020-2-12',
-                    title: '春节',
-                    class: 'leisure',
-                    allDay: true,
-
-                },
-                {
-                    start: '2020-2-12',
-                    end: '2018-2-12',
-                    title: 'Golf with John',
-                    content: '<i class="v-icon material-icons">golf_course</i>',
-                    class: 'sport',
-                    allDay: true
-                },
-                {
-                    start: '2020-2-12 T00:00:00.000Z',
-                    end: '2020-2-12 T00:00:00.000Z',
-                    title: 'Dad\'s birthday!',
-                    content: '<i class="v-icon material-icons">cake</i>',
-                    class: 'sport',
-                    resizable: true
-                }
+                // {
+                //     start: '2020-2-12',
+                //     end: '2020-2-12',
+                //     title: '春节',
+                //     class: 'leisure',
+                //     allDay: true,
+                //
+                // },
+                // {
+                //     start: '2020-2-12',
+                //     end: '2018-2-12',
+                //     title: 'Golf with John',
+                //     content: '<i class="v-icon material-icons">golf_course</i>',
+                //     class: 'sport',
+                //     allDay: true
+                // },
+                // {
+                //     start: '2020-2-12 T00:00:00.000Z',
+                //     end: '2020-2-12 T00:00:00.000Z',
+                //     title: 'Dad\'s birthday!',
+                //     content: '<i class="v-icon material-icons">cake</i>',
+                //     class: 'sport',
+                //     resizable: true
+                // }
             ],
-            dishow: true,
+            dishow: false,
             checkboxGroup2: [],
             form:{
                 remind: false,
                 remindR: ""
             },
-
+            shareList:[],
+            fileList:[],
+            staffshow: false
         }
     },
     mounted(){
@@ -165,8 +174,8 @@ export default {
                     this.events.push({
                         start: this.time(item.date, "YYYY-MM-DD"),
                         end: this.time(item.date, "YYYY-MM-DD"),
-                        // start: this.$fun.moment("2020-2-13").format("YYYY-MM-DD"),
-                        // end: this.$fun.moment("2020-2-13").format("YYYY-MM-DD") ,
+                        // start: this.$f.moment("2020-2-13").format("YYYY-MM-DD"),
+                        // end: this.$f.moment("2020-2-13").format("YYYY-MM-DD") ,
                         title: item.holiday_name,
                         class: 'holiday',
                         allDay: true
@@ -175,13 +184,32 @@ export default {
             })
         },
         time(val, format){
-            return this.$fun.moment(val).format(format || "YYYY-MM-DD HH:MM")
+            return this.$f.moment(val).format(format || "YYYY-MM-DD HH:MM")
         },
         tagClick(data, e){
             if(data.class=="event"){
-
+                this.dishow= true
             }
+        },
+        getShare(v1, v2){
+            this.shareList= v2.map(it=>{
+                return {name: it.name, id: it.id}
+            })
+        },
+        upfile(){
+            this.$f.upfile((res)=>{
+                this.fileList.push(res)
+            })
+        },
+        dfile(i){
+            this.fileList.splice(i,1)
+        },
+        save(){
+            let param= this.form
+            this.$axios.post("/api/feishu/calendar/list", param).then(data=>{
 
+            })
+            this.dishow= false
         }
     }
 }
@@ -200,19 +228,28 @@ export default {
             padding-right: 15px;
         }
     }
-
     .dialog{
         .form{
-            padding: 20px;
+            padding: 10px 20px;
+            max-height: 500px;
+            overflow: auto;
+        }
+    }
 
+    /deep/ .vue-cal{
+        .event{
+            cursor: pointer;
+        }
+        .el-scrollbar__wrap--hidden-default::-webkit-scrollbar {
+            width: 3px;
+            height: 6px;
+        }
+        .el-scrollbar__wrap--hidden-default::-webkit-scrollbar-track{
+            width: 3px!important;
         }
     }
 }
-/deep/ .el-scrollbar__wrap--hidden-default::-webkit-scrollbar {
-    width: 3px;
-    height: 6px;
-}
-.el-scrollbar__wrap--hidden-default::-webkit-scrollbar-track{
-    width: 3px!important;
-}
+
+
+
 </style>

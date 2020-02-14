@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import salarytrendChart from '../aqi-beijing'
 export default {
     name: "Salary",
     data(){
@@ -59,9 +58,7 @@ export default {
                     trigger: 'axis'
                 },
                 xAxis: {
-                    data:salarytrendChart.map(function (item) {
-                        return item[0];
-                    })
+                    data:[]
                 },
                 yAxis: {
                     splitLine: {
@@ -117,9 +114,7 @@ export default {
                 series: {
                     name: '实发工资',
                     type: 'line',
-                    data: salarytrendChart.map(function (item) {
-                        return item[1];
-                    }),
+                    data: [],
                     // markLine: {
                     //     silent: true,
                     //     data: [{
@@ -152,7 +147,7 @@ export default {
                 let arr= data.slice(-6)
                 this.mon= {}
                 arr.map(item=>{
-                    let {years, months}= this.$fun.moment(item.cpi.month).toObject()
+                    let {years, months}= this.$f.moment(item.cpi.month).toObject()
                     this.mon[years]? false: this.mon[years]= []
                     this.mon[years].push({mon: months+1, amount: item.ci_items.length && (item.ci_items[0].amount ||0)})
                 })
