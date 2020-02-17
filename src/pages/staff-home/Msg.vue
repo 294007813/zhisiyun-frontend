@@ -8,7 +8,7 @@
                     <template>
                         <p>{{item.create_tm}}小时前</p>
                         <div>
-                            <img class="head" src="~as/img/staff-home/head.png"/>
+                            <img class="head" src="~as/img/staff-home/head-M.png"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>
@@ -21,7 +21,7 @@
                     <template>
                         <p>{{item.create_tm}}小时前</p>
                         <div>
-                            <img class="head" src="~as/img/staff-home/head.png"/>
+                            <img class="head" src="~as/img/staff-home/head-M.png"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>

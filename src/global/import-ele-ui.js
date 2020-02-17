@@ -17,6 +17,7 @@ import {
     Switch,
     Card,
     Divider,
+    Image,
 } from 'element-ui';
 
 Vue.component(Dialog.name, Dialog);
@@ -40,4 +41,5 @@ Vue.component(OptionGroup.name, OptionGroup);
 Vue.component(Switch.name, Switch);
 Vue.component(Card.name, Card);
 Vue.component(Divider.name, Divider);
+Vue.component(Image.name, Image);
 Vue.prototype.$MessageBox = MessageBox;

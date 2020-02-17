@@ -1,6 +1,6 @@
 <template>
 <div class="staff-home">
-    <!--<li class="border small">
+    <li class="border small">
         <base-info></base-info>
     </li>
     <li class="border small">
@@ -38,7 +38,7 @@
     </li>
     <li class="border half">
         <skill-star></skill-star>
-    </li>-->
+    </li>
     <li class="border long">
         <v-calendar></v-calendar>
     </li>

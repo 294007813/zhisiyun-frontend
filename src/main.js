@@ -20,8 +20,10 @@ import '@/assets/styles/zsy-style.scss'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper)
-
 // import 'element-ui/lib/theme-chalk/index.css';
+
+import Avatar from './components/avatar'
+Vue.component('avatar', Avatar)
 
 Vue.config.productionTip = false;
 

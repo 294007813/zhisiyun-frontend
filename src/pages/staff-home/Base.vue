@@ -9,7 +9,8 @@
     <p><label>入职日期：</label>{{start_service_date}} <span>下属：{{info.my_team}}人</span></p>
     <a>查看档案<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
-        <img :src="avatar"/>
+<!--        <img :src="avatar"/>-->
+        <avatar :src="avatar" :sex="info.gender"></avatar>
         <p><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}枚</p>
     </div>
 </div>

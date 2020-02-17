@@ -86,7 +86,8 @@
 
   &.is-focus {
     & .el-checkbox-button__inner {
-      border-color: $--checkbox-button-checked-border-color;
+      border: $--border-base;
+      //border-color: $--checkbox-button-checked-border-color;
     }
   }
 
