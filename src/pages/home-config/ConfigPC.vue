@@ -46,7 +46,7 @@
             </el-checkbox-group>
             <p class="msg">未添加可选项</p>
             <ul class="hide-list">
-                <div class="item" v-for="(item, ind) in modsetl.hide">
+                <div class="item" v-for="(item, ind) in modsetl.hide" :key="ind">
                     <div class="check-tag">{{item.name}}</div>
                     <i class="fa fa-plus-circle"></i>
                 </div>

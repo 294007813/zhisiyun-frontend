@@ -19,7 +19,7 @@
         </div>
         <div class="head">未添加模块</div>
         <div class="disable-body">
-            <disable-block v-for="ind in 2" :key="ind" :aaa="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
+            <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
        </div>
     
     <el-dialog
@@ -37,7 +37,7 @@
             </el-checkbox-group>
             <p class="msg">未添加可选项</p>
             <ul class="hide-list">
-                <li v-for="(item, ind) in modsetl.hide">{{item.name}}
+                <li v-for="(item, ind) in modsetl.hide" :key="ind">{{item.name}}
                     <i class="fa fa-plus-circle"></i>
                 </li>
             </ul>

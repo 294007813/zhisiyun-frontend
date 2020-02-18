@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt">
             <ul class="ul">
-                <li v-for="(item, i) in gt.list">
+                <li v-for="(item, i) in gt.list" :key="i">
                     <template>
                         <p>{{item.create_tm}}小时前</p>
                         <div>
@@ -17,7 +17,7 @@
         </el-tab-pane>
         <el-tab-pane label="已读" name="at">
             <ul class="ul at">
-                <li v-for="(item, i) in at.list">
+                <li v-for="(item, i) in at.list" :key="i">
                     <template>
                         <p>{{item.create_tm}}小时前</p>
                         <div>

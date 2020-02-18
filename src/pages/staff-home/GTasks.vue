@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt">
             <ul class="ul">
-                <li v-for="(item, i) in gt.list">
+                <li v-for="(item, i) in gt.list" :key="i">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
                     <b>人事事件</b>
@@ -13,7 +13,7 @@
         </el-tab-pane>
         <el-tab-pane label="已办" name="at">
             <ul class="ul at">
-                <li v-for="(item, i) in at.list">
+                <li v-for="(item, i) in at.list" :key="i">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
                     <b>人事事件</b>

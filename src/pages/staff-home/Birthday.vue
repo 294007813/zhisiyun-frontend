@@ -5,7 +5,7 @@
         <el-tab-pane :label="`今日(${day.length||0}位)`" name="day">
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
-                <swiper-slide v-for="(item, i) in day.peoples[0].items">
+                <swiper-slide v-for="(item, i) in day.peoples[0].items" :key="i">
                     <div :class="{day: true, size}">
                         <div class="left">
                             <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
@@ -13,7 +13,8 @@
                             <p>今天是TA的生日</p>
                         </div>
                         <div class="photo">
-                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>
+                            <avatar class="head"  :src="`${baseApi}/gridfs/get/${item.people.avatar}`" :sex="item.people.gender"></avatar>
+<!--                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>-->
                             <img class="crown" src="~as/img/staff-home/crown.svg"/>
                             <p>{{item.people.people_name}}</p>
                             <span>{{`${item.people.ou_name}/${item.people.position_name}`}}</span>
@@ -28,11 +29,12 @@
             <p class="mon-title">2019年9月</p>
             <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
                     class="mon-swiper"ref="mon" @someSwiperEvent="callback">
-                <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples">
+                <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
                         <p class="title">{{$f.moment(bd.end_date).format("D")}}日<b>周{{$f.moment(bd.end_date).format("d")}}</b></p>
-                        <li  v-for="(item, j) in bd.items">
-                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>
+                        <li  v-for="(item, j) in bd.items" :key="i+'-'+j">
+<!--                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>-->
+                            <avatar class="head"  :src="`${baseApi}/gridfs/get/${item.people.avatar}`" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>
                         </li>
                     </ul>

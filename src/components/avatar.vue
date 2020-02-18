@@ -1,27 +1,42 @@
 <template>
-    <el-image class="avatar"
-        :src="src"
-        :fit="fit"
-        @error="error">
-        <img v-show="sex=='M'" slot="error" src="/img/staff-home/head-M.png"/>
-        <img v-show="sex=='F'" slot="error" src="/img/staff-home/head-F.png"/>
-    </el-image>
+    <img :src="url" ref="img"/>
 </template>
 
 <script>
 export default {
     name: "avatar",
     props:{
-        fit: {default: "cover"},
         src: {default: ""},
         sex: {default: "M"}
     },
     data(){
         return{
-            url:""
+            path: ""
         }
     },
+    computed:{
+        url(){
+            return this.path || this.sex=='F'? "/img/staff-home/head-F.png": "/img/staff-home/head-M.png"
+        }
+    },
+    watch:{
+        src(){
+            this.getImg()
+        }
+    },
+    mounted(){
+        this.getImg()
+    },
     methods:{
+        getImg(){
+            let img = new Image();
+            img.onload= ()=>{
+                this.path= this.src
+                // console.log("img.src", img.src)
+            }
+            img.src= this.src
+
+        },
         error(){
             this.$emit("error")
         }

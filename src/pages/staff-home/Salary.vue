@@ -7,7 +7,7 @@
                 <template v-for="(arr, key) in mon">
                     <p class="title">{{key}}年</p>
                     <ul>
-                        <li v-for="(item, i) in arr"><label>{{item.mon}}月</label><p>{{item.amount}}</p></li>
+                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}月</label><p>{{item.amount}}</p></li>
                     </ul>
                 </template>
             </div>

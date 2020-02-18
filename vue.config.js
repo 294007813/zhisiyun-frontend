@@ -59,8 +59,8 @@ module.exports = {
         // disableHostCheck: true,
         proxy: {
             "/api-proxy/": {
-                // target: 'https://ensure.zhisiyun.com/',
-                target: 'http://127.0.0.1:3000/',
+                target: 'https://ensure.zhisiyun.com/',
+                // target: 'http://127.0.0.1:3000/',
                 changeOrigin: true,
                 // pathRewrite: {"^/api-proxy/": ''},
                 pathRewrite: function (path, req) {

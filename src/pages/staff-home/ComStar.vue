@@ -4,12 +4,14 @@
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search" v-model="query"></el-input>
     <div class="db">
         <swiper :options="op" class="swiper" ref="day">
-            <swiper-slide v-for="(it, i) in list">
+            <swiper-slide v-for="(it, i) in list" :key="i">
                 <div :class="{ssb: true, size}">
                     <div class="left">
                         <i>NO.1</i>
 <!--                        <img src="~as/img/staff-home/head.png"/>-->
-                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>
+<!--                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>-->
+                        <avatar :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`" :sex="it.people.gender"></avatar>
+
                         <p>{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">

@@ -1,5 +1,4 @@
-config=
-    {
+export default {
       home:{
   "show": [
     [
@@ -124,7 +123,7 @@ config=
       },
       {
         "title": "绩效信息模块",
-        "code": "Perf",
+        "code": "perf",
         pages:{
           "now":{
             "name":"当前",

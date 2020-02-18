@@ -2,10 +2,30 @@
 <div class="often">
     <h5>常用应用</h5>
     <ul>
-        <li v-for="(item, key) in list" :key="key" v-show="item.uf_status_pc==1">
+        <li v-for="(item, key) in list" :key="key" v-show="!!item.uf_status">
             <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
         <li class="add" @click="add"></li>
     </ul>
+
+    <el-dialog
+            :visible.sync="dishow"
+            custom-class="dialog"
+            width="630px">
+        <p slot="title" class="title">添加应用</p>
+        <div class="content">
+            <ul style="padding-top: 10px">
+                <li v-for="(item, key) in list" :key="key" @click="change(item)">
+                    <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
+                    <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>
+                </li>
+            </ul>
+        </div>
+        <p slot="footer" class="footer">
+            <el-button plain size="small" @click="dishow= false">取消</el-button>
+            <el-button type="primary" size="small" @click="save">保存</el-button>
+        </p>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -15,30 +35,31 @@ export default {
     data(){
         return{
             list:[
-                {name: '出差申请', link: ''},
-                {name: '工作报告', link: ''},
-                {name: '绩效管理', link: ''},
-                {name: '加班申请', link: ''},
-                {name: '加班申请', link: ''},
-                {name: '考勤管理', link: ''},
-                {name: '考勤日志', link: ''},
-                {name: '考勤统计', link: ''},
-                {name: '流程管理', link: ''},
-                {name: '批量审批', link: ''},
-                {name: '培训管理', link: ''},
-                {name: '企业通讯录', link: ''},
-                {name: '签到报表', link: ''},
-                {name: '请假申请', link: ''},
-                {name: '人事管理', link: ''},
-                {name: '实时激励', link: ''},
-                {name: '协作任务', link: ''},
-                {name: '协作项目', link: ''},
-                {name: '行政管理', link: ''},
-                {name: '员工点赞', link: ''},
-                {name: '招聘管理', link: ''},
-                {name: '知识管理', link: ''},
-                {name: 'AI助手', link: ''},
-            ]
+                // {name: '出差申请', link: ''},
+                // {name: '工作报告', link: ''},
+                // {name: '绩效管理', link: ''},
+                // {name: '加班申请', link: ''},
+                // {name: '加班申请', link: ''},
+                // {name: '考勤管理', link: ''},
+                // {name: '考勤日志', link: ''},
+                // {name: '考勤统计', link: ''},
+                // {name: '流程管理', link: ''},
+                // {name: '批量审批', link: ''},
+                // {name: '培训管理', link: ''},
+                // {name: '企业通讯录', link: ''},
+                // {name: '签到报表', link: ''},
+                // {name: '请假申请', link: ''},
+                // {name: '人事管理', link: ''},
+                // {name: '实时激励', link: ''},
+                // {name: '协作任务', link: ''},
+                // {name: '协作项目', link: ''},
+                // {name: '行政管理', link: ''},
+                // {name: '员工点赞', link: ''},
+                // {name: '招聘管理', link: ''},
+                // {name: '知识管理', link: ''},
+                // {name: 'AI助手', link: ''},
+            ],
+            dishow: false
         }
     },
     mounted(){
@@ -46,12 +67,20 @@ export default {
     },
     methods:{
         getData(){
-            this.$axios.get("/api/feishu/index/myapp/list").then(data=>{
-                // this.list= data
+            this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
+                this.list= data
             })
         },
         add(){
-
+            this.dishow= true
+        },
+        change(item){
+            item.uf_status= 1- item.uf_status
+        },
+        save(){
+            this.$axios.post("/api/feishu/index/myapp/update", this.list).then(data=>{
+                this.list= data
+            })
         }
     }
 }
@@ -81,6 +110,8 @@ export default {
             margin: 0 20px 20px;
             text-align: center;
             vertical-align: top;
+            cursor: pointer;
+            position: relative;
             img{
                 width: 64px;
                 height: 64px;
@@ -96,7 +127,6 @@ export default {
                 position: relative;
                 border-radius: 100%;
                 box-shadow:0px 4px 12px 0px rgba(0,0,0,0.12);
-                cursor: pointer;
                 &:before, &:after{
                     content: "";
                     width: 2px;
@@ -111,6 +141,13 @@ export default {
                     width: 30px;
                     height: 2px;
                 }
+            }
+            i{
+                font-size: 24px;
+                position: absolute;
+                color: $color-green;
+                right: 0;
+                bottom: 20px;
             }
         }
     }
