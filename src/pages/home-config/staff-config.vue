@@ -17,8 +17,16 @@
 import ConfigPc from './ConfigPC.vue'
 export default {
     name: 'home-config-staff',
-    components: {
-        ConfigPc
+    components: {ConfigPc},
+    mounted() {
+        this.getData()
+    },
+    methods:{
+        getData(){
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
+
+            })
+        }
     }
 }
 </script>

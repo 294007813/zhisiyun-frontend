@@ -3,20 +3,20 @@
     <template v-for="(row, r) in list">
         <template v-for="(item, i) in row">
             <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
-<!--                <base-info v-if="item.code=='base'" :conf="item"></base-info>-->
-<!--                <checkin v-if="item.code=='checkin'" :conf="item"></checkin>-->
-<!--                <salary v-if="item.code=='salary'" :conf="item"></salary>-->
-<!--                <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>-->
+                <base-info v-if="item.code=='base'" :conf="item"></base-info>
+                <checkin v-if="item.code=='checkin'" :conf="item"></checkin>
+                <salary v-if="item.code=='salary'" :conf="item"></salary>
+                <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>
                 <birthday v-if="item.code=='birthday'" :conf="item"></birthday>
-<!--                <often v-if="item.code=='often'" :conf="item"></often>-->
-<!--                <msg v-if="item.code=='msg'" :conf="item"></msg>-->
-<!--                <perf v-if="item.code=='perf'" :conf="item"></perf>-->
-<!--                <idea v-if="item.code=='idea'" :conf="item"></idea>-->
-<!--                <train v-if="item.code=='train'" :conf="item"></train>-->
-<!--                <contract v-if="item.code=='contract'" :conf="item"></contract>-->
+                <often v-if="item.code=='often'" :conf="item"></often>
+                <msg v-if="item.code=='msg'" :conf="item"></msg>
+                <perf v-if="item.code=='perf'" :conf="item"></perf>
+                <idea v-if="item.code=='idea'" :conf="item"></idea>
+                <train v-if="item.code=='train'" :conf="item"></train>
+                <contract v-if="item.code=='contract'" :conf="item"></contract>
                 <com-star v-if="item.code=='comstar'" :conf="item"></com-star>
                 <skill-star v-if="item.code=='skillstar'" :conf="item"></skill-star>
-<!--                <v-calendar v-if="item.code=='calendar'" :conf="item"></v-calendar>-->
+                <v-calendar v-if="item.code=='calendar'" :conf="item"></v-calendar>
             </li>
         </template>
     </template>

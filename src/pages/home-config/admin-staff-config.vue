@@ -41,10 +41,23 @@ export default {
             subTabsVal: 'staff'
         }
     },
+    mounted() {
+        this.getPc()
+        this.getMobile()
+    },
     methods:{
-        handleTbs(){
+        handleTbs(){},
+        getPc(){
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
 
-        }
+            })
+        },
+        getMobile(){
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=Mobile").then(data=>{
+
+            })
+        },
+
     }
 }
 </script>
