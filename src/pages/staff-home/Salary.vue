@@ -149,7 +149,7 @@ export default {
                 let arr= data.slice(-6)
                 this.mon= {}
                 arr.map(item=>{
-                    let {years, months}= this.$f.moment(item.cpi.month).toObject()
+                    let {years, months}= moment(item.cpi.month).toObject()
                     this.mon[years]? false: this.mon[years]= []
                     this.mon[years].push({mon: months+1, amount: item.ci_items.length && (item.ci_items[0].amount ||0)})
                 })

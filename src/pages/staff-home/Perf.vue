@@ -2,13 +2,14 @@
 <div class="perf">
     <h5>我的绩效</h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
-        <el-tab-pane label="当前绩效" name="now">
+        <el-tab-pane label="当前绩效" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
-                <el-button size="small" type="primary" plain class="but">进入绩效首页</el-button>
+                <el-button size="small" type="primary" plain class="but"
+                    v-if="finow.enter">进入绩效首页</el-button>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="近期趋势" name="trend">
+        <el-tab-pane label="近期趋势" name="trend" v-if="fitrend">
             <div class="trend" v-if="ismounted && showTrend ">
                 <v-chart :options="trendChart" class="chart" ref="trend" autoresize/>
             </div>
@@ -20,6 +21,7 @@
 <script>
 export default {
     name: "Perf",
+    props: ["conf"],
     data(){
         return{
             activeTabs: 'now',
@@ -61,7 +63,18 @@ export default {
             }
         }
     },
+    computed:{
+        finow(){
+            let data= this.conf.pages.now
+            return data.able && data.show && data.fields
+        },
+        fitrend(){
+            let data= this.conf.pages.trend
+            return data.able && data.show && data.fields
+        },
+    },
     mounted() {
+        this.activeTabs= this.finow && 'now' || this.fitrend && 'trend'
         this.ismounted= true
         this.getTM()
         this.getRange()

@@ -21,7 +21,6 @@
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
     </div>
 
-
     <div class="head">未添加模块</div>
     <div class="disable-body">
         <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
@@ -82,6 +81,13 @@ export default {
                     </div>
                 </div>`,
             props: ['list', 'long', 'bemounted', 'openModsetup', 'toshow']
+        }
+    },
+    props:{
+        conf: {
+            default(){
+                return {show: [], hide: [],}
+            }
         }
     },
     data() {
@@ -255,7 +261,13 @@ export default {
             return {show: al.sl, hide: al.hl}
         },
     },
+    watch:{
+        conf(val){
+            this.list= val
+        }
+    },
     mounted() {
+        this.list= this.conf
         // setTimeout(()=>{
             this.bemounted = true
         // },100)
@@ -523,7 +535,9 @@ $row-height: $bhv+$phv+px;
                 cursor: default;
             }
         }
-
+        &.disable-body{
+            min-height: 200px;
+        }
     }
 
     @mixin checkbox(){

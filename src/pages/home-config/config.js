@@ -288,6 +288,11 @@ export default {
           "source":true,//是否对应老系统模块 true代表对应上
         }
       ],
+      [{
+        "title": "常用应用模块",
+        "long":true,
+        "code": "often"
+      }],
       [
         {
           "title": "我的日历模块",

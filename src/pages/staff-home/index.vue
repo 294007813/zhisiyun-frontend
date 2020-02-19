@@ -109,10 +109,10 @@ export default {
 
             })
 
-            this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
-                "flag":"PC",
-                datas: JSON.stringify(conf)
-            })
+            // this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
+            //     "flag":"PC",
+            //     datas: conf
+            // })
         }
     }
 }

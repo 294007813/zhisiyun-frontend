@@ -42,4 +42,4 @@ Vue.component(Switch.name, Switch);
 Vue.component(Card.name, Card);
 Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
-Vue.prototype.$MessageBox = MessageBox;
+Vue.prototype.$msg = MessageBox;

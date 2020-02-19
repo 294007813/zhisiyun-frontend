@@ -187,7 +187,7 @@ export default {
                         // forward_people: item.forward_people,
                         // forward_people_msg: item.forward_people_msg,
                     }
-                    let tid= this.$f.moment(item.createDate).toNow(true)
+                    let tid= moment(item.createDate).toNow(true)
                     tag.tid= tid.replace("seconds","秒")
                         .replace("minute","分钟")
                         .replace("hour","小时")
@@ -204,8 +204,8 @@ export default {
                     this.events.push({
                         start: this.time(item.date, "YYYY-MM-DD"),
                         end: this.time(item.date, "YYYY-MM-DD"),
-                        // start: this.$f.moment("2020-2-13").format("YYYY-MM-DD"),
-                        // end: this.$f.moment("2020-2-13").format("YYYY-MM-DD") ,
+                        // start: moment("2020-2-13").format("YYYY-MM-DD"),
+                        // end: moment("2020-2-13").format("YYYY-MM-DD") ,
                         title: item.holiday_name,
                         class: 'holiday orange',
                         allDay: true,
@@ -215,7 +215,7 @@ export default {
             })
         },
         time(val, format){
-            return this.$f.moment(val).format(format || "YYYY-MM-DD HH:MM")
+            return moment(val).format(format || "YYYY-MM-DD HH:MM")
         },
         switchCal(e, type){
             this.$refs.vcal.switchView(type)

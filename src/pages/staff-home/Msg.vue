@@ -2,7 +2,7 @@
 <div class="msg">
     <h5>消息动态 <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
-        <el-tab-pane label="未读" name="gt">
+        <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul">
                 <li v-for="(item, i) in gt.list" :key="i">
                     <template>
@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </el-tab-pane>
-        <el-tab-pane label="已读" name="at">
+        <el-tab-pane label="已读" name="at" v-if="fiat">
             <ul class="ul at">
                 <li v-for="(item, i) in at.list" :key="i">
                     <template>
@@ -35,6 +35,7 @@
 <script>
 export default {
     name: "Msg",
+    props: ["conf"],
     data(){
         return{
             activeTabs: 'gt',
@@ -42,7 +43,18 @@ export default {
             at: {},
         }
     },
+    computed:{
+        figt(){
+            let data= this.conf.pages.gt
+            return data.able && data.show && data.fields
+        },
+        fiat(){
+            let data= this.conf.pages.at
+            return data.able && data.show && data.fields
+        },
+    },
     mounted(){
+        this.activeTabs= this.figt && 'gt' || this.fiat && 'at'
         this.getData()
         this.getData(1)
     },

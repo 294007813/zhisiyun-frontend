@@ -43,7 +43,7 @@ export default {
     },
     computed:{
         start_service_date(){
-            return this.info.start_service_date && this.$f.moment(this.info.start_service_date).format('YYYY-MM-DD');
+            return this.info.start_service_date && moment(this.info.start_service_date).format('YYYY-MM-DD');
         },
         avatar(){
             return this.done && `${baseApi}/gridfs/get/${this.info.avatar}`

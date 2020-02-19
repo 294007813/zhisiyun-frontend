@@ -1,7 +1,8 @@
 <template>
 <div class="com-star">
     <h5>公司之星</h5>
-    <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search" v-model="query"></el-input>
+    <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
+              v-model="query" v-if="field.query"></el-input>
     <div class="db">
         <swiper :options="op" class="swiper" ref="day">
             <swiper-slide v-for="(it, i) in list" :key="i">
@@ -19,8 +20,8 @@
                         <li><label>部门：</label>{{it.people.ou_name}}</li>
                         <li><label>职位：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
-                        <li><label>入职：</label>{{$f.moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
-                        <li><label>生日：</label>{{$f.moment(it.people.birthday).format("MM月DD日")}}</li>
+                        <li><label>入职：</label>{{moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
+                        <li><label>生日：</label>{{moment(it.people.birthday).format("MM月DD日")}}</li>
                         <li><label>星座：</label>{{it.people.zodiac}}</li>
                     </ul>
                 </div>
@@ -33,12 +34,14 @@
 </template>
 
 <script>
+let moment= moment
 export default {
     name: "ComStar",
     props: {
         size:{
             default: 'half'
-        }
+        },
+        conf:{}
     },
     data(){
         return{
@@ -47,6 +50,11 @@ export default {
 
             },
             list: []
+        }
+    },
+    computed:{
+        field(){
+            return this.conf.pages.default.fields
         }
     },
     mounted(){
@@ -58,6 +66,7 @@ export default {
                 this.list= data
             })
         },
+        moment
     }
 }
 </script>

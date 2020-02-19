@@ -4,6 +4,7 @@ import App from './global/App.vue'
 import router from './global/router'
 import axios from './global/axios'
 import moment from "moment";
+import _ from "underscore"
 import util from './global/util'
 import conf from '~/proj-config'
 import { Loading } from 'element-ui';
@@ -33,6 +34,8 @@ Vue.prototype.$f= {
   loading:Loading.service,
   ...util
 }
+window.moment= moment
+window._= _
 Vue.prototype.$conf= conf
 
 new Vue({

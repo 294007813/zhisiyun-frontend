@@ -2,7 +2,7 @@
 <div class="gtasks">
     <h5>待办事宜 <el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
-        <el-tab-pane label="待办" name="gt">
+        <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul">
                 <li v-for="(item, i) in gt.list" :key="i">
                     <p><em>{{item.title}}</em></p>
@@ -12,7 +12,7 @@
             </ul>
         </el-tab-pane>
         <el-tab-pane label="已办" name="at">
-            <ul class="ul at">
+            <ul class="ul at" v-if="fiat">
                 <li v-for="(item, i) in at.list" :key="i">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
@@ -27,6 +27,7 @@
 <script>
 export default {
     name: "GTasks",
+    props: ["conf"],
     data(){
         return{
             activeTabs: 'gt',
@@ -34,7 +35,18 @@ export default {
             at: {},
         }
     },
+    computed:{
+        figt(){
+            let data= this.conf.pages.gt
+            return data.able && data.show && data.fields
+        },
+        fiat(){
+            let data= this.conf.pages.at
+            return data.able && data.show && data.fields
+        },
+    },
     mounted(){
+        this.activeTabs= this.figt && 'gt' || this.fiat && 'at'
         this.getGt()
         this.getAt()
     },
