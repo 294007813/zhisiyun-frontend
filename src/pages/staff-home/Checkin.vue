@@ -1,41 +1,41 @@
 <template>
     <div class="checkin">
-        <ul class="sta">
+        <ul class="sta" v-if="fich">
             <h5>本月考勤统计<i class="iconfont iconyoujiantou"></i></h5>
-            <li>
+            <li v-if="fich.checkin">
                 <p>{{kq.cq}}<b>天</b></p>
                 <span>出勤天数</span>
             </li>
-            <li>
+            <li v-if="fich.leave">
                 <p>{{kq.qj}}<b>天</b></p>
                 <span>请假</span>
             </li>
-            <li>
+            <li v-if="fich.late">
                 <p>{{kq.cd}}<b>次</b></p>
                 <span>迟到早退</span>
             </li>
-            <li>
+            <li v-if="fich.miss">
                 <p>{{kq.qk}}<b>次</b></p>
                 <span>缺卡</span>
             </li>
         </ul>
-        <ul class="balance">
+        <ul class="balance" v-if="fiba">
             <h5>假期余额<i class="iconfont iconyoujiantou"></i></h5>
-            <li>
+            <li v-if="fiba.year">
                 <p>{{bl.year}}<b>时</b></p>
                 <span>年假余额</span>
             </li>
-            <li>
+            <li v-if="fiba.rest">
                 <p>{{bl.exchange}}<b>时</b></p>
                 <span>调休假余额</span>
             </li>
         </ul>
-        <ul class="flow">
+        <ul class="flow" v-if="fifl">
             <h5>考勤流程<i class="iconfont iconyoujiantou"></i></h5>
-            <li><el-button size="small" type="primary" plain>请假</el-button></li>
-            <li><el-button size="small" type="primary" plain>加班</el-button></li>
-            <li><el-button size="small" type="primary" plain>出差</el-button></li>
-            <li><el-button size="small" type="primary" plain>公干</el-button></li>
+            <li v-if="fifl.leave"><el-button size="small" type="primary" plain>请假</el-button></li>
+            <li v-if="fifl.overtime"><el-button size="small" type="primary" plain>加班</el-button></li>
+            <li v-if="fifl.trip"><el-button size="small" type="primary" plain>出差</el-button></li>
+            <li v-if="fifl.official"><el-button size="small" type="primary" plain>公干</el-button></li>
         </ul>
     </div>
 </template>
@@ -43,6 +43,7 @@
 <script>
 export default {
     name: "Checkin",
+    props: ["conf"],
     data(){
         return {
             kq: {
@@ -56,6 +57,20 @@ export default {
                 qk: 0,
             },
             bl: {},
+        }
+    },
+    computed:{
+        fich(){
+            let data= this.conf.pages.checkin
+            return data.able && data.show && data.fields
+        },
+        fiba(){
+            let data= this.conf.pages.balance
+            return data.able && data.show && data.fields
+        },
+        fifl(){
+            let data= this.conf.pages.flow
+            return data.able && data.show && data.fields
         }
     },
     mounted(){

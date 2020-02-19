@@ -93,7 +93,7 @@ export default {
                 span{
                     vertical-align: middle;
                     display: inline-block;
-                    margin: 10px 0;
+                    /*margin: 10px 0;*/
                 }
             }
 

@@ -2,7 +2,7 @@
 <div class="salary">
     <h5>薪资信息<i class="iconfont iconyanjing"></i></h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
-        <el-tab-pane label="月度" name="mon">
+        <el-tab-pane label="月度" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
                 <template v-for="(arr, key) in mon">
                     <p class="title">{{key}}年</p>
@@ -12,13 +12,13 @@
                 </template>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="趋势" name="trend">
+        <el-tab-pane label="趋势" name="trend" v-if="fitrend">
             <div class="trend" v-if="ismounted && showTrend ">
                 <p class="title">2019年10月 <span>实发工资：</span><b>9,000.00</b></p>
                 <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="统计" name="sta">
+        <el-tab-pane label="统计" name="sta" v-if="fista">
             <el-date-picker
                     prefix-icon="iconfont iconshaixuan"
                     class="dp"
@@ -44,6 +44,7 @@
 <script>
 export default {
     name: "Salary",
+    props: ["conf"],
     data(){
         return {
             ismounted: false,
@@ -115,27 +116,28 @@ export default {
                     name: '实发工资',
                     type: 'line',
                     data: [],
-                    // markLine: {
-                    //     silent: true,
-                    //     data: [{
-                    //         yAxis: 50
-                    //     }, {
-                    //         yAxis: 100
-                    //     }, {
-                    //         yAxis: 150
-                    //     }, {
-                    //         yAxis: 200
-                    //     }, {
-                    //         yAxis: 300
-                    //     }]
-                    // }
                 }
             },
             mon: null,
             sta: null
         }
     },
+    computed:{
+        fimon(){
+            let data= this.conf.pages.mon
+            return data.able && data.show && data.fields
+        },
+        fitrend(){
+            let data= this.conf.pages.trend
+            return data.able && data.show && data.fields
+        },
+        fista(){
+            let data= this.conf.pages.sta
+            return data.able && data.show && data.fields
+        }
+    },
     mounted() {
+        this.activeTabs= this.fimon && 'mon' || this.fitrend && 'trend' || this.fista && 'sta'
         this.ismounted= true
         this.getMon()
         this.getTrend()

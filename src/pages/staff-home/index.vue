@@ -4,18 +4,18 @@
         <template v-for="(item, i) in row">
             <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
                 <base-info v-if="item.code=='base'" :conf="item"></base-info>
-                <checkin v-if="item.code=='checkin'" :conf="item"></checkin>
-                <salary v-if="item.code=='salary'" :conf="item"></salary>
+                <checkin v-if="item.code=='TM'" :conf="item"></checkin>
+                <salary v-if="item.code=='PY'" :conf="item"></salary>
                 <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>
                 <birthday v-if="item.code=='birthday'" :conf="item"></birthday>
                 <often v-if="item.code=='often'" :conf="item"></often>
                 <msg v-if="item.code=='msg'" :conf="item"></msg>
-                <perf v-if="item.code=='perf'" :conf="item"></perf>
-                <idea v-if="item.code=='idea'" :conf="item"></idea>
-                <train v-if="item.code=='train'" :conf="item"></train>
-                <contract v-if="item.code=='contract'" :conf="item"></contract>
+                <perf v-if="item.code=='PM'" :conf="item"></perf>
+                <idea v-if="item.code=='ADM'" :conf="item"></idea>
+                <train v-if="item.code=='TR'" :conf="item"></train>
+                <contract v-if="item.code=='PA'" :conf="item"></contract>
                 <com-star v-if="item.code=='comstar'" :conf="item"></com-star>
-                <skill-star v-if="item.code=='skillstar'" :conf="item"></skill-star>
+                <skill-star v-if="item.code=='TA'" :conf="item"></skill-star>
                 <v-calendar v-if="item.code=='calendar'" :conf="item"></v-calendar>
             </li>
         </template>
@@ -107,6 +107,11 @@ export default {
         getData(){
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
 
+            })
+
+            this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
+                "flag":"PC",
+                datas: JSON.stringify(conf)
             })
         }
     }

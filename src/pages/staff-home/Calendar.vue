@@ -16,9 +16,9 @@
                 <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY年MM月DD日') }}</span>
             </div>
             <div class="switch">
-                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">天</p>
-                <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">周</p>
                 <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">月</p>
+                <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">周</p>
+                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">天</p>
             </div>
 
         </template>

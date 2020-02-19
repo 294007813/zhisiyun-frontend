@@ -1,17 +1,21 @@
 <template>
 <div class="base" v-if="done">
     <img class="bg" src="~as/img/staff-home/info-bg.svg"/>
-    <h1 class="name"><p>{{info.people_name}}</p><span>{{info.people_no}}</span><a>{{es[info.employee_status||'H']}}</a></h1>
-    <div class="title">{{`${info.ou_name}/${info.position_name}`}}<b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b></div>
+    <h1 class="name"><p>{{info.people_name}}</p><span>{{info.people_no}}</span>
+        <a v-if="field.status">{{es[info.employee_status||'H']}}</a>
+    </h1>
+    <div class="title" v-if="field.level">{{`${info.ou_name}/${info.position_name}`}}
+        <b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b>
+    </div>
     <p><label>星座：</label>{{info.zodiac.zodiac}}</p>
     <p><label>属相：</label>{{info.zodiac.shengxiao}}</p>
     <p><label>生日：</label>{{info.zodiac.shengri}}</p>
-    <p><label>入职日期：</label>{{start_service_date}} <span>下属：{{info.my_team}}人</span></p>
-    <a>查看档案<i class="iconfont iconyoujiantou"></i></a>
+    <p><label>入职日期：</label>{{start_service_date}} <span v-if="field.sub">下属：{{info.my_team}}人</span></p>
+    <a v-if="field.look">查看档案<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
 <!--        <img :src="avatar"/>-->
         <avatar :src="avatar" :sex="info.gender"></avatar>
-        <p><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}枚</p>
+        <p v-if="field.medal"><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}枚</p>
     </div>
 </div>
 </template>
@@ -27,6 +31,7 @@ let es={
 }
 export default {
     name: "Base",
+    props: ["conf"],
     data(){
         return{
             info: {
@@ -42,6 +47,9 @@ export default {
         },
         avatar(){
             return this.done && `${baseApi}/gridfs/get/${this.info.avatar}`
+        },
+        field(){
+            return this.conf.pages.default.fields
         }
     },
     mounted(){
