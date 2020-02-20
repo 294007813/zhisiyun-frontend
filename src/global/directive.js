@@ -55,8 +55,8 @@ Vue.directive('drag', {
                             break
                         }
                         if(dom=== l[i]){
-                            console.log("dom", dom)
-                            console.log("e(l[i])", l[i])
+                            // console.log("dom", dom)
+                            // console.log("e(l[i])", l[i])
                             same= true
                             break
                         }

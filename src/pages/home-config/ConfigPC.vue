@@ -13,7 +13,7 @@
 <!--                        <a class="conf" @click="openModsetup">配置</a>-->
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
                                    @click="tohide(rowind, colind, citem)">隐藏</el-button>
-                        <el-button type="primary" size="mini" round @click="openModsetup">配置</el-button>
+                        <el-button type="primary" size="mini" round @click="openModsetup(citem)">配置</el-button>
                     </div>
                 </div>
             </div>
@@ -31,26 +31,34 @@
         custom-class="modsetup"
         width="600px">
        <p slot="title" class="title">模块项目配置<span>已添加的可选项员工可自行配置</span></p>
-        <div class="body">
-            <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
-            <el-checkbox-group v-model="modsetl.showval" class="show-list">
-                <div class="item long">
-                    <i class="fa fa-times-circle"></i>
-                    <el-checkbox-button :label="111" class="check-tag">页签名称配置</el-checkbox-button>
-                </div>
-                <div class="item"  v-for="(item, ind) in modsetl.show" :key="ind">
-                    <i class="fa fa-times-circle"></i>
-                    <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>
-                </div>
-            </el-checkbox-group>
-            <p class="msg">未添加可选项</p>
-            <ul class="hide-list">
-                <div class="item" v-for="(item, ind) in modsetl.hide" :key="ind">
-                    <div class="check-tag">{{item.name}}</div>
-                    <i class="fa fa-plus-circle"></i>
-                </div>
-            </ul>
-        </div>
+<!--        <div class="body">-->
+<!--            <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>-->
+<!--            <el-checkbox-group v-model="modsetl.showval" class="show-list">-->
+<!--                <div class="item long">-->
+<!--                    <i class="fa fa-times-circle"></i>-->
+<!--                    <el-checkbox-button :label="111" v-model="modsetl.val" class="check-tag">页签名称配置</el-checkbox-button>-->
+<!--&lt;!&ndash;                    <el-checkbox v-model="modsetl.val" class="check-tag">页签名称配置</el-checkbox>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div class="item"  v-for="(item, ind) in modsetl.show" :key="ind">-->
+<!--                    <i class="fa fa-times-circle"></i>-->
+<!--                    <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>-->
+<!--                </div>-->
+<!--            </el-checkbox-group>-->
+<!--            <div class="show-list">-->
+<!--                <div class="item long">-->
+<!--                    <i class="fa fa-times-circle"></i>-->
+<!--                    <el-checkbox class="check-tag">页签名称配置</el-checkbox>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <p class="msg">未添加可选项</p>-->
+<!--            <ul class="hide-list">-->
+<!--                <div class="item" v-for="(item, ind) in modsetl.hide" :key="ind">-->
+<!--                    <div class="check-tag">{{item.name}}</div>-->
+<!--                    <i class="fa fa-plus-circle"></i>-->
+<!--                </div>-->
+<!--            </ul>-->
+<!--        </div>-->
+        <mod-setup ref="modsetup"></mod-setup>
         <p slot="footer" class="footer">
             <el-button plain size="small">取消</el-button>
             <el-button type="primary" size="small">确定</el-button>
@@ -63,6 +71,7 @@
 
 
 <script>
+import T from "./tagi18n"
 export default {
     name: "StaffConfigPc",
     components: {
@@ -70,7 +79,7 @@ export default {
             template: `
                 <div v-if="bemounted">
                     <div v-for="(citem, colind) in list" :key="citem.code" :class="['disable-block',{long: citem.long}]"
-                         v-if="long? citem.long: !citem.long">
+                         v-if="access(citem) && (long? citem.long: !citem.long)">
                         <div class="content">
                             <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                             <div class="button">
@@ -80,7 +89,69 @@ export default {
                         </div>
                     </div>
                 </div>`,
-            props: ['list', 'long', 'bemounted', 'openModsetup', 'toshow']
+            props: ['list', 'long', 'bemounted', 'openModsetup', 'toshow'],
+            methods:{
+                access(it){
+                    let haskey= it.hasOwnProperty("access")
+                    return !haskey || (haskey && it.access)
+                }
+            }
+        },
+        ModSetup:{
+            template: `
+                <div class="body">
+                    <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
+                    <div class="show-list" v-for="(tag, tn) in pa" :key="tn" v-if="tag.able">
+                        <div class="item long">
+                            <i class="fa fa-times-circle"></i>
+                            <el-checkbox v-model="tag.show" class="check-tag">{{tagName(tn)}}</el-checkbox>
+                        </div>
+                        <template v-if="tag.fields">
+                        <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
+                            <i class="fa fa-times-circle"></i>
+                            <el-checkbox v-model="tag.fields[key]" class="check-tag">{{tagName(tn,key)}}</el-checkbox>
+                        </div>
+                        </template>
+                    </div>
+                    <p class="msg">未添加可选项</p>
+                    <ul class="hide-list"  v-for="(tag, tn) in pa" :key="tn" v-if="!tag.able || Object.keys(tag.disableFields).length">
+                        <div class="item long">
+                            <i class="fa fa-times-circle"></i>
+                            <el-checkbox v-model="tag.show" class="check-tag">{{tagName(tn)}}</el-checkbox>
+                        </div>
+                        <template v-if="tag.fields">
+                        <div class="item"  v-for="(val, key) in tag[tag.able?'fields':'disableFields']" :key="key">
+                            <i class="fa fa-times-circle"></i>
+                            <el-checkbox v-model="tag[tag.able?'fields':'disableFields'][key]" class="check-tag">{{tagName(tn,key)}}</el-checkbox>
+                        </div>
+                        </template>
+                    </ul>
+                </div>`,
+            props: [],
+            data(){
+                return{
+                    mod: {}
+                }
+            },
+            computed:{
+                t(){
+                    let mod= this.mod.code, t= T[mod]
+                    return t
+                },
+                pa(){
+                    return this.mod.pages || {}
+                }
+            },
+            methods:{
+                tagName(tn, key){
+                    this.t[tn].fields[key]
+                    return  this.t[tn].name
+                },
+                set(val){
+                    this.mod= val
+                }
+            }
+
         }
     },
     props:{
@@ -88,6 +159,9 @@ export default {
             default(){
                 return {show: [], hide: [],}
             }
+        },
+        admin: {
+            default: false
         }
     },
     data() {
@@ -201,6 +275,7 @@ export default {
                     {code: "8", name: '项目名称8' },
                     {code: "9", name: '项目名称9' },
                 ],
+
             }
         }
     },
@@ -263,6 +338,7 @@ export default {
     },
     watch:{
         conf(val){
+            // console.log(val)
             this.list= val
         }
     },
@@ -274,8 +350,11 @@ export default {
         console.log("mounted")
     },
     methods: {
-        openModsetup(){
+        openModsetup(item){
             this.modsetupShow= true
+            console.log(JSON.stringify(item))
+            this.$refs.modsetup.set(item)
+
         },
         tohide(rowind, colind, citem) {
             let s= this.list.show, h= this.list.hide[0];
@@ -492,7 +571,7 @@ $row-height: $bhv+$phv+px;
     .drag-body, .disable-body {
         margin-top: 20px;
         min-width: 800px;
-        min-height: 500px;
+        min-height: 400px;
         width: 100%;
         position: relative;
         margin-bottom: 20px;
@@ -565,7 +644,7 @@ $row-height: $bhv+$phv+px;
             display: block;
         }
     }
-    .modsetup{
+    /deep/ .modsetup{
         .title{
             color: $color-black;
             font-size: 14px;
@@ -596,16 +675,41 @@ $row-height: $bhv+$phv+px;
                 margin-bottom: 10px;
                 .item{
                    @include checkbox;
-                    .check-tag{
+                     .check-tag{
                         cursor: default;
                         width: 100%;
                         padding: 0;
+                         margin-bottom: 10px;
                         /deep/ .el-checkbox-button__inner{
                             width: 100%;
                             border-color: $color-line-light;
                             border-radius: 0;
                         }
                         /deep/ &.is-checked:first-child .el-checkbox-button__inner, &.is-checked .el-checkbox-button__inner{
+                            color: white;
+                            background-color: $color-primary;
+                            border-color: $color-primary;
+                        }
+                        .el-checkbox__input{
+                            position: absolute;
+                            opacity: 0;
+
+                        }
+                        .el-checkbox__label{
+                            width: 100%;
+                            border-radius: 0;
+                            line-height: 32px;
+                            border: 1px solid $color-line-light;
+                            padding: 0;
+                            text-align: center;
+                            color: $color-black;
+                            transition: all .2s;
+                            cursor: pointer;
+                            &:hover{
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.34902);
+                            }
+                        }
+                        &.is-checked .el-checkbox__label{
                             color: white;
                             background-color: $color-primary;
                             border-color: $color-primary;
@@ -626,6 +730,9 @@ $row-height: $bhv+$phv+px;
                     }
                     i{
                         display: block;
+                    }
+                    &.long{
+                        width: 100%;
                     }
                 }
             }

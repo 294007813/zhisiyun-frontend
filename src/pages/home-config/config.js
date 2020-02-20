@@ -3,7 +3,7 @@ export default {
     "show": [
       [
         {
-          "title": "基本信息模块",
+          "title": "基本信息模块(固定模块)",
           "subtitle": "(固定模块)",
           "fixed": true,
           "code": "base",
@@ -14,7 +14,6 @@ export default {
               "fixed": true,
               "fields":{
                 status: true,
-                rank: true,
                 level: true,
                 look: true,
                 sub: true,
@@ -302,6 +301,6 @@ export default {
         }
       ],
     ],
-    "hide": []
+    "hide": [[]]
   }
 }
