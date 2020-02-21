@@ -7,71 +7,35 @@
                  :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
             :ref="'drag-'+citem.code">
                 <div class="content" v-drag="{ cb: citem.fixed? false: movedone, exclude: 'button', item:citem, rowind, colind}">
-                    <p class="title">{{citem.title}}<span v-if="citem.subtitle">{{citem.subtitle}}</span></p>
+                    <p class="title">{{citem.title}}
+<!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
+                    </p>
                     <div class="button">
 <!--                        <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
 <!--                        <a class="conf" @click="openModsetup">配置</a>-->
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
                                    @click="tohide(rowind, colind, citem)">隐藏</el-button>
-                        <el-button type="primary" size="mini" round @click="openModsetup(citem)">配置</el-button>
+                        <el-button type="primary" size="mini" round
+                                   v-if="citem.pages &&Object.keys(citem.pages).length" @click="openModsetup(citem)">配置</el-button>
                     </div>
                 </div>
             </div>
         </template>
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
     </div>
-
     <div class="head">未添加模块</div>
     <div class="disable-body">
         <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
     </div>
-    
-    <el-dialog
-        :visible.sync="modsetupShow"
-        custom-class="modsetup"
-        width="600px">
-       <p slot="title" class="title">模块项目配置<span>已添加的可选项员工可自行配置</span></p>
-<!--        <div class="body">-->
-<!--            <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>-->
-<!--            <el-checkbox-group v-model="modsetl.showval" class="show-list">-->
-<!--                <div class="item long">-->
-<!--                    <i class="fa fa-times-circle"></i>-->
-<!--                    <el-checkbox-button :label="111" v-model="modsetl.val" class="check-tag">页签名称配置</el-checkbox-button>-->
-<!--&lt;!&ndash;                    <el-checkbox v-model="modsetl.val" class="check-tag">页签名称配置</el-checkbox>&ndash;&gt;-->
-<!--                </div>-->
-<!--                <div class="item"  v-for="(item, ind) in modsetl.show" :key="ind">-->
-<!--                    <i class="fa fa-times-circle"></i>-->
-<!--                    <el-checkbox-button :label="item.code" class="check-tag">{{item.name}}</el-checkbox-button>-->
-<!--                </div>-->
-<!--            </el-checkbox-group>-->
-<!--            <div class="show-list">-->
-<!--                <div class="item long">-->
-<!--                    <i class="fa fa-times-circle"></i>-->
-<!--                    <el-checkbox class="check-tag">页签名称配置</el-checkbox>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <p class="msg">未添加可选项</p>-->
-<!--            <ul class="hide-list">-->
-<!--                <div class="item" v-for="(item, ind) in modsetl.hide" :key="ind">-->
-<!--                    <div class="check-tag">{{item.name}}</div>-->
-<!--                    <i class="fa fa-plus-circle"></i>-->
-<!--                </div>-->
-<!--            </ul>-->
-<!--        </div>-->
-        <mod-setup ref="modsetup"></mod-setup>
-        <p slot="footer" class="footer">
-            <el-button plain size="small">取消</el-button>
-            <el-button type="primary" size="small">确定</el-button>
-        </p>
-    </el-dialog>
-
+    <mod-setup ref="modsetup" :visible="modsetupShow" @close="modsetupShow= false" :admin="admin"></mod-setup>
 </div>
 </template>
 
 
 
 <script>
-import T from "./tagi18n"
+
+import ModSetup from "./ModSetup";
 export default {
     name: "StaffConfigPc",
     components: {
@@ -97,62 +61,7 @@ export default {
                 }
             }
         },
-        ModSetup:{
-            template: `
-                <div class="body">
-                    <p class="msg">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
-                    <div class="show-list" v-for="(tag, tn) in pa" :key="tn" v-if="tag.able">
-                        <div class="item long">
-                            <i class="fa fa-times-circle"></i>
-                            <el-checkbox v-model="tag.show" class="check-tag">{{tagName(tn)}}</el-checkbox>
-                        </div>
-                        <template v-if="tag.fields">
-                        <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
-                            <i class="fa fa-times-circle"></i>
-                            <el-checkbox v-model="tag.fields[key]" class="check-tag">{{tagName(tn,key)}}</el-checkbox>
-                        </div>
-                        </template>
-                    </div>
-                    <p class="msg">未添加可选项</p>
-                    <ul class="hide-list"  v-for="(tag, tn) in pa" :key="tn" v-if="!tag.able || Object.keys(tag.disableFields).length">
-                        <div class="item long">
-                            <i class="fa fa-times-circle"></i>
-                            <el-checkbox v-model="tag.show" class="check-tag">{{tagName(tn)}}</el-checkbox>
-                        </div>
-                        <template v-if="tag.fields">
-                        <div class="item"  v-for="(val, key) in tag[tag.able?'fields':'disableFields']" :key="key">
-                            <i class="fa fa-times-circle"></i>
-                            <el-checkbox v-model="tag[tag.able?'fields':'disableFields'][key]" class="check-tag">{{tagName(tn,key)}}</el-checkbox>
-                        </div>
-                        </template>
-                    </ul>
-                </div>`,
-            props: [],
-            data(){
-                return{
-                    mod: {}
-                }
-            },
-            computed:{
-                t(){
-                    let mod= this.mod.code, t= T[mod]
-                    return t
-                },
-                pa(){
-                    return this.mod.pages || {}
-                }
-            },
-            methods:{
-                tagName(tn, key){
-                    this.t[tn].fields[key]
-                    return  this.t[tn].name
-                },
-                set(val){
-                    this.mod= val
-                }
-            }
-
-        }
+        ModSetup
     },
     props:{
         conf: {
@@ -168,120 +77,15 @@ export default {
         return {
             bemounted: false,
             list: {
-                "show": [
-                    [{
-                        "title": "基本信息模块",
-                        "subtitle": "(固定模块)",
-                        "fixed": true,
-                        "code": "base"
-                    }, {
-                        "title": "考勤信息模块",
-                        "code": "checkin"
-                    }, {
-                        "title": "薪资信息模块",
-                        "code": "salary"}],
-                    [{
-                        "title": "待办事宜模块",
-                        "code": "gtasks"
-                    }, {
-                        "title": "绩效信息模块",
-                        "code": "Perf"
-                    }, {
-                        "title": "消息动态模块",
-                        "code": "msg"
-                    }],
-                    [{
-                        "title": "生日祝福模块",
-                        "code": "birthday"
-                    }, {
-                        "title": "公司之星模块",
-                        "code": "comstar"}],
-                    [{
-                        "title": "技能之星模块",
-                        "code": "skillstar"
-                    }, {
-                        "title": "培训流程模块",
-                        "code": "train"
-                    }],
-                    [{
-                        "title": "合同协议模块",
-                        "code": "contract"
-                    }, {
-                        "title": "意见箱模块",
-                        "code": "idea"
-                    }],
-                    [{
-                        "title": "我的日历模块",
-                        "long":true,
-                        "code": "calendar"
-                    }],
-                    [{
-                        "title": "常用应用模块1",
-                        "long":true,
-                        "code": "common"
-                    }],
-                    [{
-                        "title": "常用应用模块2",
-                        "long":true,
-                        "code": "commons"
-                    }],
-                    [{
-                        "title": "常用应用模块3",
-                        "long":true,
-                        "code": "commonss"
-                    }]
-                ],
-                "hide": [
-                    [{
-                        "title": "常用应用模块4",
-                        "code": "common4",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块1",
-                        "code": "common1"
-                    },{
-                        "title": "常用应用模块2",
-                        "code": "common2"
-                    },{
-                        "title": "常用应用模块22",
-                        "code": "common22",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块5",
-                        "code": "common5",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块3",
-                        "code": "common3"
-                    },{
-                        "title": "常用应用模块288",
-                        "code": "common288"
-                    },
-                ]]
+                show: [],
+                hide: [],
             },
             modsetupShow: false,
-            modsetl: {
-                show: [
-                    {code: "1", name: '项目名称1' },
-                    {code: "2", name: '项目名称2' },
-                    {code: "3", name: '项目名称3' },
-                    {code: "4", name: '项目名称4' },
-                    {code: "5", name: '项目名称5' },
-                    {code: "6", name: '项目名称6' },
-                ],
-                showval: [],
-                hide: [
-                    {code: "7", name: '项目名称7' },
-                    {code: "8", name: '项目名称8' },
-                    {code: "9", name: '项目名称9' },
-                ],
-
-            }
         }
     },
     computed: {
         showlinenum() {
-            return this.list.show.length
+            return this.list.show? this.list.show.length :0
         },
         // hidelinenum() {
         //     return this.list.hide.length
@@ -347,12 +151,12 @@ export default {
         // setTimeout(()=>{
             this.bemounted = true
         // },100)
-        console.log("mounted")
+        // console.log("mounted")
     },
     methods: {
         openModsetup(item){
             this.modsetupShow= true
-            console.log(JSON.stringify(item))
+            // console.log(JSON.stringify(item))
             this.$refs.modsetup.set(item)
 
         },
@@ -618,7 +422,7 @@ $row-height: $bhv+$phv+px;
             min-height: 200px;
         }
     }
-
+/*
     @mixin checkbox(){
         position: relative;
         display: inline-block;
@@ -739,5 +543,6 @@ $row-height: $bhv+$phv+px;
         }
 
     }
+*/
 }
 </style>

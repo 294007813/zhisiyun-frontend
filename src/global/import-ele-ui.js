@@ -1,6 +1,6 @@
 import Vue from "vue";
 import {
-    Dialog, MessageBox,
+    Dialog, MessageBox, Message,
     Checkbox, CheckboxGroup, CheckboxButton,
     Button,
     Tabs, TabPane,
@@ -22,6 +22,7 @@ import {
 
 Vue.component(Dialog.name, Dialog);
 Vue.component(MessageBox.name, MessageBox);
+Vue.component(Message.name, Message);
 Vue.component(Checkbox.name, Checkbox);
 Vue.component(CheckboxGroup.name, CheckboxGroup);
 Vue.component(CheckboxButton.name, CheckboxButton);
@@ -42,4 +43,5 @@ Vue.component(Switch.name, Switch);
 Vue.component(Card.name, Card);
 Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
-Vue.prototype.$msg = MessageBox;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$msg = Message;

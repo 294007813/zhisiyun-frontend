@@ -3,7 +3,6 @@
     <div class="head">
         <h2>员工首页PC端布局及设置</h2>
         <div class="button">
-<!--            <span class="confirm-btn btn">保存</span>-->
             <el-button type="primary" size="small" @click="save">保存</el-button>
         </div>
     </div>
@@ -31,12 +30,12 @@ export default {
         getData(){
             // console.log("moment", moment)
             this.conf= conf.home
-            // this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-            //     let list= data.conf.pc_conf[0].home
-            //     let rule= data.modules.contract_modules
-            //     this.mapMod(list, rule)
-            //     this.conf= list
-            // })
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
+                let list= data.conf.pc_conf.home
+                let rule= data.modules.contract_modules
+                this.mapMod(list, rule)
+                this.conf= list
+            })
             // this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
             //     "flag":"PC",
             //     datas: conf
@@ -70,13 +69,15 @@ export default {
         },
 
         save(){
-            this.$msg.confirm( "",{
+            this.$msgbox.confirm( "",{
                 title: "确定保存？",
-                callback(action){
+                callback:(action)=>{
                     if(action=="confirm"){
                         this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
                             "flag":"PC",
                             datas: this.$refs.conf.list
+                        },{dataKey: "msg"}).then(data=>{
+                            this.$msg({message: 'data'});
                         })
                     }
                 }

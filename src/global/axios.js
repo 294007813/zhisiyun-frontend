@@ -23,11 +23,14 @@ axios.interceptors.response.use(
     response => {
         // console.log(response)
 
-        let { dataLevel } = response.config;
+        let { dataLevel, dataKey } = response.config;
         let { data, code } = response.data;
         switch (dataLevel) {
             case "all": {return response; break;}
-            case "api":  {return response.data; break;}
+            case "api":  {
+                return response[dataKey|| "data"];
+                break;
+            }
             default: return data
         }
     },

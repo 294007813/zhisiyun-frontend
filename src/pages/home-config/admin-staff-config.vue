@@ -10,7 +10,7 @@
     <el-tabs v-model="tabsVal" @tab-click="handleTbs" class="tbs zsy" >
         <el-tab-pane label="PC端" name="pc" :lazy="true">
             <div class="main">
-                <config-pc></config-pc>
+                <config-pc :conf="conf" ref="conf" :admin="true"></config-pc>
             </div>
         </el-tab-pane>
         <el-tab-pane label="移动端" name="mobile">
@@ -38,7 +38,8 @@ export default {
     data(){
         return{
             tabsVal: 'mobile',
-            subTabsVal: 'staff'
+            subTabsVal: 'staff',
+            conf:{}
         }
     },
     mounted() {
