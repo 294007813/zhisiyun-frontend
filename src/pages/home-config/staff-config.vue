@@ -42,9 +42,12 @@ export default {
             // })
         },
         mapMod(list, rule){
-            let no1= access(list.show, rule)
-            let no2= access(list.hide, rule)
-            list.hide[0]= list.hide[0].concat(no1, no2)
+            let l1= list.show
+            let l2= list.hide
+            let l3= list.disable
+            let a1= access(l1, rule)
+            let a2= access(l2, rule)
+            list.hide[0]= list.hide[0].concat(a1, a2)
             function  access(list, rule){
                 let noaccess= [], ind=[];
                 list.forEach((it)=>{
@@ -77,7 +80,7 @@ export default {
                             "flag":"PC",
                             datas: this.$refs.conf.list
                         },{dataKey: "msg"}).then(data=>{
-                            this.$msg({message: 'data'});
+                            this.$msg({message: data});
                         })
                     }
                 }

@@ -301,6 +301,7 @@ export default {
         }
       ],
     ],
-    "hide": [[]]
+    "hide": [[]],
+    "disable": [[]],
   }
 }

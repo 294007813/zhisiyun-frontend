@@ -11,8 +11,6 @@
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
                     </p>
                     <div class="button">
-<!--                        <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
-<!--                        <a class="conf" @click="openModsetup">配置</a>-->
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
                                    @click="tohide(rowind, colind, citem)">隐藏</el-button>
                         <el-button type="primary" size="mini" round
@@ -31,10 +29,7 @@
 </div>
 </template>
 
-
-
 <script>
-
 import ModSetup from "./ModSetup";
 export default {
     name: "StaffConfigPc",
@@ -66,7 +61,7 @@ export default {
     props:{
         conf: {
             default(){
-                return {show: [], hide: [],}
+                return {show: [], hide: [], disable:[]}
             }
         },
         admin: {
@@ -79,6 +74,7 @@ export default {
             list: {
                 show: [],
                 hide: [],
+                disable: [],
             },
             modsetupShow: false,
         }
@@ -87,19 +83,9 @@ export default {
         showlinenum() {
             return this.list.show? this.list.show.length :0
         },
-        // hidelinenum() {
-        //     return this.list.hide.length
-        // },
         lineHeight() {
             return 80
         },
-        // bodyInfo() {
-        //     return this.bemounted && {
-        //         width: this.$refs.dragbody.offsetWidth,
-        //         top: this.$refs.dragbody.scrollTop,
-        //         left: this.$refs.dragbody.scrollLeft
-        //     }
-        // },
         bodyInfo() {
             let pos= this.bemounted && this.$refs.dragbody&& this.$refs.dragbody.getBoundingClientRect()
             return this.bemounted && {
@@ -109,10 +95,13 @@ export default {
                 left: pos.left
             }
         },
+        hideKey(){
+            return this.admin? 'disable': 'hide'
+        },
         blockList() {
             let al= {
                 sl: this.list.show,
-                hl: this.list.hide
+                hl: this.list[this.hideKey]
             }
             let blockstyle = {
                 small: 1 / 3,
@@ -161,7 +150,7 @@ export default {
 
         },
         tohide(rowind, colind, citem) {
-            let s= this.list.show, h= this.list.hide[0];
+            let s= this.list.show, h= this.list[this.hideKey][0];
             let item= s[rowind].splice(colind, 1)
             if(!s[rowind].length){
                 s.splice(rowind, 1)
@@ -169,7 +158,7 @@ export default {
             h.push(...item)
         },
         toshow(ind, hitem) {
-            let s= this.list.show, h= this.list.hide[0];
+            let s= this.list.show, h= this.list[this.hideKey][0];
             let item= h.splice(ind, 1)
             s.push(item)
         },
