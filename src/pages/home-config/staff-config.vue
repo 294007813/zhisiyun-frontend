@@ -14,7 +14,7 @@
 
 <script>
 import ConfigPc from './ConfigPC.vue'
-import conf from "pa/home-config/config";
+import conf from "pa/home-config/config/config-pc";
 export default {
     name: 'home-config-staff',
     components: {ConfigPc},

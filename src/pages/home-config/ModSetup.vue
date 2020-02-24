@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import T from "./tagi18n";
+import T from "./config/config-pc-i18n";
 export default {
     name: "ModSetup",
     props:{

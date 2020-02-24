@@ -257,7 +257,7 @@ export default {
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             let samerow= rowind == torow, samecol=colind== tocol, sameall= rowind == torow&& colind== tocol;
-            if(sameall){
+            if(sameall || l[torow][tocol].fixed){
                 return
             }
             if(item.long){

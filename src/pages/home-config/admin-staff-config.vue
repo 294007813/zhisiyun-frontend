@@ -10,23 +10,26 @@
     <el-tabs v-model="tabsVal" @tab-click="handleTbs" class="tbs zsy" >
         <el-tab-pane label="PC端" name="pc" :lazy="true">
             <div class="main">
-                <config-pc :conf="conf" ref="pchome" :admin="true"></config-pc>
+                <config-pc :conf="confpc" ref="pchome" :admin="true"></config-pc>
             </div>
         </el-tab-pane>
         <el-tab-pane label="移动端" name="mobile">
             <div class="main">
             <el-tabs  class="sub-tabs" v-model="subTabsVal" >
                 <el-tab-pane label="员工首页" name="home" :lazy="true">
-                    <config-mobile :conf="confm"></config-mobile>
+                    <config-mobile :conf="confm.home"></config-mobile>
                 </el-tab-pane>
-                <el-tab-pane label="考勤首页" name="checkin" :lazy="true">
-                    <config-mobile></config-mobile>
+                <el-tab-pane label="考勤首页" name="wtpage" :lazy="true">
+                    <config-mobile :conf="confm.wtpage"></config-mobile>
                 </el-tab-pane>
-                <el-tab-pane label="角色管理" name="salary" :lazy="true">
-                    <config-mobile></config-mobile>
+                <el-tab-pane label="工作首页" name="workpage" :lazy="true">
+                    <config-mobile :conf="confm.workpage"></config-mobile>
+                </el-tab-pane>
+                <el-tab-pane label="薪酬首页" name="xcpage" :lazy="true">
+                    <config-mobile :conf="confm.xcpage"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="我的页面" name="minepage" :lazy="true">
-                    <config-mobile></config-mobile>
+                    <config-mobile :conf="confm.minepage"></config-mobile>
                 </el-tab-pane>
             </el-tabs>
             </div>
@@ -38,17 +41,18 @@
 <script>
 import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
-import conf from "pa/home-config/config";
-import minepage from "./minepage"
+import confpc from "pa/home-config/config/config-pc";
+import confmobile from "./config/config-mobile"
 export default {
     name:  "home-config-admin-staff",
     components: {ConfigPc, ConfigMobile},
     data(){
         return{
             tabsVal: 'pc',
-            subTabsVal: 'staff',
-            conf: conf.home,
-            confm: minepage.minepage
+            subTabsVal: 'home',
+            confpc: confpc.home,
+            confm: confmobile
+
         }
     },
     mounted() {
@@ -63,8 +67,10 @@ export default {
                 // this.conf= data.conf.pc_conf.home
             })
         },
-        getMobile(){
-            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=Mobile").then(data=>{
+        getMobile(type= "home"){
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client",{params:{
+                    flag: "Mobile", type
+                }}).then(data=>{
 
             })
         },

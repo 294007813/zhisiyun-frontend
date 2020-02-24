@@ -89,7 +89,7 @@ import ComStar from "./ComStar";
 import SkillStar from "./SkillStar";
 import VCalendar from "./Calendar";
 
-import conf from "pa/home-config/config";
+import conf from "pa/home-config/config/config-pc";
 export default {
     name: "staff-home",
     components: { BaseInfo, Checkin, Salary, GTasks, Birthday, Often, Msg, Perf, Idea, Train, Contract, ComStar, SkillStar, VCalendar},
