@@ -49,7 +49,6 @@
 
 <script>
 import {baseApi} from '~/proj-config'
-let moment= moment
 export default {
     name: "Birthday",
     props: {
@@ -97,7 +96,7 @@ export default {
                 month? this.mon=data: this.day= data
             })
         },
-        moment
+        moment: window.moment
     }
 }
 </script>

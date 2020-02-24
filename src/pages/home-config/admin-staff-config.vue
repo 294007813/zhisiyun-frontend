@@ -10,14 +10,14 @@
     <el-tabs v-model="tabsVal" @tab-click="handleTbs" class="tbs zsy" >
         <el-tab-pane label="PC端" name="pc" :lazy="true">
             <div class="main">
-                <config-pc :conf="conf" ref="conf" :admin="true"></config-pc>
+                <config-pc :conf="conf" ref="pchome" :admin="true"></config-pc>
             </div>
         </el-tab-pane>
         <el-tab-pane label="移动端" name="mobile">
             <div class="main">
             <el-tabs  class="sub-tabs" v-model="subTabsVal" >
-                <el-tab-pane label="员工首页" name="staff" :lazy="true">
-                    <config-mobile></config-mobile>
+                <el-tab-pane label="员工首页" name="home" :lazy="true">
+                    <config-mobile :conf="confm"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="考勤首页" name="checkin" :lazy="true">
                     <config-mobile></config-mobile>
@@ -25,7 +25,7 @@
                 <el-tab-pane label="角色管理" name="salary" :lazy="true">
                     <config-mobile></config-mobile>
                 </el-tab-pane>
-                <el-tab-pane label="我的页面" name="my" :lazy="true">
+                <el-tab-pane label="我的页面" name="minepage" :lazy="true">
                     <config-mobile></config-mobile>
                 </el-tab-pane>
             </el-tabs>
@@ -39,6 +39,7 @@
 import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
 import conf from "pa/home-config/config";
+import minepage from "./minepage"
 export default {
     name:  "home-config-admin-staff",
     components: {ConfigPc, ConfigMobile},
@@ -46,7 +47,8 @@ export default {
         return{
             tabsVal: 'pc',
             subTabsVal: 'staff',
-            conf:{}
+            conf: conf.home,
+            confm: minepage.minepage
         }
     },
     mounted() {
@@ -56,13 +58,13 @@ export default {
     methods:{
         handleTbs(){},
         getPc(){
-            this.conf= conf.home
-            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-
+            // this.conf= conf.home
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
+                // this.conf= data.conf.pc_conf.home
             })
         },
         getMobile(){
-            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=Mobile").then(data=>{
+            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=Mobile").then(data=>{
 
             })
         },
@@ -73,9 +75,10 @@ export default {
                     if(action=="confirm"){
                         this.$axios.post("/api/feishu_index_page/homePageConfControl/save",{
                             "flag":"PC",
-                            datas: this.$refs.conf.list
+                            datas: this.$refs.pchome.list
                         },{dataKey: "msg"}).then(data=>{
-                            this.$msg({message: data});
+                            console.log(data)
+                            this.$msg({message: data, type: "success"});
                         })
                     }
                 }
@@ -88,9 +91,9 @@ export default {
                     if(action=="confirm"){
                         this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
                             "flag":"PC",
-                            datas: this.$refs.conf.list
+                            datas: this.$refs.pchome.list
                         },{dataKey: "msg"}).then(data=>{
-                            this.$msg({message: data});
+                            this.$msg({message: data, type: "success"});
                         })
                     }
                 }

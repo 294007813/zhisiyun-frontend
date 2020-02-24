@@ -20,7 +20,7 @@ export default {
     components: {ConfigPc},
     data(){
         return{
-            conf:{}
+            conf: conf.home,
         }
     },
     mounted() {
@@ -29,17 +29,83 @@ export default {
     methods:{
         getData(){
             // console.log("moment", moment)
-            this.conf= conf.home
-            this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-                let list= data.conf.pc_conf.home
-                let rule= data.modules.contract_modules
-                this.mapMod(list, rule)
-                this.conf= list
-            })
+            // this.conf= conf.home
             // this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
             //     "flag":"PC",
             //     datas: conf
             // })
+
+            async.parallel({
+                user: (callback)=> {
+                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
+                        let list= data.conf.pc_conf.home
+                        let rule= data.modules.contract_modules
+                        this.mapMod(list, rule)
+                        // this.conf= list
+                        callback(null, list);
+                    })
+                },
+                admin: (callback)=> {
+                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
+                        callback(null, data.conf.pc_conf.home);
+                    })
+                }
+            }, (err, res)=> {
+                console.log(res)
+                let {user, admin} = res, distr="", my={}
+                _.mapObject(admin.disable,(it, key)=>{
+                    distr+= "-"+it.code
+                })
+
+                my={
+                    show: user.show,
+                    hide: [user.hide[0].concat( user.disable[0])],
+                    disable: [[]],
+                }
+                dis(my, 'show')
+                dis(my, 'hide')
+
+                function dis(d, name) {
+                    let ms= d[name]
+                    for(let i=ms.length-1; i>=0; i--){
+                        for(let j=ms[i].length-1; j>=0; j--){
+                            if(distr.includes(ms[i][j].code)){
+                                d.disable[0].push(ms[i][j])
+                                ms[i].splice(j, 1)
+                            }
+                        }
+                        if(!ms[i].length){
+                            ms.splice(i, 1)
+                        }
+                    }
+                    if(!ms.length) ms.push([])
+                }
+
+                let ais= _.flatten(admin.show)
+                ais.forEach((ai)=>{
+                    _.mapObject(my,(mb)=>{
+                        mb.forEach((row)=>{
+                            row.forEach((it)=>{
+                                if(it.code== ai.code){
+                                    _.mapObject(ai.pages, (ap, apk)=>{
+                                        it.pages[apk].able= ap.able
+                                        it.fields= {...it.fields, ...it.disableFields}
+                                        it.disableFields= {}
+                                        _.mapObject(ap.disableFields, (apf, apfk)=>{
+                                            it.disableFields[apfk]= it.fields[apfk]
+                                            delete it.fields[apfk]
+                                        })
+                                    })
+                                }
+                            })
+                        })
+                    })
+                })
+
+                console.log(JSON.stringify(my))
+
+                this.conf= my
+            });
         },
         mapMod(list, rule){
             let l1= list.show

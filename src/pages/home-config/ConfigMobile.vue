@@ -5,12 +5,15 @@
             <h3>已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></h3>
         </div>
         <ul class="drag-body" ref="dragbody">
-            <li v-for="(item, ind) in blockList.show" :key="item.code" :class=" {fixed: item.fixed}"
+            <li v-for="(item, ind) in left" :key="item.code" :class=" {fixed: item.fix}"
                 :ref="'drag-'+item.code" :style="{top: item.top +'px'}">
-                <div class="content" v-drag="{ cb: item.fixed? false: movedone, item, rowind: ind, only: 'y', exclude: 'button'}">
-                    <p class="name">{{item.title}} <b>{{item.subtitle}}</b></p>
+                <div class="content" v-drag="{ cb: item.fix? false: movedone, item, rowind: ind, only: 'y', exclude: 'button'}">
+                    <p class="name">{{item.name}}
+<!--                        <b>{{item.subtitle}}</b>-->
+                    </p>
                     <p class="button">
-                        <el-button type="primary" size="mini" round plain v-if="!item.fixed">隐藏</el-button>
+                        <el-button type="primary" size="mini" round plain
+                                   @click="remove(ind)" v-if="!item.fix">隐藏</el-button>
                         <el-button type="primary" size="mini" round >配置</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
@@ -22,11 +25,12 @@
     <div class="right">
         <div class="title"><h3>未添加模块</h3></div>
         <ul class="hide-body">
-            <li v-for="(item, ind) in blockList.hide" :key="item.code" >
+            <li v-for="(item, ind) in list.hide" :key="item.code" >
                 <div class="content">
-                    <p class="name">{{item.title}}</p>
+                    <p class="name">{{item.name}}</p>
                     <p class="button">
-                        <el-button type="primary" size="mini" round plain @click="toshow(ind)">显示</el-button>
+                        <el-button type="primary" size="mini" round plain
+                                   @click="remove(ind, true)">显示</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -39,107 +43,21 @@
 <script>
 export default {
     name: "ConfigMobile",
+    props:{
+        conf: {
+            default:()=>[]
+        },
+    },
     data(){
         return{
             bemounted: false,
             list: {
-                "show": [
-                    {
-                        "title": "基本信息模块",
-                        "subtitle": "(固定模块)",
-                        "fixed": true,
-                        "code": "base"
-                    }, {
-                        "title": "考勤信息模块",
-                        "code": "checkin"
-                    }, {
-                        "title": "薪资信息模块",
-                        "code": "salary"},
-                    {
-                        "title": "待办事宜模块",
-                        "code": "gtasks"
-                    }, {
-                        "title": "绩效信息模块",
-                        "code": "Perf"
-                    }, {
-                        "title": "消息动态模块",
-                        "code": "msg"
-                    },
-                    {
-                        "title": "生日祝福模块",
-                        "code": "birthday"
-                    }, {
-                        "title": "公司之星模块",
-                        "code": "comstar"},
-                    {
-                        "title": "技能之星模块",
-                        "code": "skillstar"
-                    }, {
-                        "title": "培训流程模块",
-                        "code": "train"
-                    },
-                    {
-                        "title": "合同协议模块",
-                        "code": "contract"
-                    }, {
-                        "title": "意见箱模块",
-                        "code": "idea"
-                    },
-                    {
-                        "title": "我的日历模块",
-                        "long":true,
-                        "code": "calendar"
-                    },
-                    {
-                        "title": "常用应用模块1",
-                        "long":true,
-                        "code": "common"
-                    },
-                    {
-                        "title": "常用应用模块2",
-                        "long":true,
-                        "code": "commons"
-                    },
-                    {
-                        "title": "常用应用模块3",
-                        "long":true,
-                        "code": "commonss"
-                    }
-                ],
-                "hide": [
-                    {
-                        "title": "常用应用模块4",
-                        "code": "common4",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块1",
-                        "code": "common1"
-                    },{
-                        "title": "常用应用模块2",
-                        "code": "common2"
-                    },{
-                        "title": "常用应用模块22",
-                        "code": "common22",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块5",
-                        "code": "common5",
-                        "long":true,
-                    },{
-                        "title": "常用应用模块3",
-                        "code": "common3"
-                    },{
-                        "title": "常用应用模块288",
-                        "code": "common288"
-                    },
-                    ]
+                show:[],
+                hide:[],
             },
         }
     },
     computed: {
-        showlinenum() {
-            return this.list.show.length
-        },
         // hidelinenum() {
         //     return this.list.hide.length
         // },
@@ -155,11 +73,48 @@ export default {
                 left: pos.left
             }
         },
-        blockList() {
-            let al= {
-                sl: this.list.show,
-                hl: this.list.hide
+        left() {
+            // let setL= (l, hide)=> {
+            //     let tl= al[l]
+            //     for(let si in tl){
+            //         let i = parseInt(si)
+            //         tl[i].top= i * this.lineHeight;
+            //     }
+            // }
+
+            let tl= this.list.show
+            for(let si in tl){
+                let i = parseInt(si)
+                tl[i].top= i * this.lineHeight;
             }
+            // setL("sl");
+            return tl
+        },
+        showlinenum() {
+            return this.list.show.length
+        },
+    },
+    watch:{
+        conf(val){
+            this.init()
+        }
+    },
+    mounted() {
+        this.init()
+        // this.list= this.conf
+        this.bemounted = true
+    },
+    methods: {
+        init(){
+            let al= {sl: [], hl: []}
+            this.conf.forEach((it)=>{
+                if(it.disable){
+                    al.sl.push(it)
+                }else{
+                    al.hl.push(it)
+                }
+            })
+
 
             let setL= (l, hide)=> {
                 let tl= al[l]
@@ -169,27 +124,20 @@ export default {
                 }
             }
             setL("sl");
-            // setL("hl", true);
 
-            return {show: al.sl, hide: al.hl}
+            // setL("hl", true);
+            this.list= {show: al.sl, hide: al.hl}
         },
-    },
-    mounted() {
-        this.bemounted = true
-    },
-    methods: {
+        remove(ind, show){
+            let l= (!!show)? "hide" : "show"
+            let r= (!show)? "hide" : "show"
+            console.log(l)
+            let item= this.list[l].splice(ind, 1)[0]
+            item.disable= !!show
+            this.list[r].push(item)
+        },
         openModsetup(){
             this.modsetupShow= true
-        },
-        tohide(rowind) {
-            let s= this.list.show, h= this.list.hide;
-            let item= s.splice(rowind, 1)
-            h.push(...item)
-        },
-        toshow(ind) {
-            let s= this.list.show, h= this.list.hide;
-            let item= h.splice(ind, 1)[0]
-            s.push(item)
         },
         getMovePos(y){
             let top = y - this.bodyInfo.top;

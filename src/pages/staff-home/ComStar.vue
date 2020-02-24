@@ -34,7 +34,6 @@
 </template>
 
 <script>
-let moment= moment
 export default {
     name: "ComStar",
     props: {
@@ -66,7 +65,7 @@ export default {
                 this.list= data
             })
         },
-        moment
+        moment: window.moment
     }
 }
 </script>

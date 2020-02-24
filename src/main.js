@@ -4,6 +4,7 @@ import App from './global/App.vue'
 import router from './global/router'
 import axios from './global/axios'
 import moment from "moment";
+import async from "async";
 import _ from "underscore"
 import util from './global/util'
 import conf from '~/proj-config'
@@ -30,10 +31,10 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$axios= axios
 Vue.prototype.$f= {
-  moment,
   loading:Loading.service,
   ...util
 }
+window.async= async
 window.moment= moment
 window._= _
 Vue.prototype.$conf= conf

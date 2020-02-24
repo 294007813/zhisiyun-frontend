@@ -54,6 +54,9 @@ export default {
         },
         admin: {
             default: false
+        },
+        able:{
+            default: "able"
         }
     },
     data(){
