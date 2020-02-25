@@ -2,7 +2,7 @@ module.exports = {
   wtpage: [
     {
       code: "baseinfo",
-      name: "基本信息",
+      name: "baseinfo",
       isuse: true,
       disable: true,
       source: false,
@@ -11,6 +11,7 @@ module.exports = {
         default: {
           show: true,
           disable: true,
+          name: "baseinfo",
           fields: [
             {
               aiRobot: true
@@ -22,7 +23,7 @@ module.exports = {
     },
     {
       code: "TM",
-      name: "日历统计",
+      name: "cdStatistics",
       isuse: true,
       disable: true,
       source: true,
@@ -31,16 +32,20 @@ module.exports = {
         cdStatistics: {
           show: true,
           disable: true,
-          name: "统计",
+          name: "cdStatistics",
           fields: [
             {
               calendar: false
             },
             // 出勤天数
             {
-              attendance_days: false
+              attendance_days: true
             },
             // 缺卡
+            {
+              miss_card: false
+            },
+            // 缺勤
             {
               absence: false
             },
@@ -56,22 +61,6 @@ module.exports = {
             {
               outwork_time: false
             },
-            // 公干
-            {
-              in_business: false
-            },
-            // 出差
-            {
-              on_business_trip: false
-            },
-            // 请假
-            {
-              on_leave: false
-            },
-            // 加班
-            {
-              overtime: false
-            },
             // 旷工
             {
               sign_out_change: false
@@ -83,7 +72,7 @@ module.exports = {
     },
     {
       code: "TM",
-      name: "考勤发起",
+      name: "attendance_initiation",
       isuse: true,
       disable: true,
       source: true,
@@ -92,11 +81,11 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "考勤发起",
+          name: "attendance_initiation",
           fields: [
             {
               // 请假
-              leaves: true
+              leaves: false
             },
             {
               // 加班
@@ -126,14 +115,14 @@ module.exports = {
     {
       // 签到打卡
       code: "clock_in_card",
-      name: "签到打卡",
+      name: "clock_in",
       isuse: true,
       disable: true,
       fix: false,
       pages: {
         default: {
           // 只有一个页签
-          name: "签到打卡",
+          name: "clock_in",
           show: true,
           disable: true,
           fields: [
@@ -151,7 +140,7 @@ module.exports = {
     },
     {
       code: "TM",
-      name: "假期余额",
+      name: "holiday_balance",
       isuse: true,
       disable: true,
       source: true,
@@ -160,10 +149,10 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "假期余额",
+          name: "holiday_balance",
           fields: [
             {
-              annual_holidays: true
+              annual_holidays: false
             },
             {
               leave_off_time: true

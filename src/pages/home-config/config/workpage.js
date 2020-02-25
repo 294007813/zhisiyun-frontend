@@ -2,7 +2,7 @@ module.exports = {
   workpage: [
     {
       code: "undo",
-      name: "待办",
+      name: "to_do_task",
       isuse: true,
       disable: true,
       source: false,
@@ -11,14 +11,14 @@ module.exports = {
         willdo: {
           show: true,
           disable: true,
-          name: "待办",
+          name: "to_do_task",
           fields: [],
           disableFields: {}
         },
         done: {
           show: true,
           disable: true,
-          name: "已办",
+          name: "done_task",
           fields: [],
           disableFields: {}
         }
@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       code: "news",
-      name: "消息动态",
+      name: "message_dynamics",
       isuse: true,
       disable: true,
       source: false,
@@ -35,14 +35,14 @@ module.exports = {
         unread: {
           show: true,
           disable: true,
-          name: "未读",
+          name: "unread",
           fields: [],
           disableFields: {}
         },
         done: {
           show: true,
           disable: true,
-          read: "已读",
+          read: "readed",
           fields: [],
           disableFields: {}
         }

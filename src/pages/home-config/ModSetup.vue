@@ -8,7 +8,7 @@
     </p>
     <div class="body">
         <p class="msg" v-if="admin">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
-        <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag.able || tag.fixed">
+        <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
             <div class="item long" v-if="tagName(tk)">
                 <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
                 <el-checkbox v-model="tag.show" class="check-tag" @change="cltitle($event,tag)">{{tagName(tk)}}</el-checkbox>
@@ -22,10 +22,10 @@
         </div>
         <div v-if="admin">
         <p class="msg">未添加可选项</p>
-        <ul class="hide-list"  v-for="(tag, tk) in page" :key="tk" v-if="!tag.able || Object.keys(tag.disableFields).length">
-            <div class="item long" v-if="!tag.fixed">
+        <ul class="hide-list"  v-for="(tag, tk) in page" :key="tk" v-if="!tag[an] || Object.keys(tag.disableFields).length">
+            <div class="item long" v-if="!tag.fixed && tagName(tk)">
                 <i class="fa fa-plus-circle"
-                   v-if="!tag.able" @click="deltitle(tag, true)"></i>
+                   v-if="!tag[an]" @click="deltitle(tag, true)"></i>
                 <p class="check-tag">{{tagName(tk)}}</p>
             </div>
             <template v-if="tag.fields">
@@ -45,7 +45,9 @@
 </template>
 
 <script>
-import T from "./config/config-pc-i18n";
+import Tp from "./config/config-i18n-pc";
+import Tm from "./config/config-i18n-mobile";
+let i18n={Tp, Tm}
 export default {
     name: "ModSetup",
     props:{
@@ -55,9 +57,13 @@ export default {
         admin: {
             default: false
         },
-        able:{
-            default: "able"
-        }
+        platform:{
+            required: true,
+        },
+        modname:{
+            required: true,
+        },
+
     },
     data(){
         return{
@@ -65,21 +71,36 @@ export default {
         }
     },
     computed:{
+        isp(){
+            return this.platform.toLowerCase()== "pc"
+        },
+        ism(){
+            return this.platform.toLowerCase()== "mobile"
+        },
+        tb(){
+            return this.isp? "Tp": "Tm"
+        },
         t(){
-            let mod= this.mod.code, t= T[mod]
+            let mod= this.mod.code, t= i18n[this.tb][this.modname][mod]
+            console.log("t", t)
             return t
         },
         page(){
             return this.mod.pages || {}
         },
+        an(){
+            return this.isp? "able": "disable"
+        }
 
     },
     methods:{
         tagName(tk, key){
-            let name= key? (T[key]|| this.t[tk].fields[key]) : this.t[tk].name;
+            let name= key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
+            console.log("name", name)
             return name
         },
         set(val){
+            console.log("this.mod", JSON.stringify(val))
             this.mod= val
         },
         cltitle(val, tag){
@@ -103,13 +124,13 @@ export default {
                 this.$set(tag[f1], k, tag[f2][k])
                 this.$delete(tag[f2], k);
             }
-            tag.able= !!add
+            tag[this.an]= !!add
         },
         delitem(tag, key, add){
             let f1= (!!add)? "fields" : "disableFields"
             let f2= (!add)? "fields" : "disableFields"
             if(add){
-                tag.able= true
+                tag[this.an]= true
             }
             if(tag[f2].hasOwnProperty(key)){
                 this.$set(tag[f1], key, tag[f2][key])
@@ -117,7 +138,7 @@ export default {
             }
         },
         notlist(tag){
-            if(tag.able || tag.fixed){
+            if(tag[this.an] || tag.fixed){
                 return tag.disableFields
             }else{
                 return {...tag.fields, ...tag.disableFields}

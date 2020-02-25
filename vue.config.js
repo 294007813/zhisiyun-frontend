@@ -81,5 +81,10 @@ module.exports = {
             },
 
         }
+        /**
+            location /api-proxy/ {
+               proxy_pass http://ensure.zhisiyun.com/;
+            }
+         **/
     }
 }

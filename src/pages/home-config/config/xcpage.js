@@ -2,7 +2,7 @@ module.exports = {
   xcpage: [
     {
       code: "PY",
-      name: "薪酬模块",
+      name: "pay",
       isuse: true,
       disable: true,
       source: true,
@@ -11,21 +11,21 @@ module.exports = {
         month: {
           show: true,
           disable: true,
-          name: "月度",
+          name: "month",
           fields: [],
           disableFields: {}
         },
         trend: {
           show: true,
           disable: true,
-          name: "趋势",
+          name: "trend",
           fields: [],
           disableFields: {}
         },
         statistics: {
           show: true,
           disable: true,
-          name: "统计",
+          name: "statistics",
           fields: [],
           disableFields: {}
         }

@@ -25,7 +25,9 @@
     <div class="disable-body">
         <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
     </div>
-    <mod-setup ref="modsetup" :visible="modsetupShow" @close="modsetupShow= false" :admin="admin"></mod-setup>
+    <mod-setup ref="modsetup"
+               :visible="modsetupShow" @close="modsetupShow= false" :admin="admin" modname="home" platform="pc"
+    ></mod-setup>
 </div>
 </template>
 

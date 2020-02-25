@@ -7,7 +7,7 @@
             <el-button type="primary" size="small" @click="save">保存</el-button>
         </div>
     </div>
-    <el-tabs v-model="tabsVal" @tab-click="handleTbs" class="tbs zsy" >
+    <el-tabs v-model="tabsVal" class="tbs zsy" >
         <el-tab-pane label="PC端" name="pc" :lazy="true">
             <div class="main">
                 <config-pc :conf="confpc" ref="pchome" :admin="true"></config-pc>
@@ -15,21 +15,21 @@
         </el-tab-pane>
         <el-tab-pane label="移动端" name="mobile">
             <div class="main">
-            <el-tabs  class="sub-tabs" v-model="subTabsVal" >
+            <el-tabs  class="sub-tabs" v-model="subTabsVal">
                 <el-tab-pane label="员工首页" name="home" :lazy="true">
-                    <config-mobile :conf="confm.home"></config-mobile>
+                    <config-mobile :conf="confm.home" modname="home" ref="home"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="考勤首页" name="wtpage" :lazy="true">
-                    <config-mobile :conf="confm.wtpage"></config-mobile>
+                    <config-mobile :conf="confm.wtpage" modname="wtpage" ref="wtpage"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="工作首页" name="workpage" :lazy="true">
-                    <config-mobile :conf="confm.workpage"></config-mobile>
+                    <config-mobile :conf="confm.workpage" modname="workpage" ref="workpage"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="薪酬首页" name="xcpage" :lazy="true">
-                    <config-mobile :conf="confm.xcpage"></config-mobile>
+                    <config-mobile :conf="confm.xcpage" modname="xcpage" ref="xcpage"></config-mobile>
                 </el-tab-pane>
                 <el-tab-pane label="我的页面" name="minepage" :lazy="true">
-                    <config-mobile :conf="confm.minepage"></config-mobile>
+                    <config-mobile :conf="confm.minepage" modname="minepage" ref="minepage"></config-mobile>
                 </el-tab-pane>
             </el-tabs>
             </div>
@@ -51,16 +51,27 @@ export default {
             tabsVal: 'pc',
             subTabsVal: 'home',
             confpc: confpc.home,
-            confm: confmobile
-
+            // confm: confmobile,
+            confm: {},
+        }
+    },
+    watch:{
+        subTabsVal(name){
+            if(!this.confm[name]) this.getMobile(name)
         }
     },
     mounted() {
         this.getPc()
         this.getMobile()
+        // for(let key in confmobile){
+        //     this.toupdate({
+        //         "flag":"Mobile",
+        //         type: key,
+        //         datas: confmobile[key]
+        //     })
+        // }
     },
     methods:{
-        handleTbs(){},
         getPc(){
             // this.conf= conf.home
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
@@ -71,21 +82,58 @@ export default {
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client",{params:{
                     flag: "Mobile", type
                 }}).then(data=>{
-
+                    this.confm[type]= data.conf
             })
+        },
+        tosave(data, cb){
+            this.$axios.post("/api/feishu_index_page/homePageConfControl/save",data,{dataKey: "msg"}).then(data=>{
+                // console.log(data)
+                this.$msg({message: data, type: "success"});
+                if(cb) cb()
+            })
+        },
+        toupdate(data, cb){
+            this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",data,{dataKey: "msg"}).then(data=>{
+                // console.log(data)
+                this.$msg({message: data, type: "success"});
+                if(cb) cb()
+            })
+        },
+        getmd(){
+            let res={}
+            for(let key in confmobile){
+                let arr= this.$refs[key].list.show.concat(this.$refs[key].list.hide)
+                arr.forEach((mod)=>{
+                    _.mapObject(mod.pages,(pa, pak)=>{
+                        let arr=[]
+                        _.mapObject(pa.fields, (fi, fik)=>{
+                            arr.push(fi)
+                        })
+                        pa.fields= arr
+                    })
+                })
+                res[key]= arr
+            }
+            return res
         },
         save(){
             this.$msgbox.confirm( "",{
                 title: "确定保存？",
                 callback:(action)=>{
                     if(action=="confirm"){
-                        this.$axios.post("/api/feishu_index_page/homePageConfControl/save",{
+                        this.tosave({
                             "flag":"PC",
                             datas: this.$refs.pchome.list
-                        },{dataKey: "msg"}).then(data=>{
-                            console.log(data)
-                            this.$msg({message: data, type: "success"});
                         })
+                        let mdata= this.getmd()
+                        for(let key in mdata){
+                            this.tosave({
+                                "flag":"Mobile",
+                                type: key,
+                                datas: mdata[key]
+                            })
+                        }
+
                     }
                 }
             })
@@ -95,12 +143,18 @@ export default {
                 title: "确定更新？",
                 callback:(action)=>{
                     if(action=="confirm"){
-                        this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
+                        this.toupdate({
                             "flag":"PC",
                             datas: this.$refs.pchome.list
-                        },{dataKey: "msg"}).then(data=>{
-                            this.$msg({message: data, type: "success"});
                         })
+                        let mdata= this.getmd()
+                        for(let key in mdata){
+                            this.toupdate({
+                                "flag":"Mobile",
+                                type: key,
+                                datas: mdata[key]
+                            })
+                        }
                     }
                 }
             })

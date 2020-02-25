@@ -14,7 +14,7 @@
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
                                    @click="remove(ind)" v-if="!item.fix">隐藏</el-button>
-                        <el-button type="primary" size="mini" round >配置</el-button>
+                        <el-button type="primary" size="mini" round @click="openModsetup(item)">配置</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -37,20 +37,29 @@
             </li>
         </ul>
     </div>
+    <mod-setup ref="modsetup" @close="modsetupShow= false"
+               v-bind="{visible: modsetupShow, admin: true, modname, platform: 'mobile'}"
+    ></mod-setup>
 </div>
 </template>
 
 <script>
+import ModSetup from "./ModSetup";
 export default {
     name: "ConfigMobile",
+    components: { ModSetup},
     props:{
         conf: {
             default:()=>[]
+        },
+        modname:{
+            required: true,
         },
     },
     data(){
         return{
             bemounted: false,
+            modsetupShow: false,
             list: {
                 show:[],
                 hide:[],
@@ -96,11 +105,13 @@ export default {
     },
     watch:{
         conf(val){
+            console.log("watch")
             this.init()
         }
     },
     mounted() {
         this.init()
+        console.log("mounted")
         // this.list= this.conf
         this.bemounted = true
     },
@@ -136,8 +147,27 @@ export default {
             item.disable= !!show
             this.list[r].push(item)
         },
-        openModsetup(){
+        openModsetup(item){
             this.modsetupShow= true
+            // console.log(JSON.stringify(item))
+            // for(let key in item.pages){
+            //     let it= item.pages[key]
+            //     let obj= {}
+            //     it.fields.forEach((fi)=>{
+            //         Object.assign(obj, fi)
+            //     })
+            //     item.fields= obj
+            // }
+            _.mapObject(item.pages,(it, key)=>{
+                let obj= {}
+                it.fields.forEach((fi)=>{
+                    // console.log(fi)
+                    Object.assign(obj, fi)
+                })
+                it.fields= obj
+            })
+            this.$refs.modsetup.set(item)
+
         },
         getMovePos(y){
             let top = y - this.bodyInfo.top;
@@ -150,11 +180,11 @@ export default {
             // console.log(x, y, item)
             let torow = this.getMovePos(y)
             let samerow= rowind == torow;
-            if(samerow){
+            let l= this.list.show
+            if(samerow|| l[torow][torow].fix){
                 return
             }
             console.log(y, rowind, torow)
-            let l= this.list.show
             let item= l.splice(rowind, 1)[0]
             l.splice(torow, 0, item)
         },

@@ -2,7 +2,7 @@ module.exports = {
   minepage: [
     {
       code: "baseinfo",
-      name: "基本信息",
+      name: "baseInfo",
       isuse: true,
       disable: true,
       source: false,
@@ -11,7 +11,7 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "基本信息",
+          name: "baseInfo",
           fields: [
             {
               MC_BC_PROFILE: true
@@ -47,7 +47,7 @@ module.exports = {
     },
     {
       code: "action",
-      name: "行为过程",
+      name: "action",
       isuse: true,
       disable: true,
       source: false,
@@ -56,7 +56,7 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "行为过程",
+          name: "action",
           fields: [
             {
               MC_BH_CARD_RECORD: true
@@ -104,14 +104,14 @@ module.exports = {
     },
     {
       code: "talent",
-      name: "人才信息",
+      name: "talent",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
         default: {
-          name: "人才信息",
+          name: "talent",
           show: true,
           disable: true,
           fields: [
@@ -140,7 +140,7 @@ module.exports = {
     },
     {
       code: "setting",
-      name: "设置信息",
+      name: "setting",
       isuse: true,
       disable: true,
       source: false,
@@ -149,7 +149,7 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "设置信息",
+          name: "setting",
           fields: [
             {
               change_password: true

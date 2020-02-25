@@ -2,19 +2,22 @@ module.exports = {
   home: [
     {
       code: "jbxx",
-      name:"基本信息",
+      name: "baseinfo",
       isuse: true,
       disable: true,
       source: false,
       fix: true,
       pages: {
-        default:{
-           name:"基本信息",
-           disable: true,
-           show: true,
-           fields: [
+        default: {
+          name: "baseinfo",
+          disable: true,
+          show: true,
+          fields: [
             {
-              salary_model: true
+              ai_robot: true
+            },
+            {
+              employee_status: true
             }
           ],
           disableFields: {}
@@ -23,13 +26,14 @@ module.exports = {
     },
     {
       code: "TM",
+      name: "attendance",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         tj: {
-          name: "考勤统计",
+          name: "cdStatistics",
           disable: true,
           show: false,
           fields: [
@@ -53,7 +57,7 @@ module.exports = {
           disableFields: {}
         },
         tool: {
-          name: "考勤工具",
+          name: "attendance_tools",
           disable: true,
           show: false,
           fields: [
@@ -101,7 +105,7 @@ module.exports = {
           disableFields: {}
         },
         jq: {
-          name: "假期余额",
+          name: "holiday_balance",
           disable: true,
           show: false,
           fields: [
@@ -120,88 +124,72 @@ module.exports = {
     },
     {
       code: "PY",
-      name: "我的工资",
+      name: "my_salary",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         default: {
-          name: "生日祝福墙",
+          name: "my_salary",
           disable: true,
           show: false,
-          fields: [
-            {
-              salary_model: true
-            }
-          ],
+          fields: [],
           disableFields: {}
         }
       }
     },
     {
       code: "db",
-      name: "考勤",
+      name: "todo",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
         undo: {
-          name: "代办",
+          name: "to_do_task",
           disable: true,
           show: false,
-          fields: [
-            {
-              todo_list: false
-            }
-          ],
+          fields: [],
           disableFields: {}
         },
         done: {
-          name: "已办",
+          name: "done_task",
           disable: true,
           show: false,
-          fields: [
-            {
-              done_list: false
-            }
-          ],
+          fields: [],
           disableFields: {}
         }
       }
     },
     {
       code: "wdxs",
-      name: "我的下属",
+      name: "my_subordinates",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
         default: {
-          name: "生日祝福墙",
+          name: "my_subordinates",
           disable: true,
           show: false,
-          fields: [
-            {
-              my_subordinate: true
-            }
-          ],
+          fields: [],
           disableFields: {}
         }
       }
     },
     {
       code: "PM",
-      name: "绩效信息",
+      name: "performance_info",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         month: {
-          name: "X月绩效",
+          name: "monthly_pfm",
           disable: true,
           show: false,
           fields: [
@@ -213,7 +201,7 @@ module.exports = {
           disableFields: {}
         },
         near: {
-          name: "近期",
+          name: "recent_performace",
           disable: true,
           show: false,
           fields: [
@@ -228,61 +216,60 @@ module.exports = {
     },
     {
       code: "wdrl",
-      name: "我的日历",
+      name: "me_calendar",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
         default: {
-          name: "生日祝福墙",
+          name: "me_calendar",
           disable: true,
           show: false,
-          fields: [
-            {
-              my_date_model: true
-            }
-          ],
+          fields: [],
           disableFields: {}
         }
       }
     },
     {
       code: "sr",
-      name: "生日祝福墙",
+      name: "birthday_blessing_wall",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
-        default: {
-          name: "生日祝福墙",
+        today: {
+          name: "today",
           disable: true,
-          show: false,
-          fields: [
-            {
-              birthday_wall: false
-            }
-          ],
+          show: true,
+          fields: [],
+          disableFields: {}
+        },
+        current_month: {
+          name: "month",
+          disable: true,
+          show: true,
+          fields: [],
           disableFields: {}
         }
       }
     },
     {
       code: "cpstar",
-      name: "公司之星",
+      name: "star_company",
       isuse: true,
       disable: true,
       source: false,
       fix: false,
       pages: {
         default: {
-          name: "技能之星",
+          name: "star_company",
           disable: true,
           show: false,
           fields: [
             {
-              company_star: false
+              search_btn: false
             }
           ],
           disableFields: {}
@@ -291,19 +278,22 @@ module.exports = {
     },
     {
       code: "TA",
-      name: "技能之星",
+      name: "skill_star",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         default: {
-          name: "技能之星",
+          name: "skill_star",
           disable: true,
           show: false,
           fields: [
             {
-              skill_star: false
+              search_btn: true
+            },
+            {
+              thumb_btn: true
             }
           ],
           disableFields: {}
@@ -312,19 +302,22 @@ module.exports = {
     },
     {
       code: "TR",
-      name: "培训统计",
+      name: "training_num",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         default: {
-          name: "培训统计",
+          name: "training_num",
           disable: true,
           show: false,
           fields: [
             {
-              train_model: true
+              join_travels: true
+            },
+            {
+              in_process: true
             }
           ],
           disableFields: {}
@@ -333,35 +326,14 @@ module.exports = {
     },
     {
       code: "FR",
-      name: "流程统计",
+      name: "process_num",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         default: {
-          name: "流程统计",
-          disable: true,
-          show: false,
-          fields: [
-            {
-              process_model: true
-            }
-          ],
-          disableFields: {}
-        }
-      }
-    },
-    {
-      code: "PA",
-      name: "我的合同协议",
-      isuse: true,
-      disable: true,
-      source: true,
-      fix: false,
-      pages: {
-        ht: {
-          name: "合同",
+          name: "process_num",
           disable: true,
           show: false,
           fields: [
@@ -381,14 +353,38 @@ module.exports = {
             }
           ],
           disableFields: {}
-        },
-        xy: {
-          name: "协议",
+        }
+      }
+    },
+    {
+      code: "PA",
+      name: "contract",
+      isuse: true,
+      disable: true,
+      source: true,
+      fix: false,
+      pages: {
+        ht: {
+          name: "contract",
           disable: true,
           show: false,
           fields: [
             {
-              agreement: true
+              signed_contract: true
+            },
+            {
+              vaildTime_contract: true
+            }
+          ],
+          disableFields: {}
+        },
+        xy: {
+          name: "agreement",
+          disable: true,
+          show: false,
+          fields: [
+            {
+              signed_protocol: true
             }
           ],
           disableFields: {}
@@ -397,25 +393,20 @@ module.exports = {
     },
     {
       code: "ADM",
-      name: "意见箱",
+      name: "suggestion_box",
       isuse: true,
       disable: true,
       source: true,
       fix: false,
       pages: {
         default: {
-          name: "合同",
+          name: "suggestion_box",
           disable: true,
           show: false,
-          fields: [
-            {
-              suggestion_model: true
-            }
-          ],
+          fields: [],
           disableFields: {}
         }
       }
     }
   ]
 };
-
