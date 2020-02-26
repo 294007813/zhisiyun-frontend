@@ -96,7 +96,8 @@ export default {
     data(){
         return{
             ismounted: false,
-            list: conf.home.show
+            // list: conf.home.show,
+            list: [],
         }
     },
     mounted() {
@@ -106,10 +107,8 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-
+                this.list= data.conf.home.show
             })
-
-
         }
     }
 }

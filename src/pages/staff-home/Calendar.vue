@@ -265,8 +265,7 @@ export default {
         },
         save(){
             let param= this.form
-            this.$axios.post("/api/feishu/calendar/list", param).then(data=>{
-
+            this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
             })
             this.dishow= false
         }

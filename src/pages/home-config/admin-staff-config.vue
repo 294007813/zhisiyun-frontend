@@ -75,14 +75,16 @@ export default {
         getPc(){
             // this.conf= conf.home
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
-                // this.conf= data.conf.pc_conf.home
+                this.confpc= data.conf.home
             })
         },
         getMobile(type= "home"){
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client",{params:{
                     flag: "Mobile", type
                 }}).then(data=>{
-                    this.confm[type]= data.conf
+                    // console.log(type, this.confm[type], data.conf)
+                this.$set(this.confm,  type, data.conf)
+                    // this.confm[type]= data.conf
             })
         },
         tosave(data, cb){
@@ -123,7 +125,7 @@ export default {
                     if(action=="confirm"){
                         this.tosave({
                             "flag":"PC",
-                            datas: this.$refs.pchome.list
+                            datas: {home: this.$refs.pchome.list}
                         })
                         let mdata= this.getmd()
                         for(let key in mdata){
@@ -145,7 +147,8 @@ export default {
                     if(action=="confirm"){
                         this.toupdate({
                             "flag":"PC",
-                            datas: this.$refs.pchome.list
+                            datas: {home: this.$refs.pchome.list},
+                            // datas: confpc,
                         })
                         let mdata= this.getmd()
                         for(let key in mdata){

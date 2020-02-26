@@ -96,7 +96,7 @@ export default {
     methods:{
         tagName(tk, key){
             let name= key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
-            console.log("name", name)
+            // console.log("name", name)
             return name
         },
         set(val){

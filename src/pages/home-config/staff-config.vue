@@ -20,6 +20,7 @@ export default {
     components: {ConfigPc},
     data(){
         return{
+            // conf: conf.home,
             conf: conf.home,
         }
     },
@@ -38,7 +39,7 @@ export default {
             async.parallel({
                 user: (callback)=> {
                     this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-                        let list= data.conf.pc_conf.home
+                        let list= data.conf.home
                         let rule= data.modules.contract_modules
                         this.mapMod(list, rule)
                         // this.conf= list
@@ -46,8 +47,8 @@ export default {
                     })
                 },
                 admin: (callback)=> {
-                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
-                        callback(null, data.conf.pc_conf.home);
+                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
+                        callback(null, data.conf.home);
                     })
                 }
             }, (err, res)=> {
@@ -102,7 +103,7 @@ export default {
                     })
                 })
 
-                console.log(JSON.stringify(my))
+                // console.log(JSON.stringify(my))
 
                 this.conf= my
             });
@@ -144,7 +145,8 @@ export default {
                     if(action=="confirm"){
                         this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
                             "flag":"PC",
-                            datas: this.$refs.conf.list
+                            datas: {home: this.$refs.pchome.list},
+                            // datas: conf,
                         },{dataKey: "msg"}).then(data=>{
                             this.$msg({message: data});
                         })

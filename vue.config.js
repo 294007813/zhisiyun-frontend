@@ -73,12 +73,21 @@ module.exports = {
                 // autoRewrite: true,
                 // followRedirects: true,
                 // selfHandleResponse: true,
+                // onProxyReq: function(proxyRes, req, res) {
+                //     proxyRes.setHeader( "Cookie", "connect.sid=s%3A4V_wjs55vj4CDDthKccwutJDPjqsFNFS.%2BoUA3i0mde3iiQP9zHzuRQY43Aj7dJ0gVik1sG7OrCM; i18next=zh; connect.sid=s%3AXdR_WV-aQfczh8MKrLDtkd_Gqk97jJ0j.GV0Mms0mxepkyoVZdVhY07pazN0n1jeuPy5cvRCntLo")
+                // },
+                // cookieDomainRewrite: {
+                //     // ".zhisiyun.com": "",
+                //     // "ensure.zhisiyun.com": "",
+                //     "*": "localhost",
+                // }
             },
             [`/lo-gin/`]: {
                 target: 'http://ensure.zhisiyun.com/',
                 pathRewrite: {[`^/lo-gin/`]: ''},
                 secure: false
             },
+
 
         }
         /**
