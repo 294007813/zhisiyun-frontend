@@ -6,7 +6,7 @@
             <ul class="ul">
                 <li v-for="(item, i) in gt.list" :key="i">
                     <template>
-                        <p>{{item.create_tm}}小时前</p>
+                        <p>{{item.create_tm | relativedate}}前</p>
                         <div>
                             <img class="head" src="~as/img/staff-home/head-M.png"/>
                             <span>{{item.msg}}</span>
@@ -19,7 +19,7 @@
             <ul class="ul at">
                 <li v-for="(item, i) in at.list" :key="i">
                     <template>
-                        <p>{{item.create_tm}}小时前</p>
+                        <p>{{item.create_tm | relativedate}}前</p>
                         <div>
                             <img class="head" src="~as/img/staff-home/head-M.png"/>
                             <span>{{item.msg}}</span>

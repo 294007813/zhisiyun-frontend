@@ -5,8 +5,8 @@
             <h3>已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></h3>
         </div>
         <ul class="drag-body" ref="dragbody">
-            <li v-for="(item, ind) in left" :key="item.code" :class=" {fixed: item.fix}"
-                :ref="'drag-'+item.code" :style="{top: item.top +'px'}">
+            <li v-for="(item, ind) in left" :key="item.name" :class=" {fixed: item.fix}"
+                :ref="'drag-'+item.name" :style="{top: item.top +'px'}">
                 <div class="content" v-drag="{ cb: item.fix? false: movedone, item, rowind: ind, only: 'y', exclude: 'button'}">
                     <p class="name">{{item.name}}
 <!--                        <b>{{item.subtitle}}</b>-->
@@ -25,7 +25,7 @@
     <div class="right">
         <div class="title"><h3>未添加模块</h3></div>
         <ul class="hide-body">
-            <li v-for="(item, ind) in list.hide" :key="item.code" >
+            <li v-for="(item, ind) in list.hide" :key="item.name" >
                 <div class="content">
                     <p class="name">{{item.name}}</p>
                     <p class="button">

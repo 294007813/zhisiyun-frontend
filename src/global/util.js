@@ -1,5 +1,6 @@
 /**自定义公共方法 **/
 import axios from 'gl/axios'
+import moment from "moment";
 
 const util= {
 
@@ -40,6 +41,22 @@ const util= {
             })
         }
         input.click()
+    },
+
+    /**获取相对时间**/
+    getRelativeDate(date){
+        let tid= moment(date).toNow(true),
+        res= tid.replace("seconds","秒")
+            .replace("minute","分钟")
+            .replace("hour","小时")
+            .replace("day","天")
+            .replace("month","月")
+            .replace("year","年")
+            .replace("s","")
+            .replace(" ","")
+            .replace("a","1")
+        console.log("tid", tid)
+        return res
     }
 }
 

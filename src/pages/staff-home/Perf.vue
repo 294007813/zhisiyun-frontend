@@ -7,6 +7,8 @@
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
                     v-if="finow.enter">进入绩效首页</el-button>
+                <h3 class="od">{{od.name}}</h3>
+                <p class="od">绩效分数：<span>{{od.value}}</span></p>
             </div>
         </el-tab-pane>
         <el-tab-pane label="近期趋势" name="trend" v-if="fitrend">
@@ -31,20 +33,46 @@ export default {
                 tooltip: {
                     formatter: '{a} <br/>{b} : {c}%'
                 },
-                toolbox: {
-                    feature: {
-                        restore: {},
-                        saveAsImage: {}
-                    }
-                },
+                // toolbox: {
+                //     feature: {
+                //         restore: {},
+                //         saveAsImage: {}
+                //     }
+                // },
                 series: [
                     {
-                        name: '业务指标',
+                        name: "我的绩效",
                         type: 'gauge',
-                        detail: {formatter: '绩效分数{value}'},
-                        // detail: {value: 50, name: '良好'},
-                        data: [{value: 50, name: '良好'}]
-                        // data: [{formatter: '绩效分数{value}'}]
+                        splitNumber: 4,
+                        title: {
+                            show: false,
+                        },
+                        detail: {
+                            show: false,
+                            formatter: '绩效分数{value}'
+                        },
+                        data: [{value: 0, name: '绩效分数'}],
+                        splitLine:{
+                            length: 30,
+                        },
+                        axisLine: {            // 坐标轴线
+                            show: true,
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                width: 14,
+                                color: [[0.2, '#5D77FF'], [0.4, '#5992fe'], [0.6, '#589ffd'], [0.8, '#55b9fc'], [1, '#54C7FC']]
+                            }
+                        },
+                        axisTick: {
+                            splitNumber: 11,
+                            length: 19,        // 属性length控制线长
+                            lineStyle: {       // 属性lineStyle控制线条样式
+                                color: 'white',
+                                width: 6
+                            }
+                        },
+                        itemStyle:{
+                            color: "auto"
+                        }
                     }
                 ]
             },
@@ -60,7 +88,8 @@ export default {
                     data: [120, 200, 150, 80, 70, 110, 130],
                     type: 'bar'
                 }]
-            }
+            },
+            od: {value: 0,  name: '暂无数据'}
         }
     },
     computed:{
@@ -90,11 +119,11 @@ export default {
         },
         getTM(){
             this.$axios.get("/api/feishu/jx/onedata").then(data=>{
-                let od= {value: 0,  name: '良好'}
+                // let od= {value: 0,  name: '暂无数据'}
                 if(data.length){
-                    od= {value: data[0].ai_score, name: data[0].ai_grade}
+                    this.od= {value: data[0].ai_score, name: data[0].ai_grade}
                 }
-                this.nowChart.series[0].data= [od]
+                this.nowChart.series[0].data= [this.od]
             })
         },
         getRange(){
@@ -120,6 +149,21 @@ export default {
 .perf{
     @include block;
     .now, .trend{
+        .od{
+            position: absolute;
+            bottom: 64px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        h3.od{
+            font-size: 24px;
+            font-weight: 500;
+            bottom: 90px;
+        }
+        p.od{
+            color: $color-gray-dark;
+            span{ color: $color-black}
+        }
         .chart{
             height: $bl - 40 +px;
             width: 100%;

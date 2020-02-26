@@ -5,19 +5,6 @@ const resolve = dir => {
 const conf = require('./proj-config')
 let {baseApi}= conf
 
-// var  devServer= {
-//         port: 8888,
-//         proxy: {
-//             [`${baseApi}/`]: {
-//         target: 'https://ensure.zhisiyun.com/',
-//         pathRewrite: {[`^${baseApi}/`]: ''},
-//     secure: false
-// },
-// }
-// }
-//
-// console.log("devServer", JSON.stringify(devServer) )
-
 module.exports = {
     runtimeCompiler: true,  //运行时构建
     chainWebpack: config => {

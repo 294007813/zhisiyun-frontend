@@ -10,6 +10,7 @@ import util from './global/util'
 import conf from '~/proj-config'
 import { Loading } from 'element-ui';
 import './global/directive'
+import './global/fliter'
 import './global/init'
 import './global/import-echart'
 import './global/import-ele-ui'
