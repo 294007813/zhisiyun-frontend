@@ -65,8 +65,7 @@ module.exports = {
                 // selfHandleResponse: true,
                 onProxyReq: function(onProxyReq, req, res) {
                     onProxyReq.setHeader( "Cookie",
-                        "connect.sid=s%3AHZpbIGd_sZioxqX2q_Y_zKcR9uzh3A1u.h5Qv70gmdiSR8ATzr0eGDAkecpUSaXs7YX7cbn%2FsR%2BM"
-                    )
+                        "connect.sid=s%3AavZ3w22t0bKveMybAHSytJk34RVMpxyz.gcSNHZKNOa7Z8Gqz6DPbTtbX3ueIq1q9%2F4RkoSaZlv0")
                 },
                 onProxyRes: function(proxyRes, req, res) {
                     var cookies = proxyRes.headers['set-cookie'];

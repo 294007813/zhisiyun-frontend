@@ -9,6 +9,7 @@ import _ from "underscore"
 import util from './global/util'
 import conf from '~/proj-config'
 import { Loading } from 'element-ui';
+import i18n from "./lang";
 import './global/directive'
 import './global/fliter'
 import './global/init'
@@ -43,5 +44,6 @@ Vue.prototype.$conf= conf
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')
