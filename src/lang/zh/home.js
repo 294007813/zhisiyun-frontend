@@ -44,6 +44,7 @@ export default  {
     "readed":"已读",
     "birthday_blessing_wall":"生日祝福墙",
     "today":"今日",
+    "day":"天",
     "month": "月",
     "num":"位",
     "star_company":"公司之星",
@@ -81,6 +82,7 @@ export default  {
     "to_do_module":"待办事宜模块",
     "to_configure":"配置",
     "delete": "删除",
+    "save": "保存",
     "attendance_information_module":"考勤信息模块",
     "performance_information_module":"绩效信息模块",
     "basic_information_module":"基本信息模块",
@@ -106,7 +108,11 @@ export default  {
     "show_project_on_page":"选中的项目员工在页面上显示",
     "tab_name_config":"页签名称配置",
     "cancel": "取消",
-    "confirmd": "确定"
+    "confirmd": "确定",
+    "select":"选择",
+    "private":"私人",
+    "complete":"完成",
+    "event": "事件",
   },
   //导航
   "dh":{
