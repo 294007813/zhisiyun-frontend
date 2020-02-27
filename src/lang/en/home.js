@@ -44,6 +44,7 @@ export default {
     "readed":"Already read",
     "birthday_blessing_wall":"Birthday blessing wall",
     "today":"today",
+    "day":"today",
     "month": "month",
     "num":"post",
     "star_company":"Star of company",
@@ -81,6 +82,7 @@ export default {
     "to_do_module":"To do module",
     "to_configure":"To configure",
     "delete": "Delete",
+    "save": "Save",
     "attendance_information_module":"Attendance information module",
     "performance_information_module":"Performance information module",
     "basic_information_module":"Basic information module",
@@ -106,7 +108,11 @@ export default {
     "show_project_on_page":"Selected project employees are displayed on the page",
     "tab_name_config":"Tab name configuration",
     "cancel": "Cancel",
-    "confirmd":"Confirm"
+    "confirmd":"Confirm",
+    "select":"Choice",
+    "private":"private",
+    "complete":"complete",
+    "event": "Event",
   },
   //导航
   "dh":{
