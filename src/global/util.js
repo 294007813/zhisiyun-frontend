@@ -1,6 +1,8 @@
 /**自定义公共方法 **/
 import axios from 'gl/axios'
 import moment from "moment";
+import conf from '~/proj-config'
+let {linkUrl} = conf
 
 const util= {
 
@@ -57,6 +59,14 @@ const util= {
             .replace("a","1")
         // console.log("tid", tid)
         return res
+    },
+    href(url, open){
+        let path= linkUrl+ url
+        if(open){
+            window.open(path, "_blank");
+        }else{
+            window.location.href= path
+        }
     }
 }
 
