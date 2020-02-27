@@ -20,6 +20,7 @@ module.exports = {
             .set('gl', resolve('src/global'))
             .set('pa', resolve('src/pages'))
             .set('st', resolve('src/store'))
+            .set('la', resolve('src/lang'))
     },
     transpileDependencies: [
         'vue-echarts',

@@ -22,6 +22,7 @@
 
 <script>
 import {baseApi} from '~/proj-config'
+console.log("base", baseApi)
 let es={
     'H':'正式',
     'P':'试用期',

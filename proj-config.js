@@ -5,6 +5,6 @@ const conf={
     ...c.env[process.env.VUE_APP_ENV]
 }
 delete conf.env
-// console.log("conf", conf)
-// console.log("process.env.VUE_APP_ENV",process.env.VUE_APP_ENV)
+console.log("conf", conf)
+console.log("process.env.VUE_APP_ENV",process.env.VUE_APP_ENV)
 export default  Object.freeze(conf)

@@ -49,6 +49,7 @@
 
 <script>
 import {baseApi} from '~/proj-config'
+console.log("birthday", baseApi)
 export default {
     name: "Birthday",
     props: {
