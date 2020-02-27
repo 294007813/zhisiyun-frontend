@@ -1,6 +1,7 @@
 import Axios from 'axios'
-import {baseApi} from '~/proj-config'
-
+import conf from '~/proj-config'
+let {baseApi} = conf
+// console.log("conf", conf)
 // console.log("baseApi", baseApi)
 
 let axios= Axios.create({

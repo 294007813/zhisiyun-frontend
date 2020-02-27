@@ -1,0 +1,18 @@
+{
+    "versions": 1,
+    "env": {
+        "dev": {
+            "baseApi": "/api-proxy",
+            "linkUrl": "https://ensure.zhisiyun.com"
+        },
+        "ensure": {
+            "baseApi": "https://pcensure.sec.zhisiyun.com",
+            "linkUrl": "https://ensure.zhisiyun.com"
+        },
+        "production": {
+            "baseApi": "",
+            "linkUrl": "https://www.zhisiyun.com"
+        }
+    }
+
+}

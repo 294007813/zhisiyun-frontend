@@ -85,7 +85,7 @@ export default {
         },
     },
     mounted(){
-        this.activeTabs= this.figt && 'day' || this.fiat && 'mon'
+        this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'
         this.getData()
         this.getData("month")
     },

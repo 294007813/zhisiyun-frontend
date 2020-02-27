@@ -55,7 +55,7 @@ const util= {
             .replace("s","")
             .replace(" ","")
             .replace("a","1")
-        console.log("tid", tid)
+        // console.log("tid", tid)
         return res
     }
 }
