@@ -68,7 +68,7 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
-                this.list= data
+                this.list= data.paid
             })
         },
         add(){

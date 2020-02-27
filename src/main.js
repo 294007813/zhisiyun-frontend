@@ -8,8 +8,9 @@ import async from "async";
 import _ from "underscore"
 import util from './global/util'
 import conf from '~/proj-config'
-import { Loading } from 'element-ui';
+import i18n from "./lang";
 import './global/directive'
+import './global/fliter'
 import './global/init'
 import './global/import-echart'
 import './global/import-ele-ui'
@@ -30,10 +31,7 @@ Vue.component('avatar', Avatar)
 Vue.config.productionTip = false;
 
 Vue.prototype.$axios= axios
-Vue.prototype.$f= {
-  loading:Loading.service,
-  ...util
-}
+Vue.prototype.$f= util
 window.async= async
 window.moment= moment
 window._= _
@@ -42,5 +40,6 @@ Vue.prototype.$conf= conf
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

@@ -7,7 +7,7 @@
     <div class="title" v-if="field.level">{{`${info.ou_name}/${info.position_name}`}}
         <b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b>
     </div>
-    <p><label>星座：</label>{{info.zodiac.zodiac}}</p>
+    <p><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
     <p><label>属相：</label>{{info.zodiac.shengxiao}}</p>
     <p><label>生日：</label>{{info.zodiac.shengri}}</p>
     <p><label>入职日期：</label>{{start_service_date}} <span v-if="field.sub">下属：{{info.my_team}}人</span></p>
@@ -22,6 +22,7 @@
 
 <script>
 import {baseApi} from '~/proj-config'
+console.log("base", baseApi)
 let es={
     'H':'正式',
     'P':'试用期',

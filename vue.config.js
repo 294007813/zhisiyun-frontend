@@ -2,21 +2,11 @@ const path = require('path')
 const resolve = dir => {
     return path.join(__dirname, dir)
 }
-const conf = require('./proj-config')
-let {baseApi}= conf
-
-// var  devServer= {
-//         port: 8888,
-//         proxy: {
-//             [`${baseApi}/`]: {
-//         target: 'https://ensure.zhisiyun.com/',
-//         pathRewrite: {[`^${baseApi}/`]: ''},
-//     secure: false
-// },
-// }
-// }
-//
-// console.log("devServer", JSON.stringify(devServer) )
+// const conf = require('./proj-config')
+// let {baseApi}= conf
+// console.log("process.env.area", JSON.stringify(process.env) )
+// console.log("process.env.npm_lifecycle_script", JSON.stringify(process.env.npm_lifecycle_script) )
+process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
 
 module.exports = {
     runtimeCompiler: true,  //运行时构建
@@ -30,6 +20,7 @@ module.exports = {
             .set('gl', resolve('src/global'))
             .set('pa', resolve('src/pages'))
             .set('st', resolve('src/store'))
+            .set('la', resolve('src/lang'))
     },
     transpileDependencies: [
         'vue-echarts',
@@ -73,10 +64,15 @@ module.exports = {
                 // autoRewrite: true,
                 // followRedirects: true,
                 // selfHandleResponse: true,
-                // onProxyReq: function(proxyRes, req, res) {
-                //     proxyRes.setHeader( "Cookie", "connect.sid=s%3A4V_wjs55vj4CDDthKccwutJDPjqsFNFS.%2BoUA3i0mde3iiQP9zHzuRQY43Aj7dJ0gVik1sG7OrCM; i18next=zh; connect.sid=s%3AXdR_WV-aQfczh8MKrLDtkd_Gqk97jJ0j.GV0Mms0mxepkyoVZdVhY07pazN0n1jeuPy5cvRCntLo")
-                // },
-                // cookieDomainRewrite: {
+                onProxyReq: function(onProxyReq, req, res) {
+                    onProxyReq.setHeader( "Cookie",
+                        "connect.sid=s%3AavZ3w22t0bKveMybAHSytJk34RVMpxyz.gcSNHZKNOa7Z8Gqz6DPbTtbX3ueIq1q9%2F4RkoSaZlv0")
+                },
+                onProxyRes: function(proxyRes, req, res) {
+                    var cookies = proxyRes.headers['set-cookie'];
+                    console.log("cookies", JSON.stringify(cookies))
+                }
+                    // cookieDomainRewrite: {
                 //     // ".zhisiyun.com": "",
                 //     // "ensure.zhisiyun.com": "",
                 //     "*": "localhost",

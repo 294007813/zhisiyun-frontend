@@ -3,18 +3,18 @@
     <ul class="to" v-if="fito">
         <h6>合同<i class="iconfont iconyoujiantou"></i></h6>
         <li>
-            <p><b>4</b>份</p>
+            <p><b>{{da.n1}}</b>份</p>
             <span>已签合同</span>
         </li>
         <li>
-            <p><b>{{da.h.years}}</b>年<b>{{da.h.months}}</b>月<b>{{da.h.days}}</b>天</p>
+            <p><b>{{da.h.years ||"-"}}</b>年<b>{{da.h.months||"-"}}</b>月<b>{{da.h.days||"-"}}</b>天</p>
             <span>合同有效期还剩</span>
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
         <h6>协议<i class="iconfont iconyoujiantou"></i></h6>
         <li>
-            <p><b>23</b>份</p>
+            <p><b>{{da.n2}}</b>份</p>
             <span>已签协议</span>
         </li>
     </ul>
@@ -29,8 +29,8 @@ export default {
         return{
             da:{
                 n1: 0,
+                n2: 0,
                 h: {},
-                n2: 0
             }
         }
     },
@@ -54,14 +54,15 @@ export default {
                 this.da.n1= data.newContract.length
                 this.da.n2= data.newContractAgreement.length
                 if(this.da.n1){
-                    let t= moment().diff(data.newContract.effective_date)
+                    let arr= data.newContract, date=""
+                    arr.forEach(it=>{
+                        date= date? (moment(it.effective_date).isBefore(date)? it.effective_date: date) :it.effective_date
+                    })
+                    let t= moment().diff(date)
                     // console.log("diff", moment().diff(date).toObject())
                     this.da.h= moment.duration(t)._data
                 }
             })
-            // let t= "2019-01-01"
-            // t= moment().diff("2019-01-01")
-            // console.log( "diff", moment.duration(t)._data)
         },
 
     }

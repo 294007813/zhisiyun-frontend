@@ -21,50 +21,6 @@
         </template>
     </template>
 
-    <!--
-    <li class="border small">
-        <base-info></base-info>
-    </li>
-    <li class="border small">
-       <checkin></checkin>
-    </li>
-    <li class="border small">
-        <salary></salary>
-    </li>
-    <li class="border half">
-       <g-tasks></g-tasks>
-    </li>
-    <li class="border half">
-        <birthday></birthday>
-    </li>
-    <li class="border long">
-        <often></often>
-    </li>
-    <li class="border small">
-        <msg></msg>
-    </li>
-    <li class="border small">
-        <perf></perf>
-    </li>
-    <li class="border small">
-        <idea></idea>
-    </li>
-    <li class="border half">
-       <train></train>
-    </li>
-    <li class="border half">
-        <contract></contract>
-    </li>
-    <li class="border half">
-        <com-star></com-star>
-    </li>
-    <li class="border half">
-        <skill-star></skill-star>
-    </li>
-    <li class="border long">
-        <v-calendar></v-calendar>
-    </li>
-    -->
     <div class="bottom">
         <router-link to="/staff-config">
             <i class="iconfont iconshezhi"></i>首页配置

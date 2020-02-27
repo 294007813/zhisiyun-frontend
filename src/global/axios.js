@@ -1,7 +1,10 @@
 import Axios from 'axios'
-import {baseApi} from '~/proj-config'
-
-// console.log("baseApi", baseApi)
+import store from 'st'
+import cookie from 'js-cookie'
+import conf from '~/proj-config'
+let {baseApi} = conf
+// console.log("conf", conf)
+console.log("axios", conf.baseApi)
 
 let axios= Axios.create({
     baseURL: baseApi,
@@ -22,11 +25,17 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         // console.log(response)
-
+        // console.log("cookie.get('i18next')", cookie.get('i18next'))
         let { dataLevel, dataKey } = response.config;
         let { data, msg, code } = response.data;
+        let lang= cookie.get('i18next')
+        store.commit('setLang', cookie.get('i18next'));
+
         switch (dataLevel) {
-            case "all": {return response; break;}
+            case "all": {
+                return response;
+                break;
+            }
             case "api":  {
                 return response.data;
                 break;

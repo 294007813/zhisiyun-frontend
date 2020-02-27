@@ -6,7 +6,7 @@
             <ul class="ul">
                 <li v-for="(item, i) in gt.list" :key="i">
                     <p><em>{{item.title}}</em></p>
-                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
+                    <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
             </ul>
@@ -15,7 +15,7 @@
             <ul class="ul at" v-if="fiat">
                 <li v-for="(item, i) in at.list" :key="i">
                     <p><em>{{item.title}}</em></p>
-                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>
+<!--                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>-->
 <!--                    <b>人事事件</b>-->
                 </li>
             </ul>

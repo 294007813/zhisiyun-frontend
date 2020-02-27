@@ -1,6 +1,6 @@
 import Vue from "vue";
 import {
-    Dialog, MessageBox, Message,
+    Dialog, MessageBox, Message, Loading,
     Checkbox, CheckboxGroup, CheckboxButton,
     Button,
     Tabs, TabPane,
@@ -45,3 +45,4 @@ Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$msg = Message;
+Vue.prototype.$loading = Loading.service;

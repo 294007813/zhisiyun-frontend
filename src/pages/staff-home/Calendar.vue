@@ -1,6 +1,6 @@
 <template>
 <div class="calendar">
-    <h5>我的日历</h5>
+    <h5>{{$t("index.me_calendar")}}</h5>
 
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view editable-events today-button hide-view-selector
@@ -16,14 +16,14 @@
                 <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY年MM月DD日') }}</span>
             </div>
             <div class="switch">
-                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">月</p>
-                <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">周</p>
-                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">天</p>
+                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.month")}}</p>
+                <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
+                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day")}}</p>
             </div>
 
         </template>
         <i slot="arrow-prev" class="fa fa-angle-left"></i>
-        <div slot="today-button" class="today">今天</div>
+        <div slot="today-button" class="today">{{$t("index.today")}}</div>
         <i slot="arrow-next" class="fa fa-angle-right"></i>
     </vue-cal>
 
@@ -31,12 +31,12 @@
             :visible.sync="dishow"
             custom-class="dialog"
             width="600px">
-        <p slot="title" class="title">{{form._id ?'修改' :'添加'}}事件</p>
+        <p slot="title" class="title">{{form._id ?'修改' :'添加'}}{{$t("index.event")}}</p>
         <div class="content">
             <div :class="['check-tag pri',{on: form.is_private}]" @click="form.is_private=!form.is_private"
-            ><i class="fa fa-check-circle"></i>私人</div>
+            ><i class="fa fa-check-circle"></i>{{$t("index.private")}}</div>
             <div :class="['check-tag com',{on: form.is_complete}]" @click="form.is_complete=!form.is_complete"
-            ><i class="fa fa-check-circle"></i>完成</div>
+            ><i class="fa fa-check-circle"></i>{{$t("index.complete")}}</div>
             <h2 v-if="form.tid">由{{form.creator.people_name+ form.tid}}前创建</h2>
 
             <el-form ref="form" :model="form" label-width="80px" size="mini" class="form">
@@ -105,7 +105,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="共享对象">
-                    <el-button type="primary" size="mini" @click="staffshow= true">选择</el-button>
+                    <el-button type="primary" size="mini" @click="staffshow= true">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in form.forward_people_new" :key="i">
                         <span>{{item.name}}</span>
                         <i class="el-icon-error" @click="form.forward_people_new.splice(i,1)"></i>
@@ -114,7 +114,7 @@
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="添加附件">
-                    <el-button type="primary" size="mini" @click="upfile">选择</el-button>
+                    <el-button type="primary" size="mini" @click="upfile">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in form.attachments" :key="i">
                         <span>{{item.filename}}</span> <i class="el-icon-delete-solid" @click="dfile(i)"></i>
                     </li>
@@ -125,9 +125,9 @@
             </el-form>
         </div>
         <p slot="footer" class="footer">
-            <el-button plain size="small" @click="dishow= false">取消</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id">删除</el-button>
-            <el-button type="primary" size="small" @click="save">保存</el-button>
+            <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id">{{$t("index.delete")}}</el-button>
+            <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
 
