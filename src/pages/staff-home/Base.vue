@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import {baseApi} from '~/proj-config'
-console.log("base", baseApi)
 let es={
     'H':'正式',
     'P':'试用期',
@@ -47,7 +45,7 @@ export default {
             return this.info.start_service_date && moment(this.info.start_service_date).format('YYYY-MM-DD');
         },
         avatar(){
-            return this.done && `${baseApi}/gridfs/get/${this.info.avatar}`
+            return this.done && this.$f.getPic(this.info.avatar)
         },
         field(){
             return this.conf.pages.default.fields

@@ -181,7 +181,7 @@ export default {
             let torow = this.getMovePos(y)
             let samerow= rowind == torow;
             let l= this.list.show
-            if(samerow|| l[torow][torow].fix){
+            if(samerow|| torow>=this.showlinenum || l[torow].fix){
                 return
             }
             console.log(y, rowind, torow)

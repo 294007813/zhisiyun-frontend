@@ -50,7 +50,12 @@ export default {
         return{
             tabsVal: 'pc',
             subTabsVal: 'home',
-            confpc: confpc.home,
+            // confpc: confpc.home,
+            confpc: {
+                show: [],
+                hide: [[]],
+                disable: [[]],
+            },
             // confm: confmobile,
             confm: {},
         }
@@ -104,7 +109,13 @@ export default {
         getmd(){
             let res={}
             for(let key in confmobile){
-                let arr= this.$refs[key].list.show.concat(this.$refs[key].list.hide)
+                // console.log("key", "["+key+"]")
+                // console.log("this.$refs[key]", this.$refs[key])
+                let ref= this.$refs[key]
+                if(!ref){
+                    continue
+                }
+                let arr= ref.list.show.concat(ref.list.hide)
                 arr.forEach((mod)=>{
                     _.mapObject(mod.pages,(pa, pak)=>{
                         let arr=[]
@@ -119,15 +130,16 @@ export default {
             return res
         },
         save(){
-            this.$msgbox.confirm( "",{
-                title: "确定保存？",
-                callback:(action)=>{
-                    if(action=="confirm"){
+            // this.$msgbox.confirm( "",{
+            //     title: "确定保存？",
+            //     callback:(action)=>{
+            //         if(action=="confirm"){
                         this.tosave({
                             "flag":"PC",
                             datas: {home: this.$refs.pchome.list}
                         })
                         let mdata= this.getmd()
+            console.log("mdata", mdata)
                         for(let key in mdata){
                             this.tosave({
                                 "flag":"Mobile",
@@ -136,13 +148,14 @@ export default {
                             })
                         }
 
-                    }
-                }
-            })
+            //         }
+            //     }
+            // })
         },
         update(){
             this.$msgbox.confirm( "",{
-                title: "确定更新？",
+                title: "确定要强制更新所有员工的配置？",
+                message: "强制更新后不可撤回，请谨慎操作。",
                 callback:(action)=>{
                     if(action=="confirm"){
                         this.toupdate({

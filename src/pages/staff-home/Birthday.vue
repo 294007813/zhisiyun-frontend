@@ -13,8 +13,7 @@
                             <p>今天是TA的生日</p>
                         </div>
                         <div class="photo">
-                            <avatar class="head"  :src="`${baseApi}/gridfs/get/${item.people.avatar}`" :sex="item.people.gender"></avatar>
-<!--                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>-->
+                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <img class="crown" src="~as/img/staff-home/crown.svg"/>
                             <p>{{item.people.people_name}}</p>
                             <span>{{`${item.people.ou_name}/${item.people.position_name}`}}</span>
@@ -33,8 +32,7 @@
                     <ul class="mon">
                         <p class="title">{{moment(bd.end_date).format("D")}}日<b>周{{moment(bd.end_date).format("d")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j">
-<!--                            <img class="head" :src="`${baseApi}/gridfs/get/${item.people.avatar}`"/>-->
-                            <avatar class="head"  :src="`${baseApi}/gridfs/get/${item.people.avatar}`" :sex="item.people.gender"></avatar>
+                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>
                         </li>
                     </ul>
@@ -48,8 +46,6 @@
 </template>
 
 <script>
-import {baseApi} from '~/proj-config'
-console.log("birthday", baseApi)
 export default {
     name: "Birthday",
     props: {
@@ -72,7 +68,6 @@ export default {
             },
             day: {},
             mon: {},
-            baseApi
         }
     },
     computed:{

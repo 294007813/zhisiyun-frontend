@@ -7,6 +7,7 @@ export default {
           "subtitle": "(固定模块)",
           "fixed": true,
           "code": "base",
+          name: "baseinfo",
           "source":false,//是否对应老系统模块 true代表对应上
           pages:{
             "default":{
@@ -26,6 +27,7 @@ export default {
         {
           "title": "考勤信息模块",
           "code": "TM",
+          name: "attendance",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "checkin":{
@@ -67,6 +69,7 @@ export default {
         {
           "title": "薪资信息模块",
           "code": "PY",
+          name: "my_salary",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "mon":{
@@ -108,6 +111,7 @@ export default {
         {
           "title": "待办事宜模块",
           "code": "gtasks",
+          name: "todo",
           "source":false,//是否对应老系统模块 true代表对应上
           pages:{
             "gt":{
@@ -129,6 +133,7 @@ export default {
         {
           "title": "绩效信息模块",
           "code": "PM",
+          name: "performance_info",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "now":{
@@ -177,6 +182,7 @@ export default {
         {
           "title": "生日祝福模块",
           "code": "birthday",
+          name: "birthday_blessing_wall",
           "source":false,//是否对应老系统模块 true代表对应上
           pages:{
             "day":{
@@ -198,6 +204,7 @@ export default {
         {
           "title": "公司之星模块",
           "code": "comstar",
+          name: "star_company",
           "source":false,//是否对应老系统模块 true代表对应上
           pages:{
             "default":{
@@ -215,6 +222,7 @@ export default {
         {
           "title": "技能之星模块",
           "code": "TA",
+          name: "skill_star",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "default":{
@@ -231,6 +239,7 @@ export default {
         {
           "title": "培训流程模块",
           "code": "TR",
+          name: "training_process",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "to":{
@@ -263,6 +272,7 @@ export default {
         {
           "title": "合同协议模块",
           "code": "PA",
+          name: "contract",
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "to":{
@@ -284,19 +294,22 @@ export default {
         {
           "title": "意见箱模块",
           "code": "ADM",
+          name: "suggestion_box",
           "source":true,//是否对应老系统模块 true代表对应上
         }
       ],
       [{
         "title": "常用应用模块",
         "long":true,
-        "code": "often"
+        "code": "often",
+        "name": "often",
       }],
       [
         {
           "title": "我的日历模块",
           "long": true,
           "code": "calendar",
+          name: "me_calendar",
           "source":false,//是否对应老系统模块 true代表对应上
         }
       ],
