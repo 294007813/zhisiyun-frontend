@@ -113,6 +113,8 @@ export default {
     "private":"private",
     "complete":"complete",
     "event": "Event",
+    "nums":"frequency",
+    "hour":"hour",
   },
   //导航
   "dh":{

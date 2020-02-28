@@ -113,6 +113,8 @@ export default  {
     "private":"私人",
     "complete":"完成",
     "event": "事件",
+    "nums":"次",
+    "hour":"小时",
   },
   //导航
   "dh":{
