@@ -3,7 +3,7 @@
     <h5>消息动态 <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt" v-if="figt">
-            <ul class="ul">
+            <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                 <li v-for="(item, i) in gt.list" :key="i">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
@@ -63,6 +63,7 @@ export default {
         getData(status= 0){
             this.$axios.get("/api/feishu/news/newslist",{params:{status}}).then(data=>{
                 this[status? "at": "gt"]= data
+                this.gt.list=[{},{},{}]
             })
         },
     }

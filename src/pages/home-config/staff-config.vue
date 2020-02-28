@@ -21,7 +21,11 @@ export default {
     data(){
         return{
             // conf: conf.home,
-            conf: conf.home,
+            conf: {
+                show: [],
+                hide: [[]],
+                disable: [[]],
+            },
         }
     },
     mounted() {

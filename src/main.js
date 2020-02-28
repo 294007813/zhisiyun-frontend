@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import store from './store'
+import conf from '~/proj-config'
 import App from './global/App.vue'
 import router from './global/router'
 import axios from './global/axios'
@@ -7,7 +8,6 @@ import moment from "moment";
 import async from "async";
 import _ from "underscore"
 import util from './global/util'
-import conf from '~/proj-config'
 import i18n from "./lang";
 import './global/directive'
 import './global/fliter'

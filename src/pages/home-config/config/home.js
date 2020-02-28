@@ -86,14 +86,6 @@ module.exports = {
               in_business: true
             },
             {
-              // 请假
-              on_leave: true
-            },
-            {
-              // 加班
-              overtime: true
-            },
-            {
               // 假期调整
               holiday_change: true
             },
@@ -247,7 +239,7 @@ module.exports = {
           disableFields: {}
         },
         current_month: {
-          name: "month",
+          name: "current_month",
           disable: true,
           show: true,
           fields: [],
@@ -345,9 +337,7 @@ module.exports = {
               // 我处理的的
               process_myself: true
             },
-            {
-              // 进行中的
-            },
+            // 进行中的
             {
               in_process: true
             }

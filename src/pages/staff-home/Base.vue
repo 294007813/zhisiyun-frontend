@@ -8,21 +8,19 @@
         <b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b>
     </div>
     <p><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
-    <p><label>属相：</label>{{info.zodiac.shengxiao}}</p>
-    <p><label>生日：</label>{{info.zodiac.shengri}}</p>
-    <p><label>入职日期：</label>{{start_service_date}} <span v-if="field.sub">下属：{{info.my_team}}人</span></p>
-    <a v-if="field.look">查看档案<i class="iconfont iconyoujiantou"></i></a>
+    <p><label>{{$t("index.zodiac")}}：</label>{{info.zodiac.shengxiao}}</p>
+    <p><label>{{$t("index.birthday")}}：</label>{{info.zodiac.shengri}}</p>
+    <p><label>{{$t("index.entry_data")}}：</label>{{start_service_date}} <span v-if="field.sub">{{$t("index.subordinate")}}：{{info.my_team}}{{$t("index.people")}}</span></p>
+    <a v-if="field.look">{{$t("index.view_files")}}<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
 <!--        <img :src="avatar"/>-->
         <avatar :src="avatar" :sex="info.gender"></avatar>
-        <p v-if="field.medal"><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}枚</p>
+        <p v-if="field.medal"><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>
 </div>
 </template>
 
 <script>
-import {baseApi} from '~/proj-config'
-console.log("base", baseApi)
 let es={
     'H':'正式',
     'P':'试用期',
@@ -47,7 +45,7 @@ export default {
             return this.info.start_service_date && moment(this.info.start_service_date).format('YYYY-MM-DD');
         },
         avatar(){
-            return this.done && `${baseApi}/gridfs/get/${this.info.avatar}`
+            return this.done && this.$f.getPic(this.info.avatar)
         },
         field(){
             return this.conf.pages.default.fields

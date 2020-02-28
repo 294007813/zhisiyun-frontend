@@ -1,6 +1,6 @@
 <template>
 <div class="com-star">
-    <h5>公司之星</h5>
+    <h5>{{$t("index.star_company")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
               v-model="query" v-if="field.query"></el-input>
     <div class="db">
@@ -16,13 +16,13 @@
                         <p>{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">
-                        <li><label>工号：</label>{{it.people.people_no}}</li>
-                        <li><label>部门：</label>{{it.people.ou_name}}</li>
-                        <li><label>职位：</label>{{it.people.position_name}}</li>
+                        <li><label>{{$t("index.star_company")}}：</label>{{it.people.people_no}}</li>
+                        <li><label>{{$t("index.department")}}：</label>{{it.people.ou_name}}</li>
+                        <li><label>{{$t("index.position")}}：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
-                        <li><label>入职：</label>{{moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
-                        <li><label>生日：</label>{{moment(it.people.birthday).format("MM月DD日")}}</li>
-                        <li><label>星座：</label>{{it.people.zodiac}}</li>
+                        <li><label>{{$t("index.entry_data")}}：</label>{{moment(it.people.start_service_date).format("YYYY-MM-DD")}}</li>
+                        <li><label>{{$t("index.birthday")}}：</label>{{moment(it.people.birthday).format("MM月DD日")}}</li>
+                        <li><label>{{$t("index.constellation")}}：</label>{{it.people.zodiac}}</li>
                     </ul>
                 </div>
             </swiper-slide>

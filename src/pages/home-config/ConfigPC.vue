@@ -45,7 +45,7 @@ export default {
                             <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                             <div class="button">
                                 <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                           @click="toshow">显示</el-button>
+                                           @click="toshow(citem.code)">显示</el-button>
                             </div>
                         </div>
                     </div>
@@ -159,10 +159,16 @@ export default {
             }
             h.push(...item)
         },
-        toshow(ind, hitem) {
-            let s= this.list.show, h= this.list[this.hideKey][0];
+        toshow(code) {
+            let s= this.list.show, h= this.list[this.hideKey][0], ind;
+            h.forEach((it, i)=>{
+                if(it.code== code){
+                    ind=i
+                }
+            })
             let item= h.splice(ind, 1)
             s.push(item)
+
         },
         getMovePos({x, y, item, rowind, colind}){
             let left = x - this.bodyInfo.left, top = y - this.bodyInfo.top
@@ -259,7 +265,8 @@ export default {
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             let samerow= rowind == torow, samecol=colind== tocol, sameall= rowind == torow&& colind== tocol;
-            if(sameall || l[torow][tocol].fixed){
+            console.log("torow, tocol", torow, tocol)
+            if(sameall || torow>=this.showlinenum || l[torow][tocol].fixed){
                 return
             }
             if(item.long){

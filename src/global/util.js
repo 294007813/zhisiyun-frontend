@@ -2,7 +2,7 @@
 import axios from 'gl/axios'
 import moment from "moment";
 import conf from '~/proj-config'
-let {linkUrl} = conf
+// let {linkUrl} = conf
 
 const util= {
 
@@ -54,20 +54,25 @@ const util= {
             .replace("day","天")
             .replace("month","月")
             .replace("year","年")
+            .replace("few","")
             .replace("s","")
             .replace(" ","")
             .replace("a","1")
         // console.log("tid", tid)
         return res
     },
+    getPic(id){
+        return `${conf.linkUrl}/gridfs/get/${id}`
+    },
     href(url, open){
-        let path= linkUrl+ url
+        let path= conf.linkUrl+ url
         if(open){
             window.open(path, "_blank");
         }else{
             window.location.href= path
         }
-    }
+    },
+    conf
 }
 
 

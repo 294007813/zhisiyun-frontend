@@ -82,3 +82,17 @@ Vue.directive('drag', {
         }
     }
 })
+
+Vue.directive('nodata', {
+    bind(el, binding, vnode) {
+        console.log("vnode", vnode)
+        console.log("el.style", el.style)
+    },
+    update(el, binding, vnode) {
+        // let top = el.pageX + 'px'
+        // let left = el.pageY + 'px'
+        let params= binding.value
+        let { have}= params
+        console.log("have", have)
+    }
+})
