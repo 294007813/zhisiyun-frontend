@@ -2,7 +2,7 @@
 <el-dialog
         custom-class="modsetup" width="600px"
         :visible="visible" :before-close="close">
-    <p slot="title" class="title">模块项目配置
+    <p slot="title" class="title">{{mod.title ||""}}模块项目配置
         <span v-if="admin">已添加的可选项员工可自行配置</span>
         <span v-else>选中的项目在首页进行展示</span>
     </p>
@@ -11,12 +11,19 @@
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
             <div class="item long" v-if="tagName(tk)">
                 <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
-                <el-checkbox v-model="tag.show" class="check-tag" @change="cltitle($event,tag)">{{tagName(tk)}}</el-checkbox>
+                <el-checkbox :class="['check-tag', {disable: admin}]"
+                             v-model="tag.show"
+                             @change="cltitle($event,tag)">
+                    {{tagName(tk)}}</el-checkbox>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
                     <i class="fa fa-times-circle" v-if="admin" @click="delitem(tag, key)"></i>
-                    <el-checkbox v-model="tag.fields[key]" class="check-tag" @change="clitem($event,tag, key)">{{tagName(tk,key)}}</el-checkbox>
+                    <el-checkbox
+                            v-model="tag.fields[key]"
+                            :class="['check-tag', {disable: admin}]"
+                            @change="clitem($event,tag, key)">
+                        {{tagName(tk,key)}}</el-checkbox>
                 </div>
             </template>
         </div>
@@ -39,7 +46,7 @@
     </div>
     <p slot="footer" class="footer">
 <!--        <el-button plain size="small" @click="close">取消</el-button>-->
-        <el-button type="primary" size="small"  @click="close">确定</el-button>
+        <el-button type="primary" size="small"  @click="close">关闭</el-button>
     </p>
 </el-dialog>
 </template>
@@ -63,11 +70,10 @@ export default {
         modname:{
             required: true,
         },
-
     },
     data(){
         return{
-            mod: {}
+            mod: {},
         }
     },
     computed:{
@@ -105,6 +111,9 @@ export default {
         },
         cltitle(val, tag){
             // console.log(tag.show)
+            if(this.admin){
+                return
+            }
             if(!val){
                 for(let k in tag.fields){
                     tag.fields[k]= false
@@ -113,6 +122,9 @@ export default {
         },
         clitem(val, tag, key){
             // console.log(tag.fields[key])
+            if(this.admin){
+                return
+            }
             if(tag.fields[key]){
                 tag.show= true
             }
@@ -213,6 +225,9 @@ export default {
                     width: 100%;
                     padding: 0;
                     margin-bottom: 10px;
+                    &:hover{
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.34902);
+                    }
                     .el-checkbox__input{
                         position: absolute;
                         opacity: 0;
@@ -227,14 +242,17 @@ export default {
                         color: $color-black;
                         transition: all .2s;
                         cursor: pointer;
-                        &:hover{
-                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.34902);
-                        }
+
                     }
-                    &.is-checked .el-checkbox__label{
+                    &.is-checked:not(.disable) .el-checkbox__label{
                         color: white;
                         background-color: $color-primary;
                         border-color: $color-primary;
+                    }
+                }
+                .disable{
+                    .el-checkbox__label{
+                        cursor: default;
                     }
                 }
             }

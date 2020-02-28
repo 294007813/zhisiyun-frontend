@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="main">
-        <config-pc :conf="conf" ref="conf"></config-pc>
+        <config-pc :conf="conf" ref="pchome"></config-pc>
     </div>
 </div>
 </template>

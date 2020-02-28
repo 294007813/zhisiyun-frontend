@@ -181,10 +181,13 @@ export default {
             let torow = this.getMovePos(y)
             let samerow= rowind == torow;
             let l= this.list.show
-            if(samerow|| torow>=this.showlinenum || l[torow].fix){
+            if(torow>=this.showlinenum ){
+                torow= this.showlinenum-1
+            }
+            if(samerow||  l[torow].fix){
                 return
             }
-            console.log(y, rowind, torow)
+            // console.log(y, rowind, torow)
             let item= l.splice(rowind, 1)[0]
             l.splice(torow, 0, item)
         },
