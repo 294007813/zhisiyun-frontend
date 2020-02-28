@@ -48,11 +48,13 @@ export default  {
     "month": "月",
     "num":"位",
     "star_company":"公司之星",
-    "work_number": "工   号",
+    "work_number": "工号",
     "department_position": "部门/职位",
+    "department": "部门",
+    "position": "职位",
    // "entry_data": "入职日期",
     "birth_day": "出生日期",
-    "constellations":"星    座",
+    "constellations":"星座",
     "please_enter_name_keyword":"请输姓名关键字",
     "skill_star":"技能之星",
     "praise":"个赞",
@@ -115,6 +117,11 @@ export default  {
     "event": "事件",
     "nums":"次",
     "hour":"小时",
+    "subordinate": "下属",
+    "number":"枚",
+    "people":"人",
+    "numbers":"份",
+    "year":"年"
   },
   //导航
   "dh":{

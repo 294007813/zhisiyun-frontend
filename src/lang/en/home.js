@@ -50,6 +50,8 @@ export default {
     "star_company":"Star of company",
     "work_number": "Job number",
     "department_position": "department/position",
+    "department": "department",
+    "position": "position",
    // "entry_data": "入职日期",
     "birth_day": "Date of birth",
     "constellations":"Constellation",
@@ -115,6 +117,11 @@ export default {
     "event": "Event",
     "nums":"frequency",
     "hour":"hour",
+    "subordinate": "subordinate",
+    "number":"number",
+    "people":"people",
+    "numbers":"number",
+    "year":"year"
   },
   //导航
   "dh":{
