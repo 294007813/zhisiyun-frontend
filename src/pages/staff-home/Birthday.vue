@@ -1,6 +1,6 @@
 <template>
 <div class="birthday">
-    <h5>生日祝福墙</h5>
+    <h5>{{$t("index.birthday_blessing_wall")}}</h5>
     <el-tabs v-model="activeTabs">
         <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday">
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
@@ -30,7 +30,7 @@
                     class="mon-swiper"ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}日<b>周{{moment(bd.end_date).format("d")}}</b></p>
+                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("d")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j">
                             <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>

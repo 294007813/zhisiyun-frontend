@@ -1,21 +1,21 @@
 <template>
 <div class="contract">
     <ul class="to" v-if="fito">
-        <h6>合同<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou"></i></h6>
         <li>
-            <p><b>{{da.n1}}</b>份</p>
-            <span>已签合同</span>
+            <p><b>{{da.n1}}</b>{{$t("index.numbers")}}</p>
+            <span>{{$t("index.signed_contract")}}</span>
         </li>
         <li>
-            <p><b>{{da.h.years ||"-"}}</b>年<b>{{da.h.months||"-"}}</b>月<b>{{da.h.days||"-"}}</b>天</p>
-            <span>合同有效期还剩</span>
+            <p><b>{{da.h.years ||"-"}}</b>{{$t("index.year")}}<b>{{da.h.months||"-"}}</b>{{$t("index.month")}}<b>{{da.h.days||"-"}}</b>{{$t("index.day")}}</p>
+            <span>{{$t("index.contract_still_valid")}}</span>
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
-        <h6>协议<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.agreement")}}<i class="iconfont iconyoujiantou"></i></h6>
         <li>
-            <p><b>{{da.n2}}</b>份</p>
-            <span>已签协议</span>
+            <p><b>{{da.n2}}</b>{{$t("index.numbers")}}</p>
+            <span>{{$t("index.signed_agreement")}}</span>
         </li>
     </ul>
 </div>

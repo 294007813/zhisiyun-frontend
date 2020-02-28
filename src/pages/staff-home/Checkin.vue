@@ -1,41 +1,41 @@
 <template>
     <div class="checkin">
         <ul class="sta" v-if="fich">
-            <h5>本月考勤统计<i class="iconfont iconyoujiantou"></i></h5>
+            <h5>{{$t("index.attendance_statistics_month")}}<i class="iconfont iconyoujiantou"></i></h5>
             <li v-if="fich.checkin">
-                <p>{{kq.cq}}<b>天</b></p>
-                <span>出勤天数</span>
+                <p>{{kq.cq}}<b>{{$t("index.day")}}</b></p>
+                <span>{{$t("index.attendance_days")}}</span>
             </li>
             <li v-if="fich.leave">
-                <p>{{kq.qj}}<b>天</b></p>
-                <span>请假</span>
+                <p>{{kq.qj}}<b>{{$t("index.day")}}</b></p>
+                <span>{{$t("index.leaves")}}</span>
             </li>
             <li v-if="fich.late">
-                <p>{{kq.cd}}<b>次</b></p>
-                <span>迟到早退</span>
+                <p>{{kq.cd}}<b>{{$t("index.nums")}}</b></p>
+                <span>{{$t("index.late_leave")}}</span>
             </li>
             <li v-if="fich.miss">
-                <p>{{kq.qk}}<b>次</b></p>
-                <span>缺卡</span>
+                <p>{{kq.qk}}<b>{{$t("index.nums")}}</b></p>
+                <span>{{$t("index.absence")}}</span>
             </li>
         </ul>
         <ul class="balance" v-if="fiba">
-            <h5>假期余额<i class="iconfont iconyoujiantou"></i></h5>
+            <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou"></i></h5>
             <li v-if="fiba.year">
-                <p>{{bl.year}}<b>时</b></p>
-                <span>年假余额</span>
+                <p>{{bl.year}}<b>{{$t("index.hour")}}</b></p>
+                <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
             <li v-if="fiba.rest">
-                <p>{{bl.exchange}}<b>时</b></p>
-                <span>调休假余额</span>
+                <p>{{bl.exchange}}<b>{{$t("index.hour")}}</b></p>
+                <span>{{$t("index.Balancevacationadjustment")}}</span>
             </li>
         </ul>
         <ul class="flow" v-if="fifl">
-            <h5>考勤流程<i class="iconfont iconyoujiantou"></i></h5>
-            <li v-if="fifl.leave"><el-button size="small" type="primary" plain>请假</el-button></li>
-            <li v-if="fifl.overtime"><el-button size="small" type="primary" plain>加班</el-button></li>
-            <li v-if="fifl.trip"><el-button size="small" type="primary" plain>出差</el-button></li>
-            <li v-if="fifl.official"><el-button size="small" type="primary" plain>公干</el-button></li>
+            <h5>{{$t("index.attendance_process")}}<i class="iconfont iconyoujiantou"></i></h5>
+            <li v-if="fifl.leave"><el-button size="small" type="primary" plain>{{$t("index.leaves")}}</el-button></li>
+            <li v-if="fifl.overtime"><el-button size="small" type="primary" plain>{{$t("index.overtime")}}</el-button></li>
+            <li v-if="fifl.trip"><el-button size="small" type="primary" plain>{{$t("index.on_business_trip")}}</el-button></li>
+            <li v-if="fifl.official"><el-button size="small" type="primary" plain>{{$t("index.in_business")}}</el-button></li>
         </ul>
     </div>
 </template>
