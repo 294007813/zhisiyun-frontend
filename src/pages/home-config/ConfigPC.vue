@@ -266,7 +266,10 @@ export default {
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             let samerow= rowind == torow, samecol=colind== tocol, sameall= rowind == torow&& colind== tocol;
             console.log("torow, tocol", torow, tocol)
-            if(sameall || torow>=this.showlinenum || l[torow][tocol].fixed){
+            if(torow>=this.showlinenum){
+                torow= this.showlinenum-1
+            }
+            if(sameall || l[torow][tocol].fixed){
                 return
             }
             if(item.long){
