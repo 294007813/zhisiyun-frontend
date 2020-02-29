@@ -6,7 +6,10 @@
             <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
                  :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
             :ref="'drag-'+citem.code">
-                <div class="content" v-drag="{ cb: citem.fixed? false: movedone, exclude: 'button', item:citem, rowind, colind}">
+                <div class="content" v-drag="{
+                    donecb: citem.fixed? false: movedone,
+                    movcb: moving,
+                    exclude: 'button', item:citem, rowind, colind}">
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
                     </p>
@@ -260,6 +263,9 @@ export default {
         //         el.style.top= this.lineHeight * torow + 'px'
         //     }
         // },
+        moving(){
+
+        },
         movedone({x, y, item, rowind, colind}) {
             // console.log(x, y, item)
             let l= this.list.show

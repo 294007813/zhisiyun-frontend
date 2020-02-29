@@ -67,6 +67,7 @@ export default {
     },
     mounted() {
         this.getPc()
+
         this.getMobile()
         // for(let key in confmobile){
         //     this.toupdate({
@@ -75,6 +76,7 @@ export default {
         //         datas: confmobile[key]
         //     })
         // }
+        // this.$set(this.confm,  "home", this.getmd(confmobile.home))
     },
     methods:{
         getPc(){
@@ -88,9 +90,21 @@ export default {
                     flag: "Mobile", type
                 }}).then(data=>{
                     // console.log(type, this.confm[type], data.conf)
-                this.$set(this.confm,  type, data.conf)
+                this.$set(this.confm,  type, this.getmd(data.conf))
                     // this.confm[type]= data.conf
             })
+        },
+        getmd(arr){
+            arr.forEach((mod)=>{
+                _.mapObject(mod.pages,(pa, pak)=>{
+                    let obj={}
+                    pa.fields.forEach((it)=>{
+                        Object.assign(obj, it)
+                    })
+                    pa.fields= obj
+                })
+            })
+            return arr
         },
         tosave(data, cb){
             this.$axios.post("/api/feishu_index_page/homePageConfControl/save",data,{dataKey: "msg"}).then(data=>{
@@ -106,7 +120,7 @@ export default {
                 if(cb) cb()
             })
         },
-        getmd(){
+        setmd(){
             let res={}
             for(let key in confmobile){
                 // console.log("key", "["+key+"]")
@@ -120,9 +134,11 @@ export default {
                     _.mapObject(mod.pages,(pa, pak)=>{
                         let arr=[]
                         _.mapObject(pa.fields, (fi, fik)=>{
-                            arr.push(fi)
+                            // console.log("fi, fik", fi, fik)
+                            arr.push({[fik]:fi})
                         })
                         pa.fields= arr
+                        // console.log("arr", arr, pa.fields)
                     })
                 })
                 res[key]= arr
@@ -138,8 +154,8 @@ export default {
                             "flag":"PC",
                             datas: {home: this.$refs.pchome.list}
                         })
-                        let mdata= this.getmd()
-            console.log("mdata", mdata)
+                        let mdata= this.setmd()
+            // console.log("mdata", mdata)
                         for(let key in mdata){
                             this.tosave({
                                 "flag":"Mobile",
@@ -154,7 +170,7 @@ export default {
         },
         update(){
             this.$msgbox.confirm( "",{
-                title: "确定要强制更新所有员工的配置？",
+                title: "确定要强制更新所有员工的配置和布局？",
                 message: "强制更新后不可撤回，请谨慎操作。",
                 callback:(action)=>{
                     if(action=="confirm"){
@@ -163,7 +179,7 @@ export default {
                             datas: {home: this.$refs.pchome.list},
                             // datas: confpc,
                         })
-                        let mdata= this.getmd()
+                        let mdata= this.setmd()
                         for(let key in mdata){
                             this.toupdate({
                                 "flag":"Mobile",
