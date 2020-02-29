@@ -158,14 +158,14 @@ export default {
             //     })
             //     item.fields= obj
             // }
-            _.mapObject(item.pages,(it, key)=>{
-                let obj= {}
-                it.fields.forEach((fi)=>{
-                    // console.log(fi)
-                    Object.assign(obj, fi)
-                })
-                it.fields= obj
-            })
+            // _.mapObject(item.pages,(it, key)=>{
+            //     let obj= {}
+            //     it.fields.forEach((fi)=>{
+            //         // console.log(fi)
+            //         Object.assign(obj, fi)
+            //     })
+            //     it.fields= obj
+            // })
             this.$refs.modsetup.set(item)
 
         },

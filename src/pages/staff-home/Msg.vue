@@ -63,7 +63,7 @@ export default {
         getData(status= 0){
             this.$axios.get("/api/feishu/news/newslist",{params:{status}}).then(data=>{
                 this[status? "at": "gt"]= data
-                this.gt.list=[{},{},{}]
+                // this.gt.list=[{},{},{}]
             })
         },
     }

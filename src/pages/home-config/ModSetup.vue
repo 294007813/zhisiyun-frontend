@@ -11,7 +11,7 @@
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
             <div class="item long" v-if="tagName(tk)">
                 <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
-                <el-checkbox :class="['check-tag', {disable: admin}]"
+                <el-checkbox :class="['check-tag', {disable: false}]"
                              v-model="tag.show"
                              @change="cltitle($event,tag)">
                     {{tagName(tk)}}</el-checkbox>
@@ -21,7 +21,7 @@
                     <i class="fa fa-times-circle" v-if="admin" @click="delitem(tag, key)"></i>
                     <el-checkbox
                             v-model="tag.fields[key]"
-                            :class="['check-tag', {disable: admin}]"
+                            :class="['check-tag', {disable: false}]"
                             @change="clitem($event,tag, key)">
                         {{tagName(tk,key)}}</el-checkbox>
                 </div>
@@ -106,13 +106,13 @@ export default {
             return name
         },
         set(val){
-            console.log("this.mod", JSON.stringify(val))
+            // console.log("this.mod", JSON.stringify(val))
             this.mod= val
         },
         cltitle(val, tag){
             // console.log(tag.show)
             if(this.admin){
-                return
+                // return
             }
             if(!val){
                 for(let k in tag.fields){
@@ -123,7 +123,7 @@ export default {
         clitem(val, tag, key){
             // console.log(tag.fields[key])
             if(this.admin){
-                return
+                // return
             }
             if(tag.fields[key]){
                 tag.show= true
