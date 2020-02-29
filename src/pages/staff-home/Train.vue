@@ -1,7 +1,7 @@
 <template>
 <div class="train">
     <ul class="to" v-if="fito">
-        <h6>{{$t("index.training_num")}}<i v-if="fito.more" class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.training_num")}}<i v-if="fito.more" class="iconfont iconyoujiantou" @click="$f.href('/admin/course/train_plan/mylist')"></i></h6>
         <li v-if="fito.participate">
             <p><b>{{to.trainingRecord_number||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.in_train")}}</span>
@@ -12,7 +12,7 @@
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
-        <h6>{{$t("index.process_num")}}<i v-if="fibo.more" class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.process_num")}}<i v-if="fibo.more" class="iconfont iconyoujiantou" @click="$f.href('/admin/wf/process_instance/mylist')"></i></h6>
         <li v-if="fibo.start">
             <p><b>{{bo.start ||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.self_init")}}</span>
