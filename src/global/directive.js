@@ -13,7 +13,7 @@ Vue.directive('drag', {
         // let top = el.pageX + 'px'
         // let left = el.pageY + 'px'
         let params= binding.value
-        let {donecb, movcb, only, className, exclude}= params
+        let {donecb, movecb, only, className, exclude}= params
         let mx= only== 'x'||!only,  my= only== 'y'|| !only;
         let disx = null
         let disy = null
@@ -26,10 +26,12 @@ Vue.directive('drag', {
             el.classList.add(className|| "moving")
         }
         function mounemove(e) {
-            clearTimeout(timer)
-            timer = setTimeout(() => {
-                movcb({x: e.pageX, y: e.pageY, ...params})
-            }, interval)
+            if(movecb){
+                clearTimeout(timer)
+                timer = setTimeout(() => {
+                    movecb({x: e.pageX, y: e.pageY, ...params})
+                }, interval)
+            }
             el.style.left = mx&& (e.pageX - disx + 'px');
             el.style.top = my&& (e.pageY - disy + 'px');
         }

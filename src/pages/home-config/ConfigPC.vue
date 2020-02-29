@@ -8,8 +8,10 @@
             :ref="'drag-'+citem.code">
                 <div class="content" v-drag="{
                     donecb: citem.fixed? false: movedone,
-                    movcb: moving,
-                    exclude: 'button', item:citem, rowind, colind}">
+                    movecb: moving,
+                    exclude: 'button',
+                    interval: 100,
+                    item:citem, rowind, colind}">
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
                     </p>
@@ -23,7 +25,7 @@
             </div>
         </template>
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-        <i class="ins-cursor" v-show="cursorto.show" :style="{left: cursorto.left , top: cursorto.top}"></i>
+        <i class="ins-cursor" :style="cursorto"></i>
     </div>
     <div class="head">未添加模块</div>
     <div class="disable-body">
@@ -84,7 +86,7 @@ export default {
             },
             modsetupShow: false,
             cursorto: {
-                show: false,
+                display: "none",
                 top: "0",
                 left: "0"
             }
@@ -270,18 +272,24 @@ export default {
         //     }
         // },
         moving({x, y, item, rowind, colind}){
+            console.log("moving")
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
-            let top= torow * this.lineHeight + "px"
-            let left= l[torow][tocol].long? 0: (l[torow].length<=2? (torow *33.33)+"%" : (torow *50)+"%");
-            this.cursorto={
-                show: true,
-                top,
-                left
+            if(torow>=this.showlinenum){
+                torow= this.showlinenum-1
             }
+            if( l[torow][tocol].fixed) return
+            let top= torow * this.lineHeight + "px"
+            let left= l[torow][tocol].long|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
+            console.log("torow, tocol",  torow, tocol)
+            console.log("top, left",  top, left)
+            this.$set(this.cursorto, "display", "block")
+            this.$set(this.cursorto, "left", left)
+            this.$set(this.cursorto, "top", top)
         },
         movedone({x, y, item, rowind, colind}) {
-            this.cursorto.show= false
+            console.log("movedone")
+            this.$set(this.cursorto, "display", "none")
             // console.log(x, y, item)
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})

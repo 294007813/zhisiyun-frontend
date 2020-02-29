@@ -1,10 +1,10 @@
 <template>
 <div class="idea">
-    <h5>意见箱</h5>
+    <h5>{{$t("index.suggestion_box")}}</h5>
     <div>
         <img src="~as/img/staff-home/idea.svg">
-        <p>已有<b>{{num}}</b>条意见</p>
-        <el-button size="small" type="primary" plain class="but">投递意见</el-button>
+        <p>{{$t("index.exist")}}<b>{{num}}</b>条意见</p>
+        <el-button size="small" type="primary" plain class="but">{{$t("index.delivery_advice")}}</el-button>
     </div>
 </div>
 </template>

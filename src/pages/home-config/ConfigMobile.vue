@@ -5,9 +5,14 @@
             <h3>已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></h3>
         </div>
         <ul class="drag-body" ref="dragbody">
-            <li v-for="(item, ind) in left" :key="item.name" :class=" {fixed: item.fix}"
+            <li v-for="(item, ind) in left" :key="'l-'+ind" :class=" {fixed: item.fix}"
                 :ref="'drag-'+item.name" :style="{top: item.top +'px'}">
-                <div class="content" v-drag="{ cb: item.fix? false: movedone, item, rowind: ind, only: 'y', exclude: 'button'}">
+                <div class="content" v-drag="{
+                    donecb: item.fix? false: movedone,
+                    movecb: moving,
+                    interval: 100,
+                    item, rowind: ind, only: 'y',
+                    exclude: 'button'}">
                     <p class="name">{{item.name}}
 <!--                        <b>{{item.subtitle}}</b>-->
                     </p>
@@ -20,6 +25,7 @@
                 </div>
             </li>
             <div class="row" v-for="ind in showlinenum" :key="ind"></div>
+            <i class="ins-cursor" :style="cursorto"></i>
         </ul>
     </div>
     <div class="right">
@@ -64,12 +70,16 @@ export default {
                 show:[],
                 hide:[],
             },
+            cursorto: {
+                display: "none",
+                top: "0",
+            }
         }
     },
     computed: {
-        // hidelinenum() {
-        //     return this.list.hide.length
-        // },
+        left(){
+            return this.list.show
+        },
         lineHeight() {
             return 70
         },
@@ -82,31 +92,16 @@ export default {
                 left: pos.left
             }
         },
-        left() {
-            // let setL= (l, hide)=> {
-            //     let tl= al[l]
-            //     for(let si in tl){
-            //         let i = parseInt(si)
-            //         tl[i].top= i * this.lineHeight;
-            //     }
-            // }
-
-            let tl= this.list.show
-            for(let si in tl){
-                let i = parseInt(si)
-                tl[i].top= i * this.lineHeight;
-            }
-            // setL("sl");
-            return tl
-        },
         showlinenum() {
             return this.list.show.length
         },
     },
     watch:{
         conf(val){
-            console.log("watch")
             this.init()
+        },
+        left(){
+            this.calcheight(this.list.show)
         }
     },
     mounted() {
@@ -117,27 +112,20 @@ export default {
     },
     methods: {
         init(){
-            let al= {sl: [], hl: []}
-            this.conf.forEach((it)=>{
+            JSON.parse(JSON.stringify( this.conf)).forEach((it)=>{
                 if(it.disable){
-                    al.sl.push(it)
+                    this.list.show.push(it)
                 }else{
-                    al.hl.push(it)
+                    this.list.hide.push(it)
                 }
             })
-
-
-            let setL= (l, hide)=> {
-                let tl= al[l]
-                for(let si in tl){
-                    let i = parseInt(si)
-                    tl[i].top= i * this.lineHeight;
-                }
+            this.calcheight(this.list.show)
+        },
+        calcheight(l){
+            for(let li in l){
+                let i = parseInt(li)
+                l[i].top= i * this.lineHeight;
             }
-            setL("sl");
-
-            // setL("hl", true);
-            this.list= {show: al.sl, hide: al.hl}
         },
         remove(ind, show){
             let l= (!!show)? "hide" : "show"
@@ -172,13 +160,29 @@ export default {
         getMovePos(y){
             let top = y - this.bodyInfo.top;
             let torow = Math.floor(top / this.lineHeight);
-            console.log(y, this.bodyInfo.top)
+            // console.log(y, this.bodyInfo.top)
             torow= torow<0 ? 0 :torow
             return torow
         },
-        movedone({y, rowind}) {
-            // console.log(x, y, item)
+        moving({y, rowind}){
+            console.log("moving")
+            let l= this.list.show
             let torow = this.getMovePos(y)
+            if(torow>=this.showlinenum){
+                torow= this.showlinenum-1
+            }
+            if(!torow || l[torow].fixed) return
+            let top= torow * this.lineHeight+ 10 + "px"
+            // console.log("torow,",  torow)
+            // console.log("top, ",  top)
+            this.$set(this.cursorto, "display", "block")
+            this.$set(this.cursorto, "top", top)
+        },
+        movedone({y, rowind, item}) {
+            // console.log("movedone")
+            this.$set(this.cursorto, "display", "none")
+            let torow = this.getMovePos(y)
+
             let samerow= rowind == torow;
             let l= this.list.show
             if(torow>=this.showlinenum ){
@@ -187,9 +191,10 @@ export default {
             if(samerow||  l[torow].fix){
                 return
             }
-            // console.log(y, rowind, torow)
-            let item= l.splice(rowind, 1)[0]
-            l.splice(torow, 0, item)
+            // console.log("rowind item torow", rowind, item, torow)
+            let it= l.splice(rowind, 1)[0]
+            l.splice(torow, 0, it)
+            this.$set(this.list, "show", l)
         },
 
     },
@@ -241,6 +246,30 @@ $bwith: 460px;
             position: relative;
             .row {
                 height: 70px;
+            }
+            .ins-cursor{
+                width: 420px;
+                height: 2px;
+                background-color: red;
+                display: block;
+                position: absolute;
+                left: 18px;
+                top: 0;
+                &:before, &:after{
+                    content: " ";
+                    width: 2px;
+                    height: 6px;
+                    display: block;
+                    position: absolute;
+                    top: -2px;
+                    left: 0;
+                    background-color: red;
+                }
+                &:after{
+                    background-color: red;
+                    left: auto;
+                    right: 0;
+                }
             }
             li{
                 width: 100%;

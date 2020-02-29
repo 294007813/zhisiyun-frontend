@@ -2,7 +2,7 @@
 <el-dialog
         custom-class="modsetup" width="600px"
         :visible="visible" :before-close="close">
-    <p slot="title" class="title">{{mod.title ||""}}模块项目配置
+    <p slot="title" class="title">{{mod.title || mod.name ||""}} 项目配置
         <span v-if="admin">已添加的可选项员工可自行配置</span>
         <span v-else>选中的项目在首页进行展示</span>
     </p>
