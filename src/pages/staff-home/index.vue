@@ -24,7 +24,7 @@
 
     <div class="bottom">
         <router-link to="/staff-config">
-            <i class="iconfont iconshezhi"></i>首页配置
+            <i class="iconfont iconshezhi"></i>{{$t("index.page_config")}}
         </router-link>
     </div>
 </div>

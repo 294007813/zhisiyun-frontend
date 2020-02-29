@@ -1,6 +1,6 @@
 <template>
 <div class="often">
-    <h5>常用应用</h5>
+    <h5>{{$t("index.common_application")}}</h5>
     <ul>
         <li v-for="(item, key) in list" :key="key" v-show="!!item.uf_status">
             <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
@@ -11,7 +11,7 @@
             :visible.sync="dishow"
             custom-class="dialog"
             width="630px">
-        <p slot="title" class="title">添加应用</p>
+        <p slot="title" class="title">{{$t("index.add_app")}}</p>
         <div class="content">
             <ul style="padding-top: 10px">
                 <li v-for="(item, key) in list" :key="key" @click="change(item)">
@@ -21,8 +21,8 @@
             </ul>
         </div>
         <p slot="footer" class="footer">
-            <el-button plain size="small" @click="dishow= false">取消</el-button>
-            <el-button type="primary" size="small" @click="save">保存</el-button>
+            <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
+            <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
 

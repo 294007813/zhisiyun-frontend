@@ -1,6 +1,6 @@
 <template>
 <div class="gtasks">
-    <h5>待办事宜 <el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
+    <h5>{{$t("index.todo")}}<el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul">

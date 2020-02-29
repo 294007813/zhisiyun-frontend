@@ -1,29 +1,29 @@
 <template>
 <div class="train">
     <ul class="to" v-if="fito">
-        <h6>培训统计<i v-if="fito.more" class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.training_num")}}<i v-if="fito.more" class="iconfont iconyoujiantou"></i></h6>
         <li v-if="fito.participate">
-            <p><b>{{to.trainingRecord_number||0}}</b>次</p>
-            <span>参与培训</span>
+            <p><b>{{to.trainingRecord_number||0}}</b>{{$t("index.nums")}}</p>
+            <span>{{$t("index.in_train")}}</span>
         </li>
         <li v-if="fito.doing">
-            <p><b>{{to.publicTraining_number||0}}</b>场</p>
-            <span>进行中的活动</span>
+            <p><b>{{to.publicTraining_number||0}}</b>{{$t("index.nums")}}</p>
+            <span>{{$t("index.on_active")}}</span>
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
-        <h6>流程统计<i v-if="fibo.more" class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.process_num")}}<i v-if="fibo.more" class="iconfont iconyoujiantou"></i></h6>
         <li v-if="fibo.start">
-            <p><b>{{bo.start ||0}}</b>条</p>
-            <span>我发起的</span>
+            <p><b>{{bo.start ||0}}</b>{{$t("index.nums")}}</p>
+            <span>{{$t("index.self_init")}}</span>
         </li>
         <li v-if="fibo.handle">
-            <p><b>{{bo.process||0}}</b>条</p>
-            <span>我处理的</span>
+            <p><b>{{bo.process||0}}</b>{{$t("index.nums")}}</p>
+            <span>{{$t("index.self_deal")}}</span>
         </li>
         <li v-if="fibo.doing">
-            <p><b>{{bo.ing||0}}</b>条</p>
-            <span>进行中的</span>
+            <p><b>{{bo.ing||0}}</b>{{$t("index.nums")}}</p>
+            <span>{{$t("index.ongoing")}}</span>
         </li>
     </ul>
 </div>
