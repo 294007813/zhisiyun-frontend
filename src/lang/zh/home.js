@@ -121,7 +121,21 @@ export default  {
     "number":"枚",
     "people":"人",
     "numbers":"份",
-    "year":"年"
+    "year":"年",
+    "exist":"已有",
+    "page_config":"首页配置",
+    "add_app":"添加应用",
+    "perform":"我的绩效",
+    "enter_perform":"进入绩效首页",
+    "real_wage":"实发工资",
+    "in_train":"参与培训",
+    "on_active":"进行中的活动",
+    "self_init":"我发起的",
+    "self_deal":"我处理的",
+    "ongoing":"进行中的",
+    "click_employee_cnf":"点击进入员工配置",
+    "click_admin_cnf":"点击进入管理员配置",
+    "click_homepage":"点击进入首页"
   },
   //导航
   "dh":{

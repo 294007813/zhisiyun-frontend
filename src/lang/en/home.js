@@ -121,7 +121,22 @@ export default {
     "number":"number",
     "people":"people",
     "numbers":"number",
-    "year":"year"
+    "year":"year",
+    "exist":"Already existing",
+    "page_config":"Home page",
+    "add_app":"Add application",
+    "perform":"My performance",
+    "enter_perform":"Enter performance Homepage",
+    "real_wage":"Real wages",
+    "in_train":"in training",
+    "on_active":"Ongoing activities",
+    "self_init":"Self initiated",
+    "self_deal":"Handled by myself",
+    "ongoing":"Ongoing",
+    "click_employee_cnf":"Click to enter employee configuration",
+    "click_admin_cnf":"Click to enter administrator configuration",
+    "click_homepage":"Click to enter the homepage" 
+
   },
   //导航
   "dh":{

@@ -1,6 +1,6 @@
 <template>
 <div class="skill-star">
-    <h5>技能之星</h5>
+    <h5>{{$t("index.skill_star")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
               v-if="field.query" v-model="query"></el-input>
     <div class="db">
@@ -15,8 +15,8 @@
                         <span>{{`${item.ou_name}/${item.position_name}`}}</span>
                     </div>
                     <ul class="info">
-                        <p><b>{{getStar(item)}}</b>个赞 <i v-if="field.like" class="fa fa-thumbs-up"></i></p>
-                        <li v-for="(sk, j) in item.my_skills">{{sk.skill.skill_name}}<b>{{sk.score}}个赞</b></li>
+                        <p><b>{{getStar(item)}}</b>{{$t("index.praise")}} <i v-if="field.like" class="fa fa-thumbs-up"></i></p>
+                        <li v-for="(sk, j) in item.my_skills">{{sk.skill.skill_name}}<b>{{sk.score}}{{$t("index.praise")}}</b></li>
                     </ul>
                 </div>
             </swiper-slide>

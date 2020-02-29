@@ -1,14 +1,14 @@
 <template>
 <div class="perf">
-    <h5>我的绩效</h5>
+    <h5>{{$t("index.perform")}}</h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="当前绩效" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
-                    v-if="finow.enter">进入绩效首页</el-button>
+                    v-if="finow.enter">{{$t("index.enter_perform")}}</el-button>
                 <h3 class="od">{{od.name}}</h3>
-                <p class="od">绩效分数：<span>{{od.value}}</span></p>
+                <p class="od">{{$t("index.performance_scores")}}<span>{{od.value}}</span></p>
             </div>
         </el-tab-pane>
         <el-tab-pane label="近期趋势" name="trend" v-if="fitrend">

@@ -1,20 +1,20 @@
 <template>
 <div class="salary">
-    <h5>薪资信息<i class="iconfont iconyanjing"></i></h5>
+    <h5>{{$t("index.salary_information")}}<i class="iconfont iconyanjing"></i></h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
         <el-tab-pane label="月度" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
                 <template v-for="(arr, key) in mon">
-                    <p class="title">{{key}}年</p>
+                    <p class="title">{{key}}{{$t("index.year")}}</p>
                     <ul>
-                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}月</label><p>{{item.amount}}</p></li>
+                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{item.amount}}</p></li>
                     </ul>
                 </template>
             </div>
         </el-tab-pane>
         <el-tab-pane label="趋势" name="trend" v-if="fitrend">
             <div class="trend" v-if="ismounted && showTrend ">
-                <p class="title">2019年10月 <span>实发工资：</span><b>9,000.00</b></p>
+                <p class="title">2019年10月 <span>{{$t("index.real_wage")}}：</span><b>9,000.00</b></p>
                 <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/>
             </div>
         </el-tab-pane>
@@ -32,7 +32,7 @@
 
             <ul class="sta" v-if="sta">
                 <template v-for="(item, key) in sta.huizong">
-                    <li><label>累计发放</label><p>{{sta.sum_month}} 个月</p></li>
+                    <li><label>{{$t("index.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
                     <li><label>{{item.name}}</label><p>{{item.count}}</p></li>
                 </template>
             </ul>

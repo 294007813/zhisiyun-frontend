@@ -1,6 +1,6 @@
 <template>
 <div class="msg">
-    <h5>消息动态 <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
+    <h5>{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
