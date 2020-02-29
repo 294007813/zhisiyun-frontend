@@ -4,7 +4,7 @@ import cookie from 'js-cookie'
 import conf from '~/proj-config'
 let {baseApi} = conf
 // console.log("conf", conf)
-console.log("axios", conf.baseApi)
+// console.log("axios", conf.baseApi)
 
 let axios= Axios.create({
     baseURL: baseApi,

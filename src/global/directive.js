@@ -28,7 +28,7 @@ Vue.directive('drag', {
         function mounemove(e) {
             clearTimeout(timer)
             timer = setTimeout(() => {
-                movcb({x: e.pageX, y: e.pageY, item, ...params})
+                movcb({x: e.pageX, y: e.pageY, ...params})
             }, interval)
             el.style.left = mx&& (e.pageX - disx + 'px');
             el.style.top = my&& (e.pageY - disy + 'px');

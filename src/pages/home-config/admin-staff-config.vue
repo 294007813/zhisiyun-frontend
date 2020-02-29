@@ -129,7 +129,7 @@ export default {
                 if(!ref){
                     continue
                 }
-                let arr= ref.list.show.concat(ref.list.hide)
+                let arr= JSON.parse(JSON.stringify(ref.list.show)).concat(JSON.parse(JSON.stringify(ref.list.hide)))
                 arr.forEach((mod)=>{
                     _.mapObject(mod.pages,(pa, pak)=>{
                         let arr=[]

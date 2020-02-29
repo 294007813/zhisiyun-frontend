@@ -23,6 +23,7 @@
             </div>
         </template>
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
+        <i class="ins-cursor" v-show="cursorto.show" :style="{left: cursorto.left , top: cursorto.top}"></i>
     </div>
     <div class="head">未添加模块</div>
     <div class="disable-body">
@@ -82,6 +83,11 @@ export default {
                 disable: [],
             },
             modsetupShow: false,
+            cursorto: {
+                show: false,
+                top: "0",
+                left: "0"
+            }
         }
     },
     computed: {
@@ -263,15 +269,25 @@ export default {
         //         el.style.top= this.lineHeight * torow + 'px'
         //     }
         // },
-        moving(){
-
+        moving({x, y, item, rowind, colind}){
+            let l= this.list.show
+            let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
+            let top= torow * this.lineHeight + "px"
+            let left= l[torow][tocol].long? 0: (l[torow].length<=2? (torow *33.33)+"%" : (torow *50)+"%");
+            this.cursorto={
+                show: true,
+                top,
+                left
+            }
         },
         movedone({x, y, item, rowind, colind}) {
+            this.cursorto.show= false
             // console.log(x, y, item)
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             let samerow= rowind == torow, samecol=colind== tocol, sameall= rowind == torow&& colind== tocol;
-            console.log("torow, tocol", torow, tocol)
+            // console.log("torow, tocol", torow, tocol)
+            // console.log("x, y", x, y)
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
@@ -389,7 +405,30 @@ $row-height: $bhv+$phv+px;
         .row {
             height: $row-height;
         }
-
+        .ins-cursor{
+            width: 2px;
+            height: $block-height;
+            background-color: red;
+            display: block;
+            position: absolute;
+            left: 1px;
+            top: 0;
+            &:before, &:after{
+                content: " ";
+                width: 6px;
+                height: 2px;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: -2px;
+                background-color: red;
+            }
+            &:after{
+                background-color: red;
+                top: auto;
+                bottom: 0;
+            }
+        }
         .drag-block{
             /*width: 470px;*/
             height: $block-height;
