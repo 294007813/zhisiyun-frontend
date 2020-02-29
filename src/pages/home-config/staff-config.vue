@@ -56,7 +56,7 @@ export default {
                     })
                 }
             }, (err, res)=> {
-                console.log(res)
+                // console.log(res)
                 let {user, admin} = res, distr="", my={}
                 _.mapObject(admin.disable,(it, key)=>{
                     distr+= "-"+it.code
@@ -143,20 +143,20 @@ export default {
         },
 
         save(){
-            this.$msgbox.confirm( "",{
-                title: "确定保存？",
-                callback:(action)=>{
-                    if(action=="confirm"){
-                        this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
+            // this.$msgbox.confirm( "",{
+            //     title: "确定保存？",
+            //     callback:(action)=>{
+            //         if(action=="confirm"){
+                        this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_people",{
                             "flag":"PC",
                             datas: {home: this.$refs.pchome.list},
                             // datas: conf,
                         },{dataKey: "msg"}).then(data=>{
                             this.$msg({message: data});
                         })
-                    }
-                }
-            })
+            //         }
+            //     }
+            // })
         }
     }
 }

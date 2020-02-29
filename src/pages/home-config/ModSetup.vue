@@ -14,7 +14,7 @@
                 <el-checkbox :class="['check-tag', {disable: false}]"
                              v-model="tag.show"
                              @change="cltitle($event,tag)">
-                    {{tagName(tk)}}</el-checkbox>
+                    {{tagName(tk)|| tk}}</el-checkbox>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
@@ -23,7 +23,7 @@
                             v-model="tag.fields[key]"
                             :class="['check-tag', {disable: false}]"
                             @change="clitem($event,tag, key)">
-                        {{tagName(tk,key)}}</el-checkbox>
+                        {{tagName(tk,key)||tk}}</el-checkbox>
                 </div>
             </template>
         </div>
@@ -33,12 +33,12 @@
             <div class="item long" v-if="!tag.fixed && tagName(tk)">
                 <i class="fa fa-plus-circle"
                    v-if="!tag[an]" @click="deltitle(tag, true)"></i>
-                <p class="check-tag">{{tagName(tk)}}</p>
+                <p class="check-tag">{{tagName(tk)||tk}}</p>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in notlist(tag)" :key="key">
                     <i class="fa fa-plus-circle" @click="delitem(tag, key, true)"></i>
-                    <p class="check-tag">{{tagName(tk,key)}}</p>
+                    <p class="check-tag">{{tagName(tk,key)||tk}}</p>
                 </div>
             </template>
         </ul>
