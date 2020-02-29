@@ -2,7 +2,7 @@
 <div class="often">
     <h5>{{$t("index.common_application")}}</h5>
     <ul>
-        <li v-for="(item, key) in list" :key="key" v-show="!!item.uf_status">
+        <li v-for="(item, key) in list" :key="key" v-show="!!item.uf_status" @click="$f.href(`${item.url}`)">
             <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
         <li class="add" @click="add"></li>
     </ul>
@@ -78,8 +78,18 @@ export default {
             item.uf_status= 1- item.uf_status
         },
         save(){
-            this.$axios.post("/api/feishu/index/myapp/update", this.list).then(data=>{
-                this.list= data
+            let arr = [];
+            for (let i of this.list) {
+                if (i.uf_status) arr.push({
+                    save_id: i.menu_code,
+                    uf_status_pc: i.uf_status,
+                    sequence_pc: i.sequence_pc
+                })
+            }
+
+            this.$axios.post("/api/feishu/index/myapp/update", {data: arr}).then(data=>{
+                // this.list= data
+                this.dishow = false
             })
         }
     }
