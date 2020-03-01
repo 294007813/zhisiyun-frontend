@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "serve": "nvm use v12 || vue-cli-service serve -env:dev",
     "dev": "vue-cli-service serve -env:dev",
     "build:ensure": "vue-cli-service build -env:ensure",
     "build": "vue-cli-service build -env:production"
