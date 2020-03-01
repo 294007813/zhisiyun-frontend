@@ -1,7 +1,7 @@
 <template>
     <div class="checkin">
         <ul class="sta" v-if="fich">
-            <h5>{{$t("index.attendance_statistics_month")}}<i class="iconfont iconyoujiantou"></i></h5>
+            <h5>{{$t("index.attendance_statistics_month")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/cardrecord/hr_list_v2')"></i></h5>
             <li v-if="fich.checkin">
                 <p>{{kq.cq}}<b>{{$t("index.day")}}</b></p>
                 <span>{{$t("index.attendance_days")}}</span>
@@ -20,7 +20,7 @@
             </li>
         </ul>
         <ul class="balance" v-if="fiba">
-            <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou"></i></h5>
+            <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/absence/report_emp_leave_list')"></i></h5>
             <li v-if="fiba.year">
                 <p>{{bl.year}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
@@ -31,11 +31,11 @@
             </li>
         </ul>
         <ul class="flow" v-if="fifl">
-            <h5>{{$t("index.attendance_process")}}<i class="iconfont iconyoujiantou"></i></h5>
-            <li v-if="fifl.leave"><el-button size="small" type="primary" plain>{{$t("index.leaves")}}</el-button></li>
-            <li v-if="fifl.overtime"><el-button size="small" type="primary" plain>{{$t("index.overtime")}}</el-button></li>
-            <li v-if="fifl.trip"><el-button size="small" type="primary" plain>{{$t("index.on_business_trip")}}</el-button></li>
-            <li v-if="fifl.official"><el-button size="small" type="primary" plain>{{$t("index.in_business")}}</el-button></li>
+            <h5>{{$t("index.attendance_process")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/cardrecord/my_attend_report')"></i></h5>
+            <li v-if="fifl.leave"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/wf_leave_of_absence/start')">{{$t("index.leaves")}}</el-button></li>
+            <li v-if="fifl.overtime"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/beyond_work/start')">{{$t("index.overtime")}}</el-button></li>
+            <li v-if="fifl.trip"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/work_travel/start')">{{$t("index.on_business_trip")}}</el-button></li>
+            <li v-if="fifl.official"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/work_city/start')">{{$t("index.in_business")}}</el-button></li>
         </ul>
     </div>
 </template>

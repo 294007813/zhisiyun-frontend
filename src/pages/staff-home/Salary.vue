@@ -1,13 +1,13 @@
 <template>
 <div class="salary">
-    <h5>{{$t("index.salary_information")}}<i class="iconfont iconyanjing"></i></h5>
+    <h5>{{$t("index.salary_information")}}<i class="iconfont iconyanjing" @click="checkPassword"></i></h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
         <el-tab-pane label="月度" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
                 <template v-for="(arr, key) in mon">
                     <p class="title">{{key}}{{$t("index.year")}}</p>
                     <ul>
-                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{item.amount}}</p></li>
+                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || item.amount}}</p></li>
                     </ul>
                 </template>
             </div>
@@ -33,7 +33,7 @@
             <ul class="sta" v-if="sta">
                 <template v-for="(item, key) in sta.huizong">
                     <li><label>{{$t("index.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
-                    <li><label>{{item.name}}</label><p>{{item.count}}</p></li>
+                    <li><label>{{item.name}}</label><p>{{hidstr || item.count}}</p></li>
                 </template>
             </ul>
         </el-tab-pane>
@@ -47,6 +47,7 @@ export default {
     props: ["conf"],
     data(){
         return {
+            ishide: true,
             ismounted: false,
             activeTabs: 'mon',
             showTrend: false,
@@ -123,6 +124,9 @@ export default {
         }
     },
     computed:{
+        hidstr(){
+            return this.ishide ? "******" : ''
+        },
         fimon(){
             let data= this.conf.pages.mon
             return data.able && data.show && data.fields
@@ -191,7 +195,34 @@ export default {
 
                 }
             }
+        },
+        checkPassword(){
+            this.$msgbox.confirm( "",{
+                title: "请输入密码",
+                showInput: true,
+                inputPlaceholder: "请输入密码",
+                inputType: "password"
+            }).then(({value}) => {
+                this.$axios.get("/api/feishu/xc/match_password" + "?password_input=" + value).then(data => {
+                    if (!data) {
+                        this.$msg({
+                            message: "系统错误",
+                            type: 'error'
+                        })
+                    } else if (typeof data === 'string') {
+                        this.$msg({
+                            message: data,
+                            type: 'warning'
+                        })
+                    } else {
+                        this.ishide = false
+                    }
+                })
+            })
         }
+    },
+    watch () {
+        this.ishide;
     }
 }
 </script>

@@ -6,7 +6,7 @@
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
-                    v-if="finow.enter">{{$t("index.enter_perform")}}</el-button>
+                    v-if="finow.enter" @click="$f.href('/admin/pm/pm_index/form')">{{$t("index.enter_perform")}}</el-button>
                 <h3 class="od">{{od.name}}</h3>
                 <p class="od">{{$t("index.performance_scores")}}<span>{{od.value}}</span></p>
             </div>
