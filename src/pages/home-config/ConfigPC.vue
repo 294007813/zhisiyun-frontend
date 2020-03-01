@@ -10,7 +10,7 @@
                     donecb: citem.fixed? false: movedone,
                     movecb: moving,
                     exclude: 'button',
-                    interval: 100,
+                    interval: 0,
                     item:citem, rowind, colind}">
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
@@ -32,7 +32,7 @@
         <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
     </div>
     <mod-setup ref="modsetup"
-               :visible="modsetupShow" @close="modsetupShow= false" :admin="admin" modname="home" platform="pc"
+               :visible="modsetupShow" @close="modsetupShow= false" :admin="admin" tabname="home" platform="pc"
     ></mod-setup>
 </div>
 </template>
@@ -272,7 +272,7 @@ export default {
         //     }
         // },
         moving({x, y, item, rowind, colind}){
-            console.log("moving")
+            // console.log("moving")
             let l= this.list.show
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             if(torow>=this.showlinenum){
@@ -281,8 +281,8 @@ export default {
             if( l[torow][tocol].fixed) return
             let top= torow * this.lineHeight + "px"
             let left= l[torow][tocol].long|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
-            console.log("torow, tocol",  torow, tocol)
-            console.log("top, left",  top, left)
+            // console.log("torow, tocol",  torow, tocol)
+            // console.log("top, left",  top, left)
             this.$set(this.cursorto, "display", "block")
             this.$set(this.cursorto, "left", left)
             this.$set(this.cursorto, "top", top)
@@ -291,7 +291,7 @@ export default {
             console.log("movedone")
             this.$set(this.cursorto, "display", "none")
             // console.log(x, y, item)
-            let l= this.list.show
+            let l= JSON.parse(JSON.stringify( this.list.show))
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
             let samerow= rowind == torow, samecol=colind== tocol, sameall= rowind == torow&& colind== tocol;
             // console.log("torow, tocol", torow, tocol)
@@ -303,12 +303,13 @@ export default {
                 return
             }
             if(item.long){
+                console.log("long")
                 let thisrow=l.splice(rowind, 1)[0]
-                console.log("thisrow", thisrow)
+                // console.log("thisrow", thisrow)
                 l.splice(torow,0, thisrow)
             }else{
                 let thiscol=l[rowind].splice(colind, 1)[0]
-                console.log("thiscol", thiscol)
+                // console.log("thiscol", thiscol)
                 if(l[rowind].length==0){
                     l.splice(rowind, 1)
                 }
@@ -324,6 +325,11 @@ export default {
                     }
                 }
             }
+            this.list.show= []
+            this.$nextTick(() => {
+                this.list.show= l
+            })
+
         },
        
     },

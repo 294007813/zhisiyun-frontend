@@ -1,3 +1,9 @@
+import {home} from "../../pages/home-config/config/home";
+import {wtpage} from "../../pages/home-config/config/wtpage";
+import {xcpage} from "../../pages/home-config/config/xcpage";
+import {workpage} from "../../pages/home-config/config/workpage";
+import {minepage} from "../../pages/home-config/config/minepage";
+
 export default  {
   // 首页
   "index": {
@@ -327,5 +333,12 @@ export default  {
     "attendance_page_config":"考勤页配置",
     "salary_page_config":"薪酬页配置",
     "my_page_config":"我的页配置"
+  },
+  mobile:{
+    home: "员工首页",
+    wtpage: "考勤首页",
+    xcpage: "薪酬首页",
+    workpage: "工作首页",
+    minepage: "我的页面"
   }
 }

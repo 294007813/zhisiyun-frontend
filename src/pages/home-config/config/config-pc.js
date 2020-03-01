@@ -158,6 +158,7 @@ export default {
           "title": "消息动态模块",
           "code": "msg",
           "source":false,//是否对应老系统模块 true代表对应上
+          "name": "msg",
           pages:{
             "gt":{
               "name":"未读",

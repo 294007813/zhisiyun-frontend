@@ -2,7 +2,7 @@
 <div class="mobile-config">
     <div class="left">
         <div class="title">
-            <h3>已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></h3>
+            <h3>已添加模块 <span><b>*</b>拖拽模块进行排序布局</span></h3>
         </div>
         <ul class="drag-body" ref="dragbody">
             <li v-for="(item, ind) in left" :key="'l-'+ind" :class=" {fixed: item.fix}"
@@ -10,10 +10,10 @@
                 <div class="content" v-drag="{
                     donecb: item.fix? false: movedone,
                     movecb: moving,
-                    interval: 100,
+                    interval: 0,
                     item, rowind: ind, only: 'y',
                     exclude: 'button'}">
-                    <p class="name">{{item.name}}
+                    <p class="name">{{$t(`tab.${tabname}.modules.${item.name}`)}}
 <!--                        <b>{{item.subtitle}}</b>-->
                     </p>
                     <p class="button">
@@ -33,7 +33,9 @@
         <ul class="hide-body">
             <li v-for="(item, ind) in list.hide" :key="item.name" >
                 <div class="content">
-                    <p class="name">{{item.name}}</p>
+                    <p class="name">
+                        {{$t(`tab.${tabname}.modules.${item.name}`)}}
+                    </p>
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
                                    @click="remove(ind, true)">显示</el-button>
@@ -44,13 +46,15 @@
         </ul>
     </div>
     <mod-setup ref="modsetup" @close="modsetupShow= false"
-               v-bind="{visible: modsetupShow, admin: true, modname, platform: 'mobile'}"
+               v-bind="{visible: modsetupShow, admin: true, tabname, platform: 'mobile'}"
     ></mod-setup>
 </div>
 </template>
 
 <script>
 import ModSetup from "./ModSetup";
+import men  from "./config/en"
+import mzh from "./config/zh"
 export default {
     name: "ConfigMobile",
     components: { ModSetup},
@@ -58,11 +62,12 @@ export default {
         conf: {
             default:()=>[]
         },
-        modname:{
+        tabname:{
             required: true,
         },
     },
     data(){
+        console.log(this)
         return{
             bemounted: false,
             modsetupShow: false,
@@ -196,8 +201,17 @@ export default {
             l.splice(torow, 0, it)
             this.$set(this.list, "show", l)
         },
-
     },
+    i18n: {
+        messages: {
+            en: {
+                tab: men
+            },
+            zh: {
+                tab: mzh
+            }
+        }
+    }
 }
 </script>
 
