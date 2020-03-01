@@ -17,7 +17,7 @@
                     </p>
                     <div class="button">
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                   @click="tohide(rowind, colind, citem)">隐藏</el-button>
+                                   @click.self="tohide(rowind, colind, citem, $event)">隐藏</el-button>
                         <el-button type="primary" size="mini" round
                                    v-if="citem.pages &&Object.keys(citem.pages).length" @click="openModsetup(citem)">配置</el-button>
                     </div>
@@ -162,13 +162,17 @@ export default {
             this.$refs.modsetup.set(item)
 
         },
-        tohide(rowind, colind, citem) {
+        tohide(rowind, colind, citem, e) {
             let s= this.list.show, h= this.list[this.hideKey][0];
             let item= s[rowind].splice(colind, 1)
             if(!s[rowind].length){
                 s.splice(rowind, 1)
             }
             h.push(...item)
+            setTimeout(()=>{
+                e.target.blur()
+            },10)
+
         },
         toshow(code) {
             let s= this.list.show, h= this.list[this.hideKey][0], ind;
