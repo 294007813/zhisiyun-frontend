@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul">
-                <li v-for="(item, i) in gt.list" :key="i" :onclick="item.operation">
+                <li v-for="(item, i) in gt.list" :key="i" @click="goFun(item.operation)">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import transfer from '../../global/workflow-url-transfer'
+import transfer from 'li/workflow-url-transfer'
 export default {
     name: "GTasks",
     props: ["conf"],
@@ -63,7 +63,10 @@ export default {
                 this.at= data
             })
         },
-        ...transfer
+        goFun(str){
+            let funs= transfer
+            eval("funs."+str)
+        },
     }
 }
 </script>

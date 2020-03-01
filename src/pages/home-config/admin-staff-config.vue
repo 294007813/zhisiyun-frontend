@@ -19,9 +19,8 @@
                 <el-tab-pane v-for="(mod, name) in confmobile" :key="name"
                         :label="$t(`mobile.${name}`)" :name="name" :lazy="true">
                     <config-mobile
-                        v-if="confm[name]"
                         v-bind="{
-                        conf: confm[name],
+                        conf: confm[name] ||[],
                         tabname: name,
                         ref: name }"
                     ></config-mobile>

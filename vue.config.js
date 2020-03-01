@@ -15,12 +15,14 @@ module.exports = {
         config.resolve.alias
             .set('~', resolve('/'))
             .set('@', resolve('src'))
+            .set('pu', resolve('/public'))
             .set('as', resolve('src/assets'))
             .set('co', resolve('src/components'))
             .set('gl', resolve('src/global'))
             .set('pa', resolve('src/pages'))
             .set('st', resolve('src/store'))
             .set('la', resolve('src/lang'))
+            .set('li', resolve('src/lib'))
     },
     transpileDependencies: [
         'vue-echarts',
