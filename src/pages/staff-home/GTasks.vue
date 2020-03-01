@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul">
-                <li v-for="(item, i) in gt.list" :key="i">
+                <li v-for="(item, i) in gt.list" :key="i" :onclick="item.operation">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import transfer from '../../global/workflow-url-transfer'
 export default {
     name: "GTasks",
     props: ["conf"],
@@ -61,7 +62,8 @@ export default {
             this.$axios.get("/api/feishu/news/donelist").then(data=>{
                 this.at= data
             })
-        }
+        },
+        ...transfer
     }
 }
 </script>
@@ -78,6 +80,7 @@ export default {
             padding: 10px 0;
             border-bottom: 1px solid $color-border;
             position: relative;
+            cursor: pointer;
             &:last-child{ border: 0}
             p{
                 margin-bottom: 10px;
