@@ -2,7 +2,7 @@
 <el-dialog
         custom-class="modsetup" width="600px"
         :visible="visible" :before-close="close">
-    <p slot="title" class="title">{{mod.title || mod.name ||""}} 项目配置
+    <p slot="title" class="title">{{mod.title || title ||""}} 项目配置
         <span v-if="admin">已添加的可选项员工可自行配置</span>
         <span v-else>选中的项目在首页进行展示</span>
     </p>
@@ -100,8 +100,10 @@ export default {
         },
         an(){
             return this.isp? "able": "disable"
+        },
+        title(){
+            return  this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
         }
-
     },
     methods:{
         tagName(tk, key){
@@ -110,9 +112,9 @@ export default {
             if(this.ism){
                 let tabhasname= this.mod.pages[tk].name
                 if(key){
-                    str= this.$t(`tab.${this.tabname}.${tk}.${key}`)
+                    str= this.$t(`tab.${this.tabname}.${tabhasname}.${key}`)
                 }else{
-                    str= this.$t(`tab.${this.tabname}.${tk}.${tabhasname}`)
+                    str= this.$t(`tab.${this.tabname}.bookmarks.${tabhasname}`)
                 }
             }else{
                 // if(key){
