@@ -1,0 +1,16 @@
+export default {
+    baseinfo: "basic_information_module",
+    attendance: "attendance_information_module",
+    my_salary:"salary_information",
+    todo:"to_do_module",
+    performance_info:"performance_information_module",
+    msg:"message_dynamic_module",
+    birthday_blessing_wall:"birthday_blessing_module",
+    star_company:"company_star_module",
+    skill_star:"skill_star_module",
+    training_process:"training_process_module",
+    contract:"contract_agreement_module",
+    suggestion_box:"suggestion_box_module",
+    often:"common_application_module",
+    me_calendar:"my_calendar_module",
+}

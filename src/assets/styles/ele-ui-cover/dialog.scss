@@ -37,6 +37,7 @@
   }
 
   @include e(headerbtn) {
+    height: 14px;
     font-size: 22px;
     position: absolute;
     //top: $--dialog-padding-primary;
@@ -51,6 +52,7 @@
 
     .el-dialog__close {
       color: $--color-info;
+      vertical-align: top;
     }
 
     &:focus, &:hover {

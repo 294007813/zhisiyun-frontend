@@ -24,6 +24,7 @@ Vue.directive('drag', {
             disx = e.pageX - el.offsetLeft;
             disy = e.pageY - el.offsetTop;
             el.classList.add(className|| "moving")
+            // console.log(params.item.long, JSON.stringify(params.item))
         }
         function mounemove(e) {
             if(movecb){

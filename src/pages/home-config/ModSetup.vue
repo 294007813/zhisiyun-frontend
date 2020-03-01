@@ -2,16 +2,16 @@
 <el-dialog
         custom-class="modsetup" width="600px"
         :visible="visible" :before-close="close">
-    <p slot="title" class="title">{{mod.title || mod.name ||""}} 项目配置
+    <p slot="title" class="title">{{mod.title || title ||""}} 项目配置
         <span v-if="admin">已添加的可选项员工可自行配置</span>
         <span v-else>选中的项目在首页进行展示</span>
     </p>
     <div class="body">
         <p class="msg" v-if="admin">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
-            <div class="item long" v-if="tagName(tk)">
+            <div class="item long" v-if="ism || tk!='default'">
                 <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
-                <el-checkbox :class="['check-tag', {disable: false}]"
+                <el-checkbox :class="['check-tag', {disable: admin}]"
                              v-model="tag.show"
                              @change="cltitle($event,tag)">
                     {{tagName(tk)|| tk}}</el-checkbox>
@@ -21,7 +21,7 @@
                     <i class="fa fa-times-circle" v-if="admin" @click="delitem(tag, key)"></i>
                     <el-checkbox
                             v-model="tag.fields[key]"
-                            :class="['check-tag', {disable: false}]"
+                            :class="['check-tag', {disable: admin}]"
                             @change="clitem($event,tag, key)">
                         {{tagName(tk,key)||tk}}</el-checkbox>
                 </div>
@@ -55,6 +55,10 @@
 import Tp from "./config/config-i18n-pc";
 import Tm from "./config/config-i18n-mobile";
 let i18n={Tp, Tm}
+import men from "./config/en"
+import mzh from "./config/zh"
+import pmk from "./config/pc-module-key"
+
 export default {
     name: "ModSetup",
     props:{
@@ -67,7 +71,7 @@ export default {
         platform:{
             required: true,
         },
-        modname:{
+        tabname:{
             required: true,
         },
     },
@@ -87,7 +91,7 @@ export default {
             return this.isp? "Tp": "Tm"
         },
         t(){
-            let mod= this.mod.code, t= i18n[this.tb][this.modname][mod]
+            let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
             console.log("t", t)
             return t
         },
@@ -96,14 +100,31 @@ export default {
         },
         an(){
             return this.isp? "able": "disable"
+        },
+        title(){
+            return  this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
         }
-
     },
     methods:{
         tagName(tk, key){
-            let name= key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
-            // console.log("name", name)
-            return name
+            let str= ""
+            // console.log(this.mod)
+            if(this.ism){
+                let tabhasname= this.mod.pages[tk].name
+                if(key){
+                    str= this.$t(`tab.${this.tabname}.${tabhasname}.${key}`)
+                }else{
+                    str= this.$t(`tab.${this.tabname}.bookmarks.${tabhasname}`)
+                }
+            }else{
+                // if(key){
+                //
+                // }else{
+                //     str= pmk[tk]
+                // }
+                str=  key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
+            }
+            return str
         },
         set(val){
             // console.log("this.mod", JSON.stringify(val))
@@ -112,7 +133,7 @@ export default {
         cltitle(val, tag){
             // console.log(tag.show)
             if(this.admin){
-                // return
+                return
             }
             if(!val){
                 for(let k in tag.fields){
@@ -123,7 +144,7 @@ export default {
         clitem(val, tag, key){
             // console.log(tag.fields[key])
             if(this.admin){
-                // return
+                return
             }
             if(tag.fields[key]){
                 tag.show= true
@@ -158,6 +179,16 @@ export default {
         },
         close(){
             this.$emit("close")
+        }
+    },
+    i18n: {
+        messages: {
+            en: {
+                tab: men
+            },
+            zh: {
+                tab: mzh
+            }
         }
     }
 }
