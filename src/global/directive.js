@@ -28,10 +28,10 @@ Vue.directive('drag', {
         }
         function mounemove(e) {
             if(movecb){
-                // clearTimeout(timer)
-                // timer = setTimeout(() => {
+                clearTimeout(timer)
+                timer = setTimeout(() => {
                     movecb({x: e.pageX, y: e.pageY, ...params})
-                // }, interval)
+                }, interval)
             }
             el.style.left = mx&& (e.pageX - disx + 'px');
             el.style.top = my&& (e.pageY - disy + 'px');

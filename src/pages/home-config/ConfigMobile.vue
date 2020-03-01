@@ -10,7 +10,7 @@
                 <div class="content" v-drag="{
                     donecb: item.fix? false: movedone,
                     movecb: moving,
-                    interval: 0,
+                    interval: 60,
                     item, rowind: ind, only: 'y',
                     exclude: 'button'}">
                     <p class="name">{{$t(`tab.${tabname}.modules.${item.name}`)}}
@@ -25,7 +25,7 @@
                 </div>
             </li>
             <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-            <i class="ins-cursor" :style="cursorto"></i>
+<!--            <i class="ins-cursor" :style="cursorto"></i>-->
         </ul>
     </div>
     <div class="right">
@@ -189,7 +189,7 @@ export default {
             let torow = this.getMovePos(y)
 
             let samerow= rowind == torow;
-            let l= this.list.show
+            let l= JSON.parse(JSON.stringify( this.list.show))
             if(torow>=this.showlinenum ){
                 torow= this.showlinenum-1
             }

@@ -10,7 +10,7 @@
                     donecb: citem.fixed? false: movedone,
                     movecb: moving,
                     exclude: 'button',
-                    interval: 0,
+                    interval: 60,
                     item:citem, rowind, colind}">
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
