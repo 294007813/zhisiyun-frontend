@@ -16,21 +16,28 @@
         <el-tab-pane label="移动端" name="mobile">
             <div class="main">
             <el-tabs  class="sub-tabs" v-model="subTabsVal">
-                <el-tab-pane label="员工首页" name="home" :lazy="true">
-                    <config-mobile :conf="confm.home" modname="home" ref="home"></config-mobile>
+                <el-tab-pane v-for="(mod, name) in confmobile" :key="name"
+                        :label="$t(`mobile.${name}`)" :name="name" :lazy="true">
+                    <config-mobile
+                        v-if="confm[name]"
+                        v-bind="{
+                        conf: confm[name],
+                        tabname: name,
+                        ref: name }"
+                    ></config-mobile>
                 </el-tab-pane>
-                <el-tab-pane label="考勤首页" name="wtpage" :lazy="true">
-                    <config-mobile :conf="confm.wtpage" modname="wtpage" ref="wtpage"></config-mobile>
-                </el-tab-pane>
-                <el-tab-pane label="工作首页" name="workpage" :lazy="true">
-                    <config-mobile :conf="confm.workpage" modname="workpage" ref="workpage"></config-mobile>
-                </el-tab-pane>
-                <el-tab-pane label="薪酬首页" name="xcpage" :lazy="true">
-                    <config-mobile :conf="confm.xcpage" modname="xcpage" ref="xcpage"></config-mobile>
-                </el-tab-pane>
-                <el-tab-pane label="我的页面" name="minepage" :lazy="true">
-                    <config-mobile :conf="confm.minepage" modname="minepage" ref="minepage"></config-mobile>
-                </el-tab-pane>
+<!--                <el-tab-pane label="考勤首页" name="wtpage" :lazy="true">-->
+<!--                    <config-mobile :conf="confm.wtpage" tabname="wtpage" ref="wtpage"></config-mobile>-->
+<!--                </el-tab-pane>-->
+<!--                <el-tab-pane label="工作首页" name="workpage" :lazy="true">-->
+<!--                    <config-mobile :conf="confm.workpage" tabname="workpage" ref="workpage"></config-mobile>-->
+<!--                </el-tab-pane>-->
+<!--                <el-tab-pane label="薪酬首页" name="xcpage" :lazy="true">-->
+<!--                    <config-mobile :conf="confm.xcpage" tabname="xcpage" ref="xcpage"></config-mobile>-->
+<!--                </el-tab-pane>-->
+<!--                <el-tab-pane label="我的页面" name="minepage" :lazy="true">-->
+<!--                    <config-mobile :conf="confm.minepage" tabname="minepage" ref="minepage"></config-mobile>-->
+<!--                </el-tab-pane>-->
             </el-tabs>
             </div>
         </el-tab-pane>
@@ -58,6 +65,11 @@ export default {
             },
             // confm: confmobile,
             confm: {},
+        }
+    },
+    computed:{
+        confmobile(){
+            return confmobile
         }
     },
     watch:{
@@ -191,8 +203,7 @@ export default {
                 }
             })
         }
-
-    }
+    },
 }
 </script>
 
