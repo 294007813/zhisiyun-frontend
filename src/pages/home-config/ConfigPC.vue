@@ -170,19 +170,21 @@ export default {
 
         },
         tohide(rowind, colind, citem, e) {
-            let s= this.list.show, h= this.list[this.hideKey][0];
+            let s= this.$f.deepClone(this.list.show), h= this.$f.deepClone(this.list[this.hideKey][0]);
             let item= s[rowind].splice(colind, 1)
             if(!s[rowind].length){
                 s.splice(rowind, 1)
             }
             h.push(...item)
+            this.list.show= this.clearup(s)
+            this.list[this.hideKey]= [h]
             // setTimeout(()=>{
                 e.target.blur()
             // },10)
 
         },
         toshow(code) {
-            let s= this.list.show, h= this.list[this.hideKey][0], ind;
+            let s= this.$f.deepClone(this.list.show) , h= this.$f.deepClone(this.list[this.hideKey][0]), ind;
             h.forEach((it, i)=>{
                 if(it.code== code){
                     ind=i
@@ -190,7 +192,8 @@ export default {
             })
             let item= h.splice(ind, 1)
             s.push(item)
-
+            this.list.show= this.clearup(s)
+            this.list[this.hideKey]= [h]
         },
         getMovePos({x, y, item, rowind, colind}){
             let left = x - this.bodyInfo.left, top = y - this.bodyInfo.top
@@ -203,6 +206,12 @@ export default {
                     break
                 }
                 width += show[torow][i].left + show[torow][i].width
+            }
+            if(show[torow].length==1){
+                width += show[torow][0].width
+                if (left <= width) {
+                    tocol = 1
+                }
             }
             torow= torow<0 ? 0 :torow
             tocol= tocol<0 ? 0 :tocol
@@ -289,9 +298,9 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
-            if( l[torow][tocol].fixed) return
+            if( l[torow][tocol] && l[torow][tocol].fixed) return
             let top= torow * this.lineHeight + "px"
-            let left= l[torow][tocol].long|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
+            let left=( l[torow][tocol] && l[torow][tocol].long)|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
             // console.log("torow, tocol",  torow, tocol)
             // console.log("top, left",  top, left)
             this.$set(this.cursorto, "display", "block")
@@ -311,11 +320,11 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
-            if(sameall || l[torow][tocol].fixed){
+            if(sameall || (l[torow][tocol]&& l[torow][tocol].fixed)){
                 return
             }
             if(item.long){
-                console.log("long")
+                // console.log("long")
                 let thisrow=l.splice(rowind, 1)[0]
                 // console.log("thisrow", thisrow)
                 l.splice(torow,0, thisrow)
@@ -332,17 +341,30 @@ export default {
                     l[torow].splice(tocol, 0, thiscol)
                     if(l[torow].length>3){
                         let o= l[torow].splice(3, 1)
-                        console.log("o", o)
+                        // console.log("o", o)
                         l.splice(torow+1,0, o)
                     }
                 }
             }
-            this.list.show= []
-            this.$nextTick(() => {
-                this.list.show= l
-            })
+            // this.list.show= []
+            // this.$nextTick(() => {
+                this.list.show= this.clearup(l)
+            // })
 
         },
+        clearup(list){
+            let arr= this.$f.deepClone(list)
+            for(let i = arr.length - 1; i >= 0; i--){
+                if(i>0){
+                    if(arr[i].length== 1 && !arr[i].long && arr[i-1].length== 1 && !arr[i-1].long){
+                        let it= arr[i].splice(0,1)[0]
+                        arr[i-1].push(it)
+                        arr.splice(i,1)
+                    }
+                }
+            }
+            return arr
+        }
        
     },
 }

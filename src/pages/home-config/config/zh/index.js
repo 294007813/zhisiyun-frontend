@@ -1,3 +1,4 @@
+
 import mainPages from "./mainPages";
 import minepage from "./myPage";
 import wtpage from "./wtPage";
@@ -6,6 +7,7 @@ import home from "./home";
 import workpage from "./workPage";
 
 export default {
+
   mainPages,
   minepage,
   wtpage,

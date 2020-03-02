@@ -32,7 +32,7 @@
 
             <ul class="sta" v-if="sta">
                 <template v-for="(item, key) in sta.huizong">
-                    <li><label>{{$t("index.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
+                    <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
                     <li><label>{{item.name}}</label><p>{{hidstr || item.count}}</p></li>
                 </template>
             </ul>

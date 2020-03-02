@@ -3,7 +3,7 @@
     <h5>{{$t("index.todo")}}<el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="待办" name="gt" v-if="figt">
-            <ul class="ul">
+            <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                 <li v-for="(item, i) in gt.list" :key="i" @click="goFun(item.operation)">
                     <p><em>{{item.title}}</em></p>
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
@@ -12,7 +12,7 @@
             </ul>
         </el-tab-pane>
         <el-tab-pane label="已办" name="at">
-            <ul class="ul at" v-if="fiat">
+            <ul class="ul at" v-if="fiat" v-nodata="{have: at.list&& at.list.length}">
                 <li v-for="(item, i) in at.list" :key="i">
                     <p><em>{{item.title}}</em></p>
 <!--                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>-->

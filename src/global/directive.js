@@ -89,12 +89,31 @@ Vue.directive('nodata', {
     bind(el, binding, vnode) {
         console.log("vnode", vnode)
         console.log("el.style", el.style)
+        let div = document.createElement("div")
+        let img = document.createElement("img")
+        let p = document.createElement("p")
+        div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: block;");
+        div.setAttribute("class", "nodata");
+        p.innerText="暂无数据"
+        p.setAttribute("style", "font-size: 14px;color: #999999;")
+        img.setAttribute("src", "/img/common/no-pic.png")
+        img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
+        div.appendChild(img)
+        div.appendChild(p)
+        el.appendChild(div)
+
     },
     update(el, binding, vnode) {
         // let top = el.pageX + 'px'
         // let left = el.pageY + 'px'
         let params= binding.value
+        let dom= el.querySelector(".nodata")
         let { have}= params
         console.log("have", have)
+        if(!have){
+            dom.style.display ="block";
+        }else{
+            dom.style.display ="none";
+        }
     }
 })

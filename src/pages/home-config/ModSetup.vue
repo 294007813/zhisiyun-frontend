@@ -11,8 +11,10 @@
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
             <div class="item long" v-if="ism || tk!='default'">
                 <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
-                <el-checkbox :class="['check-tag', {disable: admin}]"
+                <el-checkbox :class="['check-tag', {disable: false}]"
                              v-model="tag.show"
+                             :disabled="specrule1 && specrule1[tk].disable"
+                             @click.native="dismsg(specrule1 && specrule1[tk].disable)"
                              @change="cltitle($event,tag)">
                     {{tagName(tk)|| tk}}</el-checkbox>
             </div>
@@ -20,8 +22,10 @@
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
                     <i class="fa fa-times-circle" v-if="admin" @click="delitem(tag, key)"></i>
                     <el-checkbox
+                            :disabled="specrule1 && specrule1[tk].disfie[key]"
                             v-model="tag.fields[key]"
-                            :class="['check-tag', {disable: admin}]"
+                            :class="['check-tag', {disable: false}]"
+                            @click.native="dismsg(specrule1 && specrule1[tk].disfie[key])"
                             @change="clitem($event,tag, key)">
                         {{tagName(tk,key)||tk}}</el-checkbox>
                 </div>
@@ -105,7 +109,64 @@ export default {
             return  this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
         },
         specrule1(){
-            return this.tabname== "attendance"
+            let rownum=0, res={}, dis={}, hasmore4= false, hasmore8= false
+            _.mapObject(this.page,(pa, pak)=>{
+                let  show=[], hide=[]
+                _.mapObject(pa.fields,(fi, fik)=>{
+                    if(fi){
+                        show.push(fik)
+                    }else{
+                        hide.push(fik)
+                    }
+                })
+                res[pak]={
+                    show,
+                    hide,
+                    more4: show.length > 4,
+                    more8: show.length > 8,
+                }
+                // hasmore4= hasmore4 || show.length> 4
+                // hasmore8= hasmore8 || show.length> 8
+                rownum+= pa.show? 1: 0
+            })
+
+            _.mapObject(res,(pa, pak)=>{
+                // console.log("pak",pak)
+                let more4= false, more8= false
+                _.mapObject(res,(pao, pako)=>{
+                    if(pak!= pako){
+                        more4= more4 || pao.more4
+                        more8= more8 || pao.more8
+                    }
+                })
+                dis[pak]= {
+                    disable: false,
+                    disfie: {}
+                }
+                if(this.page[pak].show){
+                    let ts= res[pak].show.length
+                    if((more4|| rownum>2) && ts>3 || (rownum>1 && ts>7) || (rownum=1 && ts>11)){
+                        _.mapObject(this.page[pak].fields,(fi, fik)=>{
+                            dis[pak].disfie[fik]= !fi
+                        })
+                    }else{
+                        _.mapObject(this.page[pak].fields,(fi, fik)=>{
+                            dis[pak].disfie[fik]= false
+                        })
+                    }
+                }else{
+                    if((rownum>1 && more4) || (rownum==1 && more8)){
+                        dis[pak].disable= true
+
+                        _.mapObject(this.page[pak].fields,(fi, fik)=>{
+                            dis[pak].disfie[fik]= true
+                        })
+                    }
+                }
+
+            })
+
+            return this.mod.name=="attendance" && dis
         }
     },
     methods:{
@@ -135,20 +196,16 @@ export default {
         },
         cltitle(val, tag){
             // console.log(tag.show)
-            if(this.admin){
-                return
-            }
             if(!val){
                 for(let k in tag.fields){
                     tag.fields[k]= false
                 }
+            }else{
+
             }
         },
         clitem(val, tag, key){
             // console.log(tag.fields[key])
-            if(this.admin){
-                return
-            }
             if(tag.fields[key]){
                 tag.show= true
             }
@@ -157,10 +214,12 @@ export default {
             let f1= (!!add)? "fields" : "disableFields"
             let f2= (!add)? "fields" : "disableFields"
             for(let k in tag[f2]){
-                this.$set(tag[f1], k, tag[f2][k])
+                // this.$set(tag[f1], k, tag[f2][k])
+                this.$set(tag[f1], k, false)
                 this.$delete(tag[f2], k);
             }
             tag[this.an]= !!add
+            tag.show= false
         },
         delitem(tag, key, add){
             let f1= (!!add)? "fields" : "disableFields"
@@ -169,7 +228,8 @@ export default {
                 tag[this.an]= true
             }
             if(tag[f2].hasOwnProperty(key)){
-                this.$set(tag[f1], key, tag[f2][key])
+                // this.$set(tag[f1], key, tag[f2][key])
+                this.$set(tag[f1], key, false)
                 this.$delete(tag[f2], key);
             }
         },
@@ -178,6 +238,12 @@ export default {
                 return tag.disableFields
             }else{
                 return {...tag.fields, ...tag.disableFields}
+            }
+        },
+        dismsg(disable){
+            console.log("dismsg", disable)
+            if(disable){
+                this.$msg({message: "选择项目达到上限", type: "error"});
             }
         },
         close(){

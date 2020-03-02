@@ -1,8 +1,4 @@
 export default {
-  modules:{
-    to_do_task: "待办",
-    message_dynamics: "消息动态",
-  },
   bookmarks: {
     todo: "待办事宜",
     news: "消息动态",
@@ -38,5 +34,39 @@ export default {
   },
   all_app: {
     app_center: "应用中心"
+  },
+  app_name:{
+    "AI": "AI助手",
+    "QDDK": "签到打卡",
+    "WQQD": "外勤签到",
+    "GGSQ": "公干申请",
+    "TM": "考勤管理",
+    "CT": "协作任务",
+    "CP": "协作项目",
+    "WF": "流程管理",
+    "ADM": "行政管理",
+    "CNT": "通讯录",
+    "QA": "问卷管理",
+    "TA": "人才管理",
+    "TA_P": "员工点赞",
+    "OM": "组织人事",
+    "PM": "绩效管理",
+    "KM": "知识管理",
+    "EX": "实时激励",
+    "RC": "招聘管理",
+    "TR": "培训管理",
+    "WR": "工作报告",
+    "MC": "个人中心",
+    "EC": "员工关怀",
+    "TM_BW": "加班申请",
+    "TM_BT": "出差申请",
+    "TM_AL": "请假申请",
+    "TM_ML": "考勤统计",
+    "CL": "签到报表",
+    "PA_RP": "智能报表",
+    "KAIPIAO": "开票信息",
+    "PT": "积分激励",
+    "TP": "脱普大学",
+    "undefined":""
   }
 };
