@@ -18,7 +18,7 @@
                     </p>
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
-                                   @click="remove(ind)" v-if="!item.fix">隐藏</el-button>
+                                   @click.self="remove(ind, false,$event)" v-if="!item.fix">隐藏</el-button>
                         <el-button type="primary" size="mini" round @click="openModsetup(item)">配置</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
@@ -132,13 +132,15 @@ export default {
                 l[i].top= i * this.lineHeight;
             }
         },
-        remove(ind, show){
+        remove(ind, show, e){
             let l= (!!show)? "hide" : "show"
             let r= (!show)? "hide" : "show"
             console.log(l)
             let item= this.list[l].splice(ind, 1)[0]
             item.disable= !!show
             this.list[r].push(item)
+
+            e.target.blur()
         },
         openModsetup(item){
             this.modsetupShow= true

@@ -20,6 +20,9 @@
   margin: 0;
   transition: .1s;
   font-weight: $--button-font-weight;
+  span{
+    pointer-events: none;
+  }
   @include utils-user-select(none);
   & + & {
     margin-left: 10px;

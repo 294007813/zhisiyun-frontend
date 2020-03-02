@@ -19,10 +19,19 @@
       "checkin": {
         "name": "本月考勤统计",
         "fields": {
-          "checkin": "出勤天数",
-          "leave": "请假",
-          "late": "迟到早退",
-          "miss":"缺卡"
+          "checkin": "出勤",
+          "late": "迟到",
+          "rest": "休息",
+          "early": "早退",
+          "miss": "缺卡",
+          "outside": "外勤",
+          "absent": "旷工",
+
+          "short": "缺勤",
+          "trip": "出差",
+          "overtime": "加班",
+          "official": "公干",
+          "leave": "请假"
         }
       },
       "balance":{
@@ -38,7 +47,9 @@
           "leave": "请假",
           "overtime": "加班",
           "trip": "出差",
-          "official": "公干"
+          "official": "公干",
+          "abnormal": "考勤异常",
+          "adjust": "假期调整"
         }
       }
     },

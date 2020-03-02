@@ -11,13 +11,15 @@
                     movecb: moving,
                     exclude: 'button',
                     interval: 60,
-                    item:citem, rowind, colind}">
+                    item:citem, rowind, colind}"
+                     @mousedown="mup"
+                    >
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
                     </p>
                     <div class="button">
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                   @click="tohide(rowind, colind, citem)">隐藏</el-button>
+                                   @click.self="tohide(rowind, colind, citem, $event)">隐藏</el-button>
                         <el-button type="primary" size="mini" round
                                    v-if="citem.pages &&Object.keys(citem.pages).length" @click="openModsetup(citem)">配置</el-button>
                     </div>
@@ -25,7 +27,7 @@
             </div>
         </template>
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-        <i class="ins-cursor" :style="cursorto"></i>
+        <i class="ins-cursor" :style="{...cursorto, display: insCursorShow? cursorto.display: 'none'}"></i>
     </div>
     <div class="head">未添加模块</div>
     <div class="disable-body">
@@ -89,7 +91,8 @@ export default {
                 display: "none",
                 top: "0",
                 left: "0"
-            }
+            },
+            insCursorShow: false
         }
     },
     computed: {
@@ -156,19 +159,27 @@ export default {
         // console.log("mounted")
     },
     methods: {
+        mup(){
+            console.log("mup")
+            this.insCursorShow= true
+        },
         openModsetup(item){
             this.modsetupShow= true
             // console.log(JSON.stringify(item))
             this.$refs.modsetup.set(item)
 
         },
-        tohide(rowind, colind, citem) {
+        tohide(rowind, colind, citem, e) {
             let s= this.list.show, h= this.list[this.hideKey][0];
             let item= s[rowind].splice(colind, 1)
             if(!s[rowind].length){
                 s.splice(rowind, 1)
             }
             h.push(...item)
+            // setTimeout(()=>{
+                e.target.blur()
+            // },10)
+
         },
         toshow(code) {
             let s= this.list.show, h= this.list[this.hideKey][0], ind;
@@ -290,6 +301,7 @@ export default {
         movedone({x, y, item, rowind, colind}) {
             console.log("movedone")
             this.$set(this.cursorto, "display", "none")
+            this.insCursorShow= false
             // console.log(x, y, item)
             let l= JSON.parse(JSON.stringify( this.list.show))
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})

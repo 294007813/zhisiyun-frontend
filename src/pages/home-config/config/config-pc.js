@@ -4,7 +4,6 @@ export default {
       [
         {
           "title": "基本信息模块(固定模块)",
-          "subtitle": "(固定模块)",
           "fixed": true,
           "code": "base",
           name: "baseinfo",
@@ -35,10 +34,21 @@ export default {
               show: true,
               able: true,
               "fields":{
-                checkin: true,
-                leave: true,
-                late: true,
-                miss: true,
+                checkin: true, //出勤
+                late: true, //迟到
+                leave: true, //请假
+                early: true, //早退
+
+                rest: false, //休息
+                miss: false, //缺卡
+                outside: false, //外勤
+                absent: false, //旷工
+
+                short: false, //缺勤
+                trip: false, //出差
+                overtime: false, //加班
+                official: false, //公干
+
               },
               disableFields:{}
             },
@@ -57,10 +67,12 @@ export default {
               show: true,
               able: true,
               "fields":{
-                leave: true,
-                overtime: true,
-                trip: true,
-                official: true,
+                leave: true, //请假
+                overtime: true, //加班
+                trip: true, //出差
+                official: true, //公干
+                abnormal: false, //考勤异常
+                adjust: false, //假期调整
               },
               disableFields:{}
             },

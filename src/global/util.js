@@ -5,6 +5,7 @@ import conf from '~/proj-config'
 // let {linkUrl} = conf
 
 const util= {
+    conf,
 
     /**
     函数只被调用一次
@@ -72,7 +73,9 @@ const util= {
             window.location.href= path
         }
     },
-    conf
+    deepClone(data){
+        return JSON.parse(JSON.stringify(data))
+    }
 }
 
 
