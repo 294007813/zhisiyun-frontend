@@ -2,7 +2,7 @@ module.exports = {
   minepage: [
     {
       code: "baseinfo",
-      name: "baseInfo",
+      name: "baseinfo",
       isuse: true,
       disable: true,
       source: false,
@@ -11,7 +11,7 @@ module.exports = {
         default: {
           show: true,
           disable: true,
-          name: "baseInfo",
+          name: "baseinfo",
           fields: [
             {
               MC_BC_PROFILE: true

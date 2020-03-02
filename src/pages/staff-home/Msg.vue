@@ -16,7 +16,7 @@
             </ul>
         </el-tab-pane>
         <el-tab-pane label="已读" name="at" v-if="fiat">
-            <ul class="ul at">
+            <ul class="ul at" v-nodata="{have: at.list&& at.list.length}">
                 <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>

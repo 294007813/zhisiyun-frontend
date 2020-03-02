@@ -30,6 +30,7 @@ export default {
     me_calendar: "My calendar",
     today: "Today",
     current_month: "Month",
+    month: "Month",
     star_company: "Star of company",
     skill_star: "Skill star",
     training_num: "Training statistics",
@@ -58,7 +59,9 @@ export default {
     // 外勤
     outwork_time: "Outwork",
     // 旷工
-    sign_out_change: "Absenteeism"
+    sign_out_change: "Absenteeism",
+    //天
+    days: "days"
   },
   attendance_tools: {
     // 请假
@@ -78,7 +81,8 @@ export default {
   },
   holiday_balance: {
     annual_holidays: "Annual leave balance",
-    leave_off_time: "Balance of compensatory leave"
+    leave_off_time: "Balance of compensatory leave",
+    time: "Hour"
   },
   my_salary: {},
   to_do_task: {},
@@ -98,7 +102,10 @@ export default {
   },
   skill_star: {
     search_btn: "Search button",
-    thumb_btn: "Thumb Button"
+    thumb_btn: "Thumb Button",
+    support: "support",
+    keyword: "input keyword of name",
+    none: "none"
   },
   training_num: {
     join_travels: "Join Travels",
@@ -122,6 +129,34 @@ export default {
     cancel: "取消"
   },
   postComment: {
-    postComment: "Post comments"
+    postComment: "Post comments",
+    have: "has",
+    datas: "datas"
+  },
+  contact: {
+    singed: "Contact signed",
+    vaildDate: "Contact validity",
+    num: "uno",
+    year: "year",
+    day: "day",
+    months: "months"
+  },
+  performance_info:{
+    "month": "month",
+    "near": "near"
+  },
+  eventModule: {
+    eventName: "event Name",
+    private: "private",
+    eventDetatil: "event detatil",
+    eventTime: "event time",
+    allDay: "all day",
+    startTime: "start time",
+    endTime: "end time",
+    eventTips: "event tips",
+    addLocation: "add location",
+    addShareObject: "add share object",
+    addAttachment: "add attachment",
+    comment: "add comment "
   }
 };

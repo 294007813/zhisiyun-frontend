@@ -3,7 +3,7 @@
     <h5>{{$t("index.skill_star")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
               v-if="field.query" v-model="query"></el-input>
-    <div class="db">
+    <div class="db" v-nodata="{have: list.length}">
         <swiper :options="op" class="swiper" ref="day">
             <swiper-slide v-for="(item, i) in list" :key="i">
                 <div :class="{ssb: true, size}">

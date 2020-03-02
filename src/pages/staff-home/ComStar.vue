@@ -3,7 +3,7 @@
     <h5>{{$t("index.star_company")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
               v-model="query" v-if="field.query"></el-input>
-    <div class="db">
+    <div class="db" v-nodata="{have: list.length}">
         <swiper :options="op" class="swiper" ref="day">
             <swiper-slide v-for="(it, i) in list" :key="i">
                 <div :class="{ssb: true, size}">

@@ -1,10 +1,10 @@
 export default {
   // 首页
   index: {
-    // "first_page": "首页",
+    "first_page": "首页",
     // "name":"姓名",
-    // "my":"我的",
-    // "work": "工作",
+    "mine":"我的",
+    "work": "工作",
     gisi: "智思云",
     constellation: "星座",
     zodiac: "属相",
@@ -297,6 +297,7 @@ export default {
     module_config: "模块配置",
     cancel_s: "取 消",
     confirm_s: "确 认",
+    show: "显示",
     hide: "隐藏",
     config: "配置",
     added_cards: "已添加的卡片",

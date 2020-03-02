@@ -1,10 +1,10 @@
 export default {
   // 首页
   index: {
-    // "first_page": "First",
+    "first_page": "Home",
     // "name":"Name",
-    // "my":"My",
-    // "work": "Work",
+    "mine":"My",
+    "work": "Work",
     gisi: "GISI",
     constellation: "Constellation",
     zodiac: "Symbolic Animals",
@@ -293,6 +293,7 @@ export default {
     cancel_s: "Cancel",
     confirm_s: "Confirm",
     added_cards: "Added cards",
+    show: "Show",
     hide: "Hide",
     config: "Config",
     you_can_drag:

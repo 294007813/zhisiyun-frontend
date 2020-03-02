@@ -2,7 +2,7 @@
 <div class="birthday">
     <h5>{{$t("index.birthday_blessing_wall")}}</h5>
     <el-tabs v-model="activeTabs">
-        <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday">
+        <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday" >
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
                 <swiper-slide v-for="(item, i) in day.peoples[0].items" :key="i">
@@ -23,6 +23,7 @@
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
+            <div v-else v-nodata="{have: day.peoples&& day.peoples.length}"></div>
         </el-tab-pane>
         <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon" v-if="fimon">
             <p class="mon-title">2019年9月</p>
@@ -40,6 +41,7 @@
 <!--                <div class="swiper-button-prev" slot="button-prev"></div>-->
 <!--                <div class="swiper-button-next" slot="button-next"></div>-->
             </swiper>
+            <div v-else v-nodata="{have: mon.peoples&& mon.peoples.length}"></div>
         </el-tab-pane>
     </el-tabs>
 </div>

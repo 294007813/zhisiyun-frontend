@@ -11,6 +11,7 @@ export default  {
     // "name":"姓名",
     // "my":"我的",
     // "work": "工作",
+    "default": "默认",
     "gisi": "智思云",
     "constellation":"星座", 
     "zodiac":"属相",
@@ -340,5 +341,8 @@ export default  {
     xcpage: "薪酬首页",
     workpage: "工作首页",
     minepage: "我的页面"
+  },
+  config:{
+
   }
 }

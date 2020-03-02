@@ -3,7 +3,7 @@ export default {
     baseinfo: "基本信息",
     attendance: "考勤",
     my_salary: "薪酬",
-    todo: "代办事宜",
+    todo: "待办事宜",
     my_subordinates: "我的下属",
     performance_info: "绩效信息",
     me_calendar: "我的日历",
@@ -21,7 +21,7 @@ export default {
     attendance_tools: "考勤工具",
     holiday_balance: "假期余额",
     my_salary: "我的工资",
-    to_do_task: "代办",
+    to_do_task: "待办",
     done_task: "已办",
     my_subordinates: "我的下属",
     monthly_pfm: "本月绩效",
@@ -57,7 +57,10 @@ export default {
     // 外勤
     outwork_time: "外勤",
     // 旷工
-    sign_out_change: "旷工"
+    sign_out_change: "旷工",
+    //天
+    days: "天"
+
   },
   attendance_tools: {
     // 请假
@@ -77,7 +80,8 @@ export default {
   },
   holiday_balance: {
     annual_holidays: "年假余额",
-    leave_off_time: "调休假余额"
+    leave_off_time: "调休假余额",
+    time: "时"
   },
   my_salary: {},
   to_do_task: {},
@@ -101,7 +105,10 @@ export default {
   },
   skill_star: {
     search_btn: "搜索按钮",
-    thumb_btn: "Thumb Button"
+    thumb_btn: "Thumb Button",
+    support: "support",
+    keyword: "请输入姓名关键字查询",
+    none: "暂无"
   },
   training_num: {
     join_travels: "参与培训",
@@ -125,6 +132,34 @@ export default {
     cancel: "取消"
   },
   postComment: {
-    postComment: "投递意见"
+    postComment: "投递意见",
+    have: "已有",
+    datas: "条数据"
+  },
+  contact: {
+    singed: "已签合同",
+    vaildDate: "合同有效期",
+    num: "份",
+    year: "年",
+    day: "天",
+    months: "月"
+  },
+  performance_info:{
+    "month": "月绩效",
+    "near": "近期绩效"
+  },
+  eventModule: {
+    eventName: "事件名称",
+    private: "私人",
+    eventDetatil: "事件详情",
+    eventTime: "事件时间",
+    allDay: "全天时间",
+    startTime: "开始时间",
+    endTime: "结束时间",
+    eventTips: "事件提醒",
+    addLocation: "添加位置",
+    addShareObject: "添加共享对象",
+    addAttachment: "添加附件",
+    comment: "添加备注"
   }
 };

@@ -170,7 +170,10 @@ export default {
         h3.od{
             font-size: 24px;
             font-weight: 500;
-            bottom: 90px;
+            bottom: 86px;
+            padding: 4px 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
         }
         p.od{
             color: $color-gray-dark;

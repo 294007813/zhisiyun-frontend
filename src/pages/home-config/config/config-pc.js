@@ -10,7 +10,7 @@ export default {
           "source":false,//是否对应老系统模块 true代表对应上
           pages:{
             "default":{
-              "name":"默认",
+              "name":"default",
               "fixed": true,
               "fields":{
                 status: true,
@@ -30,7 +30,7 @@ export default {
           "source":true,//是否对应老系统模块 true代表对应上
           pages:{
             "checkin":{
-              "name":"本月考勤统计",
+              "name":"checkin",
               show: true,
               able: true,
               "fields":{
