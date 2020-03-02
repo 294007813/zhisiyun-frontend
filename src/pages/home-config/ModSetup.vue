@@ -53,8 +53,8 @@
 
 <script>
 import Tp from "./config/config-i18n-pc";
-import Tm from "./config/config-i18n-mobile";
-let i18n={Tp, Tm}
+
+let i18n={Tp}
 import men from "./config/en"
 import mzh from "./config/zh"
 import pmk from "./config/pc-module-key"
@@ -88,7 +88,7 @@ export default {
             return this.platform.toLowerCase()== "mobile"
         },
         tb(){
-            return this.isp? "Tp": "Tm"
+            return "Tp"
         },
         t(){
             let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
@@ -103,6 +103,9 @@ export default {
         },
         title(){
             return  this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
+        },
+        specrule1(){
+            return this.tabname== "attendance"
         }
     },
     methods:{

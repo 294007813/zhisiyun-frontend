@@ -11,7 +11,9 @@
                     movecb: moving,
                     exclude: 'button',
                     interval: 60,
-                    item:citem, rowind, colind}">
+                    item:citem, rowind, colind}"
+                     @mousedown="mup"
+                    >
                     <p class="title">{{citem.title}}
 <!--                        <span v-if="citem.subtitle">{{citem.subtitle}}</span>-->
                     </p>
@@ -25,7 +27,7 @@
             </div>
         </template>
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
-        <i class="ins-cursor" :style="cursorto"></i>
+        <i class="ins-cursor" :style="{...cursorto, display: insCursorShow? cursorto.display: 'none'}"></i>
     </div>
     <div class="head">未添加模块</div>
     <div class="disable-body">
@@ -89,7 +91,8 @@ export default {
                 display: "none",
                 top: "0",
                 left: "0"
-            }
+            },
+            insCursorShow: false
         }
     },
     computed: {
@@ -156,6 +159,10 @@ export default {
         // console.log("mounted")
     },
     methods: {
+        mup(){
+            console.log("mup")
+            this.insCursorShow= true
+        },
         openModsetup(item){
             this.modsetupShow= true
             // console.log(JSON.stringify(item))
@@ -169,9 +176,9 @@ export default {
                 s.splice(rowind, 1)
             }
             h.push(...item)
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 e.target.blur()
-            },10)
+            // },10)
 
         },
         toshow(code) {
@@ -294,6 +301,7 @@ export default {
         movedone({x, y, item, rowind, colind}) {
             console.log("movedone")
             this.$set(this.cursorto, "display", "none")
+            this.insCursorShow= false
             // console.log(x, y, item)
             let l= JSON.parse(JSON.stringify( this.list.show))
             let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})

@@ -25,18 +25,6 @@
                         ref: name }"
                     ></config-mobile>
                 </el-tab-pane>
-<!--                <el-tab-pane label="考勤首页" name="wtpage" :lazy="true">-->
-<!--                    <config-mobile :conf="confm.wtpage" tabname="wtpage" ref="wtpage"></config-mobile>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="工作首页" name="workpage" :lazy="true">-->
-<!--                    <config-mobile :conf="confm.workpage" tabname="workpage" ref="workpage"></config-mobile>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="薪酬首页" name="xcpage" :lazy="true">-->
-<!--                    <config-mobile :conf="confm.xcpage" tabname="xcpage" ref="xcpage"></config-mobile>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="我的页面" name="minepage" :lazy="true">-->
-<!--                    <config-mobile :conf="confm.minepage" tabname="minepage" ref="minepage"></config-mobile>-->
-<!--                </el-tab-pane>-->
             </el-tabs>
             </div>
         </el-tab-pane>
@@ -117,20 +105,6 @@ export default {
             })
             return arr
         },
-        tosave(data, cb){
-            this.$axios.post("/api/feishu_index_page/homePageConfControl/save",data,{dataKey: "msg"}).then(data=>{
-                // console.log(data)
-                this.$msg({message: data, type: "success"});
-                if(cb) cb()
-            })
-        },
-        toupdate(data, cb){
-            this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",data,{dataKey: "msg"}).then(data=>{
-                // console.log(data)
-                this.$msg({message: data, type: "success"});
-                if(cb) cb()
-            })
-        },
         setmd(){
             let res={}
             for(let key in confmobile){
@@ -161,23 +135,8 @@ export default {
             //     title: "确定保存？",
             //     callback:(action)=>{
             //         if(action=="confirm"){
-                        this.tosave({
-                            "flag":"PC",
-                            datas: {home: this.$refs.pchome.list}
-                        })
-                        let mdata= this.setmd()
-            // console.log("mdata", mdata)
-                        for(let key in mdata){
-                            this.tosave({
-                                "flag":"Mobile",
-                                type: key,
-                                datas: mdata[key]
-                            })
-                        }
+            this.topost()
 
-            //         }
-            //     }
-            // })
         },
         update(){
             this.$msgbox.confirm( "",{
@@ -185,23 +144,46 @@ export default {
                 message: "强制更新后不可撤回，请谨慎操作。",
                 callback:(action)=>{
                     if(action=="confirm"){
-                        this.toupdate({
-                            "flag":"PC",
-                            datas: {home: this.$refs.pchome.list},
-                            // datas: confpc,
-                        })
-                        let mdata= this.setmd()
-                        for(let key in mdata){
-                            this.toupdate({
-                                "flag":"Mobile",
-                                type: key,
-                                datas: mdata[key]
-                            })
-                        }
+                        this.topost(true)
                     }
                 }
             })
-        }
+        },
+        topost(update){
+            let tasks= []
+            let mdata= this.setmd()
+            tasks.push((callback)=> {
+                this.toreq({
+                    "flag":"PC",
+                    datas: {home: this.$refs.pchome.list}
+                },(res)=>{
+                    callback(null, res);
+                }, update)
+            })
+            for(let key in mdata){
+                tasks.push((callback)=> {
+                    this.toreq({
+                        "flag":"Mobile",
+                        type: key,
+                        datas: mdata[key]
+                    },(res)=>{
+                        callback(null, res);
+                    }, update)
+                })
+            }
+            async.parallel( tasks, (err, results)=> {
+                this.$msg({message: results[0], type: "success"});
+            });
+        },
+        toreq(data, cb, update){
+            let url=update?
+                "/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client":
+                "/api/feishu_index_page/homePageConfControl/save";
+            this.$axios.post(url, data,{dataKey: "msg"}).then(data=>{
+                // console.log(data)
+                if(cb) cb(data)
+            })
+        },
     },
 }
 </script>
