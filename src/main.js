@@ -36,6 +36,12 @@ window.async= async
 window.moment= moment
 window._= _
 Vue.prototype.$conf= conf
+Vue.prototype.$user_info = {
+  userId: '',
+  setUserId(data) {
+    this.userId = data
+  }
+}
 
 new Vue({
   router,

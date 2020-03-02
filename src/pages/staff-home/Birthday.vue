@@ -2,7 +2,7 @@
 <div class="birthday">
     <h5>{{$t("index.birthday_blessing_wall")}}</h5>
     <el-tabs v-model="activeTabs">
-        <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday">
+        <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday" >
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
                 <swiper-slide v-for="(item, i) in day.peoples[0].items" :key="i">
@@ -23,11 +23,12 @@
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
+            <div v-else v-nodata="{have: day.peoples&& day.peoples.length}"></div>
         </el-tab-pane>
         <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon" v-if="fimon">
             <p class="mon-title">2019年9月</p>
             <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
-                    class="mon-swiper"ref="mon" @someSwiperEvent="callback">
+                    class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
                         <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("d")}}</b></p>
@@ -40,6 +41,7 @@
 <!--                <div class="swiper-button-prev" slot="button-prev"></div>-->
 <!--                <div class="swiper-button-next" slot="button-next"></div>-->
             </swiper>
+            <div v-else v-nodata="{have: mon.peoples&& mon.peoples.length}"></div>
         </el-tab-pane>
     </el-tabs>
 </div>
@@ -58,13 +60,17 @@ export default {
         return{
             activeTabs: 'day',
             dayOptions:{
-                watchOverflow: true
+                watchOverflow: true,
+                prevButton: '.swiper-button-prev',
+                nextButton: '.swiper-button-next',
             },
             monOptions:{
                 slidesPerView : "auto",
                 spaceBetween : 20,
                 slidesOffsetBefore : 20,
                 slidesOffsetAfter : 20,
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
             },
             day: {},
             mon: {},

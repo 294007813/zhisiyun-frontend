@@ -79,6 +79,7 @@ export default {
             trendChart: {
                 xAxis: {
                     type: 'category',
+                    axisTick: {show : false},
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 },
                 yAxis: {
@@ -86,7 +87,11 @@ export default {
                 },
                 series: [{
                     data: [120, 200, 150, 80, 70, 110, 130],
-                    type: 'bar'
+                    type: 'bar',
+                    itemStyle: {
+                        color: "rgba(84,199,252,1)"
+                    },
+                    barWidth: '30px'
                 }]
             },
             od: {value: 0,  name: '暂无数据'}
@@ -128,12 +133,19 @@ export default {
         },
         getRange(){
             this.$axios.get("/api/feishu/jx/rangedatas").then(data=>{
-                data.sort((a, b)=>{
-                    return a.period_value< b.period_value
+                // data.sort((a, b)=>{
+                //     return a.period_value< b.period_value
+                // })
+                let newData = []
+                data.forEach(v => {
+                    if (v.year && (v.period_value || v.period_value === 0)) newData.push(v)
                 })
                 let xAxis= [],series=[]
-                data.map(item=>{
-                    xAxis.push(item.period_name)
+
+                newData.map(item=>{
+                    // xAxis.push(item.period_name)
+                    let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
+                    xAxis.push(item.year + '/' + month)
                     series.push(item.ai_score)
                 })
                 this.trendChart.xAxis.data=xAxis
@@ -158,7 +170,10 @@ export default {
         h3.od{
             font-size: 24px;
             font-weight: 500;
-            bottom: 90px;
+            bottom: 86px;
+            padding: 4px 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
         }
         p.od{
             color: $color-gray-dark;
