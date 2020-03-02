@@ -117,6 +117,27 @@ export default {
                     name: '实发工资',
                     type: 'line',
                     data: [],
+                    lineStyle: {
+                        color: '#54C7FC'
+                    },
+                    itemStyle: {
+                        color: "#FF6666"
+                    },
+                    areaStyle: {
+                        // color: '#C6EDFF'
+                        color: {
+                            stype: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#54C7FC' // 0% 处的颜色
+                            }, {
+                                offset: 1, color: '#C6EDFF' // 100% 处的颜色
+                            }]
+                        }
+                    }
                 }
             },
             mon: null,

@@ -13,7 +13,7 @@
         </el-tab-pane>
         <el-tab-pane label="已办" name="at">
             <ul class="ul at" v-if="fiat">
-                <li v-for="(item, i) in at.list" :key="i">
+                <li v-for="(item, i) in at.list" :key="i" @click="goFun(item.operation)">
                     <p><em>{{item.title}}</em></p>
 <!--                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>-->
 <!--                    <b>人事事件</b>-->

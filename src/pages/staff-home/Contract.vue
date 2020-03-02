@@ -1,7 +1,7 @@
 <template>
 <div class="contract">
     <ul class="to" v-if="fito">
-        <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
         <li>
             <p><b>{{da.n1}}</b>{{$t("index.numbers")}}</p>
             <span>{{$t("index.signed_contract")}}</span>
@@ -12,7 +12,7 @@
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
-        <h6>{{$t("index.agreement")}}<i class="iconfont iconyoujiantou"></i></h6>
+        <h6>{{$t("index.agreement")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
         <li>
             <p><b>{{da.n2}}</b>{{$t("index.numbers")}}</p>
             <span>{{$t("index.signed_agreement")}}</span>
@@ -43,6 +43,9 @@ export default {
             let data= this.conf.pages.bo
             return data.able && data.show && data.fields
         },
+        userInfoUrl() {
+            return '/admin/masterdata/people/form/' + this.$user_info.userId + '?mode=view'
+        }
     },
     mounted(){
         this.getTo()

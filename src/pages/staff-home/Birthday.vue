@@ -27,7 +27,7 @@
         <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon" v-if="fimon">
             <p class="mon-title">2019年9月</p>
             <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
-                    class="mon-swiper"ref="mon" @someSwiperEvent="callback">
+                    class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
                         <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("d")}}</b></p>
@@ -58,13 +58,17 @@ export default {
         return{
             activeTabs: 'day',
             dayOptions:{
-                watchOverflow: true
+                watchOverflow: true,
+                prevButton: '.swiper-button-prev',
+                nextButton: '.swiper-button-next',
             },
             monOptions:{
                 slidesPerView : "auto",
                 spaceBetween : 20,
                 slidesOffsetBefore : 20,
                 slidesOffsetAfter : 20,
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
             },
             day: {},
             mon: {},

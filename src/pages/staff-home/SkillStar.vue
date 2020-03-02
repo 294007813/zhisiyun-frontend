@@ -16,7 +16,7 @@
                     </div>
                     <ul class="info">
                         <p><b>{{getStar(item)}}</b>{{$t("index.praise")}} <i v-if="field.like" class="fa fa-thumbs-up"></i></p>
-                        <li v-for="(sk, j) in item.my_skills">{{sk.skill.skill_name}}<b>{{sk.score}}{{$t("index.praise")}}</b></li>
+                        <li v-for="(sk, j) in item.my_skills" :key="j" @click="like(item._id, sk.skill._id, sk.skill.skill_name)">{{sk.skill.skill_name}}<b>{{sk.praise_peoples_number}}{{$t("index.praise")}}</b></li>
                     </ul>
                 </div>
             </swiper-slide>
@@ -66,9 +66,18 @@ export default {
             //     star+= it1.praise_peoples_number
             // })
             item.my_skills.map(it1=>{
-                star+= it1.score
+                // star+= it1.score
+                star += it1.praise_peoples_number
             })
             return star
+        },
+        like(people, skill_id, skill_name) {
+            this.$axios.put('/admin/pm/skill/people_bb/' + people, {
+                skill_id: skill_id,
+                skill_name: skill_name
+            }).then(res => {
+                this.getData()
+            })
         }
     }
 }
@@ -121,6 +130,7 @@ export default {
                 border:1px solid $color-line-light;
                 margin: 0 6px 10px 0;
                 font-size: 12px;
+                cursor: pointer;
                 b{
                     font-size: 12px;
                     font-weight: 600;

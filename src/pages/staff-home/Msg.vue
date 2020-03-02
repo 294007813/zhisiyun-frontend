@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
-                <li v-for="(item, i) in gt.list" :key="i">
+                <li v-for="(item, i) in gt.list" :key="i" @click="$f.href(item.url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
@@ -17,7 +17,7 @@
         </el-tab-pane>
         <el-tab-pane label="已读" name="at" v-if="fiat">
             <ul class="ul at">
-                <li v-for="(item, i) in at.list" :key="i">
+                <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
