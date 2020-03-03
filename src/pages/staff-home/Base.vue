@@ -16,7 +16,7 @@
     <div class="head">
 <!--        <img :src="avatar"/>-->
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)"><avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
-        <p v-if="field.medal && info.numberOf_MEDALS" @click="openmedal">
+        <p v-if="field.medal" @click="openmedal">
             <i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>
 
