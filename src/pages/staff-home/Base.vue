@@ -16,8 +16,29 @@
     <div class="head">
 <!--        <img :src="avatar"/>-->
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)"><avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
-        <p v-if="field.medal"><i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
+        <p v-if="field.medal && info.numberOf_MEDALS" @click="openmedal">
+            <i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>
+
+    <el-dialog
+            title="勋章墙"
+            :visible.sync="medalshow"
+            custom-class="medalwall"
+            :append-to-body="true"
+            width="400px">
+        <ul>
+            <li v-for="(it, ind) in medal">
+                <i class="tag"><span>奖</span></i>
+                <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
+                <p>{{it.reward_punish.rap_name}}</p>
+                <span>{{getdate(it.current_time)}}获得</span>
+            </li>
+        </ul>
+        <p slot="footer" class="footer">
+            <el-button type="primary" size="small" @click="medalshow=false">确认</el-button>
+        </p>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -38,12 +59,14 @@ export default {
 
             },
             es,
-            done: false
+            done: false,
+            medalshow: false,
+            medal:[]
         }
     },
     computed:{
         start_service_date(){
-            return this.info.start_service_date && moment(this.info.start_service_date).format('YYYY-MM-DD');
+            return this.info.start_service_date && this.getdate(this.info.start_service_date);
         },
         avatar(){
             return this.done && this.$f.getPic(this.info.avatar)
@@ -62,9 +85,20 @@ export default {
                 this.$user_info.setUserId(data[0]._id)
                 this.done= true
             })
-            this.$axios.get("/people_card").then(data=>{
 
-            })
+        },
+        openmedal(){
+            if(!this.medal.length){
+                this.$axios.get("/people_card",{dataLevel: "api"}).then(data=>{
+                    if(data && data.rp &&data.rp.reward_punishs){
+                        this.medal= data.rp.reward_punishs
+                    }
+                })
+            }
+            this.medalshow= true
+        },
+        getdate(date){
+            return moment(date).format('YYYY-MM-DD');
         }
     }
 }
@@ -150,6 +184,7 @@ export default {
         }
         p{
             display: inline-block;
+            padding: 0 5px;
             font-size: 12px;
             width: 50px;
             height: 20px;
@@ -159,6 +194,7 @@ export default {
             background:linear-gradient(270deg,rgba(251,197,50,1) 0%,rgba(252,119,32,1) 100%);
             box-shadow:0px 1px 2px 0px rgba(0,0,0,0.1);
             color: white;
+            cursor: pointer;
             i{
                 font-size: 10px;
                 margin-right: 4px;
@@ -177,6 +213,52 @@ export default {
     }
     .click-hand {
         cursor: pointer;
+    }
+
+}
+.medalwall ul{
+    /*padding: 10px;*/
+    li{
+        display: inline-block;
+        width: 160px;
+        height: 140px;
+        margin: 15px 20px;
+        font-size: 12px;
+        overflow: hidden;
+        text-align: center;
+        border-radius: 4px;
+        background-color: #fafafa;
+        .tag{
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 42px solid #ffb142;
+            border-right: 42px solid transparent;
+            position: relative;
+            color: #fff;
+            span{
+                position: absolute;
+                margin-top: -38px;
+                margin-left: 6px;
+            }
+        }
+        img{
+            margin-top: -30px;
+            height: 80px;
+        }
+        >p{
+            font-size: 14px;
+            line-height: 20px;
+            color: #666;
+            height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        >span{
+            font-size: 12px;
+            color: #999;
+        }
     }
 }
 </style>
