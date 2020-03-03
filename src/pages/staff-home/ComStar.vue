@@ -2,9 +2,9 @@
 <div class="com-star">
     <h5>{{$t("index.star_company")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
-              v-model="query" v-if="field.query"></el-input>
+              v-model="query" v-if="field.query" @change="toquery"></el-input>
     <div class="db" v-nodata="{have: list.length}">
-        <swiper :options="op" class="swiper" ref="day">
+        <swiper :options="op" class="swiper" ref="swiper">
             <swiper-slide v-for="(it, i) in list" :key="i">
                 <div :class="{ssb: true, size}">
                     <div class="left">
@@ -26,8 +26,8 @@
                     </ul>
                 </div>
             </swiper-slide>
-<!--            <div class="swiper-button-prev" slot="button-prev"></div>-->
-<!--            <div class="swiper-button-next" slot="button-next"></div>-->
+            <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('swiper', true)"></i>
+            <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
         </swiper>
     </div>
 </div>
@@ -64,6 +64,26 @@ export default {
             this.$axios.get("/api/feishu/user/stardata").then(data=>{
                 this.list= data
             })
+        },
+        toquery(val){
+            // console.log(val)
+            let name="", to= null
+            this.list.forEach((it, i)=>{
+                name= it.people.people_name
+                if(name.includes(val) || val.includes(name)){
+                    to= i
+                }
+            })
+            if(to!==null){
+                this.$refs.swiper.swiper.slideTo(to)
+            }
+        },
+        next(ref, back){
+            if(back){
+                this.$refs[ref].swiper.slidePrev()
+            }else{
+                this.$refs[ref].swiper.slideNext()
+            }
         },
         moment: window.moment
     }
