@@ -48,16 +48,16 @@
     <el-dialog
             :title="(p.people &&p.people.people_name)+'的生日'"
             :visible.sync="pshow"
-            custom-class="medalwall"
+            custom-class="birthday-detail"
             :append-to-body="true"
-            width="600px">
-        <div :class="{day: true, size}">
+            width="700px">
+        <div :class="{day: true, size}" v-if="p.people">
             <div class="left">
                 <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
                 <img class="cake" src="~as/img/staff-home/cake.svg"/>
-                <p>{{moment().format()}}是TA的生日</p>
+                <p>{{moment(p.people.birthday).format("M月D日")}}是TA的生日</p>
             </div>
-            <div class="photo" v-if="p.people">
+            <div class="photo" >
                 <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>
                 <img class="crown" src="~as/img/staff-home/crown.svg"/>
                 <p>{{p.people.people_name}}</p>
@@ -129,6 +129,7 @@ export default {
         },
         select(it){
             this.p= it
+            this.pshow= true
         },
         next(ref, back){
             if(back){
@@ -144,74 +145,77 @@ export default {
 
 <style scoped lang="scss">
 @import "common";
+@mixin birthday(){
+width: 100%;
+height: 100%;
+position: relative;
+.left{
+    position: absolute;
+    top: 46%;
+    transform: translateY(-50%);
+    left: 8%;
+    .cake{
+        width: 300px;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .hb{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: .05;
+    }
+    p{
+        font-size: 24px;
+        text-align: center;
+    }
+}
+
+.photo{
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    right: 8%;
+    overflow: visible;
+    white-space: nowrap;
+    padding-left: 110px;
+    .head{
+        border-radius: 100%;
+        overflow: hidden;
+        width: 100px;
+        height: auto;
+        border: 1px solid $color-border;
+        box-shadow:0 4px 8px 0 rgba(0,0,0,0.08);
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .crown{
+        width: 54px;
+        position: absolute;
+        top: -20px;
+        left: 60px;
+    }
+    p{
+        font-size: 16px;
+        font-weight: 500;
+        margin: 30px 0 4px;
+    }
+    span{
+        font-size: 12px;
+        max-width: 100px;
+        display: inline-block;
+        white-space: normal;
+    }
+}
+}
 .birthday{
     @include block;
     .day-swiper{
         height: 100%;
         .day{
-            width: 100%;
-            height: 100%;
-            position: relative;
-            .left{
-                position: absolute;
-                top: 46%;
-                transform: translateY(-50%);
-                left: 8%;
-                .cake{
-                    width: 300px;
-                    position: relative;
-                    margin-bottom: 20px;
-                }
-                .hb{
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    opacity: .05;
-                }
-                p{
-                    font-size: 24px;
-                    text-align: center;
-                }
-            }
-
-            .photo{
-                position: absolute;
-                top: 45%;
-                transform: translateY(-50%);
-                right: 8%;
-                overflow: visible;
-                white-space: nowrap;
-                padding-left: 110px;
-                .head{
-                    border-radius: 100%;
-                    overflow: hidden;
-                    width: 100px;
-                    height: auto;
-                    border: 1px solid $color-border;
-                    box-shadow:0 4px 8px 0 rgba(0,0,0,0.08);
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                }
-                .crown{
-                    width: 54px;
-                    position: absolute;
-                    top: -20px;
-                    left: 60px;
-                }
-                p{
-                    font-size: 16px;
-                    font-weight: 500;
-                    margin: 30px 0 4px;
-                }
-                span{
-                    font-size: 12px;
-                    max-width: 100px;
-                    display: inline-block;
-                    white-space: normal;
-                }
-            }
+            @include birthday;
         }
         .mon{
 
@@ -267,6 +271,12 @@ export default {
         .mon-slide{
             width: auto;
         }
+    }
+}
+.birthday-detail{
+    .day{
+        @include birthday;
+        height: 300px;
     }
 }
 </style>
