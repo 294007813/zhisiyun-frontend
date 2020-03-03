@@ -1,8 +1,9 @@
 <template>
 <div class="com-star">
     <h5>{{$t("index.star_company")}}</h5>
-    <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
-              v-model="query" v-if="field.query" @change="toquery"></el-input>
+    <el-input class="query" size="mini" placeholder="输入关键词查询"
+              v-model="query" v-if="field.query">
+              <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>
     <div class="db" v-nodata="{have: list.length}">
         <swiper :options="op" class="swiper" ref="swiper">
             <swiper-slide v-for="(it, i) in list" :key="i">
@@ -48,7 +49,13 @@ export default {
             op:{
 
             },
-            list: []
+            list: [],
+            decoy: []
+        }
+    },
+    watch: {
+        query() {
+            this.list = this.decoy;
         }
     },
     computed:{
@@ -62,21 +69,14 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/user/stardata").then(data=>{
+                this.decoy = data;
                 this.list= data
             })
         },
         toquery(val){
-            // console.log(val)
-            let name="", to= null
-            this.list.forEach((it, i)=>{
-                name= it.people.people_name
-                if(name.includes(val) || val.includes(name)){
-                    to= i
-                }
-            })
-            if(to!==null){
-                this.$refs.swiper.swiper.slideTo(to)
-            }
+             this.list = this.list.filter(v => {
+                return v.people.people_name.indexOf(val) > -1
+            });
         },
         next(ref, back){
             if(back){
@@ -128,4 +128,12 @@ export default {
 }
 
 
+</style>
+
+<style>
+.com-star .el-input-group__append {
+    background: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 </style>

@@ -20,11 +20,13 @@
         </el-tab-pane>
         <el-tab-pane label="统计" name="sta" v-if="fista">
             <el-date-picker
+                    @change="getTrend"
                     prefix-icon="iconfont iconshaixuan"
                     class="dp"
                     size="mini"
                     v-model="stadate"
                     type="monthrange"
+                    value-format="yyyy-MM"
                     range-separator="-"
                     start-placeholder="开始月份"
                     end-placeholder="结束月份">
@@ -193,9 +195,17 @@ export default {
         getTrend(){
             this.$axios.post("/api/feishu/xc/totalinfo2",this.stadate &&{
                 start_date: this.stadate[0],
-                end_date: this.stadate[1],
+                end_date: this.stadate[1]
             }).then(data=>{
-                this.sta= data
+                if (data) {
+                    this.sta = data
+                } else {
+                    this.sta = null
+                    this.$msg({
+                        message: '该期间员工没有工资！',
+                        type: 'warning'
+                    });
+                }
             })
         },
         getSta(){
@@ -204,7 +214,7 @@ export default {
                 end_date: "2019-12",
             }).then(data=>{
 
-            })
+            },)
         },
         salaryClick({name}){
             switch (name) {
