@@ -58,10 +58,11 @@ export default {
             }, (err, res)=> {
                 // console.log(res)
                 let {user, admin} = res, distr="", my={}
-                _.mapObject(admin.disable,(it, key)=>{
+
+                _.mapObject(admin.disable[0],(it, key)=>{
                     distr+= "-"+it.code
                 })
-
+                console.log("distr", distr)
                 my={
                     show: user.show,
                     hide: [user.hide[0].concat( user.disable[0])],
@@ -87,6 +88,7 @@ export default {
                 }
 
                 let ais= _.flatten(admin.show)
+                console.log("ais", ais)
                 ais.forEach((ai)=>{
                     _.mapObject(my,(mb)=>{
                         mb.forEach((row)=>{

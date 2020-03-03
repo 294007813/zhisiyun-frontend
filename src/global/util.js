@@ -35,10 +35,10 @@ const util= {
         input.setAttribute("accept", accept|| "*");
         input.onchange= ()=>{
             let formdata = new FormData();
-            formdata.append('file' , input.files[0], input.files[0].name);
+            formdata.append('qqfile' , input.files[0], input.files[0].name);
             // formdata.append('access_token' , $store.state.user.token);
             axios.post(url|| '/gridfs/put_external', formdata,
-                {headers: {'Content-Type': 'multipart/form-data'}}
+                {headers: {'Content-Type': 'multipart/form-data'}, dataLevel:"api"}
             ).then((res) => {
                 callback(res)
             })
