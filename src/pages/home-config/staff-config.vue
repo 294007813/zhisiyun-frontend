@@ -72,6 +72,7 @@ export default {
                 dis(my, 'hide')
 
                 function dis(d, name) {
+                    //禁用模块
                     let ms= d[name]
                     for(let i=ms.length-1; i>=0; i--){
                         for(let j=ms[i].length-1; j>=0; j--){
@@ -93,9 +94,9 @@ export default {
                     _.mapObject(my,(mb)=>{
                         mb.forEach((row)=>{
                             row.forEach((it)=>{
-                                if(it.code== ai.code){
+                                if(it.name== ai.name){
                                     _.mapObject(ai.pages, (ap, apk)=>{
-                                        it.pages[apk].able= ap.able
+                                        it.pages[apk].able= ap.able //页签的禁用状态
                                         it.fields= {...it.fields, ...it.disableFields}
                                         it.disableFields= {}
                                         _.mapObject(ap.disableFields, (apf, apfk)=>{

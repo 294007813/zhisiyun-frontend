@@ -87,6 +87,8 @@ Vue.directive('drag', {
 
 Vue.directive('nodata', {
     bind(el, binding, vnode) {
+        let params= binding.value
+        let { msg}= params
         console.log("vnode", vnode)
         console.log("el.style", el.style)
         let div = document.createElement("div")
@@ -94,7 +96,7 @@ Vue.directive('nodata', {
         let p = document.createElement("p")
         div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: block;");
         div.setAttribute("class", "nodata");
-        p.innerText="暂无数据"
+        p.innerText=  msg || "暂无数据"
         p.setAttribute("style", "font-size: 14px;color: #999999;")
         img.setAttribute("src", "/img/common/no-pic.png")
         img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
