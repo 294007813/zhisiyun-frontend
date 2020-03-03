@@ -64,13 +64,18 @@ export default {
         getData(){
             this.$axios.get("/admin/im/people_help_json",{dataLevel: "api"}).then(data=>{
                 this.tree= this.ergo(data)
-                // console.log(this.tree)
+                console.log(this.tree)
             })
         },
         ergo(data){
             let it= data[0], match= false
+            // if(!it){
+            //     console.log("!it")
+            //     return data
+            // }
             it.label= it.name
             if(!it.pId){
+                // console.log("!it.pId")
                 let hasid= data.some(i=>{return i.pId})
                 if(hasid){
                     data.shift()
@@ -80,8 +85,9 @@ export default {
                     return data
                 }
             }
+
             for(let i in data){
-                if(i== 0){
+                if(parseInt(i) == 0){
                     continue
                 }else{
                     if(it.pId== data[i].id){
@@ -91,6 +97,8 @@ export default {
                         if(this.match(data[i].children, it)){
                             match= true
                         }
+                    }else if(it.id== data[i].pId){
+
                     }
                     if(match){
                         data.shift()
