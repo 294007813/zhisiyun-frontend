@@ -207,14 +207,16 @@ export default {
                 }
                 width += show[torow][i].left + show[torow][i].width
             }
+            // console.log("torow", torow)
+            if(torow<0) torow=0
+            if(tocol<0) tocol=0
             if(show[torow].length==1){
                 width += show[torow][0].width
                 if (left <= width) {
                     tocol = 1
                 }
             }
-            torow= torow<0 ? 0 :torow
-            tocol= tocol<0 ? 0 :tocol
+
             return {torow, tocol}
         },
         // moveRow(index, up){
@@ -299,6 +301,9 @@ export default {
                 torow= this.showlinenum-1
             }
             if( l[torow][tocol] && l[torow][tocol].fixed) return
+            if(item.long &&l[torow][0]&&l[torow][0].fixed){
+                return;
+            }
             let top= torow * this.lineHeight + "px"
             let left=( l[torow][tocol] && l[torow][tocol].long)|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
             // console.log("torow, tocol",  torow, tocol)
@@ -320,12 +325,17 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
+            console.log("torow, tocol", torow, tocol)
             if(sameall || (l[torow][tocol]&& l[torow][tocol].fixed)){
                 return
             }
             if(item.long){
                 // console.log("long")
-                let thisrow=l.splice(rowind, 1)[0]
+                let thisrow= []
+                if(l[torow][0]&&l[torow][0].fixed){
+                    return;
+                }
+                thisrow=l.splice(rowind, 1)[0]
                 // console.log("thisrow", thisrow)
                 l.splice(torow,0, thisrow)
             }else{
@@ -346,10 +356,10 @@ export default {
                     }
                 }
             }
-            // this.list.show= []
-            // this.$nextTick(() => {
+            this.list.show= []
+            this.$nextTick(() => {
                 this.list.show= this.clearup(l)
-            // })
+            })
 
         },
         clearup(list){
