@@ -5,12 +5,13 @@
         <a v-if="field.status">{{es[info.employee_status||'H']}}</a>
     </h1>
     <div class="title" v-if="field.level">{{`${info.ou_name}/${info.position_name}`}}
-        <b>{{`${info.joblevel.joblevel_name}-${info.jobrank.jobrank_name}`}}</b>
+        <b>{{`${info.joblevel&&info.joblevel.joblevel_name}-${info.jobrank&&info.jobrank.jobrank_name}`}}</b>
     </div>
     <p><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
     <p><label>{{$t("index.zodiac")}}：</label>{{info.zodiac.shengxiao}}</p>
     <p><label>{{$t("index.birthday")}}：</label>{{info.zodiac.shengri}}</p>
-    <p><label>{{$t("index.entry_data")}}：</label>{{start_service_date}} <span class="click-hand" v-if="field.sub" @click="$f.href('/admin/masterdata/people_contact/new/contacts')">{{$t("index.subordinate")}}：{{info.my_team}}{{$t("index.people")}}</span></p>
+    <p><label>{{$t("index.entry_data")}}：</label>{{start_service_date}}
+        <span class="click-hand" v-if="field.sub" @click="$f.href('/admin/masterdata/people_contact/new/contacts')">{{$t("index.subordinate")}}：{{info.my_team}}{{$t("index.people")}}</span></p>
     <a v-if="field.look" @click="$f.href('/profile_user')">{{$t("index.view_files")}}<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
 <!--        <img :src="avatar"/>-->
@@ -60,6 +61,9 @@ export default {
                 this.info= data[0]
                 this.$user_info.setUserId(data[0]._id)
                 this.done= true
+            })
+            this.$axios.get("/people_card").then(data=>{
+
             })
         }
     }
