@@ -7,10 +7,10 @@ import {minepage} from "../../pages/home-config/config/minepage";
 export default  {
   // 首页
   "index": {
-    // "first_page": "首页",
-    // "name":"姓名",
-    // "my":"我的",
-    // "work": "工作",
+    "process":"流程",
+    "train":"培训",
+    "this_month":"本月",
+    "current": "当前",
     "default": "默认",
     "gisi": "智思云",
     "constellation":"星座", 
@@ -92,6 +92,7 @@ export default  {
     "to_configure":"配置",
     "delete": "删除",
     "save": "保存",
+    "salary_information_module":"薪资信息模块",
     "attendance_information_module":"考勤信息模块",
     "performance_information_module":"绩效信息模块",
     "basic_information_module":"基本信息模块",
