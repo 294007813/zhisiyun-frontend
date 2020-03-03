@@ -6,7 +6,7 @@
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
                 <swiper-slide v-for="(item, i) in day.peoples[0].items" :key="i">
-                    <div :class="{day: true, size}">
+                    <div :class="{day: true, size}" @click="select(item)">
                         <div class="left">
                             <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
                             <img class="cake" src="~as/img/staff-home/cake.svg"/>
@@ -20,30 +20,54 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <div class="swiper-button-prev" slot="button-prev"></div>
-                <div class="swiper-button-next" slot="button-next"></div>
+                <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('day', true)"></i>
+                <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('day')"></i>
             </swiper>
             <div v-else v-nodata="{have: day.peoples&& day.peoples.length}"></div>
         </el-tab-pane>
         <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon" v-if="fimon">
-            <p class="mon-title">2019年9月</p>
+            <p class="mon-title">{{curMonth}}</p>
             <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
                     class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("d")}}</b></p>
-                        <li  v-for="(item, j) in bd.items" :key="i+'-'+j">
+                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("dd")}}</b></p>
+                        <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
                             <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>
                         </li>
                     </ul>
                 </swiper-slide>
-<!--                <div class="swiper-button-prev" slot="button-prev"></div>-->
-<!--                <div class="swiper-button-next" slot="button-next"></div>-->
+                <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('mon', true)"></i>
+                <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('mon')"></i>
             </swiper>
             <div v-else v-nodata="{have: mon.peoples&& mon.peoples.length}"></div>
         </el-tab-pane>
     </el-tabs>
+
+    <el-dialog
+            :title="(p.people &&p.people.people_name)+'的生日'"
+            :visible.sync="pshow"
+            custom-class="medalwall"
+            :append-to-body="true"
+            width="600px">
+        <div :class="{day: true, size}">
+            <div class="left">
+                <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
+                <img class="cake" src="~as/img/staff-home/cake.svg"/>
+                <p>{{moment().format()}}是TA的生日</p>
+            </div>
+            <div class="photo" v-if="p.people">
+                <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>
+                <img class="crown" src="~as/img/staff-home/crown.svg"/>
+                <p>{{p.people.people_name}}</p>
+                <span>{{`${p.people.ou_name}/${p.people.position_name}`}}</span>
+            </div>
+        </div>
+        <p slot="footer" class="footer">
+            <el-button type="primary" size="small" @click="pshow=false">知道了</el-button>
+        </p>
+    </el-dialog>
 </div>
 </template>
 
@@ -61,17 +85,19 @@ export default {
             activeTabs: 'day',
             dayOptions:{
                 watchOverflow: true,
-                prevButton: '.swiper-button-prev',
-                nextButton: '.swiper-button-next',
+                // prevButton: '.swiper-button-prev',
+                // nextButton: '.swiper-button-next',
             },
             monOptions:{
                 slidesPerView : "auto",
                 spaceBetween : 20,
                 slidesOffsetBefore : 20,
                 slidesOffsetAfter : 20,
-                prevButton:'.swiper-button-prev',
-                nextButton:'.swiper-button-next',
+                // prevButton:'.swiper-button-prev',
+                // nextButton:'.swiper-button-next',
             },
+            pshow: false,
+            p:{},
             day: {},
             mon: {},
         }
@@ -85,6 +111,9 @@ export default {
             let data= this.conf.pages.mon
             return data.able && data.show && data.fields
         },
+        curMonth (){
+            return new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
+        }
     },
     mounted(){
         this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'
@@ -97,6 +126,16 @@ export default {
             this.$axios.get("/api/feishu/user/birthdaydata",{params:{index: month||''}}).then(data=>{
                 month? this.mon=data: this.day= data
             })
+        },
+        select(it){
+            this.p= it
+        },
+        next(ref, back){
+            if(back){
+                this.$refs[ref].swiper.slidePrev()
+            }else{
+                this.$refs[ref].swiper.slideNext()
+            }
         },
         moment: window.moment
     }
@@ -214,6 +253,7 @@ export default {
                 width: 60px;
                 text-align: center;
                 margin: 0 14px;
+                cursor: pointer;
                 img{
                     width: 100%;
                     margin-bottom: 10px;
