@@ -12,7 +12,7 @@
         <template v-slot:title="{ title, view }">
             <div class="title">
                 <span v-show="view.id === 'month'">{{ view.startDate.format('YYYY年MM月') }}</span>
-                <span v-show="view.id === 'week'">{{view.startDate.format('YYYY年MM月DD日')}}~{{view.endDate.format('DD日')}}</span>
+                <span v-show="view.id === 'week'">{{getWeek(view)}}</span>
                 <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY年MM月DD日') }}</span>
             </div>
             <div class="switch">
@@ -106,11 +106,11 @@
                 </el-form-item>
                 <el-form-item label="共享对象">
                     <el-button type="primary" size="mini" @click="staffshow= true">{{$t("index.select")}}</el-button>
-                    <li v-for="(item, i) in form.forward_people_new" :key="i">
+                    <li v-for="(item, i) in forward_people_new" :key="i">
                         <span>{{item.name}}</span>
-                        <i class="el-icon-error" @click="form.forward_people_new.splice(i,1)"></i>
+                        <i class="el-icon-error" @click="forward_people_new.splice(i,1)"></i>
                     </li>
-                    <el-input v-show="form.attachments.length" v-model="form.forward_summary"
+                    <el-input v-show="form.forward_people_new.length" v-model="form.forward_summary"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="添加附件">
@@ -166,6 +166,7 @@ export default {
             dishow: false,
             form: JSON.parse(form),
             staffshow: false,
+            forward_people_new:[]
         }
     },
     mounted(){
@@ -230,8 +231,25 @@ export default {
                 this.form.start= this.form.end= this.time(time)
                 this.dishow= true
             }
+        },
+        getWeek(view){
 
-
+            let {startDate, endDate}= view
+            let s= moment(startDate)
+            let e= moment(endDate)
+            let ss="", se="", et="DD日"
+            console.log(s)
+            ss= s.format('YYYY年MM月DD日')
+            if(s.toObject().years==e.toObject().years){
+                if(s.toObject().months==e.toObject().months){
+                    se= e.format(et)
+                }else{
+                    se= e.format("MM月"+et)
+                }
+            }else{
+                se= e.format("YYYY年MM月DD日"+et)
+            }
+            return ss+"～"+se
         },
         changeallday(status){
             // console.log(status)
@@ -251,23 +269,31 @@ export default {
             e.stopPropagation()
         },
         getShare(v1, v2){
-            this.form.forward_people_new= v2.map(it=>{
+            this.forward_people_new= v2.map(it=>{
                 return {name: it.name, id: it.id}
             })
         },
         upfile(){
             this.$f.upfile((res)=>{
-                this.attachments.push(res)
+                console.log(res)
+                this.form.attachments= this.form.attachments.concat(res.success)
             })
         },
         dfile(i){
-            this.attachments.splice(i,1)
+            this.form.attachments.splice(i,1)
         },
         save(){
             let param= {data: this.form}
-            this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
+            param.forward_people_new= this.forward_people_new.map(it=>{
+                return it.id
             })
-            this.dishow= false
+            this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
+                this.dishow= false
+                this.$msg("创建成功")
+                this.events= []
+                this.getData()
+            })
+
         }
     }
 }
@@ -315,6 +341,12 @@ export default {
             }
             .form{
                 margin-top: 10px;
+            }
+            .el-icon-error, .el-icon-delete-solid{
+                font-size: 16px;
+                color: $color-red;
+                margin-left: 10px;
+                cursor: pointer;
             }
         }
     }

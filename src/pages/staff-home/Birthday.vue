@@ -60,8 +60,10 @@
             <div class="photo" >
                 <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>
                 <img class="crown" src="~as/img/staff-home/crown.svg"/>
-                <p>{{p.people.people_name}}</p>
+                <p>{{p.people.people_name}} <span>{{p.people.people_no}}</span></p>
                 <span>{{`${p.people.ou_name}/${p.people.position_name}`}}</span>
+                <span>{{moment(p.people.start_service_date).format("YY年M月D日")}}入职</span>
+                <span>{{p.people.zodiac}}</span>
             </div>
         </div>
         <p slot="footer" class="footer">
@@ -277,6 +279,22 @@ position: relative;
     .day{
         @include birthday;
         height: 300px;
+        .photo{
+            padding-left: 130px;
+            right: auto;
+            left: 50px;
+            >p, >span{
+                white-space: nowrap;
+                display: block;
+                margin-bottom: 4px;
+            }
+            p{margin-top: 0}
+
+        }
+        .left{
+            left: auto;
+            right: 60px;
+        }
     }
 }
 </style>
