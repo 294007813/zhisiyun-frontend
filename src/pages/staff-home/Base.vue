@@ -26,7 +26,7 @@
             custom-class="medalwall"
             :append-to-body="true"
             width="400px">
-        <ul>
+        <ul style="min-height: 100px" v-nodata="{have: medal.length}">
             <li v-for="(it, ind) in medal">
                 <i class="tag"><span>奖</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
