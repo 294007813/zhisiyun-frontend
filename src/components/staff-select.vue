@@ -11,12 +11,13 @@
             <el-button slot="append" icon="el-icon-search" @click="query"></el-button>
         </el-input>
         <el-tree class="tree" ref="tree" node-key="id" label="name"
+                 :render-after-expand="false"
                  highlight-current show-checkbox v-if="show"
                  :filter-node-method="queryMethod" :default-expand-all="expand" :data="tree">
-            <span class="tree-node" slot-scope="{ node, data }">
-                <i :class="data.type=='o' ?'fa fa-folder':'el-icon-user-solid'"></i>
-                <span>{{ node.label }}</span>
-            </span>
+<!--            <span class="tree-node" slot-scope="{ node, data }">-->
+<!--                <i :class="data.type=='o' ?'fa fa-folder':'el-icon-user-solid'"></i>-->
+<!--                <span>{{ node.label }}</span>-->
+<!--            </span>-->
         </el-tree>
     </div>
     <p slot="footer" class="footer">
@@ -42,7 +43,7 @@ export default {
         return{
             value: "",
             tree: [],
-            expand: true,
+            expand: false,
             show: true
         }
     },
