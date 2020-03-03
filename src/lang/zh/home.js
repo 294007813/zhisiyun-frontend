@@ -51,7 +51,7 @@ export default  {
     "readed":"已读",
     "birthday_blessing_wall":"生日祝福墙",
     "today":"今日",
-    "day":"天",
+    "day":"日",
     "month": "月",
     "num":"位",
     "star_company":"公司之星",

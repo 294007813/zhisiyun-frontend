@@ -26,12 +26,12 @@
             <div v-else v-nodata="{have: day.peoples&& day.peoples.length}"></div>
         </el-tab-pane>
         <el-tab-pane :label="`本月(${mon.length||0}位)`" name="mon" v-if="fimon">
-            <p class="mon-title">2019年9月</p>
+            <p class="mon-title">{{curMonth}}</p>
             <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
                     class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("d")}}</b></p>
+                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("dd")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j">
                             <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>
@@ -85,6 +85,9 @@ export default {
             let data= this.conf.pages.mon
             return data.able && data.show && data.fields
         },
+        curMonth (){
+            return new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
+        }
     },
     mounted(){
         this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'

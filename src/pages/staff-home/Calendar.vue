@@ -264,7 +264,7 @@ export default {
             this.attachments.splice(i,1)
         },
         save(){
-            let param= this.form
+            let param= {data: this.form}
             this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
             })
             this.dishow= false
