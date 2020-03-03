@@ -9,15 +9,17 @@
 
     <el-dialog
             :visible.sync="show"
-            custom-class="dialog"
-            width="630px">
+            width="500px">
         <p slot="title" class="title">填写意见</p>
-        <div class="content">
-            <textarea cols="100" rows="10" placeholder="说点什么"></textarea>
+        <div style="padding: 10px">
+            <el-input
+                    type="textarea"
+                    :rows="3"
+                    placeholder="说点什么"
+                    v-model="form.desc"/>
         </div>
         <p slot="footer" class="footer">
-            <input type="checkbox" @click="anonymous= !anonymous">
-            <span>匿名提交</span>
+            <el-checkbox v-model="form.anonymous" style="margin-right: 10px">匿名提交</el-checkbox>
             <el-button type="primary" size="small" @click="save">确认</el-button>
         </p>
     </el-dialog>
@@ -31,7 +33,11 @@ export default {
         return{
             show: false,
             anonymous: false,
-            num: 0
+            num: 0,
+            form:{
+                anonymous: false,
+                desc: ""
+            }
         }
     },
     mounted(){
@@ -47,11 +53,7 @@ export default {
              this.show = true;
         },
         save () {
-             this.$axios.post("/admin/culture/suggestion/create", {
-                 desc: "aa",
-                 anonymous: this.anonymous,
-                 type: "5e4f3ced7ddd3a1242ded7f8"
-             }).then(data=>{
+             this.$axios.post("/api/feishu/base/client_culture_suggestion_bb_create", this.form).then(data=>{
                  this.show = false
             })
         }
@@ -63,7 +65,7 @@ export default {
 @import "common";
 .idea{
     @include block;
-    div{
+    >div{
         padding-top: 40px;
         overflow: hidden;
         text-align: center;
