@@ -9,6 +9,7 @@
 
     <el-dialog
             :visible.sync="show"
+            :append-to-body="true"
             width="500px">
         <p slot="title" class="title">填写意见</p>
         <div style="padding: 10px">
@@ -32,7 +33,6 @@ export default {
     data(){
         return{
             show: false,
-            anonymous: false,
             num: 0,
             form:{
                 anonymous: false,
