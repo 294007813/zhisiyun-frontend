@@ -152,7 +152,7 @@ export default {
                             datas: {home: this.$refs.pchome.list},
                             // datas: conf,
                         },{dataKey: "msg"}).then(data=>{
-                            this.$msg({message: data});
+                            this.$msg({message: data, type: "success"});
                         })
             //         }
             //     }
