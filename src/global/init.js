@@ -1,7 +1,7 @@
-import axios from 'gl/axios'
+import axios from "gl/axios";
 
 axios.post("/login", {
-    client: "demo12",
-    username: "00001",
-    password: "000000"
-})
+  client: "demo",
+  username: "00001",
+  password: "000000"
+});
