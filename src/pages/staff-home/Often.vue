@@ -68,7 +68,6 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
-              console.log("datalist", data.paid);
                data.paid.map((v,i) => {
                  // 把AI放在第一位
                  if (v.code == "AI") {
