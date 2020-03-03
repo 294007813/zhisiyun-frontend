@@ -1,7 +1,7 @@
 import axios from "gl/axios";
 
 axios.post("/login", {
-  client: "001",
-  username: "0363",
-  password: "087373"
+  client: "demo",
+  username: "00001",
+  password: "000000"
 });
