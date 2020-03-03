@@ -78,20 +78,45 @@ export default {
             },
             trendChart: {
                 xAxis: {
+                    axisLine: {
+                        show: false,
+                    },
                     type: 'category',
                     axisTick: {show : false},
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        show: false,
+                    },
+                    axisTick: {show : false},
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            type: "dashed",
+                            color: "#EEEEEE"
+                        },
+                    },
+                },
+                tooltip: {
+                    show: true,
+                    formatter: function ({data: {level},value}, c) {
+                        console.log(arguments)
+                        return `得分：${value}分<br />等级：${level}`
+                    }
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70, 110, 130],
+                    data: [],
                     type: 'bar',
                     itemStyle: {
                         color: "rgba(84,199,252,1)"
                     },
-                    barWidth: '30px'
+                    barWidth: '30px',
+                    formatter: function ({value}) {
+                        console.log(arguments);
+                        return value
+                    }
                 }]
             },
             od: {value: 0,  name: '暂无数据'}
@@ -136,6 +161,7 @@ export default {
                 // data.sort((a, b)=>{
                 //     return a.period_value< b.period_value
                 // })
+                // 过滤
                 let newData = []
                 data.forEach(v => {
                     if (v.year && (v.period_value || v.period_value === 0)) newData.push(v)
@@ -145,11 +171,14 @@ export default {
                 newData.map(item=>{
                     // xAxis.push(item.period_name)
                     let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
-                    xAxis.push(item.year + '/' + month)
-                    series.push(item.ai_score)
+                    xAxis.push(item.year&&item.year.substring(2) + '/' + month)
+                    series.push({
+                        level: item.ai_grade,
+                        value: item.ai_score
+                    })
                 })
                 this.trendChart.xAxis.data=xAxis
-                this.trendChart.series.data=series
+                this.trendChart.series[0].data=series
             })
         }
     }
