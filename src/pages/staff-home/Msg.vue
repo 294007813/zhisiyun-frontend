@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
         <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
-                <li v-for="(item, i) in gt.list" :key="i" @click="$f.href(item.url)">
+                <li v-for="(item, i) in gt.list" :key="i" @click="$f.href(item.pc_url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
@@ -17,7 +17,7 @@
         </el-tab-pane>
         <el-tab-pane label="已读" name="at" v-if="fiat">
             <ul class="ul at" v-nodata="{have: at.list&& at.list.length}">
-                <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.url)">
+                <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.pc_url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import adapter from 'li/message-url-transfer'
 export default {
     name: "Msg",
     props: ["conf"],
@@ -62,8 +63,8 @@ export default {
         tabClick(){},
         getData(status= 0){
             this.$axios.get("/api/feishu/news/newslist",{params:{status}}).then(data=>{
+                data.list = adapter.wx_data_adapter(data.list)
                 this[status? "at": "gt"]= data
-                // this.gt.list=[{},{},{}]
             })
         },
     }
@@ -83,6 +84,7 @@ export default {
             border-bottom: 1px solid $color-border;
             position: relative;
             min-height: 90px;
+            cursor: pointer;
             &:last-child{ border: 0}
             p{
                 margin-bottom: 10px;
