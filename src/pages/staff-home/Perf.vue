@@ -102,7 +102,6 @@ export default {
                 tooltip: {
                     show: true,
                     formatter: function ({data: {level},value}, c) {
-                        console.log(arguments)
                         return `得分：${value}分<br />等级：${level}`
                     }
                 },
