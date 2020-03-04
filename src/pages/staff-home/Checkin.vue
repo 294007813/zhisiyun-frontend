@@ -2,7 +2,7 @@
     <div class="checkin">
         <ul class="sta" v-if="fich">
             <h5>{{$t("index.attendance_statistics_month")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/cardrecord/hr_list_v2')"></i></h5>
-            <li v-if="fich.checkin">
+            <!-- <li v-if="fich.checkin">
                 <p>{{kq.cq}}<b>{{$t("index.day")}}</b></p>
                 <span>{{$t("index.attendance_days")}}</span>
             </li>
@@ -17,7 +17,11 @@
             <li v-if="fich.miss">
                 <p>{{kq.qk}}<b>{{$t("index.nums")}}</b></p>
                 <span>{{$t("index.absence")}}</span>
-            </li>
+            </li> -->
+            <AttendanceCount :dict="fich" :viewList="attendanceArr" :attendanceStatistics="attendanceStatistics" 
+                :translate="propsTranslate('wtpage')"
+
+            />
         </ul>
         <ul class="balance" v-if="fiba">
             <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/absence/report_emp_leave_list')"></i></h5>
@@ -41,6 +45,10 @@
 </template>
 
 <script>
+
+import AttendanceCount from "./attendanceCount";
+const moment  = require("moment");
+
 export default {
     name: "Checkin",
     props: ["conf"],
@@ -57,11 +65,46 @@ export default {
                 qk: 0,
             },
             bl: {},
+            attendanceArr: [],
+            attendanceStatistics: {
+                // 出勤
+                // attendance_days: 0,
+                // // 加班
+                // ask_for_overtime: 0,
+                // // 请假
+                // leaves: 0,
+                // // 迟到早退
+                // late_leave: 0,
+                // // 缺卡
+                // miss_card: 0,
+                // // 休息
+                // rest: 0,
+                // // 旷工
+                // sign_out_change: 0,
+                // // 缺勤
+                // absence: 0,
+                // // 外勤
+                // outwork_time: 0,
+                checkin: 0,
+                late: 0,
+                early: 0,
+                earlylate: 0,
+                leave: 0,
+                miss: 0,
+                rest: 0,
+                absent: 0,
+                short: 0,
+                outside: 0,
+                overtime: 0,
+                official: 0,
+                trip: 0
+            },
         }
     },
     computed:{
         fich(){
             let data= this.conf.pages.checkin
+            console.log("data::::", data)
             return data.able && data.show && data.fields
         },
         fiba(){
@@ -74,30 +117,180 @@ export default {
         }
     },
     mounted(){
-        this.getData()
+        console.log("======")
+        console.log(this.$t("mainPages.wt.day"));
+        this.attendanceArr = [
+                // checkin: true, //出勤
+                // late: true, //迟到
+                // leave: true, //请假
+                // early: true, //早退
+
+                // rest: false, //休息
+                // outside: false, //外勤
+                // absent: false, //旷工
+
+                // short: false, //缺勤
+        {
+            key: "checkin",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        {
+            key: "late",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        {
+            key: "leave",
+            nuit: this.$t("mobileLang.mainPages.wt.times")
+        },
+        {
+            key: "early",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        {
+            key: "absent",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        // 缺卡
+        {
+            key: "miss",
+            nuit: this.$t("mobileLang.mainPages.wt.times")
+        },
+        // 缺勤
+        {
+            key: "short",
+            nuit: this.$t("mobileLang.mainPages.wt.min")
+        },
+        {
+            key: "outside",
+            nuit: this.$t("mobileLang.mainPages.wt.times")
+        },
+        {
+            key: "overtime",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        // 休息
+        {
+            key: "rest",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        //    trip: "出差",
+        {
+            key: "trip",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        },
+        // 公干
+        {
+            key: "official",
+            nuit: this.$t("mobileLang.mainPages.wt.day")
+        }
+        ];
+        this.getCardrecord();
+        this.$axios.get("/api/feishu/wt/blancedata").then(data=>{
+            this.bl= data;
+        })
     },
     methods:{
-        getData(){
-            // let mo= moment()
-            this.$axios.get("/api/feishu/wt/kqreport", {params:{
-                    // startdate: mo.format('YYYY-MM-01'),
-                    // enddate: mo.format('YYYY-MM-DD'),
-                    startdate: '2019-12-01',
-                    enddate: '2019-12-20',
-            }}).then(data=>{
-                for(let key in data){
-                    let item= data[key][0]
-                    item.is_job_day && !item.absenteeism && this.kq.cq++
-                    item.ask_for_leave && this.kq.qj++
-                    item.is_job_day && (item.is_come_late || item.is_leave_early) && this.kq.cd++
-                    item.is_job_day && (item.no_sign_in || item.no_sign_out) && this.kq.qk++
-
+        propsTranslate(code) {
+            return function(val) {
+                return this.$t(`mobileLang.${code}.pc.${val}`);
+            };
+        },
+        getCardrecord() {
+            const url = "/admin/tm_reborn/cardrecord/get_work_result_period_feishu";
+            // const url = `${api.cardrecord}`;
+            this.$axios({
+                url: url,
+                method: "GET"
+            }).then(res => {
+                let lastMonthDay = "";
+                if (res.from_date > moment().date()) {
+                    lastMonthDay = moment(moment().format("YYYY-MM") + "-" + res.from_date)
+                        .subtract(1, "months")
+                        .format("YYYY-MM-DD");
+                } else {
+                    lastMonthDay = moment().format("YYYY-MM") + "-" + res.from_date;
                 }
-            })
-            this.$axios.get("/api/feishu/wt/blancedata").then(data=>{
-                this.bl= data
-            })
+                const nowMonthDay = moment()
+                    .subtract(1, "day")
+                    .format("YYYY-MM-DD");
+                this.lastMonthDay = lastMonthDay;
+                this.nowMonthDay = nowMonthDay;
+                this.getData(lastMonthDay, nowMonthDay);
+            });
+        },
+        getData(lastMonthDay, nowMonthDay){
+            this.$axios({
+                url: "/api/feishu/wt/kqreport",
+                params: {
+                startdate: lastMonthDay,
+                enddate: nowMonthDay
+                }
+            }).then(res => {
+                let obj = {
+                    // 出勤
+                    is_full_work: 0,
+                    // 缺勤
+                    absentFlag: 0,
+                    // // 加班
+                    ask_for_overtime: 0,
+                    // 迟到
+                    is_come_late: 0,
+                    // 早退
+                    is_leave_early: 0,
+                    // 旷工
+                    absenteeism: 0,
+                    // 上班打卡
+                    no_sign_in: 0,
+                    // 下班打卡
+                    no_sign_out: 0,
+                    // 请假
+                    ask_for_leave: 0,
+                    // 休息
+                    is_job_day: 0,
+                    // 外勤
+                    waiqin: 0,
+                    // 缺勤时间 min
+                    short: 0
+                };
+                Object.keys(res).forEach(item => {
+                    obj.is_full_work +=
+                        res[item][0]["is_job_day"] && !res[item][0]["absenteeism"] ? 1 : 0;
+                    obj.absentFlag += res[item][0]["is_full_work"] ? 0 : 1;
+                    obj.ask_for_overtime += res[item][0]["ask_for_overtime"] ? 1 : 0;
+                    obj.is_come_late += res[item][0]["is_come_late"] ? 1 : 0;
+                    obj.is_leave_early += res[item][0]["is_leave_early"] ? 1 : 0;
+                    obj.absenteeism += res[item][0]["absenteeism"] ? 1 : 0;
+                    obj.no_sign_in += res[item][0]["no_sign_in"] ? 1 : 0;
+                    obj.no_sign_out += res[item][0]["no_sign_out"] ? 1 : 0;
+                    obj.ask_for_leave += res[item][0]["ask_for_leave"] ? 1 : 0;
+                    obj.is_job_day += res[item][0]["is_job_day"] ? 0 : 1;
+                    obj.waiqin += res[item][0]["waiqin"] ? 1 : 0;
+                    obj.short += res[item][0]["absent_mins"]
+                });
+                this.dateRange = res;
+                this.attendanceStatistics = {
+                    checkin: obj.is_full_work,
+                    // 请假
+                    leave: obj.ask_for_leave,
+                    early: obj.is_leave_early,
+                    late: obj.is_come_late,
+                    // 迟到早退
+                    // earlylate: obj.is_come_late + obj.is_leave_early,
+                    miss: obj.no_sign_in + obj.no_sign_out,
+                    rest: obj.is_job_day,
+                    absent: obj.absenteeism,
+                    short: obj.short,
+                    outside: obj.waiqin,
+                    // 加班
+                    overtime: obj.ask_for_overtime,
+                    trip: 0,
+                    official: 0,
+                };
+            });
         }
+    },
+    components: {
+        AttendanceCount
     }
 }
 </script>
@@ -129,13 +322,13 @@ export default {
                 vertical-align: middle;
             }
         }
-        li{
+        /deep/ li{
             width: 25%;
             text-align: center;
             display: inline-block;
         }
     }
-    .sta,.balance{
+    /deep/.sta > div ,.balance{
         li{
             p{
                 font-size: 16px;

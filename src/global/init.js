@@ -1,5 +1,5 @@
 import axios from "gl/axios";
-import store from 'st'
+import store from "st";
 
 axios.post("/login", {
   client: "demo12",
@@ -12,8 +12,8 @@ axios.post("/login", {
 });
 
 //获取显示语言
-axios.get("/api/feishu/base/getlanguage").then(data=>{
-  if(data){
-    store.commit('setLang', data);
+axios.get("/api/feishu/base/getlanguage").then(data => {
+  if (data) {
+    store.commit("setLang", data);
   }
 });
