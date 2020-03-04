@@ -7,7 +7,7 @@
             <span>{{$t("index.signed_contract")}}</span>
         </li>
         <li>
-            <p><b>{{da.h.years ||"-"}}</b>{{$t("index.year")}}<b>{{da.h.months||"-"}}</b>{{$t("index.month")}}<b>{{da.h.days||"-"}}</b>{{$t("index.day")}}</p>
+            <p><b>{{da.h.years || ''}}</b>{{da.h.years ? $t("index.year") : ''}}<b>{{da.h.months||''}}</b>{{da.h.months ? $t("index.month") : ''}}<b>{{da.h.days||"-"}}</b>{{$t("index.day_time")}}</p>
             <span>{{$t("index.contract_still_valid")}}</span>
         </li>
     </ul>
