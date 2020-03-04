@@ -1,5 +1,5 @@
 import axios from 'gl/axios'
-import util from "../global/util"
+import util from "gl/util"
 
 const transfer = {
     go_grade(qt_id) {

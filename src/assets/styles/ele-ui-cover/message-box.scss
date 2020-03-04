@@ -52,9 +52,11 @@
   @include e(headerbtn) {
     position: absolute;
     //top: $--msgbox-padding-primary;
-    top: 50%;
-    transform: translateY(-50%);
-    right: $--msgbox-padding-primary;
+    //top: 50%;
+    //transform: translateY(-50%);
+    //right: $--msgbox-padding-primary;
+    top: 3px;
+    right: 6px;
     padding: 0;
     border: none;
     outline: none;
