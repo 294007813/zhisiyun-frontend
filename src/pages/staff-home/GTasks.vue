@@ -11,7 +11,7 @@
                 </li>
             </ul>
         </el-tab-pane>
-        <el-tab-pane label="已办" name="at">
+        <el-tab-pane label="已办" name="at" v-if="fiat">
             <ul class="ul at" v-if="fiat" v-nodata="{have: at.list&& at.list.length}">
                 <li v-for="(item, i) in at.list" :key="i" @click="goFun(item.operation)">
                     <p><em>{{item.title}}</em></p>

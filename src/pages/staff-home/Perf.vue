@@ -2,7 +2,7 @@
 <div class="perf">
     <h5>{{$t("index.perform")}}</h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
-        <el-tab-pane label="当前绩效" name="now" v-if="finow">
+        <el-tab-pane :label="(title ||'当前') +'绩效'" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
@@ -118,7 +118,8 @@ export default {
                     }
                 }]
             },
-            od: {value: 0,  name: '暂无数据'}
+            od: {value: 0,  name: '暂无数据'},
+            title: ""
         }
     },
     computed:{
@@ -151,6 +152,7 @@ export default {
                 // let od= {value: 0,  name: '暂无数据'}
                 if(data.length){
                     this.od= {value: data[0].ai_score, name: data[0].ai_grade}
+                    this.title= data[0].period_name
                 }
                 this.nowChart.series[0].data= [this.od]
             })
