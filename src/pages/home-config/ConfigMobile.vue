@@ -8,9 +8,9 @@
             <li v-for="(item, ind) in left" :key="'l-'+ind" :class=" {fixed: item.fix}"
                 :ref="'drag-'+item.name" :style="{top: item.top +'px'}">
                 <div class="content" v-drag="{
-                    donecb: item.fix? false: movedone,
+
                     movecb: moving,
-                    interval: 60,
+
                     item, rowind: ind, only: 'y',
                     exclude: 'button'}">
                     <p class="name">{{$t(`tab.${tabname}.modules.${item.name}`)}}
