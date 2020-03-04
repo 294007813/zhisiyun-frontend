@@ -54,5 +54,16 @@ export default {
   holiday_balance: {
     annual_holidays: "Annual leave balance",
     leave_off_time: "Balance of compensatory leave"
+  },
+  pc: {
+    checkin: "Attendance Days",
+    late: "Late and early retirement",
+    rest: "休息",
+    early: "早退",
+    miss: "Miss Card",
+    outside: "Outwork",
+    absent: "Absenteeism",
+
+    short: "Absence"
   }
 };
