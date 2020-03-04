@@ -51,6 +51,9 @@ export default {
                             show: false,
                             formatter: '绩效分数{value}'
                         },
+                        pointer: {
+                            width: 5,
+                        },
                         data: [{value: 0, name: '绩效分数'}],
                         splitLine:{
                             length: 30,
@@ -152,7 +155,8 @@ export default {
                 // let od= {value: 0,  name: '暂无数据'}
                 if(data.length){
                     this.od= {value: data[0].ai_score, name: data[0].ai_grade}
-                    this.title= data[0].period_name
+                    let ti= data[0].period_name.split("年")
+                    this.title= ti.length==2? ti[1]: ti[0]
                 }
                 this.nowChart.series[0].data= [this.od]
             })

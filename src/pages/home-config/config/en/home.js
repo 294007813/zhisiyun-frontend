@@ -38,7 +38,9 @@ export default {
     contract: "Contract",
     agreement: "Agreement",
     suggestion_box: "Suggestion box",
-    noData: "No Data"
+    noData: "No Data",
+    keywords: "keywords of name",
+    near: "near"
   },
   baseinfo: {
     ai_robot: "AI Robot",
@@ -87,23 +89,37 @@ export default {
   my_salary: {},
   to_do_task: {},
   done_task: {},
-  my_subordinates: {},
+  my_subordinates: {
+    people: ""
+  },
   monthly_pfm: {
     month_performance: "Month performance"
   },
   recent_performace: {
     recent_performace: "Recent performace"
   },
-  me_calendar: {},
+  me_calendar: {
+    last: "last",
+    next: "next",
+    meeting_time: "time",
+    address: "address",
+    content: "content",
+    issuer: "issuer"
+  },
   today: {},
   current_month: {},
   star_company: {
-    search_btn: "Search button"
+    search_btn: "Search button",
+    jobNumbner: "job number",
+    dep_pos: "Dep/position",
+    start_service_date: "start date",
+    birthday: "birthday",
+    constellation: "constellation"
   },
   skill_star: {
     search_btn: "Search button",
     thumb_btn: "Thumb Button",
-    support: "support",
+    support: "star",
     keyword: "input keyword of name",
     none: "none"
   },
@@ -114,7 +130,8 @@ export default {
   process_num: {
     start_by_myself: "Start By Myself",
     process_myself: "Process By Myself",
-    in_process: "In process"
+    in_process: "In process",
+    data: ""
   },
   contract: {
     signed_contract: "Signed contract",
