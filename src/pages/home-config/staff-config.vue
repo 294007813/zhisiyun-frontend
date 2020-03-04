@@ -62,7 +62,7 @@ export default {
                 _.mapObject(admin.disable[0],(it, key)=>{
                     distr+= "-"+it.code
                 })
-                console.log("distr", distr)
+                // console.log("distr", distr)
                 my={
                     show: user.show,
                     hide: [user.hide[0].concat( user.disable[0])],
@@ -72,6 +72,7 @@ export default {
                 dis(my, 'hide')
 
                 function dis(d, name) {
+                    //禁用模块
                     let ms= d[name]
                     for(let i=ms.length-1; i>=0; i--){
                         for(let j=ms[i].length-1; j>=0; j--){
@@ -88,27 +89,41 @@ export default {
                 }
 
                 let ais= _.flatten(admin.show)
-                console.log("ais", ais)
-                ais.forEach((ai)=>{
-                    _.mapObject(my,(mb)=>{
-                        mb.forEach((row)=>{
-                            row.forEach((it)=>{
-                                if(it.code== ai.code){
-                                    _.mapObject(ai.pages, (ap, apk)=>{
-                                        it.pages[apk].able= ap.able
-                                        it.fields= {...it.fields, ...it.disableFields}
-                                        it.disableFields= {}
-                                        _.mapObject(ap.disableFields, (apf, apfk)=>{
-                                            it.disableFields[apfk]= it.fields[apfk]
-                                            delete it.fields[apfk]
-                                        })
-                                    })
-                                }
-                            })
-                        })
+                // console.log("ais", ais)
+
+                my.show.forEach((row)=>{
+                    row.forEach((item)=>{
+                        setitem(item)
+                    })
+                })
+                my.hide.forEach((row)=>{
+                    row.forEach((item)=>{
+                        setitem(item)
                     })
                 })
 
+                function setitem(it) {
+                    ais.forEach((ai)=>{
+                        if(it.name== ai.name){
+                            _.mapObject(ai.pages, (ap, apk)=>{
+                                let itp= it.pages[apk]
+                                    itp.able= ap.able //页签的禁用状态
+                                    _.mapObject(ap.fields, (apf, apfk)=>{
+                                        if(!itp.fields[apfk]){
+                                            itp.fields[apfk]= ap.fields[apfk]
+                                        }
+                                    })
+                                    _.mapObject(ap.disableFields, (apf, apfk)=>{
+                                        if(itp.fields.hasOwnProperty(apfk)){
+                                            delete itp.fields[apfk]
+                                        }
+                                        itp.disableFields[apfk]= apf
+                                    })
+
+                            })
+                        }
+                    })
+                }
                 // console.log(JSON.stringify(my))
 
                 this.conf= my

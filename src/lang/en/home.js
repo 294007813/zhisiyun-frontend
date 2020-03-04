@@ -1,10 +1,17 @@
+
+
+
+
+
+
 export default {
    // 首页
    "index": {
-    // "first_page": "First",
-    // "name":"Name",
-    // "my":"My",
-    // "work": "Work",
+    "process":"Process",
+    "train":"Train",
+    "this_month":"this month",
+    "current": "current",
+    "default": "default",
     "gisi": "GISI",
     "constellation": "Constellation",
     "zodiac":"Symbolic Animals",
@@ -85,6 +92,7 @@ export default {
     "to_configure":"To configure",
     "delete": "Delete",
     "save": "Save",
+    "salary_information_module":"Salary information module",
     "attendance_information_module":"Attendance information module",
     "performance_information_module":"Performance information module",
     "basic_information_module":"Basic information module",

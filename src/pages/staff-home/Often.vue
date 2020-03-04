@@ -68,6 +68,13 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
+               data.paid.map((v,i) => {
+                 // 把AI放在第一位
+                 if (v.code == "AI") {
+                    data.paid.splice(i, 1);
+                    data.paid[0] = v;
+                 }
+               })
                 this.list= data.paid
             })
         },
@@ -86,7 +93,7 @@ export default {
                     sequence_pc: i.sequence_pc
                 })
             }
-
+            // AI放置第一个
             this.$axios.post("/api/feishu/index/myapp/update", {data: arr}).then(data=>{
                 // this.list= data
                 this.dishow = false

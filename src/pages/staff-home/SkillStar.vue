@@ -1,8 +1,10 @@
 <template>
 <div class="skill-star">
     <h5>{{$t("index.skill_star")}}</h5>
-    <el-input class="query" size="mini" placeholder="输入关键词查询" suffix-icon="fa fa-search"
-              v-if="field.query" v-model="query"  @change="toquery"></el-input>
+    <el-input class="query" size="mini" placeholder="输入关键词查询"
+              v-if="field.query" v-model="query">
+              <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>
+              </el-input>
     <div class="db" v-nodata="{have: list.length}">
         <swiper :options="op" class="swiper" ref="swiper">
             <swiper-slide v-for="(item, i) in list" :key="i">
@@ -42,12 +44,18 @@ export default {
             op:{
 
             },
-            list:[]
+            list: [],
+            decoy: []
         }
     },
     computed:{
         field(){
             return this.conf.pages.default.fields
+        }
+    },
+    watch: {
+        query() {
+            this.list = this.decoy;
         }
     },
     mounted(){
@@ -56,7 +64,8 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/user/skilldata").then(data=>{
-                this.list= data
+                this.list= data;
+                this.decoy = data;
 
             })
         },
@@ -80,17 +89,9 @@ export default {
             })
         },
         toquery(val){
-            // console.log(val)
-            let name="", to= null
-            this.list.forEach((it, i)=>{
-                name= it.people_name
-                if(name.includes(val) || val.includes(name)){
-                    to= i
-                }
-            })
-            if(to!==null){
-                this.$refs.swiper.swiper.slideTo(to)
-            }
+             this.list = this.list.filter(v => {
+                return v.people_name.indexOf(val) > -1
+            });
         },
         next(ref, back){
             if(back){
@@ -159,5 +160,13 @@ export default {
             }
         }
     }
+}
+</style>
+
+<style>
+.skill-star .el-input-group__append {
+    background: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 </style>

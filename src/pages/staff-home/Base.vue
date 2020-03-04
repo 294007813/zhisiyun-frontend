@@ -16,7 +16,7 @@
     <div class="head">
 <!--        <img :src="avatar"/>-->
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)"><avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
-        <p v-if="field.medal && info.numberOf_MEDALS" @click="openmedal">
+        <p v-if="field.medal" @click="openmedal">
             <i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>
 
@@ -26,7 +26,7 @@
             custom-class="medalwall"
             :append-to-body="true"
             width="400px">
-        <ul style="min-height: 100px" v-nodata="{have: medal.length}">
+        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:'暂无勋章'}">
             <li v-for="(it, ind) in medal">
                 <i class="tag"><span>奖</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>

@@ -207,14 +207,19 @@ export default {
                 }
                 width += show[torow][i].left + show[torow][i].width
             }
+            // console.log("torow", torow)
+            if(torow<0) torow=0
+            if(tocol<0) tocol=0
+            if(torow>=this.showlinenum){
+                torow= this.showlinenum-1
+            }
             if(show[torow].length==1){
                 width += show[torow][0].width
                 if (left <= width) {
                     tocol = 1
                 }
             }
-            torow= torow<0 ? 0 :torow
-            tocol= tocol<0 ? 0 :tocol
+
             return {torow, tocol}
         },
         // moveRow(index, up){
@@ -298,7 +303,10 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
-            if( l[torow][tocol] && l[torow][tocol].fixed) return
+            if( l[torow][tocol] && l[torow][tocol].fixed || l[torow][0].long) return
+            if(item.long &&l[torow][0]&&l[torow][0].fixed){
+                return;
+            }
             let top= torow * this.lineHeight + "px"
             let left=( l[torow][tocol] && l[torow][tocol].long)|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
             // console.log("torow, tocol",  torow, tocol)
@@ -320,12 +328,17 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
-            if(sameall || (l[torow][tocol]&& l[torow][tocol].fixed)){
+            console.log("torow, tocol", torow, tocol)
+            if(sameall || (l[torow][tocol]&& l[torow][tocol].fixed) || l[torow][0].long){
                 return
             }
             if(item.long){
                 // console.log("long")
-                let thisrow=l.splice(rowind, 1)[0]
+                let thisrow= []
+                if(l[torow][0]&&l[torow][0].fixed){
+                    return;
+                }
+                thisrow=l.splice(rowind, 1)[0]
                 // console.log("thisrow", thisrow)
                 l.splice(torow,0, thisrow)
             }else{
@@ -346,17 +359,17 @@ export default {
                     }
                 }
             }
-            // this.list.show= []
-            // this.$nextTick(() => {
+            this.list.show= []
+            this.$nextTick(() => {
                 this.list.show= this.clearup(l)
-            // })
+            })
 
         },
         clearup(list){
             let arr= this.$f.deepClone(list)
             for(let i = arr.length - 1; i >= 0; i--){
-                if(i>0){
-                    if(arr[i].length== 1 && !arr[i].long && arr[i-1].length== 1 && !arr[i-1].long){
+                if(i>=0){
+                    if(arr[i].length== 1 && !arr[i][0].long && (arr[i-1]&& arr[i-1].length== 1 && !arr[i-1].long)){
                         let it= arr[i].splice(0,1)[0]
                         arr[i-1].push(it)
                         arr.splice(i,1)
