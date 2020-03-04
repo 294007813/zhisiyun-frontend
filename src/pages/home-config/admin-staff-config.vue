@@ -3,7 +3,8 @@
     <div class="head">
         <h2>员工首页配置</h2>
         <div class="button">
-            <el-button size="small" @click="update">更新</el-button>
+            <el-button size="small" @click="back">后退</el-button>
+            <el-button size="small" type="success" @click="update">更新</el-button>
             <el-button type="primary" size="small" @click="save">保存</el-button>
         </div>
     </div>
@@ -184,6 +185,9 @@ export default {
                 if(cb) cb(data)
             })
         },
+        back(){
+            window.history.go(-1)
+        }
     },
 }
 </script>

@@ -10,7 +10,7 @@
                     donecb: citem.fixed? false: movedone,
                     movecb: moving,
                     exclude: 'button',
-                    interval: 60,
+                    interval: 0,
                     item:citem, rowind, colind}"
                      @mousedown="mup"
                     >
@@ -222,80 +222,7 @@ export default {
 
             return {torow, tocol}
         },
-        // moveRow(index, up){
-        //     let l= this.blockList.show
-        //     for(let i in l){
-        //         if(i>= index){
-        //             for(let j in l[i]){
-        //                 let lel= this.$refs['drag-'+ l[i][j].code][0]
-        //                 lel.style.top= lel.offsetTop+ (up? (-this.lineHeight): (this.lineHeight)) + 'px'
-        //             }
-        //         }
-        //
-        //     }
-        // },
 
-        //在滑动过程中只改变dom样式，不改变数据
-        //找到要去的行/列计算本身和其他块的样式
-        // moving({x, y, item, rowind, colind}){
-        //     let el= this.$refs['drag-'+item.code][0]
-        //     // console.log("item", item)
-        //     console.log("el", el)
-        //     let {torow, tocol} = this.getMovePos({x, y, item, rowind, colind})
-        //     // console.log(x, y, item, rowind, colind)
-        //     console.log(torow, tocol)
-        //     let l= this.blockList.show, bw= this.bodyInfo.width
-        //     let samerow= rowind == torow, sameall= rowind == torow&& colind== tocol;
-        //     if(sameall){
-        //         return
-        //     }
-        //     if(item.long){
-        //         this.moveRow(torow)
-        //         // this.moveRow(rowind+1, true)
-        //         el.style.top= torow * this.lineHeight + 'px'
-        //     }else{
-        //         let tlength= l[torow].length
-        //         let width2= bw/ 2, width3= bw/ 3
-        //         // console.log(width2, width3)
-        //         // console.log( el.style.width)
-        //         // console.log( el.style.width)
-        //         for(let si in l[torow]){
-        //             let i= parseInt(si)
-        //             let sitem= l[torow][i]
-        //             let sel=  this.$refs['drag-'+sitem.code][0]
-        //             let twidth= bw/ (tlength==3? 3 :(tlength+ (samerow ?0:1)))
-        //
-        //             if(i<2){
-        //                 sel.style.width= twidth + 'px'
-        //                 sel.style.left= twidth * (i<tocol? i: i+1) + 'px'
-        //             }else{
-        //                 this.tempLine++
-        //                 samerow? false: this.moveRow(torow+1)
-        //                 sel.style.width= width2  + 'px'
-        //                 sel.style.left= 0
-        //                 sel.style.top= sel.offsetTop+ this.lineHeight + 'px'
-        //             }
-        //         }
-        //         if(!samerow){
-        //             for(let si in l[rowind]){
-        //                 let i= parseInt(si)
-        //                 let slength= l[rowind].length-1
-        //                 let sitem= l[rowind][i]
-        //                 let swidth= bw/ (slength==1 ? 2 : slength)
-        //                 let sel=  this.$refs['drag-'+sitem.code][0]
-        //                 if(sitem.code== item.code){
-        //                     continue;
-        //                 }
-        //                 sel.style.width= swidth + 'px'
-        //                 sel.style.left= swidth * (i<colind? i: i-1) + 'px'
-        //             }
-        //         }
-        //
-        //         el.style.width= (samerow? bw/tlength: (tlength>1 ? width3: width2))  + 'px'
-        //         el.style.left= (samerow? bw/tlength: (tlength>1 ? width3: width2))* tocol + 'px'
-        //         el.style.top= this.lineHeight * torow + 'px'
-        //     }
-        // },
         moving({x, y, item, rowind, colind}){
             // console.log("moving")
             let l= this.list.show
@@ -366,10 +293,11 @@ export default {
 
         },
         clearup(list){
+            console.log("list", JSON.stringify(list))
             let arr= this.$f.deepClone(list)
             for(let i = arr.length - 1; i >= 0; i--){
                 if(i>=0){
-                    if(arr[i].length== 1 && !arr[i][0].long && (arr[i-1]&& arr[i-1].length== 1 && !arr[i-1].long)){
+                    if(arr[i].length== 1 && !arr[i][0].long && (arr[i-1]&& arr[i-1].length== 1 && !arr[i-1][0].long)){
                         let it= arr[i].splice(0,1)[0]
                         arr[i-1].push(it)
                         arr.splice(i,1)
