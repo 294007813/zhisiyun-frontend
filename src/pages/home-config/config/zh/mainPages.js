@@ -1,10 +1,10 @@
 export default {
   // 首页
   index: {
-    first_page: "首页",
+    "first_page": "首页",
     // "name":"姓名",
-    mine: "我的",
-    work: "工作",
+    "mine":"我的",
+    "work": "工作",
     gisi: "智思云",
     constellation: "星座",
     zodiac: "属相",
@@ -135,7 +135,6 @@ export default {
     day: "天",
     times: "次",
     hour: "时",
-    min: "分",
     attendance: "考勤",
     cdStatistics: "考勤统计",
     attendance_tools: "考勤工具",
@@ -302,7 +301,7 @@ export default {
     hide: "隐藏",
     config: "配置",
     added_cards: "已添加的卡片",
-    you_can_drag: '可以<span>"拖拽"</span>整行调整显示顺序',
+    you_can_drag: "可以<span>\"拖拽\"</span>整行调整显示顺序",
     not_added_cards: "未添加的卡片",
     back: "返回",
     confirm: "确认",

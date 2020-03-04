@@ -14,7 +14,7 @@ export default {
     holiday_balance: "假期余额"
   },
   baseinfo: {
-    aiRobot: "AI机器人"
+    aiRobot: "AI助手"
   },
   cdStatistics: {
     calendar: "日历",
@@ -54,20 +54,5 @@ export default {
   holiday_balance: {
     annual_holidays: "年假余额",
     leave_off_time: "调休假余额"
-  },
-  pc: {
-    checkin: "出勤",
-    late: "迟到",
-    rest: "休息",
-    early: "早退",
-    miss: "缺卡",
-    outside: "外勤",
-    absent: "旷工",
-
-    short: "缺勤",
-    trip: "出差",
-    overtime: "加班",
-    official: "公干",
-    leave: "请假"
   }
 };

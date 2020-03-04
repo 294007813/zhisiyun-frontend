@@ -1,10 +1,10 @@
 export default {
   // 首页
   index: {
-    first_page: "Home",
+    "first_page": "Home",
     // "name":"Name",
-    mine: "My",
-    work: "Work",
+    "mine": "Me",
+    "work": "Work",
     gisi: "GISI",
     constellation: "Constellation",
     zodiac: "Symbolic Animals",
@@ -136,7 +136,6 @@ export default {
   wt: {
     day: "day",
     times: "times",
-    min: "mins",
     hour: "hour",
     "wt-statistics": "Attendance statistics",
     attendance_days: "Attendance days",
@@ -298,7 +297,7 @@ export default {
     hide: "Hide",
     config: "Config",
     you_can_drag:
-      'You can <span>"drag"</span> the whole line to adjust the display order',
+      "You can <span>\"drag\"</span> the whole line to adjust the display order",
     drag: "drag",
     not_added_cards: "Cards not added",
     back: "Back",

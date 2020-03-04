@@ -293,7 +293,7 @@ export default {
 
         },
         clearup(list){
-            console.log("list", JSON.stringify(list))
+            // console.log("list", JSON.stringify(list))
             let arr= this.$f.deepClone(list)
             for(let i = arr.length - 1; i >= 0; i--){
                 if(i>=0){
