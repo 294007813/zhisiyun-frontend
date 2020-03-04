@@ -131,7 +131,7 @@
         </p>
     </el-dialog>
 
-    <staff-select :visible="staffshow" @close="staffshow= false" @ok="getShare"></staff-select>
+    <staff-select v-if="staffMount" :visible="staffshow" @close="staffshow= false" @ok="getShare"></staff-select>
 </div>
 </template>
 
@@ -166,11 +166,15 @@ export default {
             dishow: false,
             form: JSON.parse(form),
             staffshow: false,
-            forward_people_new:[]
+            forward_people_new:[],
+            staffMount: false
         }
     },
     mounted(){
         this.getData()
+        setTimeout(()=>{
+            this.staffMount= true
+        },1000)
     },
     methods:{
         getData(){
@@ -201,6 +205,7 @@ export default {
                 })
             })
             this.$axios.get("/api/feishu/calendar/get_holiday_day").then(data=>{
+                if(data)
                 data.map(item=>{
                     this.events.push({
                         start: this.time(item.date, "YYYY-MM-DD"),
