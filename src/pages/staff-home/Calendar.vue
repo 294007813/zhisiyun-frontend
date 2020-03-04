@@ -225,7 +225,7 @@ export default {
         },
         switchCal(e, type){
             this.$refs.vcal.switchView(type)
-            console.log("switchCal")
+            // console.log("switchCal")
             e.stopPropagation()
         },
         create(time, a, b, c){
@@ -243,7 +243,7 @@ export default {
             let s= moment(startDate)
             let e= moment(endDate)
             let ss="", se="", et="DD日"
-            console.log(s)
+            // console.log(s)
             ss= s.format('YYYY年MM月DD日')
             if(s.toObject().years==e.toObject().years){
                 if(s.toObject().months==e.toObject().months){
@@ -266,21 +266,21 @@ export default {
             }
         },
         tagClick(data, e){
-            console.log(data, e)
+            // console.log(data, e)
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
             }
             e.stopPropagation()
         },
-        getShare(v1, v2){
-            this.forward_people_new= v2.map(it=>{
+        getShare(arr){
+            this.forward_people_new= arr.map(it=>{
                 return {name: it.name, id: it.id}
             })
         },
         upfile(){
             this.$f.upfile((res)=>{
-                console.log(res)
+                // console.log(res)
                 this.form.attachments= this.form.attachments.concat(res.success)
             })
         },

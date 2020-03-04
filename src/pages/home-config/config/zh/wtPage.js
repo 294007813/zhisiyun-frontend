@@ -14,7 +14,7 @@ export default {
     holiday_balance: "假期余额"
   },
   baseinfo: {
-    aiRobot: "AI机器人"
+    aiRobot: "AI助手"
   },
   cdStatistics: {
     calendar: "日历",

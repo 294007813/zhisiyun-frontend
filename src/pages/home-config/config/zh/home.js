@@ -36,10 +36,13 @@ export default {
     contract: "我的合同",
     agreement: "我的协议",
     suggestion_box: "意见箱",
-    noData: "暂无"
+    noData: "暂无",
+    keywords: "输入姓名关键词查询",
+    monthPer: "月绩效",
+    near: "近期绩效"
   },
   baseinfo: {
-    ai_robot: "AI机器人",
+    ai_robot: "AI助手",
     employee_status: "员工状态"
   },
   cdStatistics: {
@@ -86,14 +89,24 @@ export default {
   my_salary: {},
   to_do_task: {},
   done_task: {},
-  my_subordinates: {},
+  my_subordinates: {
+    people: "人"
+  },
   monthly_pfm: {
     month_performance: "本月绩效"
   },
   recent_performace: {
     recent_performace: "近期绩效"
   },
-  me_calendar: {},
+  me_calendar: {
+    last: "上一月",
+    next: "下一月",
+    meeting_time: "会议时间",
+    address: "会议时间",
+    content: "会议内容",
+    issuer: "发布人"
+
+  },
   today: {
     today: "今日"
   },
@@ -101,12 +114,18 @@ export default {
     month: "本月"
   },
   star_company: {
-    search_btn: "搜索按钮"
+    search_btn: "搜索按钮",
+    jobNumbner: "工号",
+    dep_pos: "部门/职位",
+    start_service_date: "入职日期",
+    birthday: "出生日期",
+    constellation: "星座"
+
   },
   skill_star: {
     search_btn: "搜索按钮",
     thumb_btn: "Thumb Button",
-    support: "support",
+    support: "个赞",
     keyword: "请输入姓名关键字查询",
     none: "暂无"
   },
@@ -117,7 +136,8 @@ export default {
   process_num: {
     start_by_myself: "我发起的",
     process_myself: "我处理的",
-    in_process: "进行中的"
+    in_process: "进行中的",
+    data: "条"
   },
   contract: {
     signed_contract: "已签合同",

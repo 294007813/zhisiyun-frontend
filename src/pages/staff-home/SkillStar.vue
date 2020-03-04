@@ -18,7 +18,11 @@
                     </div>
                     <ul class="info">
                         <p><b>{{getStar(item)}}</b>{{$t("index.praise")}} <i v-if="field.like" class="fa fa-thumbs-up"></i></p>
-                        <li v-for="(sk, j) in item.my_skills" :key="j" @click="like(item._id, sk.skill._id, sk.skill.skill_name)">{{sk.skill.skill_name}}<b>{{sk.praise_peoples_number}}{{$t("index.praise")}}</b></li>
+                        <div class="skill">
+                            <li v-for="(sk, j) in item.my_skills" :key="j" @click="like(item._id, sk.skill._id, sk.skill.skill_name)">
+                                {{sk.skill.skill_name}}<b>{{sk.praise_peoples_number}}{{$t("index.praise")}}</b>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </swiper-slide>
@@ -139,6 +143,10 @@ export default {
                     -webkit-text-fill-color: transparent;
                     -webkit-background-clip: text;
                 }
+            }
+            .skill{
+                max-height: 120px;
+                overflow: hidden;
             }
             li{
                 display: inline-block;

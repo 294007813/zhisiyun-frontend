@@ -3,7 +3,7 @@ export default {
   index: {
     "first_page": "Home",
     // "name":"Name",
-    "mine":"My",
+    "mine": "Me",
     "work": "Work",
     gisi: "GISI",
     constellation: "Constellation",
