@@ -2,7 +2,7 @@
 <div class="perf">
     <h5>{{$t("index.perform")}}</h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick">
-        <el-tab-pane label="当前绩效" name="now" v-if="finow">
+        <el-tab-pane :label="(title ||'当前') +'绩效'" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
@@ -78,23 +78,48 @@ export default {
             },
             trendChart: {
                 xAxis: {
+                    axisLine: {
+                        show: false,
+                    },
                     type: 'category',
                     axisTick: {show : false},
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        show: false,
+                    },
+                    axisTick: {show : false},
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            type: "dashed",
+                            color: "#EEEEEE"
+                        },
+                    },
+                },
+                tooltip: {
+                    show: true,
+                    formatter: function ({data: {level},value}, c) {
+                        return `得分：${value}分<br />等级：${level}`
+                    }
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70, 110, 130],
+                    data: [],
                     type: 'bar',
                     itemStyle: {
                         color: "rgba(84,199,252,1)"
                     },
-                    barWidth: '30px'
+                    barWidth: '30px',
+                    formatter: function ({value}) {
+                        console.log(arguments);
+                        return value
+                    }
                 }]
             },
-            od: {value: 0,  name: '暂无数据'}
+            od: {value: 0,  name: '暂无数据'},
+            title: ""
         }
     },
     computed:{
@@ -127,6 +152,7 @@ export default {
                 // let od= {value: 0,  name: '暂无数据'}
                 if(data.length){
                     this.od= {value: data[0].ai_score, name: data[0].ai_grade}
+                    this.title= data[0].period_name
                 }
                 this.nowChart.series[0].data= [this.od]
             })
@@ -136,6 +162,7 @@ export default {
                 // data.sort((a, b)=>{
                 //     return a.period_value< b.period_value
                 // })
+                // 过滤
                 let newData = []
                 data.forEach(v => {
                     if (v.year && (v.period_value || v.period_value === 0)) newData.push(v)
@@ -145,11 +172,14 @@ export default {
                 newData.map(item=>{
                     // xAxis.push(item.period_name)
                     let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
-                    xAxis.push(item.year + '/' + month)
-                    series.push(item.ai_score)
+                    xAxis.push(item.year&&item.year.substring(2) + '/' + month)
+                    series.push({
+                        level: item.ai_grade,
+                        value: item.ai_score
+                    })
                 })
                 this.trendChart.xAxis.data=xAxis
-                this.trendChart.series.data=series
+                this.trendChart.series[0].data=series
             })
         }
     }
