@@ -315,7 +315,7 @@ export default {
             })
         },
         del(){
-            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form._id).then(data=>{
                 this.dishow= false
                 this.$msg({message:"删除成功", type: "success"})
                 this.events= []
