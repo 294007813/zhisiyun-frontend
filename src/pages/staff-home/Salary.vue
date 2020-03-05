@@ -17,7 +17,7 @@
                 <!-- <p class="title">2019年10月 <span>{{$t("index.real_wage")}}：</span><b>9,000.00</b></p>
                 <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/> -->
                 <!-- 趋势图 -->
-                <trend v-if="Object.keys(slideList).length" :eyes="hidstr" :dateInterval="dateInterval" :trendList="slideList" autoresize></trend>
+                <trend v-if="Object.keys(slideList).length" :eyes="hidstr" :dateInterval="dateInterval" :trendList="slideList"></trend>
                 <div v-else v-nodata="{have: !Object.keys(slideList).length}"></div>
             </div>
         </el-tab-pane>
