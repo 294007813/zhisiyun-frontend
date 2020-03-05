@@ -67,12 +67,18 @@
                                 v-model="form.start"
                                 type="datetime"
                                 placeholder="开始时间"
+                                :picker-options="{
+                                    selectableRange: form.allDay ?`00:00:00-00:00:00`: null
+                                }"
                                 default-time="12:00:00">
                         </el-date-picker>
                         <el-date-picker
                                 v-model="form.end"
                                 type="datetime"
                                 placeholder="结束时间"
+                                :picker-options="{
+                                     selectableRange: form.allDay ?`23:59:59-23:59:59`: null
+                                }"
                                 default-time="12:00:00">
                         </el-date-picker>
                     </div>
