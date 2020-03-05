@@ -10,6 +10,7 @@ export default {
     "process":"Process",
     "train":"Train",
     "this_month":"this month",
+    "this_week":"this week",
     "current": "current",
     "default": "default",
     "gisi": "GISI",

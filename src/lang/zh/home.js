@@ -10,6 +10,7 @@ export default  {
     "process":"流程",
     "train":"培训",
     "this_month":"本月",
+    "this_week":"本周",
     "current": "当前",
     "default": "默认",
     "gisi": "智思云",
