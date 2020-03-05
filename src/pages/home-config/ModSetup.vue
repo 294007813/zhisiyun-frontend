@@ -196,13 +196,13 @@ export default {
         },
         cltitle(val, tag){
             // console.log(tag.show)
-            if(!val){
-                for(let k in tag.fields){
-                    tag.fields[k]= false
-                }
-            }else{
-
-            }
+            // if(!val){
+            //     for(let k in tag.fields){
+            //         tag.fields[k]= false
+            //     }
+            // }else{
+            //
+            // }
         },
         clitem(val, tag, key){
             // console.log(tag.fields[key])

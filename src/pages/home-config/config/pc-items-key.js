@@ -76,7 +76,8 @@ export default {
             "doing2": "进行中的"
         },
         "contract_agreement_module":{
-
+            contract: "合同",
+            agreement: "协议"
         },
         "suggestion_box_module":{
 
@@ -88,35 +89,5 @@ export default {
 
         },
     },
-
-
-
-        "TR": {
-            "name": "培训流程模块",
-            "to":{
-                "name":"培训",
-                "fields":{
-                    "participate": "参与培训",
-                    "doing": "进行中的活动"
-                }
-            },
-            "bo":{
-                "name":"流程",
-                "fields":{
-                    "start": "我发起的",
-                    "handle": "我处理的",
-                    "doing": "进行中的"
-                }
-            }
-        },
-        "PA": {
-            "name":"合同协议模块",
-            "to":{
-                "name":"合同"
-            },
-            "bo":{
-                "name":"协议"
-            }
-        },
 
 }
