@@ -21,6 +21,7 @@
 </template>
 
 <script>
+
 export default {
     name: "Perf",
     props: ["conf"],
@@ -106,13 +107,32 @@ export default {
                     show: true,
                     formatter: function ({data: {level},value}, c) {
                         return `得分：${value}分<br />等级：${level}`
-                    }
+                    },
+                    position: function (point, params, dom, rect, size) {
+                        // 固定在顶部
+                        return [point[0], point[1]-40];
+                    },
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    textStyle: {
+                        color: "rgba(102,102,102,1)",
+                        fontSize: 12
+                    },
+                    extraCssText: "box-shadow:0px 2px 8px 0px rgba(0,0,0,0.2);border-radius:4px;"
                 },
                 series: [{
                     data: [],
                     type: 'bar',
                     itemStyle: {
-                        color: "rgba(84,199,252,1)"
+                        normal: {
+                            color: {
+                                type: "linear",
+                                    x:0, y:0, x2:0, y2:1,  //4个参数用于配置渐变色的起止位置, 这4个参数依次对应右/下/左/上四个方位. 而0 0 0 1则代表渐变色从正上方开始
+                                    colorStops: [
+                                        {offset: 0, color: 'rgba(84,199,252,1)'},
+                                        {offset: 1, color: 'rgba(93,119,255,1)'},
+                                    ]                //数组, 用于配置颜色的渐变过程. 每一项为一个对象, 包含offset和color两个参数. offset的范围是0 ~ 1, 用于表示位置
+                            }
+                        }
                     },
                     barWidth: '30px',
                     formatter: function ({value}) {
