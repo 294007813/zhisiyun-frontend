@@ -4,8 +4,8 @@
     custom-class="staff-select" width="600px">
     <p slot="title" class="title">{{title}}</p>
     <div class="content">
-        <el-button size="small" @click="reset(true)">展开全部</el-button>
-        <el-button size="small" style="margin-right: 10px" @click="reset(false)">折叠全部</el-button>
+        <el-button size="small" @click="toexpand(true)">展开全部</el-button>
+        <el-button size="small" style="margin-right: 10px" @click="toexpand(false)">折叠全部</el-button>
         <el-input size="small" style="width: 300px" placeholder="搜索"
                   v-model="value" @change="query">
             <el-button slot="append" icon="el-icon-search" @click="query"></el-button>
@@ -90,7 +90,7 @@ export default {
         //     return !value || data.name.includes(value) || value.includes(data.name)
         // },
         getData(){
-            this.$axios.get("/admin/im/people_help_json",{dataLevel: "api"}).then(data=>{
+            this.$axios.get("/admin/im/people_help_json?p_limit=true",{dataLevel: "api"}).then(data=>{
                 // let  arr=[]
                 // arr= this.goon(data)
                 // console.log(arr)
@@ -131,9 +131,12 @@ export default {
         //     }
         //     return match
         // },
-        reset(expand){
-            let tree=this.$refs.tree
-            tree.ztreeObj.expandAll(expand)
+        toexpand(expand){
+            let tree=this.$refs.tree.ztreeObj
+            tree.expandAll(expand)
+        },
+        reset(){
+            this.tree= JSON.parse(tree)
         },
         ok(){
             let fun=this.$refs.tree.ztreeObj
@@ -141,10 +144,10 @@ export default {
             // console.log("res", res)
             this.$emit("ok", res)
             // console.log(tree.getCheckedNodes(true))
-            this.$emit("close")
+            this.close()
         },
         close(){
-            this.reset(true)
+            this.reset()
             this.$emit("close")
         }
     }

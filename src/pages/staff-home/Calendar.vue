@@ -22,7 +22,7 @@
             </div>
         </template>
         <i slot="arrow-prev" class="fa fa-angle-left"></i>
-        <div slot="today-button" class="today">{{nowToday? $t("index.today"): $t("index.this_month")}}</div>
+        <div slot="today-button" class="today">{{showNow}}</div>
         <i slot="arrow-next" class="fa fa-angle-right"></i>
 
         <template v-slot:weekday-heading="{heading, view}">
@@ -131,7 +131,7 @@
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id">{{$t("index.delete")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id" @click="del">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
@@ -180,8 +180,22 @@ export default {
         nowView(){
             return this.mounted && this.$refs.vcal.view.id
         },
-        nowToday(){
-            return this.nowView=="week" || this.nowView=="day"
+        showNow(){
+            let now=""
+            switch (this.nowView) {
+                case "week":{
+                    now= this.$t("index.this_week")
+                    break
+                }
+                case "day":{
+                    now= this.$t("index.today")
+                    break
+                }
+                default:{
+                    now= this.$t("index.this_month")
+                }
+            }
+            return now
         }
     },
     mounted(){
@@ -251,6 +265,7 @@ export default {
                 this.form.start= this.form.end= this.time(time)
                 this.dishow= true
             }
+            this.forward_people_new=[]
         },
         getWeek(view){
 
@@ -286,6 +301,7 @@ export default {
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
             }
+            this.forward_people_new=[]
             e.stopPropagation()
         },
         getShare(arr){
@@ -309,11 +325,18 @@ export default {
             })
             this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
                 this.dishow= false
-                this.$msg("创建成功")
+                this.$msg({message:"创建成功", type: "success"})
                 this.events= []
                 this.getData()
             })
-
+        },
+        del(){
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+                this.dishow= false
+                this.$msg({message:"删除成功", type: "success"})
+                this.events= []
+                this.getData()
+            })
         },
         weekdayHeading(val){
             return moment(val.date).format("M/D")
@@ -424,7 +447,7 @@ export default {
         }
         .vuecal__arrow--next{
             position: absolute;
-            right: 36px;
+            right: 34px;
             padding: 0 4px;
         }
 

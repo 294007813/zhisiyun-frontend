@@ -37,7 +37,8 @@ export default {
             form:{
                 anonymous: false,
                 desc: ""
-            }
+            },
+            typeList: []
         }
     },
     mounted(){
@@ -47,6 +48,9 @@ export default {
         getData(){
             this.$axios.get("/api/employeesindexpage/suggestion_num").then(data=>{
                 this.num= data
+            })
+            this.$axios.get("/api/employeesindexpage/suggestion_items").then(data=>{
+                this.typeList= data
             })
         },
         suggest () {

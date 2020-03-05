@@ -2,6 +2,7 @@ import Axios from 'axios'
 // import store from 'st'
 // import cookie from 'js-cookie'
 import conf from '~/proj-config'
+import {Message } from 'element-ui';
 let {baseApi} = conf
 // console.log("conf", conf)
 // console.log("axios", conf.baseApi)
@@ -30,7 +31,9 @@ axios.interceptors.response.use(
         let { data, msg, code } = response.data;
         // let lang= cookie.get('i18next')
         // store.commit('setLang', cookie.get('i18next'));
-
+        if(code && code!=200 && msg){
+            // Message({message: msg, type: "error"})
+        }
         switch (dataLevel) {
             case "all": {
                 return response;
