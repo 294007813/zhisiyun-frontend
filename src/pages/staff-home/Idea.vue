@@ -74,12 +74,11 @@ export default {
                 this.num= data
             })
         },
-
         suggest () {
              this.show = true;
         },
         save () {
-             this.$axios.post("/api/feishu/base/client_culture_suggestion_bb_create", this.form).then(data=>{
+             this.$axios.get("/api/feishu/base/client_culture_suggestion_bb_create",{params: this.form}).then(data=>{
                  this.show = false
             })
         }
