@@ -22,7 +22,7 @@
             </div>
         </template>
         <i slot="arrow-prev" class="fa fa-angle-left"></i>
-        <div slot="today-button" class="today">{{nowToday? $t("index.today"): $t("index.this_month")}}</div>
+        <div slot="today-button" class="today">{{showNow}}</div>
         <i slot="arrow-next" class="fa fa-angle-right"></i>
 
         <template v-slot:weekday-heading="{heading, view}">
@@ -180,8 +180,22 @@ export default {
         nowView(){
             return this.mounted && this.$refs.vcal.view.id
         },
-        nowToday(){
-            return this.nowView=="week" || this.nowView=="day"
+        showNow(){
+            let now=""
+            switch (this.nowView) {
+                case "week":{
+                    now= this.$t("index.this_week")
+                    break
+                }
+                case "day":{
+                    now= this.$t("index.today")
+                    break
+                }
+                default:{
+                    now= this.$t("index.this_month")
+                }
+            }
+            return now
         }
     },
     mounted(){
@@ -251,6 +265,7 @@ export default {
                 this.form.start= this.form.end= this.time(time)
                 this.dishow= true
             }
+            this.forward_people_new=[]
         },
         getWeek(view){
 
@@ -286,6 +301,7 @@ export default {
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
             }
+            this.forward_people_new=[]
             e.stopPropagation()
         },
         getShare(arr){
@@ -431,7 +447,7 @@ export default {
         }
         .vuecal__arrow--next{
             position: absolute;
-            right: 35px;
+            right: 34px;
             padding: 0 4px;
         }
 
