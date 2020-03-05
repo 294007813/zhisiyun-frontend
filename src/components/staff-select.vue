@@ -90,7 +90,7 @@ export default {
         //     return !value || data.name.includes(value) || value.includes(data.name)
         // },
         getData(){
-            this.$axios.get("/admin/im/people_help_json",{dataLevel: "api"}).then(data=>{
+            this.$axios.get("/admin/im/people_help_json?p_limit=true",{dataLevel: "api"}).then(data=>{
                 // let  arr=[]
                 // arr= this.goon(data)
                 // console.log(arr)

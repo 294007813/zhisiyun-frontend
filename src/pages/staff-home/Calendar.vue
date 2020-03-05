@@ -131,7 +131,7 @@
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id">{{$t("index.delete")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id" @click="del">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
@@ -309,11 +309,18 @@ export default {
             })
             this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
                 this.dishow= false
-                this.$msg("创建成功")
+                this.$msg({message:"创建成功", type: "success"})
                 this.events= []
                 this.getData()
             })
-
+        },
+        del(){
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+                this.dishow= false
+                this.$msg({message:"删除成功", type: "success"})
+                this.events= []
+                this.getData()
+            })
         },
         weekdayHeading(val){
             return moment(val.date).format("M/D")
@@ -424,7 +431,7 @@ export default {
         }
         .vuecal__arrow--next{
             position: absolute;
-            right: 36px;
+            right: 35px;
             padding: 0 4px;
         }
 
