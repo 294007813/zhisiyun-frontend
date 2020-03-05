@@ -64,12 +64,14 @@
                     </el-switch>
                     <div>
                         <el-date-picker
+                                @blur="changetime(true, $event)"
                                 v-model="form.start"
                                 type="datetime"
                                 placeholder="开始时间"
                                 default-time="12:00:00">
                         </el-date-picker>
                         <el-date-picker
+                                @blur="changetime(false, $event)"
                                 v-model="form.end"
                                 type="datetime"
                                 placeholder="结束时间"
@@ -249,6 +251,26 @@ export default {
                 })
             })
         },
+        changetime(flag, vn){
+            let val= vn.displayValue
+            let time= moment( val)
+            let allday= true
+            if(this.form.allDay){
+                if(flag){
+                    this.form.start= val
+                    if(time.hour()!=0 || time.minute()!=0 ||time.second()!=0){
+                        allday= false
+                    }
+                }else{
+                    this.form.end= val
+                    if(time.hour()!=23 || time.minute()!=59 ||time.second()!=59){
+                        allday= false
+                    }
+                }
+                this.form.allDay= allday
+            }
+
+        },
         time(val, format){
             return moment(val).format(format || "YYYY-MM-DD HH:MM")
         },
@@ -287,12 +309,9 @@ export default {
             return ss+"～"+se
         },
         changeallday(status){
-            // console.log(status)
-            // console.log(this.form.start)
-            // console.log(this.form.end)
             if(status){
-                this.form.start= this.time(this.form.start, "YYYY-MM-DD 00:00")
-                this.form.end= this.time(this.form.end, "YYYY-MM-DD 00:00")
+                this.form.start= this.time(this.form.start, "YYYY-MM-DD 00:00:00")
+                this.form.end= this.time(this.form.end, "YYYY-MM-DD 23:59:59")
             }
         },
         tagClick(data, e){
@@ -331,7 +350,7 @@ export default {
             })
         },
         del(){
-            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form._id).then(data=>{
                 this.dishow= false
                 this.$msg({message:"删除成功", type: "success"})
                 this.events= []
