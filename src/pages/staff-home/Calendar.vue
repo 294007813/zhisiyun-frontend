@@ -20,11 +20,16 @@
                 <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
                 <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day")}}</p>
             </div>
-
         </template>
         <i slot="arrow-prev" class="fa fa-angle-left"></i>
-        <div slot="today-button" class="today">{{$t("index.today")}}</div>
+        <div slot="today-button" class="today">{{nowToday? $t("index.today"): $t("index.this_month")}}</div>
         <i slot="arrow-next" class="fa fa-angle-right"></i>
+
+        <template v-slot:weekday-heading="{heading, view}">
+            {{heading.label}}
+            <span style="margin-left: 6px" v-show="view.id === 'week'">{{weekdayHeading(heading)}}</span>
+        </template>
+
     </vue-cal>
 
     <el-dialog
@@ -110,7 +115,7 @@
                         <span>{{item.name}}</span>
                         <i class="el-icon-error" @click="forward_people_new.splice(i,1)"></i>
                     </li>
-                    <el-input v-show="form.forward_people_new.length" v-model="form.forward_summary"
+                    <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="添加附件">
@@ -167,10 +172,20 @@ export default {
             form: JSON.parse(form),
             staffshow: false,
             forward_people_new:[],
-            staffMount: false
+            staffMount: false,
+            mounted: false
+        }
+    },
+    computed:{
+        nowView(){
+            return this.mounted && this.$refs.vcal.view.id
+        },
+        nowToday(){
+            return this.nowView=="week" || this.nowView=="day"
         }
     },
     mounted(){
+        this.mounted= true
         this.getData()
         setTimeout(()=>{
             this.staffMount= true
@@ -299,7 +314,10 @@ export default {
                 this.getData()
             })
 
-        }
+        },
+        weekdayHeading(val){
+            return moment(val.date).format("M/D")
+        },
     }
 }
 </script>
