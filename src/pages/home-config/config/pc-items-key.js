@@ -29,100 +29,68 @@ export default {
             "abnormal": "考勤异常",
             "adjust": "假期调整"
         },
-        "salary_information":{},
-       "to_do_module":{},
-        "performance_information_module":{},
-        "message_dynamic_module":{},
-        "birthday_blessing_module":{},
-        "company_star_module":{},
-        "skill_star_module":{},
-        "training_process_module":{},
-        "contract_agreement_module":{},
-        "suggestion_box_module":{},
-        "common_application_module":{},
-        "my_calendar_module":{},
+        "salary_information":{
+            monthly: "",
+            trend: "",
+            statistics: "",
+            "p_all_income": "累计收入",
+            "sum_tax": "累计个税",
+            "c_sb_total": "公司缴纳社保总数",
+            "p_sb_total": "个人缴纳社保总数",
+            "c_gjj_total": "公司缴纳公积金总数",
+            "p_gjj_total": "个人缴纳公积金总数",
+            "dikou_total": "抵扣总额"
+        },
+       "to_do_module":{
+           to_do_task:"",
+           done_task:"",
+       },
+        "performance_information_module":{
+            "current":"",
+            "trend":"",
+            "enter": "进入绩效首页"
+        },
+        "message_dynamic_module":{
+            unread: "",
+            readed: "",
+            "read": "全部设为已读"
+        },
+        "birthday_blessing_module":{
+            today: "",
+            this_month: "",
+        },
+        "company_star_module":{
+            "query": "搜索"
+        },
+        "skill_star_module":{
+            "query": "搜索",
+            "like": "点赞"
+        },
+        "training_process_module":{
+            train: "培训",
+            process: "流程",
+            "participate": "参与培训",
+            "doing": "进行中的活动",
+            "start": "我发起的",
+            "handle": "我处理的",
+            "doing2": "进行中的"
+        },
+        "contract_agreement_module":{
+
+        },
+        "suggestion_box_module":{
+
+        },
+        "common_application_module":{
+
+        },
+        "my_calendar_module":{
+
+        },
     },
 
-        "PY": {
-            "name": "薪资信息模块",
-            "mon": {
-                "name":"月度"
-            },
-            "trend": {
-                "name":"趋势"
-            },
-            "sta": {
-                "name":"统计",
-                "fields": {
-                    "p_all_income": "累计收入",
-                    "sum_tax": "累计个税",
-                    "c_sb_total": "公司缴纳社保总数",
-                    "p_sb_total": "个人缴纳社保总数",
-                    "c_gjj_total": "公司缴纳公积金总数",
-                    "p_gjj_total": "个人缴纳公积金总数",
-                    "dikou_total": "抵扣总额"
-                }
-            }
-        },
-        "gtasks": {
-            "name": "待办事宜模块",
-            "gt":{
-                "name":"待办"
-            },
-            "at":{
-                "name":"已办"
-            }
-        },
-        "PM": {
-            "name": "绩效信息模块",
-            "now":{
-                "name":"当前",
-                "fields": {
-                    "enter": "进入绩效首页"
-                }
-            },
-            "trend":{
-                "name":"趋势"
-            }
-        },
-        "msg": {
-            "name": "消息动态模块",
-            "gt":{
-                "name":"未读",
-                "fields": {
-                    "read": "全部设为已读"
-                }
-            },
-            "at":{
-                "name":"已读"
-            }
-        },
-        "birthday": {
-            "name": "生日祝福模块",
-            "day":{
-                "name":"今日"
-            },
-            "mon":{
-                "name":"本月"
-            }
-        },
-        "comstar": {
-            "name": "公司之星模块",
-            "default":{
-                "fields":{
-                    "query": "搜索"
-                }
-            }
-        },
-        "TA":{
-            "name": "技能之星模块",
-            "default":{
-                "fields":{
-                    "query": "搜索",
-                    "like": "点赞"
-                }
-            }
-        },
+
+
         "TR": {
             "name": "培训流程模块",
             "to":{

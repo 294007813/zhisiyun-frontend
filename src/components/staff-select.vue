@@ -69,16 +69,17 @@ export default {
         // method(name){
         //     return this.$refs.tree[name]
         // },
-        query(val){
+        query(){
+            let q= this.value
+            let fun=this.$refs.tree.ztreeObj
             this.treeShow=false
             this.tree= JSON.parse(tree)
-            console.log("tree", tree)
-            console.log("query(val)", val)
+            // console.log("tree", tree)
+            // console.log("query(val)", val)
             // console.log("this.$refs.tree", this.$refs.tree)
-            if(val){
-                let fun=this.$refs.tree.ztreeObj
+            if(q){
                 setTimeout(()=>{
-                    this.tree= fun.getNodesByParamFuzzy("name", val)
+                    this.tree= fun.getNodesByParamFuzzy("name", q)
                     this.treeShow= true
                 })
             }else{
