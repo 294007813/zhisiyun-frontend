@@ -3,7 +3,7 @@
     <div class="head">
         <h2>员工首页PC端布局及设置</h2>
         <div class="button">
-            <el-button size="small" @click="back">后退</el-button>
+            <el-button size="small" @click="back">返回</el-button>
             <el-button type="primary" size="small" @click="save">保存</el-button>
         </div>
     </div>
