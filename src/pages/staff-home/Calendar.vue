@@ -287,12 +287,9 @@ export default {
             return ss+"～"+se
         },
         changeallday(status){
-            // console.log(status)
-            // console.log(this.form.start)
-            // console.log(this.form.end)
             if(status){
-                this.form.start= this.time(this.form.start, "YYYY-MM-DD 00:00")
-                this.form.end= this.time(this.form.end, "YYYY-MM-DD 00:00")
+                this.form.start= this.time(this.form.start, "YYYY-MM-DD 00:00:00")
+                this.form.end= this.time(this.form.end, "YYYY-MM-DD 23:59:59")
             }
         },
         tagClick(data, e){
@@ -331,7 +328,7 @@ export default {
             })
         },
         del(){
-            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form._id).then(data=>{
                 this.dishow= false
                 this.$msg({message:"删除成功", type: "success"})
                 this.events= []

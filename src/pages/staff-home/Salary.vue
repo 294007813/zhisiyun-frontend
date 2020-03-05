@@ -13,9 +13,12 @@
             </div>
         </el-tab-pane>
         <el-tab-pane label="趋势" name="trend" v-if="fitrend">
-            <div class="trend" v-if="ismounted && showTrend ">
-                <p class="title">2019年10月 <span>{{$t("index.real_wage")}}：</span><b>9,000.00</b></p>
-                <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/>
+            <div class="trend" v-if="ismounted && showTrend">
+                <!-- <p class="title">2019年10月 <span>{{$t("index.real_wage")}}：</span><b>9,000.00</b></p>
+                <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/> -->
+                <!-- 趋势图 -->
+                <trend v-if="Object.keys(slideList).length" :eyes="hidstr" :dateInterval="dateInterval" :trendList="slideList" autoresize></trend>
+                <div v-else v-nodata="{have: !Object.keys(slideList).length}"></div>
             </div>
         </el-tab-pane>
         <el-tab-pane label="统计" name="sta" v-if="fista">
@@ -32,11 +35,13 @@
                     end-placeholder="结束月份">
             </el-date-picker>
 
-            <ul class="sta" v-if="sta">
+            <ul class="sta">
+                <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
+                <li><label>累计工资</label><p>{{hidstr || sta.p_all_income}}</p></li>
                 <template v-for="(item, key) in sta.huizong">
-                    <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
                     <li><label>{{item.name}}</label><p>{{hidstr || item.count}}</p></li>
                 </template>
+                <li><label>累计个税专项抵扣</label><p>{{hidstr || sta.dikou_total}}</p></li>
             </ul>
         </el-tab-pane>
     </el-tabs>
@@ -44,9 +49,14 @@
 </template>
 
 <script>
+import trend from "./components/trend";
+
 export default {
     name: "Salary",
     props: ["conf"],
+    components: {
+        trend
+    },
     data(){
         return {
             ishide: true,
@@ -54,96 +64,12 @@ export default {
             activeTabs: 'mon',
             showTrend: false,
             stadate: null,
-            trendChart:{
-                // title: {
-                //     text: 'Beijing AQI'
-                // },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    data:[]
-                },
-                yAxis: {
-                    splitLine: {
-                        show: false
-                    }
-                },
-                toolbox: {
-                    left: 'center',
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        restore: {},
-                        saveAsImage: {}
-                    }
-                },
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
-                visualMap: {
-                    top: 10,
-                    right: 10,
-                    pieces: [{
-                        gt: 0,
-                        lte: 50,
-                        color: '#096'
-                    }, {
-                        gt: 50,
-                        lte: 100,
-                        color: '#ffde33'
-                    }, {
-                        gt: 100,
-                        lte: 150,
-                        color: '#ff9933'
-                    }, {
-                        gt: 150,
-                        lte: 200,
-                        color: '#cc0033'
-                    }, {
-                        gt: 200,
-                        lte: 300,
-                        color: '#660099'
-                    }, {
-                        gt: 300,
-                        color: '#7e0023'
-                    }],
-                    outOfRange: {
-                        color: '#999'
-                    }
-                },
-                series: {
-                    name: '实发工资',
-                    type: 'line',
-                    data: [],
-                    lineStyle: {
-                        color: '#54C7FC'
-                    },
-                    itemStyle: {
-                        color: "#FF6666"
-                    },
-                    areaStyle: {
-                        // color: '#C6EDFF'
-                        color: {
-                            stype: 'linear',
-                            x: 0,
-                            y: 0,
-                            x2: 0,
-                            y2: 1,
-                            colorStops: [{
-                                offset: 0, color: '#54C7FC' // 0% 处的颜色
-                            }, {
-                                offset: 1, color: '#C6EDFF' // 100% 处的颜色
-                            }]
-                        }
-                    }
-                }
-            },
             mon: null,
-            sta: null
+            sta: {},
+            
+            // 趋势图
+            dateInterval: [],
+            slideList: {}
         }
     },
     computed:{
@@ -168,7 +94,7 @@ export default {
         this.ismounted= true
         this.getMon()
         this.getTrend()
-        this.getSta()
+        // this.getSta()
     },
     methods:{
         getMon(){
@@ -187,12 +113,27 @@ export default {
                     xv.push(item.cpi.month)
                     yv.push( item.ci_items.length && (item.ci_items[0].amount ||0))
                 })
-                this.trendChart.dataZoom[0].startValue= xv[xv.length-6]
-                this.trendChart.xAxis.data= xv
-                this.trendChart.series.data= yv
+                // this.trendChart.dataZoom[0].startValue= xv[xv.length-6]
+                // this.trendChart.xAxis.data= xv
+                // this.trendChart.series.data= yv
+                const dest = {};
+                data.map((item, index) => {
+                    const money = item.ci_items.length && (item.ci_items[0].amount || 0);
+                    if (index && dest[item.cpi.month]) {
+                        dest[item.cpi.month] = dest.item.cpi.month + money;
+                    } else {
+                        dest[item.cpi.month] = money;
+                    }
+                });   
+                this.slideList = dest;
+                this.dateInterval = [
+                    Object.keys(dest)[0],
+                    Object.keys(dest)[Object.keys(dest).length - 1]
+                ];
             })
         },
         getTrend(){
+            // 统计
             this.$axios.post("/api/feishu/xc/totalinfo2",this.stadate &&{
                 start_date: this.stadate[0],
                 end_date: this.stadate[1]
@@ -200,22 +141,23 @@ export default {
                 if (data) {
                     this.sta = data
                 } else {
-                    this.sta = null
-                    this.$msg({
-                        message: '该期间员工没有工资！',
-                        type: 'warning'
-                    });
+                    this.sta = {
+                        sum_month: 0,
+                        p_all_income: 0,
+                        dikou_total: 0,
+                        huizong: []
+                    }
                 }
             })
         },
-        getSta(){
-            this.$axios.post("/api/feishu/xc/totalinfo",{
-                start_date: "2019-6",
-                end_date: "2019-12",
-            }).then(data=>{
+        // getSta(){
+        //     this.$axios.post("/api/feishu/xc/totalinfo",{
+        //         start_date: "2019-6",
+        //         end_date: "2019-12",
+        //     }).then(data=>{
 
-            },)
-        },
+        //     },)
+        // },
         salaryClick({name}){
             switch (name) {
                 case 'trend':{
