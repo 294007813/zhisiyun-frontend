@@ -5,7 +5,7 @@
         <a v-if="field.status">{{es[info.employee_status||'H']}}</a>
     </h1>
     <div class="title" v-if="field.level">{{`${info.ou_name}/${info.position_name}`}}
-        <b>{{`${info.joblevel&&info.joblevel.joblevel_name}-${info.jobrank&&info.jobrank.jobrank_name}`}}</b>
+        <b>{{`${get_full_jobname}`}}</b>
     </div>
     <p><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
     <p><label>{{$t("index.zodiac")}}：</label>{{info.zodiac.shengxiao}}</p>
@@ -73,6 +73,11 @@ export default {
         },
         field(){
             return this.conf.pages.default.fields
+        },
+        get_full_jobname() {
+            let l_name = this.info.joblevel ? this.info.joblevel.joblevel_name : ''
+            let r_name = this.info.jobrank ? this.info.jobrank.jobrank_name : ''
+            return  l_name + (l_name && r_name ? '-' : '')  + r_name
         }
     },
     mounted(){
