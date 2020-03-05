@@ -20,11 +20,16 @@
                 <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
                 <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day")}}</p>
             </div>
-
         </template>
         <i slot="arrow-prev" class="fa fa-angle-left"></i>
-        <div slot="today-button" class="today">{{$t("index.today")}}</div>
+        <div slot="today-button" class="today">{{showNow}}</div>
         <i slot="arrow-next" class="fa fa-angle-right"></i>
+
+        <template v-slot:weekday-heading="{heading, view}">
+            {{heading.label}}
+            <span style="margin-left: 6px" v-show="view.id === 'week'">{{weekdayHeading(heading)}}</span>
+        </template>
+
     </vue-cal>
 
     <el-dialog
@@ -110,7 +115,7 @@
                         <span>{{item.name}}</span>
                         <i class="el-icon-error" @click="forward_people_new.splice(i,1)"></i>
                     </li>
-                    <el-input v-show="form.forward_people_new.length" v-model="form.forward_summary"
+                    <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item label="添加附件">
@@ -126,12 +131,12 @@
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id">{{$t("index.delete")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id" @click="del">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
 
-    <staff-select :visible="staffshow" @close="staffshow= false" @ok="getShare"></staff-select>
+    <staff-select v-if="staffMount" :visible="staffshow" @close="staffshow= false" @ok="getShare"></staff-select>
 </div>
 </template>
 
@@ -166,11 +171,39 @@ export default {
             dishow: false,
             form: JSON.parse(form),
             staffshow: false,
-            forward_people_new:[]
+            forward_people_new:[],
+            staffMount: false,
+            mounted: false
+        }
+    },
+    computed:{
+        nowView(){
+            return this.mounted && this.$refs.vcal.view.id
+        },
+        showNow(){
+            let now=""
+            switch (this.nowView) {
+                case "week":{
+                    now= this.$t("index.this_week")
+                    break
+                }
+                case "day":{
+                    now= this.$t("index.today")
+                    break
+                }
+                default:{
+                    now= this.$t("index.this_month")
+                }
+            }
+            return now
         }
     },
     mounted(){
+        this.mounted= true
         this.getData()
+        setTimeout(()=>{
+            this.staffMount= true
+        },1000)
     },
     methods:{
         getData(){
@@ -201,6 +234,7 @@ export default {
                 })
             })
             this.$axios.get("/api/feishu/calendar/get_holiday_day").then(data=>{
+                if(data)
                 data.map(item=>{
                     this.events.push({
                         start: this.time(item.date, "YYYY-MM-DD"),
@@ -220,7 +254,7 @@ export default {
         },
         switchCal(e, type){
             this.$refs.vcal.switchView(type)
-            console.log("switchCal")
+            // console.log("switchCal")
             e.stopPropagation()
         },
         create(time, a, b, c){
@@ -231,6 +265,7 @@ export default {
                 this.form.start= this.form.end= this.time(time)
                 this.dishow= true
             }
+            this.forward_people_new=[]
         },
         getWeek(view){
 
@@ -238,7 +273,7 @@ export default {
             let s= moment(startDate)
             let e= moment(endDate)
             let ss="", se="", et="DD日"
-            console.log(s)
+            // console.log(s)
             ss= s.format('YYYY年MM月DD日')
             if(s.toObject().years==e.toObject().years){
                 if(s.toObject().months==e.toObject().months){
@@ -261,21 +296,22 @@ export default {
             }
         },
         tagClick(data, e){
-            console.log(data, e)
+            // console.log(data, e)
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
             }
+            this.forward_people_new=[]
             e.stopPropagation()
         },
-        getShare(v1, v2){
-            this.forward_people_new= v2.map(it=>{
+        getShare(arr){
+            this.forward_people_new= arr.map(it=>{
                 return {name: it.name, id: it.id}
             })
         },
         upfile(){
             this.$f.upfile((res)=>{
-                console.log(res)
+                // console.log(res)
                 this.form.attachments= this.form.attachments.concat(res.success)
             })
         },
@@ -289,12 +325,22 @@ export default {
             })
             this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
                 this.dishow= false
-                this.$msg("创建成功")
+                this.$msg({message:"创建成功", type: "success"})
                 this.events= []
                 this.getData()
             })
-
-        }
+        },
+        del(){
+            this.$axios.delete("/api/feishu/calendar/delete/"+this.form.id).then(data=>{
+                this.dishow= false
+                this.$msg({message:"删除成功", type: "success"})
+                this.events= []
+                this.getData()
+            })
+        },
+        weekdayHeading(val){
+            return moment(val.date).format("M/D")
+        },
     }
 }
 </script>
@@ -401,7 +447,7 @@ export default {
         }
         .vuecal__arrow--next{
             position: absolute;
-            right: 36px;
+            right: 34px;
             padding: 0 4px;
         }
 

@@ -19,13 +19,13 @@ export default {
   cdStatistics: {
     calendar: "Calendar",
     // 出勤天数
-    attendance_days: "Attendance Days",
+    attendance_days: "Working",
     // 缺卡
     miss_card: "Miss Card",
     // 缺勤
     absence: "Absence",
     // 迟到早退
-    late_leave: "Late and early retirement",
+    late_leave: "Late leave early",
     // 请假
     leaves: "Leave",
     // 外勤
@@ -53,6 +53,6 @@ export default {
   },
   holiday_balance: {
     annual_holidays: "Annual leave balance",
-    leave_off_time: "Balance of compensatory leave"
+    leave_off_time: "Adjust balance"
   }
 };

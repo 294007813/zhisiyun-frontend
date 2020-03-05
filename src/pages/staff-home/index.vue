@@ -63,8 +63,10 @@ export default {
     },
     methods:{
         getData(){
+            let load= this.$loading({ fullscreen: true })
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
                 this.list= data.conf.home.show
+                load.close()
             })
         }
     }
