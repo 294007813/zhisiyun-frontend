@@ -24,11 +24,16 @@
         </ul>
         <ul class="balance" v-if="fiba">
             <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/absence/report_emp_leave_list')"></i></h5>
-            <li v-if="fiba.year">
+            <li v-if="fiba.year"
+                @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
+                >
                 <p>{{bl.year}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
-            <li v-if="fiba.rest">
+            <li v-if="fiba.rest"
+                @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
+
+            >
                 <p>{{bl.exchange}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Balancevacationadjustment")}}</span>
             </li>

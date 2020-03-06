@@ -140,7 +140,7 @@ export default {
             item.disable= !!show
             this.list[r].push(item)
 
-            e.target.blur()
+            if(e) e.target.blur()
         },
         openModsetup(item){
             this.modsetupShow= true

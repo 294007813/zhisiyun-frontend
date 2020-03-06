@@ -44,7 +44,7 @@ export default {
             return data.able && data.show && data.fields
         },
         userInfoUrl() {
-            return '/admin/masterdata/people/form/' + this.$user_info.userId + '?mode=view'
+            return '/admin/masterdata/people/form/' + this.$store.getters.userId + '?mode=view'
         }
     },
     mounted(){
