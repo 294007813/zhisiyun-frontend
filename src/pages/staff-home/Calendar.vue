@@ -280,7 +280,7 @@ export default {
             e.stopPropagation()
         },
         create(time, a, b, c){
-            // console.log("create(time)", time, a, b, c)
+            console.log("create(time)", time, a, b, c)
             let view= this.$refs.vcal.view.id
             if(view.indexOf("year")<0){
                 this.form= JSON.parse(form)
