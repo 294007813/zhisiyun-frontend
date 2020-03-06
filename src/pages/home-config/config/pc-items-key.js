@@ -1,6 +1,6 @@
 export default {
     "basic_information_module":{
-        "default": "员工状态",
+        "default": "index.default",
         "status": "员工状态",
         "level": "职级、层级、等级",
         "sub": "下属",
