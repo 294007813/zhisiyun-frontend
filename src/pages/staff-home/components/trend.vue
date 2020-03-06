@@ -3,8 +3,7 @@
     <div class="trend-title">
       <div class="titleInfo">
         {{lineObj[0] && lineObj[0].replace("-",$t(`index.year`))}}{{$t(`index.month`)}}
-        <!-- <span>{{$t(`xcpage.trend.wages`)}}：{{ eyes ? CurrencyFilter(lineObj[1] || 0) : "******"}}</span> -->
-        <span>实发工资：{{ eyes || lineObj[1]}}</span>
+        <span>{{$t('xc.real_wage')}}：{{ eyes || $f.currencyFilter(lineObj[1])}}</span>
       </div>
       <div class="trend-graph" ref="trendGraph">
         <vuescroll :ops="ops">
@@ -37,7 +36,6 @@
   </div>
 </template>
 <script>
-// import { CurrencyFilter } from "../../../util";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
