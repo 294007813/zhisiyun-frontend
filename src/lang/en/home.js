@@ -92,6 +92,7 @@ export default {
     "to_do_module":"To do module",
     "to_configure":"To configure",
     "delete": "Delete",
+   "refuse": "Refuse",
     "save": "Save",
     "salary_information_module":"Salary information module",
     "attendance_information_module":"Attendance information module",

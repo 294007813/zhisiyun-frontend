@@ -16,6 +16,7 @@ import {
     Card,
     Divider,
     Image,
+    Tooltip,
 } from 'element-ui';
 
 Vue.component(Dialog.name, Dialog);
@@ -41,6 +42,7 @@ Vue.component(Switch.name, Switch);
 Vue.component(Card.name, Card);
 Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
+Vue.component(Tooltip.name, Tooltip);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$msg = Message;
 Vue.prototype.$loading = Loading.service;
