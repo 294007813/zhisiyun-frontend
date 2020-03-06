@@ -2,26 +2,26 @@
 <div class="train">
     <ul class="to" v-if="fito">
         <h6>{{$t("index.training_num")}}<i v-if="fito.more" class="iconfont iconyoujiantou" @click="$f.href('/admin/course/train_plan/mylist')"></i></h6>
-        <li v-if="fito.participate">
+        <li v-if="fito.participate"  @click="$f.href('/admin/course/train_plan/my_list')">
             <p><b>{{to.trainingRecord_number||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.in_train")}}</span>
         </li>
-        <li v-if="fito.doing">
+        <li v-if="fito.doing"  @click="$f.href('/admin/course/train_plan/mylist')">
             <p><b>{{to.publicTraining_number||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.on_active")}}</span>
         </li>
     </ul>
     <ul class="bo" v-if="fibo">
         <h6>{{$t("index.process_num")}}<i v-if="fibo.more" class="iconfont iconyoujiantou" @click="$f.href('/admin/wf/process_instance/mylist')"></i></h6>
-        <li v-if="fibo.start">
+        <li v-if="fibo.start" @click="$f.href('/admin/wf/finished_list')">
             <p><b>{{bo.start ||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.self_init")}}</span>
         </li>
-        <li v-if="fibo.handle">
+        <li v-if="fibo.handle" @click="$f.href('/admin/wf/finished_list')">
             <p><b>{{bo.process||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.self_deal")}}</span>
         </li>
-        <li v-if="fibo.doing">
+        <li v-if="fibo.doing" @click="$f.href('/admin/wf/process_instance/mylist')">
             <p><b>{{bo.ing||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.ongoing")}}</span>
         </li>
@@ -72,5 +72,8 @@ export default {
 @import "train&contract";
 .train{
    @include style;
+}
+li {
+    cursor: pointer;
 }
 </style>
