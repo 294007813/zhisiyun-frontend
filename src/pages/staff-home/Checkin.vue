@@ -33,6 +33,8 @@
                 <p>{{bl.exchange}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Balancevacationadjustment")}}</span>
             </li>
+            <li></li>
+            <li></li>
         </ul>
         <ul class="flow" v-if="fifl">
             <h5>{{$t("index.attendance_process")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/cardrecord/my_attend_report')"></i></h5>
@@ -301,14 +303,16 @@ export default {
     @include block;
     padding: 6px 20px;
     ul{
-        padding-top: 10px;
+        // padding-top: 10px;
         height: 1/3*100%;
         &:not(:last-child){border-bottom: 1px solid $color-border;}
         h5{
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             position: relative;
+            height: 28px;
             left: 0;
-            top: 0;
+            top: 10px;
+            flex-basis: 100%;
             i{
                 font-weight: 400;
                 color: $color-gray;
@@ -317,22 +321,28 @@ export default {
                 right: -10px;
                 padding: 10px;
                 cursor: pointer;
-                top: 50%;
+                top: 30%;
                 transform: translateY(-50%);
                 vertical-align: middle;
             }
         }
-        /deep/ li{
-            width: 25%;
-            text-align: center;
-            display: inline-block;
-        }
     }
-    /deep/.sta > div ,.balance{
+    /deep/.sta > div ,.balance, .flow {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
         li{
+            flex: 1;
+            margin-left: 10px;
+            margin-right: 10px;
+            text-align: center;
+            .el-button {
+                width: 100%;
+            }
             p{
                 font-size: 16px;
                 margin-bottom: 4px;
+                white-space: nowrap;
                 b{ font-size: 12px; margin-left: 6px}
             }
             span{ font-size: 12px}
