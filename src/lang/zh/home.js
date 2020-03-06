@@ -93,6 +93,7 @@ export default  {
     "to_do_module":"待办事宜模块",
     "to_configure":"配置",
     "delete": "删除",
+    "refuse": "拒绝",
     "save": "保存",
     "salary_information_module":"薪资信息模块",
     "attendance_information_module":"考勤信息模块",

@@ -1,14 +1,16 @@
 <template>
 <div class="calendar">
     <h5>{{$t("index.me_calendar")}}</h5>
-
+    <el-tooltip class="work-calendar" effect="dark" content="工作日历" placement="top-start">
+        <i class="fa fa-mail-forward" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
+    </el-tooltip>
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
-             resize-x show-all-day-events events-on-month-view editable-events today-button hide-view-selector
-             :events="events" :transitions="false" :cell-click-hold="true"
+             resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
+             :events="events" :transitions="false" :cell-click-hold="true" :editable-events="false"
              :on-event-click="tagClick" @cell-click="create">
-        <template v-slot:events-count="{ events, view }">
+<!--        <template v-slot:events-count="{ events, view }">-->
 
-        </template>
+<!--        </template>-->
         <template v-slot:title="{ title, view }">
             <div class="title">
                 <span v-show="view.id === 'month'">{{ view.startDate.format('YYYY年MM月') }}</span>
@@ -42,7 +44,7 @@
             ><i class="fa fa-check-circle"></i>{{$t("index.private")}}</div>
             <div :class="['check-tag com',{on: form.is_complete}]" @click="form.is_complete=!form.is_complete"
             ><i class="fa fa-check-circle"></i>{{$t("index.complete")}}</div>
-            <h2 v-if="form.tid">由{{form.creator.people_name+ form.tid}}前创建</h2>
+            <h2 v-if="form._id">{{subtitle}}</h2>
 
             <el-form ref="form" :model="form" label-width="80px" size="mini" class="form">
                 <el-form-item label="事件名称">
@@ -72,6 +74,7 @@
                         </el-date-picker>
                         <el-date-picker
                                 @blur="changetime(false, $event)"
+                                :picker-options="{disabledDate }"
                                 v-model="form.end"
                                 type="datetime"
                                 placeholder="结束时间"
@@ -133,7 +136,8 @@
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id" @click="del">{{$t("index.delete")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && isMine" @click="del(true)">{{$t("index.refuse")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && !isMine" @click="del(false)">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
@@ -198,6 +202,18 @@ export default {
                 }
             }
             return now
+        },
+        isMine(){
+            return this.form && this.form.creator && this.form.creator._id== this.$store.getters.userId
+        },
+        subtitle(){
+            let msg="", da= this.form
+            if(this.isMine){
+                msg= `由${da.creator.people_name} ${this.$f.getRelativeDate(da.createDate)}前创建`
+            }else{
+                msg= `受到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
+            }
+
         }
     },
     mounted(){
@@ -211,29 +227,10 @@ export default {
         getData(){
             this.$axios.get("/api/feishu/calendar/list").then(data=>{
                 // console.log("data", data)
-                data.map(item=>{
-                    let tag={
-                        class: `event ${item.is_complete? 'green': 'red'}`,
-                        deletable: false,
-                        ...item,
-                        start: this.time(item.start),
-                        end: this.time(item.end),
-                        // title: item.title,
-                        // people: item.people,
-                        // forward_people: item.forward_people,
-                        // forward_people_msg: item.forward_people_msg,
-                    }
-                    let tid= moment(item.createDate).toNow(true)
-                    tag.tid= tid.replace("seconds","秒")
-                        .replace("minute","分钟")
-                        .replace("hour","小时")
-                        .replace("day","天")
-                        .replace("month","月")
-                        .replace("year","年")
-                        .replace("s","")
-                        .replace(" ","")
-                    this.events.push(tag)
-                })
+                    data.map(item=>{
+                        this.pushEvent(item)
+                    })
+
             })
             this.$axios.get("/api/feishu/calendar/get_holiday_day").then(data=>{
                 if(data)
@@ -251,40 +248,49 @@ export default {
                 })
             })
         },
-        changetime(flag, vn){
-            let val= vn.displayValue
-            let time= moment( val)
-            let allday= true
-            if(this.form.allDay){
-                if(flag){
-                    this.form.start= val
-                    if(time.hour()!=0 || time.minute()!=0 ||time.second()!=0){
-                        allday= false
-                    }
+        pushEvent(item){
+            let color="", st= moment(item.start), et= moment(item.end)
+            if(item.is_complete){
+                color= "green"
+            }else{
+                if(moment().isBefore(st)){
+                    color= "blue"
+                }else if(moment().isAfter(et)){
+                    color= "red"
                 }else{
-                    this.form.end= val
-                    if(time.hour()!=23 || time.minute()!=59 ||time.second()!=59){
-                        allday= false
-                    }
+                    color= "blue"
                 }
-                this.form.allDay= allday
             }
-
-        },
-        time(val, format){
-            return moment(val).format(format || "YYYY-MM-DD HH:MM")
+            let tag={
+                class: `event ${color}`,
+                deletable: false,
+                ...item,
+                start: this.time(item.start),
+                end: this.time(item.end),
+                // title: item.title,
+                // people: item.people,
+                // forward_people: item.forward_people,
+                // forward_people_msg: item.forward_people_msg,
+            }
+            this.events.push(tag)
         },
         switchCal(e, type){
             this.$refs.vcal.switchView(type)
             // console.log("switchCal")
             e.stopPropagation()
         },
-        create(time, a, b, c){
-            console.log("create(time)", time, a, b, c)
+        create(date, a, b, c){
+            // console.log("create(date)", date, a, b, c)
             let view= this.$refs.vcal.view.id
+            let time= date.date|| date
             if(view.indexOf("year")<0){
                 this.form= JSON.parse(form)
-                this.form.start= this.form.end= this.time(time)
+                this.form.start=  this.time(time)
+                this.form.end= this.time(moment(time).add(30, 'minutes'))
+                if(this.nowView=='month'|| date.date){
+                    this.form.allDay= true
+                    this.changeallday(true)
+                }
                 this.dishow= true
             }
             this.forward_people_new=[]
@@ -323,6 +329,39 @@ export default {
             this.forward_people_new=[]
             e.stopPropagation()
         },
+        changetime(flag, vn){
+            let val= vn.displayValue
+            let time= moment( val)
+            let allday= true
+            let least= null
+            let st= moment(this.form.start)
+            let et= moment(this.form.end)
+            if(this.form.allDay){
+                if(flag){
+                    this.form.start= val
+                    if(time.hour()!=0 || time.minute()!=0 ||time.second()!=0){
+                        allday= false
+                    }
+                }else{
+                    this.form.end= val
+                    if(time.hour()!=23 || time.minute()!=59 ||time.second()!=59){
+                        allday= false
+                    }
+                }
+                this.form.allDay= allday
+            }
+            if(flag){
+                least= time.add(30, 'm')
+                if(et.isBefore(least)){
+                    this.form.end= this.time(least)
+                }
+            }else{
+                // least= st.add(30, 'm')
+                if(time.isBefore(st)){
+                    this.form.end= this.form.start
+                }
+            }
+        },
         getShare(arr){
             this.forward_people_new= arr.map(it=>{
                 return {name: it.name, id: it.id}
@@ -338,28 +377,57 @@ export default {
             this.form.attachments.splice(i,1)
         },
         save(){
+            let method='post', url= '/api/feishu/calendar/create', msg= "创建"
+            if(this.form._id){
+                method= 'put'
+                url= '/api/feishu/calendar/update/:wp_id'+ this.form._id
+                msg= "修改"
+            }
             let param= {data: this.form}
             param.forward_people_new= this.forward_people_new.map(it=>{
                 return it.id
             })
-            this.$axios.post("/api/feishu/calendar/create", param).then(data=>{
+            this.$axios[method]( url, param).then(data=>{
                 this.dishow= false
-                this.$msg({message:"创建成功", type: "success"})
-                this.events= []
-                this.getData()
+                this.$msg({message:msg+"成功", type: "success"})
+                if(!this.form._id) this.pushEvent(data)
             })
         },
-        del(){
-            this.$axios.delete("/api/feishu/calendar/delete/"+this.form._id).then(data=>{
+        del(refuse){
+            let url= "/api/feishu/calendar/delete/", msg= "删除", id= this.form._id
+            if(refuse){
+                url= "/admin/pm/work_plan/bb/"
+                msg= "拒绝"
+            }
+            this.$axios.delete(url+ id).then(data=>{
                 this.dishow= false
-                this.$msg({message:"删除成功", type: "success"})
-                this.events= []
-                this.getData()
+                this.$msg({message:msg+"成功", type: "success"})
+                // this.events= []
+                // this.getData()
+                this.delevent(id)
             })
+        },
+        delevent(id){
+            for(let i in this.events){
+                if(this.events[i]._id== id){
+                    this.events.splice( i, 1)
+                    break;
+                }
+            }
+
+        },
+        time(val, format){
+            return moment(val).format(format || "YYYY-MM-DD HH:mm:ss")
         },
         weekdayHeading(val){
             return moment(val.date).format("M/D")
         },
+        disabledDate(date){
+            let st= moment(this.form.start)
+            let d= moment(date)
+            // console.log("data",data)
+            return d.isBefore(st, "day");
+        }
     }
 }
 </script>
@@ -413,6 +481,17 @@ export default {
                 margin-left: 10px;
                 cursor: pointer;
             }
+        }
+    }
+    .work-calendar{
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        z-index: 1;
+        cursor: pointer;
+        i{
+            color: $color-gray-dark;
+
         }
     }
 
@@ -483,6 +562,9 @@ export default {
             }
             &.orange{
                 background-color: orange;
+            }
+            &.blue{
+                background-color: #7acfff;
             }
         }
         &.vuecal--events-on-month-view{
