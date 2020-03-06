@@ -33,16 +33,9 @@ Vue.config.productionTip = false;
 Vue.prototype.$axios= axios
 Vue.prototype.$f= util
 window.async= async
-moment.locale(i18n.locale == "zh" ? "zh-cn" : i18n.locale)
 window.moment= moment
 window._= _
 Vue.prototype.$conf= conf
-Vue.prototype.$user_info = {
-  userId: '',
-  setUserId(data) {
-    this.userId = data
-  }
-}
 
 new Vue({
   router,

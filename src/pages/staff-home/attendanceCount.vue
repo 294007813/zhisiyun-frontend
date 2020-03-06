@@ -7,6 +7,7 @@
         :key="ind"
         class="item"
         v-if="dict[item.key]"
+        @click="$f.href(item.url)"
       >
         <p class="text">
           {{ attendanceStatistics[item.key] }}

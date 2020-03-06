@@ -20,19 +20,25 @@
             </li> -->
             <AttendanceCount :dict="fich" :viewList="attendanceArr" :attendanceStatistics="attendanceStatistics" 
                 :translate="propsTranslate('wtpage')"
-
             />
         </ul>
         <ul class="balance" v-if="fiba">
             <h5>{{$t("index.holiday_balance")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/absence/report_emp_leave_list')"></i></h5>
-            <li v-if="fiba.year">
+            <li v-if="fiba.year"
+                @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
+                >
                 <p>{{bl.year}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
-            <li v-if="fiba.rest">
+            <li v-if="fiba.rest"
+                @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
+
+            >
                 <p>{{bl.exchange}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Balancevacationadjustment")}}</span>
             </li>
+            <li></li>
+            <li></li>
         </ul>
         <ul class="flow" v-if="fifl">
             <h5>{{$t("index.attendance_process")}}<i class="iconfont iconyoujiantou" @click="$f.href('/admin/tm/cardrecord/my_attend_report')"></i></h5>
@@ -132,56 +138,77 @@ export default {
                 // short: false, //缺勤
         {
             key: "checkin",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
         {
             key: "late",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
+        // 请假
         {
             key: "leave",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/my_attend_report"
         },
         {
             key: "early",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         {
             key: "absent",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         // 缺卡
         {
             key: "miss",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         // 缺勤
         {
             key: "short",
-            nuit: this.$t("mobileLang.mainPages.wt.min")
+            nuit: this.$t("mobileLang.mainPages.wt.min"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         {
             key: "outside",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
         {
             key: "overtime",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         // 休息
         {
             key: "rest",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         //    trip: "出差",
         {
             key: "trip",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         // 公干
         {
             key: "official",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         }
         ];
         this.getCardrecord();
@@ -301,14 +328,16 @@ export default {
     @include block;
     padding: 6px 20px;
     ul{
-        padding-top: 10px;
+        // padding-top: 10px;
         height: 1/3*100%;
         &:not(:last-child){border-bottom: 1px solid $color-border;}
         h5{
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             position: relative;
+            height: 28px;
             left: 0;
-            top: 0;
+            top: 10px;
+            flex-basis: 100%;
             i{
                 font-weight: 400;
                 color: $color-gray;
@@ -317,22 +346,30 @@ export default {
                 right: -10px;
                 padding: 10px;
                 cursor: pointer;
-                top: 50%;
+                top: 30%;
                 transform: translateY(-50%);
                 vertical-align: middle;
             }
         }
-        /deep/ li{
-            width: 25%;
-            text-align: center;
-            display: inline-block;
-        }
     }
-    /deep/.sta > div ,.balance{
+    /deep/.sta > div ,.balance, .flow {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
         li{
+            flex: 1;
+            margin-left: 10px;
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+
+            .el-button {
+                width: 100%;
+            }
             p{
                 font-size: 16px;
                 margin-bottom: 4px;
+                white-space: nowrap;
                 b{ font-size: 12px; margin-left: 6px}
             }
             span{ font-size: 12px}

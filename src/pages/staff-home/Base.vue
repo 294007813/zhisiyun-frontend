@@ -27,7 +27,7 @@
             :append-to-body="true"
             width="400px">
         <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:'暂无勋章'}">
-            <li v-for="(it, ind) in medal">
+            <li v-for="(it, ind) in medal" :key="ind">
                 <i class="tag"><span>奖</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
                 <p>{{it.reward_punish.rap_name}}</p>
@@ -87,7 +87,7 @@ export default {
         getData(){
             this.$axios.get("/api/feishu/base/info").then(data=>{
                 this.info= data[0]
-                this.$user_info.setUserId(data[0]._id)
+                this.$store.commit("setUser", data[0]);
                 this.done= true
             })
 
