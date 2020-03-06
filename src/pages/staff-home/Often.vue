@@ -2,7 +2,7 @@
 <div class="often">
     <h5>{{$t("index.common_application")}}</h5>
     <ul>
-        <li v-for="(item, key) in list" :key="key" v-show="!!item.uf_status" @click="$f.href(`${item.url}`)">
+        <li v-for="(item, key) in selectList" :key="key" v-show="!item || !!item.uf_status" @click="$f.href(`${item.url}`)">
             <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
         <li class="add" @click="add"></li>
     </ul>
@@ -14,7 +14,7 @@
         <p slot="title" class="title">{{$t("index.add_app")}}</p>
         <div class="content">
             <ul style="padding-top: 10px">
-                <li v-for="(item, key) in list" :key="key" @click="change(item)">
+                <li v-for="(item, key) in list" :key="key" @click="change(item, key)">
                     <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
                     <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>
                 </li>
@@ -60,6 +60,7 @@ export default {
                 // {name: 'AI助手', link: ''},
             ],
             dishow: false
+            ,selectList : [],
         }
     },
     mounted(){
@@ -70,30 +71,60 @@ export default {
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
                data.paid.map((v,i) => {
                  // 把AI放在第一位
-                 if (v.code == "AI") {
+                 if (v.menu_code == "AI_ASSESSITANT") {
                     data.paid.splice(i, 1);
-                    data.paid[0] = v;
+                    data.paid.unshift(v);
                  }
                })
                 this.list= data.paid
+    
+                for (let i=0;i< data.paid.length;i++){
+                    let item = data.paid[i]
+                    if (item.uf_status) {
+                        this.selectList.push(item)
+                    }
+                }
             })
         },
         add(){
             this.dishow= true
         },
-        change(item){
+        change(item, key){
             item.uf_status= 1- item.uf_status
+            let have = false
+            let idx = 0
+
+            for (let i = 0; i < this.selectList.length; i++) {                
+                if (this.selectList[i].menu_code == item.menu_code) {
+                    have = !have
+                    idx = i
+                }
+            }
+
+            if (!have) {
+                this.selectList.push(item)
+            } else {
+                this.selectList.splice(idx, 1)
+            }
+
+            this.selectList.map((v,i) => {
+                 // 把AI放在第一位
+                if (v.menu_code == "AI_ASSESSITANT") {
+                    this.selectList.splice(i, 1);
+                    this.selectList.unshift(v);
+                }
+            })
         },
         save(){
             let arr = [];
-            for (let i of this.list) {
-                if (i.uf_status) arr.push({
-                    save_id: i.menu_code,
-                    uf_status_pc: i.uf_status,
-                    sequence_pc: i.sequence_pc
+            for (let i = 0; i< this.selectList.length; i++) {
+                let item = this.selectList[i]
+                if (item.uf_status) arr.push({
+                    save_id: item.menu_code,
+                    uf_status_pc: item.uf_status,
+                    sequence_pc: item.sequence_pc
                 })
             }
-            // AI放置第一个
             this.$axios.post("/api/feishu/index/myapp/update", {data: arr}).then(data=>{
                 // this.list= data
                 this.dishow = false
