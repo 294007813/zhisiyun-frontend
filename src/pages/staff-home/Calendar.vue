@@ -23,9 +23,9 @@
                 <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day")}}</p>
             </div>
         </template>
-        <i slot="arrow-prev" class="fa fa-angle-left"></i>
+        <i slot="arrow-prev" class="fa fa-chevron-left"></i>
         <div slot="today-button" class="today">{{showNow}}</div>
-        <i slot="arrow-next" class="fa fa-angle-right"></i>
+        <i slot="arrow-next" class="fa fa-chevron-right"></i>
 
         <template v-slot:weekday-heading="{heading, view}">
             {{heading.label}}
@@ -535,10 +535,11 @@ export default {
             position: absolute;
             right: 87px;
             padding: 0 4px;
+            top: 13px;
         }
         .vuecal__today-btn{
             position: absolute;
-            right: 50px;
+            right: 54px;
             padding: 0 4px;
             cursor: pointer;
             .today{font-size: 14px}
@@ -547,8 +548,14 @@ export default {
             position: absolute;
             right: 34px;
             padding: 0 4px;
+            top: 13px;
         }
-
+        .vuecal__arrow{
+            i{
+                color: $color-gray-dark;
+                font-size: 12px;
+            }
+        }
         .event{
             cursor: pointer;
             opacity: .8;
