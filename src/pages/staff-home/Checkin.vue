@@ -20,7 +20,6 @@
             </li> -->
             <AttendanceCount :dict="fich" :viewList="attendanceArr" :attendanceStatistics="attendanceStatistics" 
                 :translate="propsTranslate('wtpage')"
-
             />
         </ul>
         <ul class="balance" v-if="fiba">
@@ -134,56 +133,77 @@ export default {
                 // short: false, //缺勤
         {
             key: "checkin",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
         {
             key: "late",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
+        // 请假
         {
             key: "leave",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/my_attend_report"
         },
         {
             key: "early",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         {
             key: "absent",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         // 缺卡
         {
             key: "miss",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         // 缺勤
         {
             key: "short",
-            nuit: this.$t("mobileLang.mainPages.wt.min")
+            nuit: this.$t("mobileLang.mainPages.wt.min"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         {
             key: "outside",
-            nuit: this.$t("mobileLang.mainPages.wt.times")
+            nuit: this.$t("mobileLang.mainPages.wt.times"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
         },
         {
             key: "overtime",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         // 休息
         {
             key: "rest",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/hr_list_v2"
+
         },
         //    trip: "出差",
         {
             key: "trip",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         },
         // 公干
         {
             key: "official",
-            nuit: this.$t("mobileLang.mainPages.wt.day")
+            nuit: this.$t("mobileLang.mainPages.wt.day"),
+            url: "/admin/tm/cardrecord/my_attend_report"
+
         }
         ];
         this.getCardrecord();
@@ -336,6 +356,8 @@ export default {
             margin-left: 10px;
             margin-right: 10px;
             text-align: center;
+            cursor: pointer;
+
             .el-button {
                 width: 100%;
             }

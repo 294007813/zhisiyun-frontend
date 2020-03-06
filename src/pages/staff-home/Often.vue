@@ -82,7 +82,7 @@ export default {
             this.dishow= true
         },
         change(item){
-            item.uf_status= 1- item.uf_status
+            item.uf_status = 1 - item.uf_status;
         },
         save(){
             let arr = [];
