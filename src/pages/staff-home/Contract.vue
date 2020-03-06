@@ -3,7 +3,7 @@
     <ul class="to" v-if="fito">
         <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
         <li  @click="$f.href('/profile_user')">
-            <p><b>{{da.n1}}</b>{{$t("indexnumbers")}}</p>
+            <p><b>{{da.n1}}</b>{{$t("index.numbers")}}</p>
             <span>{{$t("index.signed_contract")}}</span>
         </li>
         <li @click="$f.href('/profile_user')">
