@@ -6,8 +6,8 @@ axios.post("/login", {
   username: "00001",
   password: "000000"
 
-  // client: "001",
-  // username: "0062",
+  // client: "HYFZ",
+  // username: "000003",
   // password: "000000"
 });
 

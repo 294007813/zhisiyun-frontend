@@ -32,7 +32,8 @@
                     value-format="yyyy-MM"
                     range-separator="-"
                     start-placeholder="开始月份"
-                    end-placeholder="结束月份">
+                    end-placeholder="结束月份"
+            :picker-options="{disabledDate }">
             </el-date-picker>
 
             <ul class="sta">
@@ -192,11 +193,14 @@ export default {
                     }
                 })
             })
+        },
+        disabledDate(date){
+            let st= this.$store.getters.userInfo.start_service_date
+            let d= moment(date)
+            // console.log("data",data)
+            return d.isBefore(moment(st)) || d.isAfter(moment());
         }
     },
-    watch () {
-        this.ishide;
-    }
 }
 </script>
 

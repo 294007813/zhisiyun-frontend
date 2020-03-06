@@ -87,7 +87,7 @@ export default {
         getData(){
             this.$axios.get("/api/feishu/base/info").then(data=>{
                 this.info= data[0]
-                this.$user_info.setUserId(data[0]._id)
+                this.$store.commit("setUser", data[0]);
                 this.done= true
             })
 
