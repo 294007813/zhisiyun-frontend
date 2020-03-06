@@ -1,11 +1,16 @@
 export default {
   modules: {
+    baseinfo: "Basic Info",
     pay: "pay"
   },
   bookmarks: {
+    baseinfo: "Basic Info",
     month: "monthly",
     trend: "trend",
     statistics: "statistics"
+  },
+  baseinfo: {
+    aiRobot: "AI Robot"
   },
   month: {},
   trend: {

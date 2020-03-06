@@ -21,7 +21,6 @@
 </template>
 
 <script>
-
 export default {
     name: "Perf",
     props: ["conf"],
@@ -101,6 +100,7 @@ export default {
                             type: "dashed",
                             color: "#EEEEEE"
                         },
+
                     },
                 },
                 tooltip: {
@@ -118,6 +118,7 @@ export default {
                         fontSize: 12
                     },
                     extraCssText: "box-shadow:0px 2px 8px 0px rgba(0,0,0,0.2);border-radius:4px;"
+
                 },
                 series: [{
                     data: [],
@@ -136,7 +137,7 @@ export default {
                     },
                     barWidth: '30px',
                     formatter: function ({value}) {
-                        console.log(arguments);
+                        // console.log(arguments);
                         return value
                     }
                 }]

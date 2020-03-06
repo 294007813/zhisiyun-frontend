@@ -1,11 +1,16 @@
 export default {
   modules: {
+    baseinfo: "基本信息",
     pay: "薪酬"
   },
   bookmarks: {
+    baseinfo: "基本信息",
     month: "月度",
     trend: "趋势",
     statistics: "统计"
+  },
+  baseinfo: {
+    aiRobot: "AI助手"
   },
   month: {},
   trend: {

@@ -1,14 +1,14 @@
 export default {
   modules: {
     baseinfo: "基本信息",
-    cdStatistics: "日历统计",
+    cdStatistics: "考勤统计",
     attendance_initiation: "考勤发起",
     clock_in: "签到打卡",
     holiday_balance: "假期余额"
   },
   bookmarks: {
     baseinfo: "基本信息",
-    cdStatistics: "日历统计",
+    cdStatistics: "考勤统计",
     attendance_initiation: "考勤发起",
     clock_in: "签到打卡",
     holiday_balance: "假期余额"
@@ -31,7 +31,19 @@ export default {
     // 外勤
     outwork_time: "外勤",
     // 旷工
-    sign_out_change: "旷工"
+    sign_out_change: "旷工",
+    // 迟到
+    late: "迟到",
+    // 休息
+    rest: "休息",
+    // 早退
+    early: "早退",
+    // 出差
+    trip: "出差",
+    // 加班
+    overtime: "加班",
+    // 公干
+    official: "公干" 
   },
   attendance_initiation: {
     // 请假
@@ -54,5 +66,21 @@ export default {
   holiday_balance: {
     annual_holidays: "年假余额",
     leave_off_time: "调休假余额"
+  },
+  pc: {
+    checkin: "出勤",
+    late: "迟到",
+    rest: "休息",
+    early: "早退",
+    miss: "缺卡",
+    outside: "外勤",
+    absent: "旷工",
+
+    short: "缺勤",
+    trip: "出差",
+    overtime: "加班",
+    official: "公干",
+    leave: "请假"
   }
+
 };

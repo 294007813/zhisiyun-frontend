@@ -137,6 +137,7 @@ export default {
     day: "day",
     times: "times",
     hour: "hour",
+    min: "Mins",
     "wt-statistics": "Attendance statistics",
     attendance_days: "Attendance days",
     absence: "Absence",

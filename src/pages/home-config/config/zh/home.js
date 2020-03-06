@@ -38,7 +38,7 @@ export default {
     suggestion_box: "意见箱",
     noData: "暂无",
     keywords: "输入姓名关键词查询",
-    monthPer: "月绩效",
+    month: "月绩效",
     near: "近期绩效"
   },
   baseinfo: {
