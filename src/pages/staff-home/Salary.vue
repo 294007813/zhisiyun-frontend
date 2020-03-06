@@ -2,26 +2,26 @@
 <div class="salary">
     <h5>{{$t("index.salary_information")}}<i class="iconfont iconyanjing" @click="checkPassword"></i></h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
-        <el-tab-pane label="月度" name="mon" v-if="fimon">
+        <el-tab-pane :label="$t('xc.monthly')" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
                 <template v-for="(arr, key) in mon">
                     <p class="title">{{key}}{{$t("index.year")}}</p>
                     <ul>
-                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || item.amount}}</p></li>
+                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li>
                     </ul>
                 </template>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="趋势" name="trend" v-if="fitrend">
+        <el-tab-pane :label="$t('xc.trend')" name="trend" v-if="fitrend">
             <div class="trend" v-if="ismounted && showTrend">
                 <!-- <p class="title">2019年10月 <span>{{$t("index.real_wage")}}：</span><b>9,000.00</b></p>
                 <v-chart :options="trendChart" class="chart" ref="salarytc" autoresize/> -->
                 <!-- 趋势图 -->
-                <trend v-if="Object.keys(slideList).length" :eyes="hidstr" :dateInterval="dateInterval" :trendList="slideList" autoresize></trend>
+                <trend v-if="Object.keys(slideList).length" :eyes="hidstr" :dateInterval="dateInterval" :trendList="slideList"></trend>
                 <div v-else v-nodata="{have: !Object.keys(slideList).length}"></div>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="统计" name="sta" v-if="fista">
+        <el-tab-pane :label="$t('xc.statistics')" name="sta" v-if="fista">
             <el-date-picker
                     @change="getTrend"
                     prefix-icon="iconfont iconshaixuan"
@@ -37,11 +37,11 @@
 
             <ul class="sta">
                 <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
-                <li><label>累计工资</label><p>{{hidstr || sta.p_all_income}}</p></li>
+                <li><label>{{$t("xc.accumulated_wages")}}</label><p>{{hidstr || $f.currencyFilter(sta.p_all_income)}}</p></li>
                 <template v-for="(item, key) in sta.huizong">
-                    <li><label>{{item.name}}</label><p>{{hidstr || item.count}}</p></li>
+                    <li><label>{{item.name}}</label><p>{{hidstr || $f.currencyFilter(item.count)}}</p></li>
                 </template>
-                <li><label>累计个税专项抵扣</label><p>{{hidstr || sta.dikou_total}}</p></li>
+                <li><label>{{$t("xc.accumulated_individual_deduction")}}</label><p>{{hidstr || $f.currencyFilter(sta.dikou_total)}}</p></li>
             </ul>
         </el-tab-pane>
     </el-tabs>
@@ -133,7 +133,7 @@ export default {
             })
         },
         getTrend(){
-            // 统计
+            // 这是统计
             this.$axios.post("/api/feishu/xc/totalinfo2",this.stadate &&{
                 start_date: this.stadate[0],
                 end_date: this.stadate[1]
@@ -159,6 +159,7 @@ export default {
         //     },)
         // },
         salaryClick({name}){
+            this.showTrend= false;
             switch (name) {
                 case 'trend':{
                     this.showTrend= true;

@@ -300,6 +300,7 @@ export default  {
     "monthly": "月度",
     "trend": "趋势",
     "statistics":"统计",
+    "real_wage":"实发工资",
     "my_payroll": "工资单",
     "shebao": "社保",
     "social_base":"社保缴费基数",

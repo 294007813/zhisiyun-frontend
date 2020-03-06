@@ -301,6 +301,7 @@ export default {
     "trend": "trend",
     "statistics":"Statistics",
     "my_payroll": "Payroll",
+    "real_wage":"Real wages",
     "shebao": "social security",
     "social_base":"Social security payment base",
     "payment_area":"Payment area",

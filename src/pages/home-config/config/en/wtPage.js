@@ -31,7 +31,19 @@ export default {
     // 外勤
     outwork_time: "Outwork",
     // 旷工
-    sign_out_change: "Absenteeism"
+    sign_out_change: "Absenteeism",
+    // 迟到
+    late: "Late",
+    // 休息
+    rest: "rest",
+    // 早退
+    early: "Early",
+    // 出差
+    trip: "Trip Days",
+    // 加班
+    overtime: "Overtime",
+    // 公干
+    official: "Official Days" 
   },
   attendance_initiation: {
     // 请假
@@ -54,5 +66,20 @@ export default {
   holiday_balance: {
     annual_holidays: "Annual leave balance",
     leave_off_time: "Adjust balance"
+  },
+  pc: {
+    checkin: "Attendance Days",
+    late: "Late and early retirement",
+    rest: "rest",
+    early: "Early",
+    miss: "Miss Card",
+    outside: "Outwork",
+    absent: "Absenteeism",
+
+    short: "Absence",
+    trip: "Trip Days",
+    overtime: "Overtime",
+    official: "Official Days",
+    leave: "Leave"
   }
 };

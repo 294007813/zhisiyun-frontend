@@ -135,6 +135,7 @@ export default {
     day: "天",
     times: "次",
     hour: "时",
+    min: "分",
     attendance: "考勤",
     cdStatistics: "考勤统计",
     attendance_tools: "考勤工具",

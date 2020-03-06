@@ -3,8 +3,7 @@
     <div class="trend-title">
       <div class="titleInfo">
         {{lineObj[0] && lineObj[0].replace("-",$t(`index.year`))}}{{$t(`index.month`)}}
-        <!-- <span>{{$t(`xcpage.trend.wages`)}}：{{ eyes ? CurrencyFilter(lineObj[1] || 0) : "******"}}</span> -->
-        <span>实发工资：{{ eyes || lineObj[1]}}</span>
+        <span>{{$t('xc.real_wage')}}：{{ eyes || $f.currencyFilter(lineObj[1])}}</span>
       </div>
       <div class="trend-graph" ref="trendGraph">
         <vuescroll :ops="ops">
@@ -37,7 +36,6 @@
   </div>
 </template>
 <script>
-// import { CurrencyFilter } from "../../../util";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
@@ -60,6 +58,7 @@ export default {
       showScrollBar: false,
       lineObj: [],
       dataList: [],
+      dataObj: [],
       clientWidth: 0,
       maxWidth: 0,
       option: null,
@@ -100,7 +99,6 @@ export default {
     vuescroll
   },
   mounted() {
-    this.dataObj = [];
     for (const i in this.trendList) {
       this.dataObj.push([i, this.trendList[i]]);
     }
@@ -131,12 +129,9 @@ export default {
             backgroundColor: "#6a7985"
           }
         },
+        triggerOn: 'mousemove|click',
         formatter: e => {
           this.lineObj = e[0].data;
-          if (this.dataList.length > 18) {
-            const scrollLeft = document.getElementById("line").scrollLeft;
-          }
-          // return e[0].data
         }
       },
       grid: {
@@ -188,12 +183,7 @@ export default {
           },
           handle: {
             // 拖动手柄
-            show: false, // 是否显示
-            color: "#004E52", // 可去掉
-            margin: 15,
-            size: 30,
-            icon:
-              "image://http://img.alicdn.com/tfs/TB1td1qB5rpK1RjSZFhXXXSdXXa-60-30.png"
+            show: true
           }
         },
         min: 0,
@@ -219,6 +209,12 @@ export default {
           color: ["#54C7FC"],
           symbolSize: 4,
           data: this.dataObj,
+          itemStyle: {
+            emphasis:{ // 鼠标经过时拐点样式
+                color: "#fff",
+                borderColor: "#3aa7ff"
+            },
+          }, 
           lineStyle: {
             normal: {
               width: 1,
@@ -252,7 +248,10 @@ export default {
         }
       ]
     };
-    this.getWidth();
+    
+    this.resizeTheChart();
+    window.addEventListener("resize", this.resizeTheChart);
+    this.delayAction()
   },
   methods: {
     getWidth() {
@@ -262,15 +261,28 @@ export default {
       this.$nextTick(() => {
         lineId.scrollLeft = lineId.scrollWidth;
         this.showScrollBar = lineId.scrollWidth !== this.clientWidth;
-        setTimeout(() => {
-          this.$refs.echars1.dispatchAction({
-            type: "showTip",
-            seriesIndex: 0,
-            dataIndex: this.dataObj.length - 1 // 显示第几个数据
-          });
-        }, 400);
       });
+    },
+    // 延时执行
+    delayAction() {
+      clearTimeout(timer)
+      var timer = setTimeout(() => {
+        this.$refs.echars1.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: this.dataObj.length - 1 // 显示第几个数据
+        });
+      }, 400);
+    },
+    resizeTheChart() {
+      if (this.$refs && this.$refs.echars1) {
+        this.getWidth()
+        this.$refs.echars1.resize()
+      }
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resizeTheChart);
   }
 };
 </script>
