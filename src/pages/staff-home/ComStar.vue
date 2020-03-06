@@ -9,12 +9,12 @@
             <swiper-slide v-for="(it, i) in list" :key="i">
                 <div :class="{ssb: true, size}">
                     <div class="left">
-                        <i>NO.1</i>
+                        <!-- <i>NO.1</i> -->
 <!--                        <img src="~as/img/staff-home/head.png"/>-->
 <!--                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>-->
                         <avatar :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`" :sex="it.people.gender"></avatar>
-
-                        <p>{{it.people.people_name}}</p>
+                        <p class="medal" @click="openmedal(it.people.reward_punishs)"><i class="iconfont iconxunzhangtubiao"></i>{{it.people.reward_punishs.length}}{{$t("index.number")}}</p>
+                        <p class="name">{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">
                         <li><label>{{$t("index.star_company")}}：</label>{{it.people.people_no}}</li>
@@ -31,6 +31,24 @@
             <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
         </swiper>
     </div>
+    <el-dialog
+        title="勋章墙"
+        :visible.sync="medalshow"
+        custom-class="medalwall"
+        :append-to-body="true"
+        width="400px">
+        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:'暂无勋章'}">
+            <li v-for="(it, ind) in medal">
+                <i class="tag"><span>奖</span></i>
+                <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
+                <p>{{it.reward_punish.rap_name}}</p>
+                <span>{{getdate(it.current_time)}}获得</span>
+            </li>
+        </ul>
+        <p slot="footer" class="footer">
+            <el-button type="primary" size="small" @click="medalshow=false">确认</el-button>
+        </p>
+</el-dialog>
 </div>
 </template>
 
@@ -50,7 +68,10 @@ export default {
 
             },
             list: [],
-            decoy: []
+            decoy: [],
+            // 勋章墙
+            medalshow: false,
+            medal:[]
         }
     },
     watch: {
@@ -67,6 +88,11 @@ export default {
         this.getData()
     },
     methods:{
+        // 打开勋章墙
+        openmedal(reward_punishs){
+            this.medal= reward_punishs
+            this.medalshow= true
+        },
         getData(){
             this.$axios.get("/api/feishu/user/stardata").then(data=>{
                 this.decoy = data;
@@ -85,6 +111,9 @@ export default {
                 this.$refs[ref].swiper.slideNext()
             }
         },
+        getdate(date){
+            return moment(date).format('YYYY-MM-DD');
+        },
         moment: window.moment
     }
 }
@@ -97,16 +126,28 @@ export default {
     .db .swiper .ssb{
         .left{
             background-color: #EDF8FF;
-            i{
-                font-size: 12px;
-                width:54px;
-                height:20px;
-                background:linear-gradient(270deg,rgba(255,255,168,1) 0%,rgba(255,208,111,1) 100%);
-                box-shadow:0px 1px 2px 0px rgba(0,0,0,0.1);
-                border-radius:10px;
+            padding-top: 30px;
+            .medal{
                 display: inline-block;
-                margin-top: 30px;
+                padding: 0 5px;
+                font-size: 12px;
+                width: 50px;
+                height: 20px;
                 line-height: 20px;
+                vertical-align: middle;
+                border-radius: 10px;
+                background:linear-gradient(270deg,rgba(251,197,50,1) 0%,rgba(252,119,32,1) 100%);
+                box-shadow:0px 1px 2px 0px rgba(0,0,0,0.1);
+                color: white;
+                cursor: pointer;
+                i{
+                    font-size: 10px;
+                    margin-right: 4px;
+                }
+            }
+            .name {
+                font-size: 14px;
+                margin-top: 5px;
             }
         }
         .info{
@@ -127,6 +168,51 @@ export default {
     }
 }
 
+.medalwall ul{
+    /*padding: 10px;*/
+    li{
+        display: inline-block;
+        width: 160px;
+        height: 140px;
+        margin: 15px 20px;
+        font-size: 12px;
+        overflow: hidden;
+        text-align: center;
+        border-radius: 4px;
+        background-color: #fafafa;
+        .tag{
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 42px solid #ffb142;
+            border-right: 42px solid transparent;
+            position: relative;
+            color: #fff;
+            span{
+                position: absolute;
+                margin-top: -38px;
+                margin-left: 6px;
+            }
+        }
+        img{
+            margin-top: -30px;
+            height: 80px;
+        }
+        >p{
+            font-size: 14px;
+            line-height: 20px;
+            color: #666;
+            height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        >span{
+            font-size: 12px;
+            color: #999;
+        }
+    }
+}
 
 </style>
 
