@@ -2,11 +2,11 @@
 <div class="contract">
     <ul class="to" v-if="fito">
         <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
-        <li  @click="$f.href('/profile_user')">
+        <li  @click="$f.href(userInfoUrl)">
             <p><b>{{da.n1}}</b>{{$t("index.numbers")}}</p>
             <span>{{$t("index.signed_contract")}}</span>
         </li>
-        <li @click="$f.href('/profile_user')">
+        <li @click="$f.href(userInfoUrl)">
             <p><b>{{da.h.years || ''}}</b>{{da.h.years ? $t("index.year") : ''}}<b>{{da.h.months||''}}</b>{{da.h.months ? $t("index.month") : ''}}<b>{{da.h.days||"0"}}</b>{{$t("index.day_time")}}</p>
             <span>{{$t("index.contract_still_valid")}}</span>
         </li>
