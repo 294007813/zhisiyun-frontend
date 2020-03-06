@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import ECharts from 'vue-echarts'
 export default {
     name: "Perf",
     props: ["conf"],
@@ -100,23 +101,35 @@ export default {
                             type: "dashed",
                             color: "#EEEEEE"
                         },
+
                     },
                 },
                 tooltip: {
                     show: true,
                     formatter: function ({data: {level},value}, c) {
                         return `得分：${value}分<br />等级：${level}`
-                    }
+                    },
+                    backgroundColor: 'rgba(255,255,255,0.7)',
+                    textStyle: {
+                        color: "#333"
+                    },
+                    extraCssText: 'box-shadow:0px 2px 8px 0px rgba(0,0,0,0.2);'
                 },
                 series: [{
                     data: [],
                     type: 'bar',
                     itemStyle: {
-                        color: "rgba(84,199,252,1)"
+                        color: new ECharts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#54C7FC'
+                        }, {
+                            offset: 1,
+                            color: '#5D77FF'
+                        }]),
                     },
                     barWidth: '30px',
                     formatter: function ({value}) {
-                        console.log(arguments);
+                        // console.log(arguments);
                         return value
                     }
                 }]
