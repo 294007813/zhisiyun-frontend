@@ -211,7 +211,7 @@ export default {
             if(this.isMine){
                 msg= `由${da.creator.people_name} ${this.$f.getRelativeDate(da.createDate)}前创建`
             }else{
-                msg= `受到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
+                msg= `收到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
             }
             return msg
         }

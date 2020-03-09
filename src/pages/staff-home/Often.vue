@@ -10,15 +10,29 @@
     <el-dialog
             :visible.sync="dishow"
             custom-class="dialog"
+            :append-to-body="true"
             width="630px">
         <p slot="title" class="title">{{$t("index.add_app")}}</p>
         <div class="content">
-            <ul style="padding-top: 10px">
-                <li v-for="(item, key) in list" :key="key" @click="change(item, key)">
-                    <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
-                    <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>
-                </li>
-            </ul>
+            <el-tabs v-model="activeName">
+                <el-tab-pane label="可添加" name="yes">
+                    <ul style="padding: 0">
+                    <li v-for="(item, key) in list" :key="key" @click="change(item, key)">
+                        <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
+                        <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>
+                    </li>
+                    </ul>
+                </el-tab-pane>
+                <el-tab-pane label="未购买" name="no">
+                    <ul style="padding: 0">
+                        <li v-for="(item, key) in dislist" :key="key" style="cursor: default">
+                            <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
+<!--                            <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>-->
+                        </li>
+                    </ul>
+                </el-tab-pane>
+            </el-tabs>
+
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
@@ -34,33 +48,11 @@ export default {
     name: "Often",
     data(){
         return{
-            list:[
-                // {name: '出差申请', link: ''},
-                // {name: '工作报告', link: ''},
-                // {name: '绩效管理', link: ''},
-                // {name: '加班申请', link: ''},
-                // {name: '加班申请', link: ''},
-                // {name: '考勤管理', link: ''},
-                // {name: '考勤日志', link: ''},
-                // {name: '考勤统计', link: ''},
-                // {name: '流程管理', link: ''},
-                // {name: '批量审批', link: ''},
-                // {name: '培训管理', link: ''},
-                // {name: '企业通讯录', link: ''},
-                // {name: '签到报表', link: ''},
-                // {name: '请假申请', link: ''},
-                // {name: '人事管理', link: ''},
-                // {name: '实时激励', link: ''},
-                // {name: '协作任务', link: ''},
-                // {name: '协作项目', link: ''},
-                // {name: '行政管理', link: ''},
-                // {name: '员工点赞', link: ''},
-                // {name: '招聘管理', link: ''},
-                // {name: '知识管理', link: ''},
-                // {name: 'AI助手', link: ''},
-            ],
+            list:[],
             dishow: false
             ,selectList : [],
+            activeName: "yes",
+            dislist: []
         }
     },
     mounted(){
@@ -71,19 +63,22 @@ export default {
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
                data.paid.map((v,i) => {
                  // 把AI放在第一位
-                 if (v.menu_code == "AI_ASSESSITANT") {
-                    data.paid.splice(i, 1);
-                    data.paid.unshift(v);
-                 }
+                     if (v.menu_code == "AI_ASSESSITANT") {
+                        data.paid.splice(i, 1);
+                        data.paid.unshift(v);
+                     }
+                    if (v.uf_status) {
+                        this.selectList.push(v)
+                    }
                })
                 this.list= data.paid
-    
-                for (let i=0;i< data.paid.length;i++){
-                    let item = data.paid[i]
-                    if (item.uf_status) {
-                        this.selectList.push(item)
-                    }
-                }
+                this.dislist= data.unpaid
+                // for (let i=0;i< data.paid.length;i++){
+                //     let item = data.paid[i]
+                //     if (item.uf_status) {
+                //         this.selectList.push(item)
+                //     }
+                // }
             })
         },
         add(){
@@ -136,9 +131,7 @@ export default {
 
 <style scoped lang="scss">
 @import "common";
-.often{
-    @include block;
-    height: auto;
+@mixin icon(){
     ul{
         min-height: 172px;
         padding-top: 60px;
@@ -198,6 +191,25 @@ export default {
                 bottom: 20px;
             }
         }
+    }
+}
+.often{
+    @include block;
+    height: auto;
+    @include icon;
+}
+/deep/ .dialog{
+    @include icon;
+    ul:before{
+        display: none;
+    }
+    .el-tabs{
+        .el-tabs__header .el-tabs__nav-wrap{
+            .el-tabs__nav{
+                margin-left: 20px;
+            }
+        }
+
     }
 }
 </style>

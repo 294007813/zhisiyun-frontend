@@ -5,7 +5,7 @@
             <i class="iconfont iconyanjing" @click="checkPassword"></i>
         </el-tooltip>
     </h5>
-    <el-tabs v-model="activeTabs" @tab-click="salaryClick">
+    <el-tabs v-model="activeTabs" @tab-click="salaryClick" class="block-tabs">
         <el-tab-pane :label="$t('xc.monthly')" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
                 <template v-for="(arr, key) in mon">
