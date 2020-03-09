@@ -7,6 +7,7 @@
 export default {
    // 首页
    "index": {
+    "search":"Search",
     "process":"Process",
     "train":"Train",
     "this_month":"this month",

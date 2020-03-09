@@ -17,3 +17,6 @@ axios.get("/api/feishu/base/getlanguage").then(data => {
     store.commit("setLang", data);
   }
 });
+axios.get("/api/feishu/base/info").then(data=>{
+  store.commit("setUser", data[0]);
+})

@@ -1,37 +1,37 @@
 export default {
     "basic_information_module":{
         "default": "index.default",
-        "status": "员工状态",
+        // "status": "员工状态",
         "level": "职级、层级、等级",
-        "sub": "下属",
-        "look": "查看档案",
+        "sub": "index.subordinate",
+        "look": "index.view_files",
         "medal": "勋章"
     },
     "attendance_information_module":{
-        "attendance_statistics_month": "",
-        "holiday_balance": "",
-        "attendance_process": "",
-        "checkin": "出勤",
+        "attendance_statistics_month": "index.attendance_statistics_month",
+        "holiday_balance": "index.holiday_balance",
+        "attendance_process": "index.attendance_process",
+        "checkin": "wt.attendance_days",
         "late": "迟到",
         "rest": "休息",
         "early": "早退",
-        "miss": "缺卡",
+        "miss": "index.absence",
         "outside": "外勤",
         "absent": "旷工",
         "short": "缺勤",
-        "trip": "出差",
-        "overtime": "加班",
-        "official": "公干",
-        "leave": "请假",
-        "year": "年假余额",
-        "restbalance": "调休假余额",
+        "trip": "index.on_business_trip",
+        "overtime": "index.overtime",
+        "official": "index.in_business",
+        "leave": "index.leaves",
+        "year": "index.Annualleavebalance",
+        "restbalance": "index.Balancevacationadjustment",
         "abnormal": "考勤异常",
         "adjust": "假期调整"
     },
     "salary_information":{
-        monthly: "",
-        trend: "",
-        statistics: "",
+        monthly: "xc.monthly",
+        trend: "xc.trend",
+        statistics: "xc.statistics",
         "p_all_income": "累计收入",
         "sum_tax": "累计个税",
         "c_sb_total": "公司缴纳社保总数",
@@ -41,8 +41,8 @@ export default {
         "dikou_total": "抵扣总额"
     },
    "to_do_module":{
-       to_do_task:"",
-       done_task:"",
+       to_do_task:"index.to_do_task",
+       done_task:"index.done_task",
    },
     "performance_information_module":{
         "current":"",
@@ -50,16 +50,16 @@ export default {
         "enter": "进入绩效首页"
     },
     "message_dynamic_module":{
-        unread: "",
-        readed: "",
+        unread: "index.unread",
+        readed: "index.readed",
         "read": "全部设为已读"
     },
     "birthday_blessing_module":{
-        today: "",
-        this_month: "",
+        today: "index.today",
+        this_month: "index.this_month",
     },
     "company_star_module":{
-        "query": "搜索"
+        "query": "index.search"
     },
     "skill_star_module":{
         "query": "搜索",

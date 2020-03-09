@@ -2,7 +2,7 @@
 <div class="calendar">
     <h5>{{$t("index.me_calendar")}}</h5>
     <el-tooltip class="work-calendar" effect="dark" content="工作日历" placement="top-start">
-        <i class="fa fa-mail-forward" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
+        <i class="iconfont iconquanping" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
     </el-tooltip>
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
@@ -213,7 +213,7 @@ export default {
             }else{
                 msg= `受到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
             }
-
+            return msg
         }
     },
     mounted(){
@@ -285,8 +285,8 @@ export default {
             let time= date.date|| date
             if(view.indexOf("year")<0){
                 this.form= JSON.parse(form)
-                this.form.start=  this.time(time)
-                this.form.end= this.time(moment(time).add(30, 'minutes'))
+                this.form.start= this.form.end= this.time(time)
+                // this.form.end= this.time(moment(time).add(30, 'minutes'))
                 if(this.nowView=='month'|| date.date){
                     this.form.allDay= true
                     this.changeallday(true)
@@ -320,8 +320,8 @@ export default {
                 this.form.end= this.time(this.form.end, "YYYY-MM-DD 23:59:59")
             }
         },
-        tagClick(data, e){
-            // console.log(data, e)
+        tagClick(data, e, c){
+            console.log(data, e, c)
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
@@ -380,7 +380,7 @@ export default {
             let method='post', url= '/api/feishu/calendar/create', msg= "创建"
             if(this.form._id){
                 method= 'put'
-                url= '/api/feishu/calendar/update/:wp_id'+ this.form._id
+                url= '/api/feishu/calendar/update/'+ this.form._id
                 msg= "修改"
             }
             let param= {data: this.form}
@@ -390,7 +390,10 @@ export default {
             this.$axios[method]( url, param).then(data=>{
                 this.dishow= false
                 this.$msg({message:msg+"成功", type: "success"})
-                if(!this.form._id) this.pushEvent(data)
+                if(this.form._id){
+                    this.delevent(this.form._id)
+                }
+                this.pushEvent(data)
             })
         },
         del(refuse){
@@ -485,14 +488,12 @@ export default {
     }
     .work-calendar{
         position: absolute;
-        top: 12px;
-        right: 10px;
+        top: 13px;
+        right: 13px;
         z-index: 1;
         cursor: pointer;
-        i{
-            color: $color-gray-dark;
-
-        }
+        font-size: 14px;
+        color: $color-gray-dark;
     }
 
     /deep/ .vue-cal{
@@ -564,7 +565,7 @@ export default {
                 border: 1px solid #f4a4a6;
             }
             &.green{
-                background-color: #d5faf2;
+                background-color: #3cefc8;
                 border: 1px solid transparent;
             }
             &.orange{
