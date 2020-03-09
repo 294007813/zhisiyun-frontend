@@ -2,9 +2,9 @@
 <div class="skill-star">
     <h5>{{$t("index.skill_star")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询"
+              @keydown.enter.native="enter"
               v-if="field.query" v-model="query">
               <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>
-              </el-input>
     <div class="db" v-nodata="{have: list.length}">
         <swiper :options="op" class="swiper" ref="swiper">
             <swiper-slide v-for="(item, i) in list" :key="i">
@@ -91,6 +91,11 @@ export default {
             }).then(res => {
                 this.getData()
             })
+        },
+        enter(e){
+            if (e.keyCode == 13) {
+                this.toquery(this.query)
+            }
         },
         toquery(val){
              this.list = this.list.filter(v => {

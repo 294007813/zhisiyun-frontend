@@ -136,8 +136,8 @@
         </div>
         <p slot="footer" class="footer">
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id && isMine" @click="del(true)">{{$t("index.refuse")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id && !isMine" @click="del(false)">{{$t("index.delete")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && !isMine" @click="del(true)">{{$t("index.refuse")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && isMine" @click="del(false)">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
@@ -279,15 +279,16 @@ export default {
             // console.log("switchCal")
             e.stopPropagation()
         },
-        create(date, a, b, c){
-            // console.log("create(date)", date, a, b, c)
+        create(date){
+            // console.log("create(date)", date)
+            let allday= !!date.date
             let view= this.$refs.vcal.view.id
             let time= date.date|| date
             if(view.indexOf("year")<0){
                 this.form= JSON.parse(form)
-                this.form.start= this.form.end= this.time(time)
+                this.form.start= this.form.end= this.time(allday? moment(time).add(1, 'd'):time)
                 // this.form.end= this.time(moment(time).add(30, 'minutes'))
-                if(this.nowView=='month'|| date.date){
+                if(this.nowView=='month'|| allday){
                     this.form.allDay= true
                     this.changeallday(true)
                 }
@@ -321,7 +322,7 @@ export default {
             }
         },
         tagClick(data, e, c){
-            console.log(data, e, c)
+            // console.log(data, e, c)
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
@@ -488,8 +489,8 @@ export default {
     }
     .work-calendar{
         position: absolute;
-        top: 13px;
-        right: 13px;
+        top: 14px;
+        right: 14px;
         z-index: 1;
         cursor: pointer;
         font-size: 14px;
@@ -580,7 +581,9 @@ export default {
                 padding-right: 15px;
             }
         }
-
+        .vuecal__event-title{
+            color: black;
+        }
         .vuecal__event-title--edit, .vuecal__event-title--edit:focus, .vuecal__event-title--edit:hover{
             border: 0;
             background: none;

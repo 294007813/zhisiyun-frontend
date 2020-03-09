@@ -2,6 +2,7 @@
 <div class="com-star">
     <h5>{{$t("index.star_company")}}</h5>
     <el-input class="query" size="mini" placeholder="输入关键词查询"
+              @keydown.enter.native="enter"
               v-model="query" v-if="field.query">
               <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>
     <div class="db" v-nodata="{have: list.length}">
@@ -98,6 +99,11 @@ export default {
                 this.decoy = data;
                 this.list= data
             })
+        },
+        enter(e){
+            if (e.keyCode == 13) {
+                this.toquery(this.query)
+            }
         },
         toquery(val){
              this.list = this.list.filter(v => {

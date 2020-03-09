@@ -7,6 +7,7 @@ import {minepage} from "../../pages/home-config/config/minepage";
 export default  {
   // 首页
   "index": {
+    "like":"点赞",
     "search":"搜索",
     "process":"流程",
     "train":"培训",
@@ -349,6 +350,14 @@ export default  {
     minepage: "我的页面"
   },
   config:{
+    rgl: "职级、层级、等级",
+    "medal": "勋章",
+    "late": "迟到",
+    "rest": "休息",
+    "early": "早退",
+    "outside": "外勤",
+    "absent": "旷工",
+    "short": "缺勤",
 
   }
 }
