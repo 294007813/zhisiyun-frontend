@@ -7,6 +7,7 @@ import {minepage} from "../../pages/home-config/config/minepage";
 export default  {
   // 首页
   "index": {
+    "search":"搜索",
     "process":"流程",
     "train":"培训",
     "this_month":"本月",

@@ -2,12 +2,12 @@
 <div class="calendar">
     <h5>{{$t("index.me_calendar")}}</h5>
     <el-tooltip class="work-calendar" effect="dark" content="工作日历" placement="top-start">
-        <i class="fa fa-mail-forward" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
+        <i class="iconfont iconquanping" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
     </el-tooltip>
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="true" :editable-events="false"
-             :on-event-click="tagClick" @cell-click="create">
+             :on-event-click="tagClick" @cell-focus="create">
 <!--        <template v-slot:events-count="{ events, view }">-->
 
 <!--        </template>-->
@@ -488,14 +488,12 @@ export default {
     }
     .work-calendar{
         position: absolute;
-        top: 12px;
-        right: 10px;
+        top: 13px;
+        right: 13px;
         z-index: 1;
         cursor: pointer;
-        i{
-            color: $color-gray-dark;
-
-        }
+        font-size: 14px;
+        color: $color-gray-dark;
     }
 
     /deep/ .vue-cal{

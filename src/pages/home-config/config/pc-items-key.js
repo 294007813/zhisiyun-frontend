@@ -29,9 +29,9 @@ export default {
         "adjust": "假期调整"
     },
     "salary_information":{
-        monthly: "",
-        trend: "",
-        statistics: "",
+        monthly: "xc.monthly",
+        trend: "xc.trend",
+        statistics: "xc.statistics",
         "p_all_income": "累计收入",
         "sum_tax": "累计个税",
         "c_sb_total": "公司缴纳社保总数",
@@ -41,8 +41,8 @@ export default {
         "dikou_total": "抵扣总额"
     },
    "to_do_module":{
-       to_do_task:"",
-       done_task:"",
+       to_do_task:"index.to_do_task",
+       done_task:"index.done_task",
    },
     "performance_information_module":{
         "current":"",
@@ -50,16 +50,16 @@ export default {
         "enter": "进入绩效首页"
     },
     "message_dynamic_module":{
-        unread: "",
-        readed: "",
+        unread: "index.unread",
+        readed: "index.readed",
         "read": "全部设为已读"
     },
     "birthday_blessing_module":{
-        today: "",
-        this_month: "",
+        today: "index.today",
+        this_month: "index.this_month",
     },
     "company_star_module":{
-        "query": "搜索"
+        "query": "index.search"
     },
     "skill_star_module":{
         "query": "搜索",
