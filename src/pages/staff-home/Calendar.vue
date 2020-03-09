@@ -7,7 +7,7 @@
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="true" :editable-events="false"
-             :on-event-click="tagClick" @cell-focus="create">
+             :on-event-click="tagClick" @cell-click="create">
 <!--        <template v-slot:events-count="{ events, view }">-->
 
 <!--        </template>-->
