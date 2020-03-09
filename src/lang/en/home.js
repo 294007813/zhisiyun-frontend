@@ -7,6 +7,7 @@
 export default {
    // 首页
    "index": {
+   "like":"like",
     "search":"Search",
     "process":"Process",
     "train":"Train",

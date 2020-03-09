@@ -117,5 +117,11 @@ export default {
             color: $color-gray;
         }
     }
+    /deep/ .el-badge{
+        vertical-align: text-bottom;
+        sup{
+            vertical-align: top;
+        }
+    }
 }
 </style>

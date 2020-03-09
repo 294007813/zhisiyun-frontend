@@ -104,9 +104,10 @@ export default {
         },
         bodyInfo() {
             let pos= this.bemounted && this.$refs.dragbody&& this.$refs.dragbody.getBoundingClientRect()
+            // console.log("this.$refs.dragbody", this.$refs.dragbody.offsetWidth)
             return this.bemounted && {
                 // width: this.$refs.dragbody.offsetWidth,
-                width: pos.width,
+                width: pos.width-15,
                 top: pos.top,
                 left: pos.left
             }
@@ -230,12 +231,20 @@ export default {
             if(torow>=this.showlinenum){
                 torow= this.showlinenum-1
             }
-            if( l[torow][tocol] && l[torow][tocol].fixed || l[torow][0].long) return
+            // console.log("torow", torow)
+            // if(torow<0){
+            //     this.$set(this.cursorto, "display", "none")
+            //     return;
+            // }
+            if( l[torow][tocol] && l[torow][tocol].fixed || l[torow][0].long){
+                this.$set(this.cursorto, "display", "none")
+                return
+            }
             if(item.long &&l[torow][0]&&l[torow][0].fixed){
                 return;
             }
             let top= torow * this.lineHeight + "px"
-            let left=( l[torow][tocol] && l[torow][tocol].long)|| item.long? 0: (l[torow].length>2? (tocol *33.5)+"%" : (tocol *51)+"%");
+            let left=( l[torow][tocol] && l[torow][tocol].long)|| item.long? 0: (l[torow].length>2? (tocol *33.33)+"%" : (tocol *50)+"%");
             // console.log("torow, tocol",  torow, tocol)
             // console.log("top, left",  top, left)
             this.$set(this.cursorto, "display", "block")
@@ -243,7 +252,7 @@ export default {
             this.$set(this.cursorto, "top", top)
         },
         movedone({x, y, item, rowind, colind}) {
-            console.log("movedone")
+            // console.log("movedone")
             this.$set(this.cursorto, "display", "none")
             this.insCursorShow= false
             // console.log(x, y, item)
@@ -336,6 +345,7 @@ $row-height: $bhv+$phv+px;
             border-style: dashed;
             box-shadow: 0 4px 9px 3px #adadad;
             z-index: 1;
+            opacity: .7;
         }
         .title {
             font-size: 14px;

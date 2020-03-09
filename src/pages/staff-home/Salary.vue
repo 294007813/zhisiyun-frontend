@@ -1,6 +1,10 @@
 <template>
 <div class="salary">
-    <h5>{{$t("index.salary_information")}}<i class="iconfont iconyanjing" @click="checkPassword"></i></h5>
+    <h5>{{$t("index.salary_information")}}
+        <el-tooltip class="work-calendar" effect="dark" content="查看薪资" placement="bottom-start">
+            <i class="iconfont iconyanjing" @click="checkPassword"></i>
+        </el-tooltip>
+    </h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick">
         <el-tab-pane :label="$t('xc.monthly')" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
@@ -33,7 +37,7 @@
                     range-separator="-"
                     start-placeholder="开始月份"
                     end-placeholder="结束月份"
-            :picker-options="{disabledDate }">
+            :picker-options="{disabledDate}">
             </el-date-picker>
 
             <ul class="sta">
@@ -199,8 +203,8 @@ export default {
             let st= this.$store.getters.userInfo.start_service_date
             let d= moment(date)
             // console.log("data",data)
-            return d.isBefore(moment(st)) || d.isAfter(moment());
-        }
+            return d.isBefore(moment(st), 'month') || d.isAfter(moment(), 'month');
+        },
     },
 }
 </script>

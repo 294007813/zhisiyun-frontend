@@ -2,10 +2,10 @@ export default {
     "basic_information_module":{
         "default": "index.default",
         // "status": "员工状态",
-        "level": "职级、层级、等级",
+        "level": "config.rgl",
         "sub": "index.subordinate",
         "look": "index.view_files",
-        "medal": "勋章"
+        "medal": "config.medal"
     },
     "attendance_information_module":{
         "attendance_statistics_month": "index.attendance_statistics_month",
@@ -33,26 +33,26 @@ export default {
         trend: "xc.trend",
         statistics: "xc.statistics",
         "p_all_income": "累计收入",
-        "sum_tax": "累计个税",
-        "c_sb_total": "公司缴纳社保总数",
-        "p_sb_total": "个人缴纳社保总数",
-        "c_gjj_total": "公司缴纳公积金总数",
-        "p_gjj_total": "个人缴纳公积金总数",
-        "dikou_total": "抵扣总额"
+        // "sum_tax": "累计个税",
+        // "c_sb_total": "公司缴纳社保总数",
+        // "p_sb_total": "个人缴纳社保总数",
+        // "c_gjj_total": "公司缴纳公积金总数",
+        // "p_gjj_total": "个人缴纳公积金总数",
+        // "dikou_total": "抵扣总额"
     },
    "to_do_module":{
        to_do_task:"index.to_do_task",
        done_task:"index.done_task",
    },
     "performance_information_module":{
-        "current":"",
-        "trend":"",
-        "enter": "进入绩效首页"
+        "current":"index.current",
+        "trend":"xc.trend",
+        "enter": "index.enter_perform"
     },
     "message_dynamic_module":{
         unread: "index.unread",
         readed: "index.readed",
-        "read": "全部设为已读"
+        // "read": "全部设为已读"
     },
     "birthday_blessing_module":{
         today: "index.today",
@@ -62,21 +62,21 @@ export default {
         "query": "index.search"
     },
     "skill_star_module":{
-        "query": "搜索",
-        "like": "点赞"
+        "query": "index.search",
+        "like": "index.like"
     },
     "training_process_module":{
-        train: "培训",
-        process: "流程",
-        "participate": "参与培训",
-        "doing": "进行中的活动",
-        "start": "我发起的",
-        "handle": "我处理的",
-        "doing2": "进行中的"
+        train: "index.train",
+        process: "index.process",
+        "participate": "index.in_train",
+        "doing": "index.on_active",
+        "start": "index.self_init",
+        "handle": "index.self_deal",
+        "doing2": "index.ongoing"
     },
     "contract_agreement_module":{
-        contract: "合同",
-        agreement: "协议"
+        contract: "index.train",
+        agreement: "index.agreement"
     },
     "suggestion_box_module":{
 
