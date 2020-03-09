@@ -1,7 +1,7 @@
 <template>
 <div class="msg">
     <h5>{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
-    <el-tabs v-model="activeTabs" @tab-click="tabClick">
+    <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                 <li v-for="(item, i) in gt.list" :key="i" @click="$f.href(item.pc_url)">

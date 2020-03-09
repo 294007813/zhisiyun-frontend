@@ -1,7 +1,7 @@
 <template>
 <div class="perf">
     <h5>{{$t("index.perform")}}</h5>
-    <el-tabs v-model="activeTabs" @tab-click="tabClick">
+    <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane :label="(title ||'当前') +'绩效'" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>

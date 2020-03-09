@@ -1,7 +1,7 @@
 <template>
 <div class="birthday">
     <h5>{{$t("index.birthday_blessing_wall")}}</h5>
-    <el-tabs v-model="activeTabs">
+    <el-tabs v-model="activeTabs" class="block-tabs">
         <el-tab-pane :label="`今日(${day.length||0}位)`" name="day" v-if="fiday" >
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
