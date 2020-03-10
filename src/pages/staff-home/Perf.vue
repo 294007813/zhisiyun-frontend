@@ -80,13 +80,28 @@ export default {
                 ]
             },
             trendChart: {
+                grid: {
+                    // show: true,
+                    //grid 组件离容器左侧的距离。
+                    top: "10%",
+                    left: "5%",
+                    //grid 组件离容器右侧的距离。
+                    right: "5%",
+                    //grid 组件离容器下侧的距离。
+                    bottom: "8%",
+                    //grid 区域是否包含坐标轴的刻度标签。true这常用于『防止标签溢出』的场景，标签溢出指的是，标签长度动态变化时，可能会溢出容器或者覆盖其他组件。
+                    containLabel: true,
+                    // 网格背景色，此配置项生效的前提是，设置了 show: true
+                    backgroundColor: "#fff"
+                },
                 xAxis: {
                     axisLine: {
                         show: false,
                     },
                     type: 'category',
                     axisTick: {show : false},
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    offset: 8
                 },
                 yAxis: {
                     type: 'value',
