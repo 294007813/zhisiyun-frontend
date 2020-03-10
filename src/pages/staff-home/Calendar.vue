@@ -537,7 +537,6 @@ export default {
             position: absolute;
             right: 87px;
             padding: 0 4px;
-            top: 13px;
         }
         .vuecal__today-btn{
             position: absolute;
@@ -550,12 +549,14 @@ export default {
             position: absolute;
             right: 34px;
             padding: 0 4px;
-            top: 13px;
         }
         .vuecal__arrow{
+            top: 50%;
+            transform: translateY(-50%);
             i{
                 color: $color-gray-dark;
                 font-size: 12px;
+                vertical-align: middle;
             }
         }
         .event{
