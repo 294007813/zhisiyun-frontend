@@ -11,12 +11,12 @@
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
             <div class="item long">
                 <i class="fa fa-times-circle" v-if="admin && tk!='default'" @click="deltitle(tag)"></i>
-                <el-checkbox :class="['check-tag', {disable: specrule1 && specrule1[tk].disable || tk=='default'}]"
+                <el-checkbox :class="['check-tag', {disable: false, default: tk=='default'}]"
                              v-model="tag.show"
                              :disabled="specrule1 && specrule1[tk].disable || tk=='default'"
                              @click.native="dismsg(specrule1 && specrule1[tk].disable)"
                              @change="cltitle($event,tag)">
-                    {{tagName(tk)|| '默认'}}</el-checkbox>
+                    {{tagName(tk)|| '基本信息'}}</el-checkbox>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
@@ -143,9 +143,10 @@ export default {
                     disable: false,
                     disfie: {}
                 }
+                console.log("more4", more4)
                 if(this.page[pak].show){
                     let ts= res[pak].show.length
-                    if((more4|| rownum>2) && ts>3 || (rownum>1 && ts>7) || (rownum=1 && ts>11)){
+                    if((more4|| rownum>2) && ts>3 || (rownum>1 && ts>7) || (rownum==1 && ts>11)){
                         _.mapObject(this.page[pak].fields,(fi, fik)=>{
                             dis[pak].disfie[fik]= !fi
                         })
@@ -196,13 +197,13 @@ export default {
         },
         cltitle(val, tag){
             // console.log(tag.show)
-            // if(!val){
-            //     for(let k in tag.fields){
-            //         tag.fields[k]= false
-            //     }
-            // }else{
-            //
-            // }
+            if(!val){
+                for(let k in tag.fields){
+                    tag.fields[k]= false
+                }
+            }else{
+
+            }
         },
         clitem(val, tag, key){
             // console.log(tag.fields[key])
@@ -351,6 +352,11 @@ export default {
                     }
                 }
                 .disable{
+                    .el-checkbox__label{
+                        cursor: default;
+                    }
+                }
+                .default{
                     .el-checkbox__label{
                         cursor: default;
                         color: white;
