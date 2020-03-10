@@ -125,7 +125,7 @@ export default {
     methods:{
         callback(){},
         getData(month){
-            this.$axios.get("/api/feishu/user/birthdaydata",{params:{index: month||''}}).then(data=>{
+            this.$axios.get("/api/feishu/user/birthdaydata_index",{params:{index: month||''}}).then(data=>{
                 month? this.mon=data: this.day= data
             })
         },

@@ -95,7 +95,7 @@ export default {
             this.medalshow= true
         },
         getData(){
-            this.$axios.get("/api/feishu/user/stardata").then(data=>{
+            this.$axios.get("/api/feishu/user/stardata_index").then(data=>{
                 this.decoy = data;
                 this.list= data
             })
