@@ -188,21 +188,33 @@ export default {
                 //     return a.period_value< b.period_value
                 // })
                 // 过滤
-                let newData = []
-                data.forEach(v => {
-                    if (v.year && (v.period_value || v.period_value === 0)) newData.push(v)
-                })
+                // let newData = []
+                // data.forEach(v => {
+                //     if (v.year && (v.period_value || v.period_value === 0)) newData.push(v)
+                // })
                 let xAxis= [],series=[]
+                //
+                // newData.map(item=>{
+                //     // xAxis.push(item.period_name)
+                //     let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
+                //     xAxis.push(item.year&&item.year.substring(2) + '/' + month)
+                //     series.push({
+                //         level: item.ai_grade,
+                //         value: item.ai_score
+                //     })
+                // })
+                for(let i=data.length-1; i>=0; i--){
+                    let item= data[i]
+                    if (item.year && (item.period_value || item.period_value === 0)){
+                        let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
+                        xAxis.push(item.year&&item.year.substring(2) + '/' + month)
+                        series.push({
+                            level: item.ai_grade,
+                            value: item.ai_score
+                        })
+                    }
+                }
 
-                newData.map(item=>{
-                    // xAxis.push(item.period_name)
-                    let month = item.period_value < 9 ? '0' + (item.period_value + 1) : item.period_value + 1 + ''
-                    xAxis.push(item.year&&item.year.substring(2) + '/' + month)
-                    series.push({
-                        level: item.ai_grade,
-                        value: item.ai_score
-                    })
-                })
                 this.trendChart.xAxis.data=xAxis
                 this.trendChart.series[0].data=series
             })

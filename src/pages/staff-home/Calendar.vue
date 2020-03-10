@@ -6,7 +6,7 @@
     </el-tooltip>
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
-             :events="events" :transitions="false" :cell-click-hold="true" :editable-events="false"
+             :events="events" :transitions="false" :cell-click-hold="false" :editable-events="false"
              :on-event-click="tagClick" @cell-click="create">
 <!--        <template v-slot:events-count="{ events, view }">-->
 
@@ -279,8 +279,8 @@ export default {
             // console.log("switchCal")
             e.stopPropagation()
         },
-        create(date){
-            // console.log("create(date)", date)
+        create(date, a1){
+            console.log("create(date)", date, a1)
             let allday= !!date.date
             let view= this.$refs.vcal.view.id
             let time= date.date|| date
@@ -589,6 +589,14 @@ export default {
             border: 0;
             background: none;
             pointer-events: none;
+        }
+        .vuecal__all-day{
+            .vuecal__cell-content{
+                pointer-events: none;
+                .vuecal__cell-events{
+                    pointer-events: auto;
+                }
+            }
         }
     }
 }

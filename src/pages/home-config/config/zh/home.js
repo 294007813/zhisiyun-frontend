@@ -39,7 +39,10 @@ export default {
     noData: "暂无",
     keywords: "输入姓名关键词查询",
     month: "月绩效",
-    near: "近期绩效"
+    near: "近期绩效",
+    matters: "事宜",
+    cancel: "取消",
+    confirm: "确定"
   },
   baseinfo: {
     ai_robot: "AI助手",
@@ -62,8 +65,19 @@ export default {
     // 旷工
     sign_out_change: "旷工",
     //天
-    days: "天"
-
+    days: "天",
+    // 迟到
+    late: "迟到",
+    // 休息
+    rest: "休息",
+    // 早退
+    early: "早退",
+    // 出差
+    trip: "出差",
+    // 加班
+    overtime: "加班",
+    // 公干
+    official: "公干" 
   },
   attendance_tools: {
     // 请假
@@ -119,12 +133,12 @@ export default {
     dep_pos: "部门/职位",
     start_service_date: "入职日期",
     birthday: "出生日期",
-    constellation: "星座"
-
+    constellation: "星座",
+    number:"枚"
   },
   skill_star: {
     search_btn: "搜索按钮",
-    thumb_btn: "Thumb Button",
+    // thumb_btn: "Thumb Button",
     support: "个赞",
     keyword: "请输入姓名关键字查询",
     none: "暂无"

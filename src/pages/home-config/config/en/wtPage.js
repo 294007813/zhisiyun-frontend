@@ -81,5 +81,32 @@ export default {
     overtime: "Overtime",
     official: "Official Days",
     leave: "Leave"
-  }
+  },
+  calendar: {
+    calendar: "Calendar",
+    // 出勤天数
+    attendance_days: "Working",
+    // 缺卡
+    miss_card: "MissCard",
+    // 缺勤
+    absence: "Absence",
+    // 请假
+    leaves: "Leave",
+    // 外勤
+    outwork_time: "Outwork",
+    // 旷工
+    sign_out_change: "Absenteeism",
+    // 迟到
+    late: "Late",
+    // 休息
+    rest: "rest",
+    // 早退
+    early: "Early",
+    // 出差
+    trip: "Trip Days",
+    // 加班
+    overtime: "Overtime",
+    // 公干
+    official: "Official Days" 
+  },
 };

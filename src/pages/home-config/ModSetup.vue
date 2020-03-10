@@ -9,14 +9,14 @@
     <div class="body">
         <p class="msg" v-if="admin">已添加可选项 <span><b>*</b>点击选中的项目可在更新后的员工页面中默认显示</span></p>
         <div class="show-list" v-for="(tag, tk) in page" :key="tk" v-if="tag[an] || tag.fixed">
-            <div class="item long" v-if="ism || tk!='default'">
-                <i class="fa fa-times-circle" v-if="admin" @click="deltitle(tag)"></i>
-                <el-checkbox :class="['check-tag', {disable: false}]"
+            <div class="item long">
+                <i class="fa fa-times-circle" v-if="admin && tk!='default'" @click="deltitle(tag)"></i>
+                <el-checkbox :class="['check-tag', {disable: specrule1 && specrule1[tk].disable || tk=='default'}]"
                              v-model="tag.show"
-                             :disabled="specrule1 && specrule1[tk].disable"
+                             :disabled="specrule1 && specrule1[tk].disable || tk=='default'"
                              @click.native="dismsg(specrule1 && specrule1[tk].disable)"
                              @change="cltitle($event,tag)">
-                    {{tagName(tk)|| tk}}</el-checkbox>
+                    {{tagName(tk)|| '默认'}}</el-checkbox>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
@@ -353,6 +353,9 @@ export default {
                 .disable{
                     .el-checkbox__label{
                         cursor: default;
+                        color: white;
+                        background-color: $color-primary;
+                        border-color: $color-primary;
                     }
                 }
             }
