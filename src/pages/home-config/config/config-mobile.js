@@ -4,5 +4,5 @@ import {xcpage} from "./xcpage"
 import {workpage} from "./workpage"
 import {minepage} from "./minepage"
 export default {
-    home, wtpage, xcpage, workpage, minepage
+    home, wtpage, xcpage,  minepage
 }
