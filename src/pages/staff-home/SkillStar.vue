@@ -67,7 +67,7 @@ export default {
     },
     methods:{
         getData(){
-            this.$axios.get("/api/feishu/user/skilldata").then(data=>{
+            this.$axios.get("/api/feishu/user/skilldata_index").then(data=>{
                 this.list= data;
                 this.decoy = data;
 
