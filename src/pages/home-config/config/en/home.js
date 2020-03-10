@@ -63,7 +63,19 @@ export default {
     // 旷工
     sign_out_change: "Absenteeism",
     //天
-    days: "days"
+    days: "days",
+    // 迟到
+    late: "Late",
+    // 休息
+    rest: "rest",
+    // 早退
+    early: "Early",
+    // 出差
+    trip: "Trip Days",
+    // 加班
+    overtime: "Overtime",
+    // 公干
+    official: "Official Days"
   },
   attendance_tools: {
     // 请假
@@ -158,9 +170,9 @@ export default {
     day: "day",
     months: "months"
   },
-  performance_info:{
-    "month": "month",
-    "near": "near"
+  performance_info: {
+    month: "month",
+    near: "near"
   },
   eventModule: {
     eventName: "event Name",

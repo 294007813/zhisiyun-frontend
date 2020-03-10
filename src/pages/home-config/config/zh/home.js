@@ -62,8 +62,19 @@ export default {
     // 旷工
     sign_out_change: "旷工",
     //天
-    days: "天"
-
+    days: "天",
+    // 迟到
+    late: "Late",
+    // 休息
+    rest: "rest",
+    // 早退
+    early: "Early",
+    // 出差
+    trip: "Trip Days",
+    // 加班
+    overtime: "Overtime",
+    // 公干
+    official: "Official Days"
   },
   attendance_tools: {
     // 请假
@@ -105,7 +116,6 @@ export default {
     address: "会议时间",
     content: "会议内容",
     issuer: "发布人"
-
   },
   today: {
     today: "今日"
@@ -120,7 +130,6 @@ export default {
     start_service_date: "入职日期",
     birthday: "出生日期",
     constellation: "星座"
-
   },
   skill_star: {
     search_btn: "搜索按钮",
@@ -164,9 +173,9 @@ export default {
     day: "天",
     months: "月"
   },
-  performance_info:{
-    "month": "月绩效",
-    "near": "近期绩效"
+  performance_info: {
+    month: "月绩效",
+    near: "近期绩效"
   },
   eventModule: {
     eventName: "事件名称",
