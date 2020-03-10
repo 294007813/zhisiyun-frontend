@@ -21,8 +21,8 @@ export default {
     attendance_tools: "Attendance tools",
     holiday_balance: "Holiday Balance",
     my_salary: "My Salary",
-    to_do_task: "To do tasks",
-    done_task: "Done tasks",
+    to_do_task: "To do ",
+    done_task: "Done tasks ",
     my_subordinates: "My subordinates",
     birthday_blessing_wall: "Birthday blessing wall",
     monthly_pfm: "Monthly performance",
@@ -40,7 +40,10 @@ export default {
     suggestion_box: "Suggestion box",
     noData: "No Data",
     keywords: "keywords of name",
-    near: "near"
+    near: "near",
+    matters: "matters",
+    cancel: "cancel",
+    confirm: "confirm"
   },
   baseinfo: {
     ai_robot: "AI Robot",
@@ -63,7 +66,20 @@ export default {
     // 旷工
     sign_out_change: "Absenteeism",
     //天
-    days: "days"
+    days: "days",
+    // 迟到
+    late: "Late",
+    // 休息
+    rest: "rest",
+    // 早退
+    early: "Early",
+    // 出差
+    trip: "Trip Days",
+    // 加班
+    overtime: "Overtime",
+    // 公干
+    official: "Official Days" 
+
   },
   attendance_tools: {
     // 请假
@@ -114,11 +130,12 @@ export default {
     dep_pos: "Dep/position",
     start_service_date: "start date",
     birthday: "birthday",
-    constellation: "constellation"
+    constellation: "constellation",
+    number:"number",
   },
   skill_star: {
     search_btn: "Search button",
-    thumb_btn: "Thumb Button",
+    // thumb_btn: "Thumb Button",
     support: "star",
     keyword: "input keyword of name",
     none: "none"
