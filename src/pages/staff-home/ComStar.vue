@@ -6,7 +6,7 @@
               v-model="query" v-if="field.query">
               <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>
     <div class="db" v-nodata="{have: list.length}">
-        <swiper :options="op" class="swiper" ref="swiper">
+        <swiper :options="op" class="swiper" ref="swiper" v-if="list.length">
             <swiper-slide v-for="(it, i) in list" :key="i">
                 <div :class="{ssb: true, size}">
                     <div class="left">

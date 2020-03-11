@@ -3,9 +3,9 @@
     <h5>{{$t("index.salary_information")}}
         <el-tooltip class="tooltip" effect="dark" :content="`${ishide?'查看': '隐藏'}薪资`" placement="bottom-start">
             <span>
-                 <i class="iconfont iconyanjing" @click="checkPassword(false)" v-show="ishide"></i>
-            <img class="close" src="~as/img/staff-home/iconfont/icon_see_hide.svg"
-                 v-show="!ishide" @click="checkPassword(true)"/>
+                <i class="iconfont iconyanjing open" @click="checkPassword(false)" v-show="ishide"></i>
+                <img class="close" src="~as/img/staff-home/iconfont/close.png" v-show="!ishide" @click="checkPassword(true)"/>
+<!--                <i class="close"></i>-->
             </span>
         </el-tooltip>
     </h5>
@@ -236,18 +236,17 @@ export default {
 .salary{
     @include block;
     h5{
-        i{
+        .open{
             font-size: 12px;
             color: $color-gray;
             margin-left: 4px;
             cursor: pointer;
         }
         .close{
-            width: 16px;
+            width: 17px;
             margin-left: 4px;
             cursor: pointer;
-            color: $color-gray;
-            margin-top: 3px;
+            margin-top: 4px;
         }
     }
     .mon{

@@ -5,7 +5,7 @@
         <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                 <li v-for="(item, i) in gt.list" :key="i" @click="goFun(item.operation)">
-                    <p>{{item.title}}<em v-if="item.sort>0">超时</em></p>
+                    <p>{{item.title}}<em v-if="item.sort>0">[超时]</em></p>
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
