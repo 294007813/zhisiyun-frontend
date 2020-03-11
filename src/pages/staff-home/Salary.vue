@@ -59,7 +59,7 @@
 
 <script>
 import trend from "./components/trend";
-
+import cookie from 'js-cookie'
 export default {
     name: "Salary",
     props: ["conf"],
@@ -82,8 +82,8 @@ export default {
         }
     },
     computed:{
-        sid(){
-            return this.$store.state.user.connectsid
+        uid(){
+            return this.$store.getters.userId
         },
         ssd(){
             return this.$store.getters.userInfo.start_service_date
@@ -110,7 +110,6 @@ export default {
         this.ismounted= true
         this.getMon()
         this.getTrend()
-
         // this.getSta()
     },
     methods:{
@@ -191,8 +190,8 @@ export default {
             if(hide){
                 this.ishide= true
             }else{
-                let lsid= localStorage.getItem("connect.sid")
-                if(lsid== this.sid){
+                let luid= sessionStorage.getItem("uid")
+                if(luid== this.uid){
                     this.ishide= false
                 }else{
                     this.$msgbox.confirm( "",{
@@ -214,7 +213,7 @@ export default {
                                 })
                             } else {
                                 this.ishide = false
-                                localStorage.setItem("connect.sid", this.sid)
+                                sessionStorage.setItem("uid", this.uid)
                             }
                         })
                     })

@@ -1,8 +1,8 @@
 import Axios from 'axios'
 // import store from 'st'
-// import cookie from 'js-cookie'
+import cookie from 'js-cookie'
 import conf from '~/proj-config'
-import {Message } from 'element-ui';
+// import {Message } from 'element-ui';
 let {baseApi} = conf
 // console.log("conf", conf)
 // console.log("axios", conf.baseApi)
@@ -26,7 +26,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         // console.log(response)
-        // console.log("cookie.get('i18next')", cookie.get('i18next'))
+        // console.log("cookie.get('i18next')", cookie.get('TY_SESSION_ID'))
         let { dataLevel, dataKey } = response.config;
         let { data, msg, code } = response.data;
         // let lang= cookie.get('i18next')

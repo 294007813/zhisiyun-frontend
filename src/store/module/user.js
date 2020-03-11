@@ -4,7 +4,7 @@ export default {
     state: {
        lang: "zh",
         userinfo: {},
-        connectsid: ''
+        tsi: ''
     },
     getters: {
         userId: state => {
@@ -21,9 +21,9 @@ export default {
         setUser(state, data){
             state.userinfo= data
         },
-        setSid(state, sid){
+        setTSI(state, tsi){
             // sessionStorage.setItem("connect.sid", sid)
-            state.connectsid= sid
+            state.tsi= tsi
         }
     },
     actions:{
