@@ -1,8 +1,12 @@
 <template>
 <div class="salary">
     <h5>{{$t("index.salary_information")}}
-        <el-tooltip class="work-calendar" effect="dark" content="查看薪资" placement="bottom-start">
-            <i class="iconfont iconyanjing" @click="checkPassword"></i>
+        <el-tooltip class="tooltip" effect="dark" :content="`${ishide?'查看': '隐藏'}薪资`" placement="bottom-start">
+            <span>
+                 <i class="iconfont iconyanjing" @click="checkPassword(false)" v-show="ishide"></i>
+            <img class="close" src="~as/img/staff-home/iconfont/icon_see_hide.svg"
+                 v-show="!ishide" @click="checkPassword(true)"/>
+            </span>
         </el-tooltip>
     </h5>
     <el-tabs v-model="activeTabs" @tab-click="salaryClick" class="block-tabs">
@@ -78,6 +82,9 @@ export default {
         }
     },
     computed:{
+        sid(){
+            return this.$store.state.user.connectsid
+        },
         ssd(){
             return this.$store.getters.userInfo.start_service_date
         },
@@ -180,33 +187,39 @@ export default {
                 }
             }
         },
-        checkPassword(){
-            if(!this.ishide){
+        checkPassword(hide){
+            if(hide){
                 this.ishide= true
-                return
+            }else{
+                let lsid= localStorage.getItem("connect.sid")
+                if(lsid== this.sid){
+                    this.ishide= false
+                }else{
+                    this.$msgbox.confirm( "",{
+                        title: "请输入密码",
+                        showInput: true,
+                        inputPlaceholder: "请输入密码",
+                        inputType: "password"
+                    }).then(({value}) => {
+                        this.$axios.get("/api/feishu/xc/match_password" + "?password_input=" + value).then(data => {
+                            if (!data) {
+                                this.$msg({
+                                    message: "系统错误",
+                                    type: 'error'
+                                })
+                            } else if (typeof data === 'string') {
+                                this.$msg({
+                                    message: data,
+                                    type: 'warning'
+                                })
+                            } else {
+                                this.ishide = false
+                                localStorage.setItem("connect.sid", this.sid)
+                            }
+                        })
+                    })
+                }
             }
-            this.$msgbox.confirm( "",{
-                title: "请输入密码",
-                showInput: true,
-                inputPlaceholder: "请输入密码",
-                inputType: "password"
-            }).then(({value}) => {
-                this.$axios.get("/api/feishu/xc/match_password" + "?password_input=" + value).then(data => {
-                    if (!data) {
-                        this.$msg({
-                            message: "系统错误",
-                            type: 'error'
-                        })
-                    } else if (typeof data === 'string') {
-                        this.$msg({
-                            message: data,
-                            type: 'warning'
-                        })
-                    } else {
-                        this.ishide = false
-                    }
-                })
-            })
         },
         disabledDate(date){
             let st= this.ssd
@@ -225,15 +238,22 @@ export default {
     h5{
         i{
             font-size: 12px;
-            color: $color-gray-dark;
+            color: $color-gray;
             margin-left: 4px;
             cursor: pointer;
+        }
+        .close{
+            width: 16px;
+            margin-left: 4px;
+            cursor: pointer;
+            color: $color-gray;
+            margin-top: 3px;
         }
     }
     .mon{
         height: $bl - 40 +px;
         overflow: auto;
-        padding: 0 10px 12px;
+        padding: 0 10px;
         .title{
             font-size: 18px;
             margin-top: 20px;
@@ -274,6 +294,9 @@ export default {
                     }
                 }
             }
+            &:last-child{
+                margin-bottom: 12px;
+            }
         }
     }
     .trend{
@@ -302,7 +325,7 @@ export default {
     }
     .sta{
         height: $bl - 40 - 30 +px;
-        padding: 0 10px 12px;
+        padding: 0 10px;
         overflow: auto;
         background-color: white;
 
@@ -333,6 +356,9 @@ export default {
                 left: 0;
                 top: 0;
                 background-color: $color-gray-light;
+            }
+            &:last-child{
+                margin-bottom: 12px;
             }
         }
     }

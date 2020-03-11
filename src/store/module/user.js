@@ -3,7 +3,8 @@ import moment from "moment";
 export default {
     state: {
        lang: "zh",
-        userinfo: {}
+        userinfo: {},
+        connectsid: ''
     },
     getters: {
         userId: state => {
@@ -19,6 +20,10 @@ export default {
         },
         setUser(state, data){
             state.userinfo= data
+        },
+        setSid(state, sid){
+            // sessionStorage.setItem("connect.sid", sid)
+            state.connectsid= sid
         }
     },
     actions:{

@@ -10,7 +10,7 @@
             "linkUrl": "https://ensure.zhisiyun.com"
         },
         "production": {
-            "baseApi": "https://www.zhisiyun.com",
+            "baseApi": "",
             "linkUrl": "https://www.zhisiyun.com"
         }
     }

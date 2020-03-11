@@ -7,8 +7,11 @@
     position: relative;
     height: 50%;
     padding: 20px 0;
-    &:not(.single):first-child{
+    &:first-child{
       border-bottom: 1px solid $color-border;
+    }
+    &:last-child{
+      border-bottom: none;
     }
     h6{
       margin-bottom: 14px;
