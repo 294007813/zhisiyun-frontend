@@ -91,7 +91,7 @@ export default {
     // 假期调整
     holiday_change: "假期调整",
     // 考勤异常
-    check_in_exceptions: "考勤异常",
+    check_in_exceptions: "加班调整",
     check_in: "打卡",
     outwork_check_in: "外勤打卡"
   },

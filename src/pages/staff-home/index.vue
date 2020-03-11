@@ -23,9 +23,9 @@
     </template>
 
     <div class="bottom">
-        <router-link to="/staff-config">
+        <a @click="$f.href('/index_page_new_people')">
             <i class="iconfont iconshezhi"></i>{{$t("index.page_config")}}
-        </router-link>
+        </a>
     </div>
 </div>
 </template>

@@ -57,7 +57,7 @@ export default {
     // 假期调整
     holiday_change: "Holiday changes",
     // 考勤异常
-    check_in_exceptions: "Exceptions of Attendance"
+    check_in_exceptions: "overtime adjustment"
   },
   clock_in: {
     check_in: "CheckIn",

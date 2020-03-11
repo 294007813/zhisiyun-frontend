@@ -1,6 +1,6 @@
 <template>
 <div class="contract">
-    <ul class="to" v-if="fito">
+    <ul :class="{to: true, single: !fibo}" v-if="fito">
         <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
         <li  @click="$f.href(userInfoUrl)">
             <p><b>{{da.n1}}</b>{{$t("index.numbers")}}</p>

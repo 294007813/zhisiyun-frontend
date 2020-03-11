@@ -110,8 +110,8 @@ export default {
                                 let itp= it.pages[apk]
                                     itp.able= ap.able //页签的禁用状态
                                     _.mapObject(ap.fields, (apf, apfk)=>{
-                                        if(!itp.fields[apfk]){
-                                            itp.fields[apfk]= ap.fields[apfk]
+                                        if(!itp.fields.hasOwnProperty(apfk)){
+                                            itp.fields[apfk]= false
                                         }
                                     })
                                     _.mapObject(ap.disableFields, (apf, apfk)=>{
@@ -125,7 +125,7 @@ export default {
                         }
                     })
                 }
-                // console.log(JSON.stringify(my))
+                console.log(JSON.stringify(my))
 
                 this.conf= my
             });

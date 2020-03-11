@@ -61,7 +61,7 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
-                let ai= {}
+                let ai= null
                 data.paid.map((v,i) => {
                  // 把AI放在第一位
                      if (v.menu_code == "AI_ASSESSITANT") {
@@ -72,10 +72,13 @@ export default {
                 })
                 this.list= data.paid
                 this.dislist= data.unpaid
-                data.paid.unshift(ai);
-                if (ai.uf_status) {
-                    this.selectList.unshift(ai)
+                if(ai){
+                    data.paid.unshift(ai);
+                    if (ai.uf_status) {
+                        this.selectList.unshift(ai)
+                    }
                 }
+
             })
         },
         add(){

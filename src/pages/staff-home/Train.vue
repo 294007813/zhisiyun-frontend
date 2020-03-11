@@ -1,6 +1,6 @@
 <template>
 <div class="train">
-    <ul class="to" v-if="fito">
+    <ul :class="{to: true, single: !fibo}" v-if="fito">
         <h6>{{$t("index.training_num")}}<i v-if="fito.more" class="iconfont iconyoujiantou" @click="$f.href('/admin/course/train_plan/mylist')"></i></h6>
         <li v-if="fito.participate"  @click="$f.href('/admin/course/train_record/my_list')">
             <p><b>{{to.trainingRecord_number||0}}</b>{{$t("index.nums")}}</p>

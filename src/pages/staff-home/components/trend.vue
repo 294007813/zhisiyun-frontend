@@ -1,7 +1,7 @@
 <template>
   <div class="trend-content">
     <div class="trend-title">
-      <div class="titleInfo">
+      <div class="titleInfo" :style="{opacity: lineObj.length? 1: 0}">
         {{lineObj[0] && lineObj[0].replace("-",$t(`index.year`))}}{{$t(`index.month`)}}
         <span>{{$t('xc.real_wage')}}：{{ eyes || $f.currencyFilter(lineObj[1])}}</span>
       </div>

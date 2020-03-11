@@ -78,6 +78,9 @@ export default {
         }
     },
     computed:{
+        ssd(){
+            return this.$store.getters.userInfo.start_service_date
+        },
         hidstr(){
             return this.ishide ? "******" : ''
         },
@@ -96,9 +99,11 @@ export default {
     },
     mounted() {
         this.activeTabs= this.fimon && 'mon' || this.fitrend && 'trend' || this.fista && 'sta'
+        this.stadate=[moment(this.ssd).format("YYYY-MM"), moment().format("YYYY-MM")]
         this.ismounted= true
         this.getMon()
         this.getTrend()
+
         // this.getSta()
     },
     methods:{
@@ -176,6 +181,10 @@ export default {
             }
         },
         checkPassword(){
+            if(!this.ishide){
+                this.ishide= true
+                return
+            }
             this.$msgbox.confirm( "",{
                 title: "请输入密码",
                 showInput: true,
@@ -200,7 +209,7 @@ export default {
             })
         },
         disabledDate(date){
-            let st= this.$store.getters.userInfo.start_service_date
+            let st= this.ssd
             let d= moment(date)
             // console.log("data",data)
             return d.isBefore(moment(st), 'month') || d.isAfter(moment(), 'month');
@@ -224,7 +233,7 @@ export default {
     .mon{
         height: $bl - 40 +px;
         overflow: auto;
-        padding: 0 10px;
+        padding: 0 10px 12px;
         .title{
             font-size: 18px;
             margin-top: 20px;
@@ -293,7 +302,7 @@ export default {
     }
     .sta{
         height: $bl - 40 - 30 +px;
-        padding: 0 10px;
+        padding: 0 10px 12px;
         overflow: auto;
         background-color: white;
 

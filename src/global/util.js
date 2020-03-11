@@ -70,7 +70,7 @@ const util= {
         if(open){
             window.open(path, "_blank");
         }else{
-            window.location.href= path
+            window.top.location.href = path
         }
     },
     deepClone(data){

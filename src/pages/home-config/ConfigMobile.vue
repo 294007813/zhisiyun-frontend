@@ -19,7 +19,9 @@
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
                                    @click.self="remove(ind, false,$event)" v-if="!item.fix">隐藏</el-button>
-                        <el-button type="primary" size="mini" round @click="openModsetup(item)">配置</el-button>
+                        <el-button type="primary" size="mini" round
+                                   v-if="cansetup(item)"
+                                   @click="openModsetup(item)">配置</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -131,6 +133,18 @@ export default {
                 let i = parseInt(li)
                 l[i].top= i * this.lineHeight;
             }
+        },
+        cansetup(item){
+            let show= false
+            if(item.pages &&Object.keys(item.pages).length==1 &&item.pages.default){
+                let pag= item.pages.default
+                if(Object.keys(pag.fields).length || Object.keys(pag.disableFields).length){
+                    show= true
+                }
+            }else{
+                show= true
+            }
+            return show
         },
         remove(ind, show, e){
             let l= (!!show)? "hide" : "show"

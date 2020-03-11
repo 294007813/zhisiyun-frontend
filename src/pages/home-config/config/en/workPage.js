@@ -9,6 +9,7 @@ export default {
     upcoming: 'Upcoming',
     done: 'Done',
     delayed_submission: "Delayed submission",
+    ontime_submission: "Submit on time",
     create: "create",
     time_limit: "Time limit",
     time_out: "Time out",

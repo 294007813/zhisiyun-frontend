@@ -9,6 +9,7 @@ export default {
     upcoming: '待办',
     done: '已办',
     delayed_submission: "延迟提交",
+    ontime_submission: "按时提交",
     create: "创建",
     time_limit: "限时",
     time_out: "超时",

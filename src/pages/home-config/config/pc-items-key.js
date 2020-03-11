@@ -25,7 +25,7 @@ export default {
         "leave": "index.leaves",
         "year": "index.Annualleavebalance",
         "restbalance": "index.Balancevacationadjustment",
-        "abnormal": "考勤异常",
+        "abnormal": "加班调整",
         "adjust": "假期调整"
     },
     "salary_information":{
