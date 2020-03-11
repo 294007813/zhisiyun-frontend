@@ -609,6 +609,9 @@ export default {
                 pointer-events: none;
                 .vuecal__cell-events{
                     pointer-events: auto;
+                    .vuecal__event{
+                        min-height: 24px;
+                    }
                 }
             }
         }
