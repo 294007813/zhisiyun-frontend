@@ -7,7 +7,8 @@
     <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="false" :editable-events="false"
-             :on-event-click="tagClick" @cell-click="create">
+             :on-event-click="tagClick" @cell-click="create"
+             @mousedown.native="md" @mousemove.native="mm">
 <!--        <template v-slot:events-count="{ events, view }">-->
 
 <!--        </template>-->
@@ -179,7 +180,8 @@ export default {
             staffshow: false,
             forward_people_new:[],
             staffMount: false,
-            mounted: false
+            mounted: false,
+            creatable: true,
         }
     },
     computed:{
@@ -279,8 +281,17 @@ export default {
             // console.log("switchCal")
             e.stopPropagation()
         },
+        md(){
+            // console.log("md")
+            this.creatable= true
+        },
+        mm(){
+            // console.log("mm")
+            this.creatable= false
+        },
         create(date, a1){
-            console.log("create(date)", date, a1)
+            // console.log("create(date)", date, a1)
+            if(!this.creatable){return;}
             let allday= !!date.date
             let view= this.$refs.vcal.view.id
             let time= date.date|| date

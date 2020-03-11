@@ -89,8 +89,8 @@ Vue.directive('nodata', {
     bind(el, binding, vnode) {
         let params= binding.value
         let { msg}= params
-        console.log("vnode", vnode)
-        console.log("el.style", el.style)
+        // console.log("vnode", vnode)
+        // console.log("el.style", el.style)
         let div = document.createElement("div")
         let img = document.createElement("img")
         let p = document.createElement("p")
@@ -111,7 +111,7 @@ Vue.directive('nodata', {
         let params= binding.value
         let dom= el.querySelector(".nodata")
         let { have}= params
-        console.log("have", have)
+        // console.log("have", have)
         if(!have){
             dom.style.display ="block";
         }else{
