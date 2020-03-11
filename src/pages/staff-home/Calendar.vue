@@ -37,6 +37,7 @@
 
     <el-dialog
             :visible.sync="dishow"
+            :lock-scroll="false"
             custom-class="dialog"
             width="600px">
         <p slot="title" class="title">{{form._id ?'修改' :'添加'}}{{$t("index.event")}}</p>
@@ -334,6 +335,7 @@ export default {
         },
         tagClick(data, e, c){
             // console.log(data, e, c)
+            if(!this.creatable){return;}
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
