@@ -581,13 +581,14 @@ export default {
             }
             &.green{
                 background-color: #3cefc8;
-                border: 1px solid transparent;
+                border: 1px solid #a3efc9;
             }
             &.orange{
                 background-color: orange;
             }
             &.blue{
                 background-color: #7acfff;
+                border: 1px solid #64b7ff;
             }
         }
         &.vuecal--events-on-month-view{
@@ -609,6 +610,14 @@ export default {
                 .vuecal__cell-events{
                     pointer-events: auto;
                 }
+            }
+        }
+        .month-view{
+            .vuecal__cell{
+                min-height: 40px;
+            }
+            .vuecal__event{
+                min-height: 24px;
             }
         }
     }
