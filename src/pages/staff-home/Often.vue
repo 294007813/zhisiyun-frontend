@@ -61,24 +61,21 @@ export default {
     methods:{
         getData(){
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
-               data.paid.map((v,i) => {
+                let ai= {}
+                data.paid.map((v,i) => {
                  // 把AI放在第一位
                      if (v.menu_code == "AI_ASSESSITANT") {
-                        data.paid.splice(i, 1);
-                        data.paid.unshift(v);
-                     }
-                    if (v.uf_status) {
+                        ai= data.paid.splice(i, 1)[0];
+                     }else if (v.uf_status) {
                         this.selectList.push(v)
                     }
-               })
+                })
                 this.list= data.paid
                 this.dislist= data.unpaid
-                // for (let i=0;i< data.paid.length;i++){
-                //     let item = data.paid[i]
-                //     if (item.uf_status) {
-                //         this.selectList.push(item)
-                //     }
-                // }
+                data.paid.unshift(ai);
+                if (ai.uf_status) {
+                    this.selectList.unshift(ai)
+                }
             })
         },
         add(){

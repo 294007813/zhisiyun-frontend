@@ -1,6 +1,6 @@
 <template>
 <div class="gtasks">
-    <h5>{{$t("index.todo")}}<el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
+    <h5 class="todo-num" @click="$f.href('/admin/wf/todo_list')">{{$t("index.todo")}}<el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane label="待办" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
@@ -75,6 +75,9 @@ export default {
 @import "common";
 .gtasks{
     @include block;
+    .todo-num{
+        cursor: pointer;
+    }
     .ul{
         padding: 0 20px;
         height: 100%;
