@@ -125,12 +125,6 @@ export default {
                     },
                     position: function (point, params, dom, rect, size) {
                         const {contentSize: { 0: domWidth}, viewSize} = size;
-                        // 固定在顶部
-                        console.log("++++");
-                        console.log(size);
-                        console.log(point)
-                        console.log("dom:::",dom);
-                        console.log(dom.offsetWidth);
                         if (domWidth + point[0] > viewSize[0]) {
                             return [point[0] - domWidth, point[1]-40];
                         }
