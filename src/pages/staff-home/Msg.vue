@@ -1,6 +1,6 @@
 <template>
 <div class="msg">
-    <h5>{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
+    <h5 class="unread-num" @click="$f.href('/pc_message_list')">{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane label="未读" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
@@ -75,6 +75,9 @@ export default {
 @import "common";
 .msg{
     @include block;
+    .unread-num{
+        cursor: pointer;
+    }
     .ul{
         padding: 0 20px;
         height: 100%;
