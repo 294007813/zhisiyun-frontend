@@ -18,14 +18,14 @@ const routes = [
         component: () => import('pa/home-config/admin-staff-config.vue')
     },
     {
-        path: '/staff-home',
+        path: '/home/pcindex',
         component: () => import('pa/staff-home')
     }
 ]
 
 const router = new VueRouter({
     routes,
-    // mode: 'history'
+    mode: 'history'
 })
 
 export default router
