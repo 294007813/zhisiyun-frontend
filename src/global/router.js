@@ -18,7 +18,7 @@ const routes = [
         component: () => import('pa/home-config/admin-staff-config.vue')
     },
     {
-        path: '/home/pcindex',
+        path: '/pcindex',
         component: () => import('pa/staff-home')
     }
 ]
