@@ -6,27 +6,28 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        alias: '/pcindex',
+        // alias: '/pcindex',
         name: 'pcindex',
         component: () => import('pa/home.vue'),
     },
     {
-        path: '/pcindex/usersetting',
+        path: '/usersetting',
         component: () => import('pa/home-config/staff-config.vue')
     },
     {
-        path: '/pcindex/adminsetting',
+        path: '/adminsetting',
         component: () => import('pa/home-config/admin-staff-config.vue')
     },
     {
-        path: '/pcindex/home',
+        path: '/home',
         component: () => import('pa/staff-home')
     }
 ]
 
 const router = new VueRouter({
     routes,
-    mode: 'history'
+    mode: 'history',
+    base: "/pcindex/",
 })
 
 export default router
