@@ -9,6 +9,7 @@ const resolve = dir => {
 process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
 
 module.exports = {
+    assetsDir: "pcindex",
     runtimeCompiler: true,  //运行时构建
     chainWebpack: config => {
         //快捷路径，样式内引用要在前面加上'～'
