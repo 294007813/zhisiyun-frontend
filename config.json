@@ -6,7 +6,7 @@
             "linkUrl": "https://ensure.zhisiyun.com"
         },
         "ensure": {
-            "baseApi": "https://pcensure.sec.zhisiyun.com",
+            "baseApi": "https://ensure.zhisiyun.com",
             "linkUrl": "https://ensure.zhisiyun.com"
         },
         "production": {
