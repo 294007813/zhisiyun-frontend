@@ -40,16 +40,14 @@ export default {
         size:{
             default: 'half'
         },
-        conf:{}
+        conf:{},
     },
     data(){
         return{
             query: '',
-            op:{
-
-            },
+            op:{},
             list: [],
-            decoy: []
+            decoy: [],
         }
     },
     computed:{
@@ -117,6 +115,11 @@ export default {
 @import "comstar&skillstar";
 .skill-star{
     @include style;
+    /deep/ .el-input-group__append {
+        background: #fff;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     .db .swiper .ssb{
         background-color: $color-bg-light;
         .left{
@@ -174,12 +177,19 @@ export default {
         }
     }
 }
-</style>
-
-<style>
-.skill-star .el-input-group__append {
-    background: #fff;
-    padding-left: 10px;
-    padding-right: 10px;
+.skill-box{
+    .content{
+        padding: 40px 20px 20px;
+        overflow: auto;
+        height: 300px;
+        position: relative;
+        .query{
+            position: absolute;
+            width: 80%;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
 }
 </style>

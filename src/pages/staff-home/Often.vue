@@ -3,7 +3,7 @@
     <h5>{{$t("index.common_application")}}</h5>
     <ul>
         <li v-for="(item, key) in selectList" :key="key" v-show="!item || !!item.uf_status" @click="$f.href(`${item.url}`)">
-            <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
+            <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
         <li class="add" @click="add"></li>
     </ul>
 
@@ -18,7 +18,7 @@
                 <el-tab-pane label="可添加" name="yes">
                     <ul style="padding: 0">
                     <li v-for="(item, key) in list" :key="key" @click="change(item, key)">
-                        <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
+                        <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
                         <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>
                     </li>
                     </ul>
@@ -26,7 +26,7 @@
                 <el-tab-pane label="未购买" name="no">
                     <ul style="padding: 0">
                         <li v-for="(item, key) in dislist" :key="key" style="cursor: default">
-                            <img :src="`/img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
+                            <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
 <!--                            <i class="fa fa-check-circle" v-show="!!item.uf_status"></i>-->
                         </li>
                     </ul>

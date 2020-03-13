@@ -2,16 +2,16 @@ const path = require('path')
 const resolve = dir => {
     return path.join(__dirname, dir)
 }
-// const conf = require('./proj-config')
-// let {baseApi}= conf
-// console.log("process.env.area", JSON.stringify(process.env) )
-// console.log("process.env.npm_lifecycle_script", JSON.stringify(process.env.npm_lifecycle_script) )
-process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
 
+// console.log("process.env", JSON.stringify(process.env))
+process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
+let proconf= process.env.NODE_ENV=="production"?{
+    outputDir: "pcindex",
+    // assetsDir: "pcindex",
+    // publicPath: "/pcindex/"
+} : {}
 module.exports = {
-    assetsDir: "pcindex",
-    // publicPath: process.env.VUE_APP_ENV=="dev" ? "/": "/pcindex/",
-    publicPath: "/pcindex/",
+    ...proconf,
     runtimeCompiler: true,  //运行时构建
     chainWebpack: config => {
         //快捷路径，样式内引用要在前面加上'～'
@@ -43,28 +43,18 @@ module.exports = {
         host: "0.0.0.0",
         // open: false,
         port: 8888,
-        // proxy: {
-        //     [`${baseApi}/`]: {
-        //         target: 'http://ensure.zhisiyun.com/',
-        //         pathRewrite: {[`^${baseApi}/`]: ''},
-        //         secure: false
-        //     },
-        // },
-        // allowedHosts: ['https://ensure.zhisiyun.com/'],
-        // public: 'https://ensure.zhisiyun.com/',
-        // disableHostCheck: true,
         proxy: {
             "/api-proxy/": {
-                target: 'http://pcensure.sec.zhisiyun.com/',
+                target: 'https://ensure.zhisiyun.com/',
                 // target: 'http://127.0.0.1:3000/',
                 changeOrigin: true,
-                // pathRewrite: {"^/api-proxy/": ''},
-                pathRewrite: function (path, req) {
-                    let p= path.replace('/api-proxy/', '')
-                    // .replace('admin/', '')
-                    // console.log("p", p)
-                    return p
-                },
+                pathRewrite: {"^/api-proxy/": ''},
+                // pathRewrite: function (path, req) {
+                //     let p= path.replace('/api-proxy/', '')
+                //     // .replace('admin/', '')
+                //     // console.log("p", p)
+                //     return p
+                // },
                 secure: false,
                 // autoRewrite: true,
                 // followRedirects: true,
@@ -88,8 +78,6 @@ module.exports = {
                 pathRewrite: {[`^/lo-gin/`]: ''},
                 secure: false
             },
-
-
         }
         /**
             location /api-proxy/ {

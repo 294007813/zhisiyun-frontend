@@ -16,7 +16,7 @@ export default {
     },
     computed:{
         url(){
-            return this.path || this.sex=='F'? "/img/staff-home/head-F.png": "/img/staff-home/head-M.png"
+            return this.path || this.sex=='F'? "./img/staff-home/head-F.png": "./img/staff-home/head-M.png"
         }
     },
     watch:{
