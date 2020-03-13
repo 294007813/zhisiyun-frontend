@@ -5,7 +5,6 @@
             <span>
                 <i class="iconfont iconyanjing open" @click="checkPassword(false)" v-show="ishide"></i>
                 <img class="close" src="~as/img/staff-home/iconfont/close.png" v-show="!ishide" @click="checkPassword(true)"/>
-<!--                <i class="close"></i>-->
             </span>
         </el-tooltip>
     </h5>
@@ -35,6 +34,7 @@
                     prefix-icon="iconfont iconshaixuan"
                     class="dp"
                     size="mini"
+                    :clearable="false"
                     v-model="stadate"
                     type="monthrange"
                     value-format="yyyy-MM"
@@ -110,7 +110,6 @@ export default {
         this.ismounted= true
         this.getMon()
         this.getTrend()
-        // this.getSta()
     },
     methods:{
         getMon(){
@@ -166,14 +165,13 @@ export default {
                 }
             })
         },
-        // getSta(){
-        //     this.$axios.post("/api/feishu/xc/totalinfo",{
-        //         start_date: "2019-6",
-        //         end_date: "2019-12",
-        //     }).then(data=>{
-
-        //     },)
-        // },
+        geteye(cb){
+            this.$axios.get("/api/feishu/xc/eye_status",).then(data=>{
+                if(cb){
+                    cb(data)
+                }
+            })
+        },
         salaryClick({name}){
             this.showTrend= false;
             switch (name) {
@@ -190,34 +188,35 @@ export default {
             if(hide){
                 this.ishide= true
             }else{
-                let luid= sessionStorage.getItem("uid")
-                if(luid== this.uid){
-                    this.ishide= false
-                }else{
-                    this.$msgbox.confirm( "",{
-                        title: "请输入密码",
-                        showInput: true,
-                        inputPlaceholder: "请输入密码",
-                        inputType: "password"
-                    }).then(({value}) => {
-                        this.$axios.get("/api/feishu/xc/match_password" + "?password_input=" + value).then(data => {
-                            if (!data) {
-                                this.$msg({
-                                    message: "系统错误",
-                                    type: 'error'
-                                })
-                            } else if (typeof data === 'string') {
-                                this.$msg({
-                                    message: data,
-                                    type: 'warning'
-                                })
-                            } else {
-                                this.ishide = false
-                                sessionStorage.setItem("uid", this.uid)
-                            }
+                this.geteye((stat)=>{
+                    if(stat){
+                        this.ishide = false
+                    }else{
+                        this.$msgbox.confirm( "",{
+                            title: "请输入密码",
+                            showInput: true,
+                            closeOnClickModal: false,
+                            inputPlaceholder: "请输入密码",
+                            inputType: "password"
+                        }).then(({value}) => {
+                            this.$axios.get("/api/feishu/xc/match_password" + "?password_input=" + value).then(data => {
+                                if (!data) {
+                                    this.$msg({
+                                        message: "系统错误",
+                                        type: 'error'
+                                    })
+                                } else if (typeof data === 'string') {
+                                    this.$msg({
+                                        message: data,
+                                        type: 'warning'
+                                    })
+                                } else {
+                                    this.ishide = false
+                                }
+                            })
                         })
-                    })
-                }
+                    }
+                })
             }
         },
         disabledDate(date){
