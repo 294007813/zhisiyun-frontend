@@ -7,8 +7,8 @@ const resolve = dir => {
 process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
 let proconf= process.env.NODE_ENV=="production"?{
     outputDir: "pcindex",
-    assetsDir: "pcindex",
-    publicPath: "/pcindex/"
+    // assetsDir: "pcindex",
+    // publicPath: "/pcindex/"
 } : {}
 module.exports = {
     ...proconf,
@@ -45,15 +45,15 @@ module.exports = {
         port: 8888,
         proxy: {
             "/api-proxy/": {
-                target: 'http://pcensure.sec.zhisiyun.com/',
+                target: 'https://ensure.zhisiyun.com/',
                 // target: 'http://127.0.0.1:3000/',
                 changeOrigin: true,
                 pathRewrite: {"^/api-proxy/": ''},
                 // pathRewrite: function (path, req) {
                 //     let p= path.replace('/api-proxy/', '')
-                // .replace('admin/', '')
-                // console.log("p", p)
-                // return p
+                //     // .replace('admin/', '')
+                //     // console.log("p", p)
+                //     return p
                 // },
                 secure: false,
                 // autoRewrite: true,

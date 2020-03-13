@@ -30,16 +30,6 @@
             <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
         </swiper>
     </div>
-
-<!--    <el-dialog-->
-<!--            :visible.sync="skillv"-->
-<!--            :append-to-body="true"-->
-<!--            width="500px">-->
-<!--        <p slot="title" class="title">推荐技能</p>-->
-<!--        <div style="">-->
-
-<!--        </div>-->
-<!--    </el-dialog>-->
 </div>
 </template>
 
@@ -51,16 +41,13 @@ export default {
             default: 'half'
         },
         conf:{},
-        skillv: true
     },
     data(){
         return{
             query: '',
-            op:{
-
-            },
+            op:{},
             list: [],
-            decoy: []
+            decoy: [],
         }
     },
     computed:{
@@ -128,6 +115,11 @@ export default {
 @import "comstar&skillstar";
 .skill-star{
     @include style;
+    /deep/ .el-input-group__append {
+        background: #fff;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     .db .swiper .ssb{
         background-color: $color-bg-light;
         .left{
@@ -185,12 +177,19 @@ export default {
         }
     }
 }
-</style>
-
-<style>
-.skill-star .el-input-group__append {
-    background: #fff;
-    padding-left: 10px;
-    padding-right: 10px;
+.skill-box{
+    .content{
+        padding: 40px 20px 20px;
+        overflow: auto;
+        height: 300px;
+        position: relative;
+        .query{
+            position: absolute;
+            width: 80%;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
 }
 </style>

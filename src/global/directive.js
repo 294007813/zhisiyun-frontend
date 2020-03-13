@@ -98,7 +98,7 @@ Vue.directive('nodata', {
         div.setAttribute("class", "nodata");
         p.innerText=  msg || "暂无数据"
         p.setAttribute("style", "font-size: 14px;color: #999999;")
-        img.setAttribute("src", "/img/common/no-pic.png")
+        img.setAttribute("src", "./img/common/no-pic.png")
         img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
         div.appendChild(img)
         div.appendChild(p)
