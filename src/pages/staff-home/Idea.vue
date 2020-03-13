@@ -5,6 +5,12 @@
         <img src="~as/img/staff-home/idea.svg">
         <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{num}}</b>条意见</p>
         <el-button size="small" type="primary" plain class="but"  @click="suggest">{{$t("index.delivery_advice")}}</el-button>
+        <el-select placeholder="请选择" size="small" class="select"
+            v-show="typeList.length" v-model="type" @change="getData">
+            <el-option v-for="(item, ind) in typeList"
+                    :key="ind" :label="item.name" :value="item._id">
+            </el-option>
+        </el-select>
     </div>
 
     <el-dialog
@@ -20,6 +26,15 @@
                     v-model="form.desc"/>
         </div>
         <p slot="footer" class="footer">
+            <span style="float: left">投递到：
+                <el-select placeholder="请选择" size="small" class="select"
+                           v-show="typeList.length" v-model="form.type">
+                    <el-option v-for="(item, ind) in typeList"
+                               :key="ind" :label="item.name" :value="item._id">
+                    </el-option>
+                </el-select>
+            </span>
+
             <el-checkbox v-model="form.anonymous" style="margin-right: 10px">匿名提交</el-checkbox>
             <el-button type="primary" size="small" @click="save">确认</el-button>
         </p>
@@ -36,28 +51,34 @@ export default {
             num: 0,
             form:{
                 anonymous: false,
-                desc: ""
+                desc: "",
+                type: ""
             },
-            typeList: []
+            typeList: [],
+            type: ""
         }
     },
     mounted(){
-        this.getData()
+        this.getType()
     },
     methods:{
-        getData(){
-            this.$axios.get("/api/employeesindexpage/suggestion_num").then(data=>{
-                this.num= data
-            })
+        getType(){
             this.$axios.get("/api/employeesindexpage/suggestion_items").then(data=>{
                 this.typeList= data
+                this.type= this.form.type= data[0]._id
+                this.getData()
+            })
+        },
+        getData(){
+            this.$axios.get(`/api/employeesindexpage/suggestion_num?type=${this.type}`).then(data=>{
+                this.num= data
             })
         },
         suggest () {
              this.show = true;
         },
         save () {
-             this.$axios.post("/api/feishu/base/client_culture_suggestion_bb_create", this.form).then(data=>{
+             this.$axios.get("/api/feishu/base/client_culture_suggestion_bb_create",{params: this.form}).then(data=>{
                  this.show = false
             })
         }
@@ -73,6 +94,7 @@ export default {
         padding-top: 40px;
         overflow: hidden;
         text-align: center;
+        position: relative;
         &:before{
             content: "";
             display: block;
@@ -82,6 +104,11 @@ export default {
             background-color: $color-border;
             left: 0;
             top: 40px;
+        }
+        .select{
+            position: absolute;
+            left: 10px;
+            top: 50px;
         }
         img{
             margin-top: 20px;

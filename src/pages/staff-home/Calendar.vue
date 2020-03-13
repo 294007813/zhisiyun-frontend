@@ -575,6 +575,7 @@ export default {
         .event{
             cursor: pointer;
             opacity: .8;
+            min-height: 20px;
             &.red{
                 background-color: #f5babc;
                 border: 1px solid #f4a4a6;

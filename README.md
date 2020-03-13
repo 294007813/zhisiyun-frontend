@@ -1,5 +1,10 @@
 # pc-frontend
 
+## Project environment
+```
+nvm use v12
+```
+
 ## Project setup
 ```
 npm install -g @vue/cli
