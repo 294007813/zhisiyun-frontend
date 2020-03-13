@@ -2,7 +2,7 @@
 node_modules
 /dist
 /pcindex
-pcindex*
+*.tz
 
 # local env files
 .env.local
