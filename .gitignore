@@ -2,6 +2,7 @@
 node_modules
 /dist
 /pcindex
+pcindex*
 
 # local env files
 .env.local
