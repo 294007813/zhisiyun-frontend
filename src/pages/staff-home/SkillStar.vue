@@ -30,6 +30,16 @@
             <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
         </swiper>
     </div>
+
+<!--    <el-dialog-->
+<!--            :visible.sync="skillv"-->
+<!--            :append-to-body="true"-->
+<!--            width="500px">-->
+<!--        <p slot="title" class="title">推荐技能</p>-->
+<!--        <div style="">-->
+
+<!--        </div>-->
+<!--    </el-dialog>-->
 </div>
 </template>
 
@@ -40,7 +50,8 @@ export default {
         size:{
             default: 'half'
         },
-        conf:{}
+        conf:{},
+        skillv: true
     },
     data(){
         return{
