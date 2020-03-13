@@ -8,7 +8,7 @@ process.env.VUE_APP_ENV= process.env.npm_lifecycle_script.split("-env:")[1]
 let proconf= process.env.NODE_ENV=="production"?{
     outputDir: "pcindex",
     // assetsDir: "pcindex",
-    // publicPath: "/pcindex/"
+    publicPath: "/pcindex/"
 } : {}
 module.exports = {
     ...proconf,
