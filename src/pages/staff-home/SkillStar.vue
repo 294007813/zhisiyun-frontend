@@ -17,7 +17,9 @@
                         <span>{{`${item.ou_name}/${item.position_name}`}}</span>
                     </div>
                     <ul class="info">
-                        <p><b>{{getStar(item)}}</b>{{$t("index.praise")}} <i v-if="field.like" class="fa fa-thumbs-up"></i></p>
+                        <p><b>{{getStar(item)}}</b>{{$t("index.praise")}}
+                            <i v-if="field.like" class="fa fa-thumbs-up"
+                                @click="$f.href('/admin/pm/pp_skill/'+ item._id)"></i></p>
                         <div class="skill">
                             <li v-for="(sk, j) in item.my_skills" :key="j" @click="like(item._id, sk.skill._id, sk.skill.skill_name)">
                                 {{sk.skill.skill_name}}<b>{{sk.praise_peoples_number}}{{$t("index.praise")}}</b>
@@ -173,6 +175,9 @@ export default {
                     font-weight: 600;
                     margin-left: 4px;
                 }
+            }
+            .fa-thumbs-up{
+                cursor: pointer;
             }
         }
     }
