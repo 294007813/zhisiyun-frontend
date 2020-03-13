@@ -7,7 +7,8 @@
             <span>{{$t("index.signed_contract")}}</span>
         </li>
         <li @click="$f.href(userInfoUrl)">
-            <p><b>{{da.h.years || ''}}</b>{{da.h.years ? $t("index.year") : ''}}<b>{{da.h.months||''}}</b>{{da.h.months ? $t("index.month") : ''}}<b>{{da.h.days||"0"}}</b>{{$t("index.day_time")}}</p>
+            <p v-show="notime"></p>
+            <p v-show="!notime"><b>{{da.h.years || ''}}</b>{{da.h.years ? $t("index.year") : ''}}<b>{{da.h.months||''}}</b>{{da.h.months ? $t("index.month") : ''}}<b>{{da.h.days||"0"}}</b>{{$t("index.day_time")}}</p>
             <span>{{$t("index.contract_still_valid")}}</span>
         </li>
     </ul>
@@ -31,7 +32,8 @@ export default {
                 n1: 0,
                 n2: 0,
                 h: {},
-            }
+            },
+            notime: ""
         }
     },
     computed:{
@@ -59,11 +61,18 @@ export default {
                 if(this.da.n1){
                     let arr= data.newContract, date=""
                     arr.forEach(it=>{
-                        date= date? (moment(it.effective_date).isBefore(date)? it.effective_date: date) :it.effective_date
+                        let d= it.expire_date
+                        if(d){
+                            date= date? (moment(d).isBefore(date)? d: date) :d
+                        }
                     })
-                    let t= moment().diff(date)
-                    // console.log("diff", moment().diff(date).toObject())
-                    this.da.h= moment.duration(t)._data
+                    if(date){
+                        let t= moment().diff(date)
+                        // console.log("diff", moment().diff(date).toObject())
+                        this.da.h= moment.duration(t)._data
+                    }else{
+                        this.notime= arr[0].type_name
+                    }
                 }
             })
         },

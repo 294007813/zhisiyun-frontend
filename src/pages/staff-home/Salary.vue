@@ -11,10 +11,10 @@
     <el-tabs v-model="activeTabs" @tab-click="salaryClick" class="block-tabs">
         <el-tab-pane :label="$t('xc.monthly')" name="mon" v-if="fimon">
             <div class="mon" v-if="mon">
-                <template v-for="(arr, key) in mon">
-                    <p class="title">{{key}}{{$t("index.year")}}</p>
+                <template v-for="(it, key) in revmon">
+                    <p class="title">{{it.year}}{{$t("index.year")}}</p>
                     <ul>
-                        <li v-for="(item, i) in arr" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li>
+                        <li v-for="(item, i) in it.item" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li>
                     </ul>
                 </template>
             </div>
@@ -102,6 +102,13 @@ export default {
         fista(){
             let data= this.conf.pages.sta
             return data.able && data.show && data.fields
+        },
+        revmon(){
+            let arr=[]
+            for(let i in this.mon){
+                arr.unshift({year: i, item: this.mon[i]})
+            }
+            return arr
         }
     },
     mounted() {
@@ -116,11 +123,12 @@ export default {
             this.$axios.get("/api/feishu/xc/allBaseinfo").then(data=>{
                 let arr= data.slice(-6)
                 this.mon= {}
-                arr.map(item=>{
+                for(let i = arr.length - 1; i >= 0; i--){
+                    let item= arr[i]
                     let {years, months}= moment(item.cpi.month).toObject()
                     this.mon[years]? false: this.mon[years]= []
                     this.mon[years].push({mon: months+1, amount: item.ci_items.length && (item.ci_items[0].amount ||0)})
-                })
+                }
 
                 let trend= data.slice(-18)
                 let xv=[], yv=[]
