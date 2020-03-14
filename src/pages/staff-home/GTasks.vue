@@ -54,12 +54,12 @@ export default {
     methods:{
         tabClick(){},
         getGt(){
-            this.$axios.get("/api/feishu/news/todolist").then(data=>{
+            this.$axios.get("/api/feishu/news/todolist?from=new_pc_index").then(data=>{
                 this.gt= data
             })
         },
         getAt(){
-            this.$axios.get("/api/feishu/news/donelist").then(data=>{
+            this.$axios.get("/api/feishu/news/donelist?from=new_pc_index").then(data=>{
                 this.at= data
             })
         },

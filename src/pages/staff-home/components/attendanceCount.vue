@@ -10,7 +10,7 @@
         @click="$f.href(item.url)"
       >
         <p class="text">
-          {{ attendanceStatistics[item.key] }}
+          {{ attendanceStatistics[item.key] | toFixed(2, true)}}
           <b class="nuit">{{ item.nuit }}</b>
         </p>
         <span class="label">{{ translate(item.key) }}</span>

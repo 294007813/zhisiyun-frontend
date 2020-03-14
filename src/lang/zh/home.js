@@ -215,6 +215,8 @@ export default  {
     "holiday_balance": "假期余额",
     "clock_in_card": "签到打卡",
     "attendance_initiation":"考勤发起",
+    "abnormal_attendance":"考勤异常",
+    "adjust_holiday":"假期调整",
     "on_business_trip": "出差",
     "in_business": "公干",
     "on_leave": "请假",

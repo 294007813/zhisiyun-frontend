@@ -214,6 +214,8 @@ export default {
     "holiday_balance": "Holiday Balance",
     "clock_in_card": "Check-in and punch card",
     "attendance_initiation":"Attendance initiation",
+  "abnormal_attendance":"Abnormal attendance",
+      "adjust_holiday":"Adjust holiday",
     "on_business_trip": "On Travel",
     "in_business": "Out of the Office",
     "on_leave": "On Leave",

@@ -4,7 +4,7 @@
     <el-tooltip class="work-calendar" effect="dark" content="工作日历" placement="top-start">
         <i class="iconfont iconquanping" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
     </el-tooltip>
-    <vue-cal class="vue-cal" locale="zh-cn" ref="vcal"
+    <vue-cal class="vue-cal" :locale="locale" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="false" :editable-events="false"
              :on-event-click="tagClick" @cell-click="create"
@@ -217,6 +217,9 @@ export default {
                 msg= `收到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
             }
             return msg
+        },
+        locale(){
+            return this.$store.state.user.lang=='zh' ? "zh-cn": "en"
         }
     },
     mounted(){

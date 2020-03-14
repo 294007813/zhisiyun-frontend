@@ -8,7 +8,7 @@
             <li v-for="(item, ind) in left" :key="'l-'+ind" :class=" {fixed: item.fix}"
                 :ref="'drag-'+item.name" :style="{top: item.top +'px'}">
                 <div class="content" v-drag="{
-
+                    donecb: item.fix? false: movedone,
                     movecb: moving,
 
                     item, rowind: ind, only: 'y',

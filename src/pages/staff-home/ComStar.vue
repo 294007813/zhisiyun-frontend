@@ -18,7 +18,7 @@
                         <p class="name">{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">
-                        <li><label>{{$t("index.star_company")}}：</label>{{it.people.people_no}}</li>
+                        <li><label>{{$t("index.work_number")}}：</label>{{it.people.people_no}}</li>
                         <li><label>{{$t("index.department")}}：</label>{{it.people.ou_name}}</li>
                         <li><label>{{$t("index.position")}}：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
@@ -92,7 +92,9 @@ export default {
         // 打开勋章墙
         openmedal(reward_punishs){
             this.medal= reward_punishs
-            this.medalshow= true
+            this.$nextTick(()=>{
+                this.medalshow= true
+            })
         },
         getData(){
             this.$axios.get("/api/feishu/user/stardata_index").then(data=>{

@@ -2,9 +2,8 @@ import i18n from 'la'
 import moment from "moment";
 export default {
     state: {
-       lang: "zh",
+        lang: "zh",
         userinfo: {},
-        tsi: ''
     },
     getters: {
         userId: state => {
@@ -21,10 +20,6 @@ export default {
         setUser(state, data){
             state.userinfo= data
         },
-        setTSI(state, tsi){
-            // sessionStorage.setItem("connect.sid", sid)
-            state.tsi= tsi
-        }
     },
     actions:{
 
