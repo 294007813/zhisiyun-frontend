@@ -54,7 +54,7 @@
 
 <script>
 
-import AttendanceCount from "./attendanceCount";
+import AttendanceCount from "./components/attendanceCount";
 const moment  = require("moment");
 
 export default {
