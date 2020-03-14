@@ -18,7 +18,7 @@
                         <p class="name">{{it.people.people_name}}</p>
                     </div>
                     <ul class="info">
-                        <li><label>{{$t("index.star_company")}}：</label>{{it.people.people_no}}</li>
+                        <li><label>{{$t("index.work_number")}}：</label>{{it.people.people_no}}</li>
                         <li><label>{{$t("index.department")}}：</label>{{it.people.ou_name}}</li>
                         <li><label>{{$t("index.position")}}：</label>{{it.people.position_name}}</li>
 <!--                        <li><label>部门/职位：</label>信息技术部/开发总监</li>-->
