@@ -143,7 +143,7 @@ export default {
                 data.map((item, index) => {
                     const money = item.ci_items.length && (item.ci_items[0].amount || 0);
                     if (index && dest[item.cpi.month]) {
-                        dest[item.cpi.month] = dest.item.cpi.month + money;
+                        dest[item.cpi.month] +=  money;
                     } else {
                         dest[item.cpi.month] = money;
                     }
