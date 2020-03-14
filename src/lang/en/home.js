@@ -83,7 +83,7 @@ export default {
     "unfinished": "Hang in the air",
     "message_dynamics":"Message dynamics",
     "unread":"Unread",
-    "readed":"Already read",
+    "readed":"Have read",
     "birthday_blessing_wall":"Birthday blessing wall",
     "today":"today",
     "day":"today",

@@ -39,7 +39,7 @@ export default  {
     "shared_with":"共享对象",
     "add_attachments":"添加附件",
     "add_notes":"添加备注",	
-    
+
     "like":"点赞",
     "search":"搜索",
     "process":"流程",
