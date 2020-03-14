@@ -84,7 +84,7 @@ export default {
         padding: 0 10px;
         margin-bottom: 20px;
         display: inline-block;
-
+        vertical-align: top;
         &.small{
             width: 1/3*100%;
         }
