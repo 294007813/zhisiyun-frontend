@@ -6,7 +6,7 @@
         <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{num}}</b>条意见</p>
         <el-button size="small" type="primary" plain class="but"  @click="suggest">{{$t("index.delivery_advice")}}</el-button>
         <el-select placeholder="请选择" size="small" class="select"
-            v-show="typeList.length" v-model="type" @change="getData">
+            v-show="typeList.length>1" v-model="type" @change="getData">
             <el-option v-for="(item, ind) in typeList"
                     :key="ind" :label="item.name" :value="item._id">
             </el-option>
@@ -28,7 +28,7 @@
         <p slot="footer" class="footer">
             <span style="float: left">投递到：
                 <el-select placeholder="请选择" size="small" class="select"
-                           v-show="typeList.length" v-model="form.type">
+                           v-show="typeList.length>1" v-model="form.type">
                     <el-option v-for="(item, ind) in typeList"
                                :key="ind" :label="item.name" :value="item._id">
                     </el-option>

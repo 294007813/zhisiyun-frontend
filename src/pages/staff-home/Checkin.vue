@@ -46,6 +46,8 @@
             <li v-if="fifl.overtime"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/beyond_work/start')">{{$t("index.overtime")}}</el-button></li>
             <li v-if="fifl.trip"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/work_travel/start')">{{$t("index.on_business_trip")}}</el-button></li>
             <li v-if="fifl.official"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/work_city/start')">{{$t("index.in_business")}}</el-button></li>
+            <li v-if="fifl.abnormal"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/cardrecord/hr_list_v2')">{{$t("wt.abnormal_attendance")}}</el-button></li>
+            <li v-if="fifl.adjust"><el-button size="small" type="primary" plain @click="$f.href('/admin/tm/wf_back_after_leave_of_absence/start?pd='+ $store.getters.userId)">{{$t("wt.adjust_holiday")}}</el-button></li>
         </ul>
     </div>
 </template>

@@ -14,8 +14,8 @@
         <span class="click-hand" v-if="field.sub" @click="$f.href('/admin/masterdata/people_contact/new/contacts')">{{$t("index.subordinate")}}：{{info.my_team}}{{$t("index.people")}}</span></p>
     <a v-if="field.look" @click="$f.href('/profile_user')">{{$t("index.view_files")}}<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
-<!--        <img :src="avatar"/>-->
-        <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)"><avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
+        <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)">
+            <avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
         <p v-if="field.medal" @click="openmedal">
             <i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>

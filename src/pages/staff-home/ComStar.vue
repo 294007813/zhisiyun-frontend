@@ -92,7 +92,9 @@ export default {
         // 打开勋章墙
         openmedal(reward_punishs){
             this.medal= reward_punishs
-            this.medalshow= true
+            this.$nextTick(()=>{
+                this.medalshow= true
+            })
         },
         getData(){
             this.$axios.get("/api/feishu/user/stardata_index").then(data=>{
