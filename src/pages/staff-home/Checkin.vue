@@ -27,14 +27,14 @@
             <li v-if="fiba.year"
                 @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
                 >
-                <p>{{bl.year}}<b>{{$t("index.hour")}}</b></p>
+                <p>{{bl.year| toFixed(2, true)}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
             <li v-if="fiba.rest"
                 @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
 
             >
-                <p>{{bl.exchange}}<b>{{$t("index.hour")}}</b></p>
+                <p>{{bl.exchange| toFixed(2, true)}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Balancevacationadjustment")}}</span>
             </li>
             <li></li>
