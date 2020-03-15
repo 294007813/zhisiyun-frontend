@@ -1,7 +1,7 @@
 <template>
 <div class="skill-star">
     <h5>{{$t("index.skill_star")}}</h5>
-    <el-input class="query" size="mini" placeholder="输入关键词查询"
+    <el-input class="query" size="mini" :placeholder="$t('index.keyword_search')"  
               @keydown.enter.native="enter"
               v-if="field.query" v-model="query">
               <el-button slot="append" icon="el-icon-search"  @click="toquery(query)"></el-button></el-input>

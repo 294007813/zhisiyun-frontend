@@ -45,7 +45,7 @@
             </el-date-picker>
 
             <ul class="sta">
-                <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} 个月</p></li>
+                <li><label>{{$t("xc.grand_total")}}</label><p>{{sta.sum_month}} {{$t("index.the_month")}}</p></li>
                 <li><label>{{$t("xc.accumulated_wages")}}</label><p>{{hidstr || $f.currencyFilter(sta.p_all_income)}}</p></li>
                 <template v-for="(item, key) in sta.huizong">
                     <li><label>{{item.name}}</label><p>{{hidstr || $f.currencyFilter(item.count)}}</p></li>

@@ -21,7 +21,7 @@
     </div>
 
     <el-dialog
-            :title="$t("index.medal_wall")"
+            :title="$t('index.medal_wall')"
             :visible.sync="medalshow"
             custom-class="medalwall"
             :append-to-body="true"
