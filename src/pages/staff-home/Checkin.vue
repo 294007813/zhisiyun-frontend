@@ -125,8 +125,6 @@ export default {
         }
     },
     mounted(){
-        console.log("======")
-        console.log(this.$t("mainPages.wt.day"));
         this.attendanceArr = [
                 // checkin: true, //出勤
                 // late: true, //迟到
@@ -356,10 +354,12 @@ export default {
     }
     /deep/.sta > div ,.balance, .flow {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         flex-wrap: wrap;
         li{
-            flex: 1;
+            // flex: 1;
+            display: inline-block;
+            width: calc(25% - 20px);
             margin-left: 10px;
             margin-right: 10px;
             text-align: center;
@@ -375,6 +375,17 @@ export default {
                 b{ font-size: 12px; margin-left: 6px}
             }
             span{ font-size: 12px}
+        }
+        li {
+            .el-button {
+                padding-left: 0;
+                padding-right: 0;
+                text-align: center;
+                overflow: hidden;
+            }
+        }
+        li:nth-of-type(4n) {
+            margin-bottom: 10px;
         }
     }
 }
