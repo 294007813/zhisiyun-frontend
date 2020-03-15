@@ -3,8 +3,8 @@
     <h5>{{$t("index.salary_information")}}
         <el-tooltip class="tooltip" effect="dark" :content="`${ishide?'查看': '隐藏'}薪资`" placement="bottom-start">
             <span>
-                <i class="iconfont iconyanjing open" @click="checkPassword(false)" v-show="ishide"></i>
-                <img class="close" src="~as/img/staff-home/iconfont/close.png" v-show="!ishide" @click="checkPassword(true)"/>
+                <i class="iconfont iconyanjing open" @click="checkPassword(true)" v-show="!ishide"></i>
+                <img class="close" src="~as/img/staff-home/iconfont/close.png" v-show="ishide" @click="checkPassword(false)"/>
             </span>
         </el-tooltip>
     </h5>
