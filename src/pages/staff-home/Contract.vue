@@ -8,7 +8,11 @@
         </li>
         <li @click="$f.href(userInfoUrl)">
             <p v-show="notime">{{notime}}</p>
-            <p v-show="!notime"><b>{{da.h.years || ''}}</b>{{da.h.years && $t("index.year")}}<b>{{da.h.months||''}}</b>{{da.h.months && $t("index.month")}}<b>{{da.h.days||"0"}}</b>{{$t("index.day_time")}}</p>
+            <p v-show="!notime">
+                <template v-if="da.h.years"><b>{{Math.abs(da.h.years)}}</b>{{$t("index.year")}}</template>
+                <template v-if="da.h.months"><b>{{Math.abs(da.h.months)}}</b>{{$t("index.month")}}</template>
+                <b>{{Math.abs(da.h.days|| 0)}}</b>{{$t("index.day_time")}}
+            </p>
             <span>{{$t("index.contract_still_valid")}}</span>
         </li>
     </ul>

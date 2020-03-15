@@ -118,11 +118,11 @@
                 </el-form-item>
                 <el-form-item :label="$t('index.shared_with')">
                     <el-button type="primary" size="mini" @click="staffshow= true">{{$t("index.select")}}</el-button>
-                    <li v-for="(item, i) in forward_people" :key="i">
+                    <li v-for="(item, i) in forward_people_new" :key="i">
                         <span>{{item.name}}</span>
-                        <i class="el-icon-error" @click="forward_people.splice(i,1)"></i>
+                        <i class="el-icon-error" @click="forward_people_new.splice(i,1)"></i>
                     </li>
-                    <el-input v-show="forward_people.length" v-model="form.forward_summary"
+                    <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_attachments')">
@@ -165,7 +165,7 @@ let form= JSON.stringify({
     alarm_date_type: "R",
     alarm_date_absolute: null,
     alarm_date_offset: null,
-    forward_people: [],
+    forward_people_new: [],
     forward_summary: "",
     attachments:[],
     comments: "",
@@ -179,7 +179,7 @@ export default {
             dishow: false,
             form: JSON.parse(form),
             staffshow: false,
-            forward_people:[],
+            forward_people_new:[],
             staffMount: false,
             mounted: false,
             creatable: true,
@@ -275,8 +275,8 @@ export default {
                 end: this.time(item.end),
                 // title: item.title,
                 // people: item.people,
-                // forward_people: item.forward_people,
-                // forward_people_msg: item.forward_people_msg,
+                // forward_people_new: item.forward_people_new,
+                // forward_people_new_msg: item.forward_people_new_msg,
             }
             this.events.push(tag)
         },
@@ -309,7 +309,7 @@ export default {
                 }
                 this.dishow= true
             }
-            this.forward_people=[]
+            this.forward_people_new=[]
         },
         getWeek(view){
 
@@ -343,7 +343,7 @@ export default {
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
             }
-            this.forward_people=[]
+            this.forward_people_new=[]
             e.stopPropagation()
         },
         changetime(flag, vn){
@@ -380,7 +380,7 @@ export default {
             }
         },
         getShare(arr){
-            this.forward_people= arr.map(it=>{
+            this.forward_people_new= arr.map(it=>{
                 return {name: it.name, id: it.id}
             })
         },
@@ -401,7 +401,7 @@ export default {
                 msg= "修改"
             }
             let param= this.form
-            this.form.forward_people= this.forward_people.map(it=>{
+            this.form.forward_people_new= this.forward_people_new.map(it=>{
                 return it.id
             })
             this.$axios[method]( url, {data: param}).then(data=>{

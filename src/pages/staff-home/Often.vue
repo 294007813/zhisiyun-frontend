@@ -2,7 +2,8 @@
 <div class="often">
     <h5>{{$t("index.common_application")}}</h5>
     <ul>
-        <li v-for="(item, key) in selectList" :key="key" v-show="!item || !!item.uf_status" @click="$f.href(`${item.url}`)">
+<!--        <li><img :src="'./img/staff-home/AI助手.png'"/><p>{{$t("index.ai_assistant")}}</p></li>-->
+        <li v-for="(item, key) in selectList" :key="key" v-show="!item || !!item.uf_status" @click="clit(item)">
             <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p></li>
         <li class="add" @click="add"></li>
     </ul>
@@ -40,6 +41,14 @@
         </p>
     </el-dialog>
 
+    <el-dialog
+            :visible.sync="aishow"
+            custom-class="ai-dialog"
+            :append-to-body="true"
+            width="630px">
+        <div v-html="ai"></div>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -49,10 +58,12 @@ export default {
     data(){
         return{
             list:[],
+            aishow: false,
             dishow: false
             ,selectList : [],
             activeName: "yes",
-            dislist: []
+            dislist: [],
+            ai: ""
         }
     },
     mounted(){
@@ -60,6 +71,9 @@ export default {
     },
     methods:{
         getData(){
+            this.$axios.get("/api/AI",{dataLevel: 'api'}).then(data=>{
+                this.ai= data
+            })
             this.$axios.get("/api/feishu/index/myapp/list?from=pc&type=all").then(data=>{
                 let ai= null
                 data.paid.map((v,i) => {
@@ -83,6 +97,13 @@ export default {
         },
         add(){
             this.dishow= true
+        },
+        clit(item){
+            if(item.menu_code == "AI_ASSESSITANT"){
+                this.aishow= true
+            }else{
+                this.$f.href(`${item.url}`)
+            }
         },
         change(item, key){
             item.uf_status= 1- item.uf_status
@@ -210,6 +231,20 @@ export default {
             }
         }
 
+    }
+}
+/deep/ .ai-dialog{
+    overflow: hidden;
+    .el-dialog__header{
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        .el-dialog__headerbtn{
+            top: 16px;
+            right: 8px;
+        }
     }
 }
 </style>
