@@ -13,8 +13,7 @@
                             <p>今天是TA的生日</p>
                         </div>
                         <div class="photo">
-                            <img class="head" :src="$f.getPic(item.people.avatar)"/>
-<!--                            <avatar class="head" :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
+                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <img class="crown" src="~as/img/staff-home/crown.svg"/>
                             <p>{{item.people.people_name}}</p>
                             <span>{{`${item.people.ou_name}/${item.people.position_name}`}}</span>
@@ -34,8 +33,7 @@
                     <ul class="mon">
                         <p class="title">{{moment(bd.end_date).format("D")}}{{$t("index.day")}}<b>{{$t("index.week")}}{{moment(bd.end_date).format("dd")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
-                            <img class="head" :src="$f.getPic(item.people.avatar)"/>
-<!--                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
+                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
                             <span>{{item.people.people_name}}</span>
                         </li>
                     </ul>
@@ -60,8 +58,7 @@
                 <p>{{moment(p.people.birthday).format("M月D日")}}是TA的生日</p>
             </div>
             <div class="photo" >
-                <img class="head" :src="$f.getPic(p.people.avatar)"/>
-<!--                <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>-->
+                <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>
                 <img class="crown" src="~as/img/staff-home/crown.svg"/>
                 <p>{{p.people.people_name}} <span>{{p.people.people_no}}</span></p>
                 <span>{{`${p.people.ou_name}/${p.people.position_name}`}}</span>
@@ -70,7 +67,7 @@
             </div>
         </div>
         <p slot="footer" class="footer">
-            <el-button type="primary" size="small" @click="pshow=false">知道了</el-button>
+            <el-button type="primary" size="small" @click="pshow=false">{{$t("index.know")}}</el-button>
         </p>
     </el-dialog>
 </div>

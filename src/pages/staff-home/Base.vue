@@ -21,21 +21,21 @@
     </div>
 
     <el-dialog
-            title="勋章墙"
+            :title="$t("index.medal_wall")"
             :visible.sync="medalshow"
             custom-class="medalwall"
             :append-to-body="true"
             width="400px">
-        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:'暂无勋章'}">
+        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:$t("index.no_medal")}">
             <li v-for="(it, ind) in medal" :key="ind">
-                <i class="tag"><span>奖</span></i>
+                <i class="tag"><span>{{$t("index.prize")}}</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
                 <p>{{it.reward_punish.rap_name}}</p>
-                <span>{{getdate(it.current_time)}}获得</span>
+                <span>{{getdate(it.current_time)}}{{$t("index.obtain")}}</span>
             </li>
         </ul>
         <p slot="footer" class="footer">
-            <el-button type="primary" size="small" @click="medalshow=false">确认</el-button>
+            <el-button type="primary" size="small" @click="medalshow=false">{{$t("index.confirm")}}</el-button>
         </p>
     </el-dialog>
 

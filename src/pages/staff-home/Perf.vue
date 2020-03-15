@@ -11,7 +11,7 @@
                 <p class="od">{{$t("index.performance_scores")}}<span>{{od.value}}</span></p>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="近期趋势" name="trend" v-if="fitrend">
+        <el-tab-pane :label="$t("index.recent_trends")" name="trend" v-if="fitrend">
             <div class="trend" v-if="ismounted && showTrend ">
                 <v-chart :options="trendChart" class="chart" ref="trend" autoresize/>
             </div>
