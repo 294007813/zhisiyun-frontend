@@ -35,7 +35,7 @@ export default  {
     "add_place":"添加地点",	
     "event_time":"事件时间",
     "customize":"自定义",
-    "reminder time":"提醒时间",
+    "reminder_time":"提醒时间",
     "shared_with":"共享对象",
     "add_attachments":"添加附件",
     "add_notes":"添加备注",	

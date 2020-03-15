@@ -49,16 +49,16 @@
             <h2 v-if="form._id">{{subtitle}}</h2>
 
             <el-form ref="form" :model="form" label-width="80px" size="mini" class="form">
-                <el-form-item label="事件名称">
+                <el-form-item :label="$t("index.event_name")">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
-                <el-form-item label="添加详情">
+                <el-form-item :label="$t("index.add_details")">
                     <el-input v-model="form.description" type="textarea"></el-input>
                 </el-form-item>
-                <el-form-item label="添加地点">
+                <el-form-item :label="$t("index.add_place")">
                     <el-input v-model="form.location" type="textarea"></el-input>
                 </el-form-item>
-                <el-form-item label="事件时间">
+                <el-form-item :label="$t("index.event_time")">
                     <el-switch
                             @change="changeallday"
                             v-model="form.allDay"
@@ -85,7 +85,7 @@
                     </div>
 
                 </el-form-item>
-                <el-form-item label="提醒时间">
+                <el-form-item :label="$t("index.reminder_time")">
                     <el-switch
                             v-model="form.alarm_date_type"
                             active-value="A"
@@ -116,7 +116,7 @@
                         </el-date-picker>
                     </div>
                 </el-form-item>
-                <el-form-item label="共享对象">
+                <el-form-item :label="$t("index.shared_with")">
                     <el-button type="primary" size="mini" @click="staffshow= true">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in forward_people_new" :key="i">
                         <span>{{item.name}}</span>
@@ -125,13 +125,13 @@
                     <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
-                <el-form-item label="添加附件">
+                <el-form-item :label="$t("index.add_attachments")">
                     <el-button type="primary" size="mini" @click="upfile">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in form.attachments" :key="i">
                         <span>{{item.filename}}</span> <i class="el-icon-delete-solid" @click="dfile(i)"></i>
                     </li>
                 </el-form-item>
-                <el-form-item label="添加备注">
+                <el-form-item :label="$t("index.add_notes")">
                     <el-input v-model="form.comments" type="textarea"></el-input>
                 </el-form-item>
             </el-form>

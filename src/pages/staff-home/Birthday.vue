@@ -67,7 +67,7 @@
             </div>
         </div>
         <p slot="footer" class="footer">
-            <el-button type="primary" size="small" @click="pshow=false">知道了</el-button>
+            <el-button type="primary" size="small" @click="pshow=false">{{$t("index.know")}}</el-button>
         </p>
     </el-dialog>
 </div>

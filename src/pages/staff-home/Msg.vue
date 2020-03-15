@@ -2,7 +2,7 @@
 <div class="msg">
     <h5 class="unread-num" @click="$f.href('/pc_message_list')">{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
-        <el-tab-pane label="未读" name="gt" v-if="figt">
+        <el-tab-pane :label="$t("index.unread")" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                 <li v-for="(item, i) in gt.list" :key="i" @click="$f.href(item.pc_url)">
                     <template>
@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </el-tab-pane>
-        <el-tab-pane label="已读" name="at" v-if="fiat">
+        <el-tab-pane :label="$t("index.readed")" name="at" v-if="fiat">
             <ul class="ul at" v-nodata="{have: at.list&& at.list.length}">
                 <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.pc_url)">
                     <template>
