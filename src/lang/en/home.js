@@ -39,6 +39,8 @@ export default {
       "shared_with":"Shared with",
       "add_attachments":"Add attachments",
       "add_notes":"Add notes",
+      "fill_comments":"Fill in comments",	
+      "submit_anonymously":"Submit anonymously",
       
    "like":"like",
     "search":"Search",

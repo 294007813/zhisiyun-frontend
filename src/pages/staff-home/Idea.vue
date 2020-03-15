@@ -17,7 +17,7 @@
             :visible.sync="show"
             :append-to-body="true"
             width="500px">
-        <p slot="title" class="title">填写意见</p>
+        <p slot="title" class="title">{{$t("index.fill_comments")}}</p>
         <div style="padding: 10px">
             <el-input
                     type="textarea"
@@ -35,8 +35,8 @@
                 </el-select>
             </span>
 
-            <el-checkbox v-model="form.anonymous" style="margin-right: 10px">匿名提交</el-checkbox>
-            <el-button type="primary" size="small" @click="save">确认</el-button>
+            <el-checkbox v-model="form.anonymous" style="margin-right: 10px">{{$t("index.submit_anonymously")}}</el-checkbox>
+            <el-button type="primary" size="small" @click="save">{{$t("index.confirm")}}</el-button>
         </p>
     </el-dialog>
 </div>

@@ -39,6 +39,8 @@ export default  {
     "shared_with":"共享对象",
     "add_attachments":"添加附件",
     "add_notes":"添加备注",	
+    "fill_comments":"填写意见",	
+    "submit_anonymously":"匿名提交",	
 
     "like":"点赞",
     "search":"搜索",
