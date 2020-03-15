@@ -43,7 +43,12 @@ export default {
 
             async.parallel({
                 user: (callback)=> {
-                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people?flag=PC").then(data=>{
+                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people",{
+                        params:{
+                            flag: "PC",
+                            tp: new Date().getTime(),
+                        }
+                    }).then(data=>{
                         let list= data.conf.home
                         let rule= data.modules.contract_modules
                         this.mapMod(list, rule)
@@ -52,7 +57,12 @@ export default {
                     })
                 },
                 admin: (callback)=> {
-                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
+                    this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client",{
+                        params:{
+                            flag: "PC",
+                            tp: new Date().getTime(),
+                        }
+                    }).then(data=>{
                         callback(null, data.conf.home);
                     })
                 }
