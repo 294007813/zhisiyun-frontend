@@ -11,9 +11,8 @@
                 <div :class="{ssb: true, size}">
                     <div class="left">
                         <!-- <i>NO.1</i> -->
-<!--                        <img src="~as/img/staff-home/head.png"/>-->
-<!--                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>-->
-                        <avatar :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`" :sex="it.people.gender"></avatar>
+                        <img :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`"/>
+<!--                        <avatar :src="`${$conf.baseApi}/gridfs/get/${it.people.avatar}`" :sex="it.people.gender"></avatar>-->
                         <p class="medal" @click="openmedal(it.people.reward_punishs)"><i class="iconfont iconxunzhangtubiao"></i>{{it.people.reward_punishs.length}}{{$t("index.number")}}</p>
                         <p class="name">{{it.people.people_name}}</p>
                     </div>
