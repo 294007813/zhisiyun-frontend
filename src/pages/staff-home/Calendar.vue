@@ -88,15 +88,15 @@
                 <el-form-item :label="$t('index.reminder_time')">
                     <el-switch
                             v-model="form.alarm_date_type"
-                            active-value="A"
-                            inactive-value="R"
+                            active-value="R"
+                            inactive-value="A"
                             active-color="#13ce66"
                             inactive-color="#409eff"
-                            :active-text="form.alarm_date_type=='R'? '自定义': '相对时间'">
+                            :active-text="form.alarm_date_type=='A'? '自定义': '相对时间'">
                     </el-switch>
                     <div>
                         <el-select placeholder="请选择" size="mini"
-                                   v-show="form.alarm_date_type=='A'" v-model="form.alarm_date_offset" clearable>
+                                   v-show="form.alarm_date_type=='R'" v-model="form.alarm_date_offset" clearable>
                             <el-option label="不提醒" :value="0"></el-option>
                             <el-option label="提前5分钟" :value="-5"></el-option>
                             <el-option label="提前15分钟" :value="-15"></el-option>
@@ -108,7 +108,7 @@
                             <el-option label="提前1星期" :value="-10080"></el-option>
                         </el-select>
                         <el-date-picker
-                                v-show="form.alarm_date_type=='R'"
+                                v-show="form.alarm_date_type=='A'"
                                 v-model="form.alarm_date_absolute"
                                 type="datetime"
                                 placeholder="提醒时间"
@@ -162,7 +162,8 @@ let form= JSON.stringify({
     allDay: false,
     start: null,
     end: null,
-    alarm_date_type: "R",
+    has_alarms: true,
+    alarm_date_type: "A",
     alarm_date_absolute: null,
     alarm_date_offset: null,
     forward_people_new: [],
@@ -273,10 +274,6 @@ export default {
                 ...item,
                 start: this.time(item.start),
                 end: this.time(item.end),
-                // title: item.title,
-                // people: item.people,
-                // forward_people_new: item.forward_people_new,
-                // forward_people_new_msg: item.forward_people_new_msg,
             }
             this.events.push(tag)
         },
@@ -337,13 +334,24 @@ export default {
             }
         },
         tagClick(data, e, c){
-            // console.log(data, e, c)
+            console.log(data, e, c)
             if(!this.creatable){return;}
             if(data.class.includes("event")){
                 this.form= JSON.parse(JSON.stringify(data))
                 this.dishow= true
+                let p= data.forward_people_msg
+                if(p && p.length){
+                    this.forward_people_new= p.map(it=>{
+                        let ip= it.people
+                        return {name: `${ ip.people_name}/${ip.position_name}`, p_id: ip._id}
+                    })
+                    this.form.forward_summary= p[0].msg
+                }else{
+                    this.forward_people_new=[]
+                }
+            }else{
+                this.forward_people_new=[]
             }
-            this.forward_people_new=[]
             e.stopPropagation()
         },
         changetime(flag, vn){
@@ -381,7 +389,7 @@ export default {
         },
         getShare(arr){
             this.forward_people_new= arr.map(it=>{
-                return {name: it.name, id: it.id}
+                return {name: it.name, p_id: it.p_id}
             })
         },
         upfile(){
@@ -402,8 +410,9 @@ export default {
             }
             let param= this.form
             this.form.forward_people_new= this.forward_people_new.map(it=>{
-                return it.id
+                return it.p_id
             })
+            param.has_alarms= true
             this.$axios[method]( url, {data: param}).then(data=>{
                 this.dishow= false
                 this.$msg({message:msg+"成功", type: "success"})
@@ -578,7 +587,9 @@ export default {
         .event{
             cursor: pointer;
             opacity: .8;
-            min-height: 20px;
+            &:hover{
+                overflow: visible;
+            }
             &.red{
                 background-color: #f5babc;
                 border: 1px solid #f4a4a6;

@@ -44,8 +44,7 @@
     <el-dialog
             :visible.sync="aishow"
             custom-class="ai-dialog"
-            :append-to-body="true"
-            width="630px">
+            :append-to-body="true">
         <div v-html="ai"></div>
     </el-dialog>
 
@@ -58,7 +57,7 @@ export default {
     data(){
         return{
             list:[],
-            aishow: false,
+            aishow: true,
             dishow: false
             ,selectList : [],
             activeName: "yes",
