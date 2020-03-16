@@ -58,7 +58,7 @@ export default {
     data(){
         return{
             list:[],
-            aishow: true,
+            aishow: false,
             dishow: false
             ,selectList : [],
             activeName: "yes",
