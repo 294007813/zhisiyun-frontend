@@ -11,7 +11,7 @@
                 <div :class="{ssb: true, size}">
                     <div class="left">
                         <img :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`"
-                             @click="$f.href(`/admin/masterdata/people/form/${item._id}?mode=view`)"/>
+                             @click="$f.href('/admin/pm/pp_skill/'+ item._id)"/>
 <!--                        <avatar :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`" :sex="item.gender"></avatar>-->
                         <p>{{item.people_name}}</p>
                         <span>{{`${item.ou_name}/${item.position_name}`}}</span>

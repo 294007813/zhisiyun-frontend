@@ -1,17 +1,20 @@
 <template>
 <div class="idea">
     <h5>{{$t("index.suggestion_box")}}</h5>
-    <div>
-        <img src="~as/img/staff-home/idea.svg">
-        <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{num}}</b>条意见</p>
-        <el-button size="small" type="primary" plain class="but"  @click="suggest">{{$t("index.delivery_advice")}}</el-button>
-        <el-select placeholder="请选择" size="small" class="select"
-            v-show="typeList.length>1" v-model="type" @change="getData">
-            <el-option v-for="(item, ind) in typeList"
-                    :key="ind" :label="item.name" :value="item._id">
-            </el-option>
-        </el-select>
-    </div>
+
+    <swiper class="swiper" ref="swiper" :options="{watchOverflow: true}" v-if="typeList.length">
+        <swiper-slide v-for="(item, i) in typeList" :key="i">
+            <div class="ibox">
+                <img src="~as/img/staff-home/idea.svg">
+                <span>{{item.name}}</span>
+                <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{nums[i]|| 0}}</b>条意见</p>
+                <el-button size="small" type="primary" plain class="but"
+                       @click="suggest(item)">{{$t("index.delivery_advice")}}</el-button>
+            </div>
+        </swiper-slide>
+        <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('swiper', true)"></i>
+        <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
+    </swiper>
 
     <el-dialog
             :visible.sync="show"
@@ -26,13 +29,13 @@
                     v-model="form.desc"/>
         </div>
         <p slot="footer" class="footer">
-            <span style="float: left">投递到：
-                <el-select placeholder="请选择" size="small" class="select"
-                           v-show="typeList.length>1" v-model="form.type">
-                    <el-option v-for="(item, ind) in typeList"
-                               :key="ind" :label="item.name" :value="item._id">
-                    </el-option>
-                </el-select>
+            <span style="float: left;line-height: 34px;">投递到：{{form.name}}
+<!--                <el-select placeholder="请选择" size="small" class="select"-->
+<!--                           v-show="typeList.length>1" v-model="form.type">-->
+<!--                    <el-option v-for="(item, ind) in typeList"-->
+<!--                               :key="ind" :label="item.name" :value="item._id">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
             </span>
 
             <el-checkbox v-model="form.anonymous" style="margin-right: 10px">{{$t("index.submit_anonymously")}}</el-checkbox>
@@ -48,14 +51,15 @@ export default {
     data(){
         return{
             show: false,
-            num: 0,
             form:{
                 anonymous: false,
                 desc: "",
-                type: ""
+                type: "",
+                name: ""
             },
             typeList: [],
-            type: ""
+            type: "",
+            nums:{}
         }
     },
     mounted(){
@@ -65,23 +69,34 @@ export default {
         getType(){
             this.$axios.get("/api/employeesindexpage/suggestion_items").then(data=>{
                 this.typeList= data
-                this.type= this.form.type= data[0]._id
-                this.getData()
+                data.forEach((it, i)=>{
+                    this.getData(it._id, i)
+                })
             })
         },
-        getData(){
-            this.$axios.get(`/api/employeesindexpage/suggestion_num?type=${this.type}`).then(data=>{
-                this.num= data
+        getData(id, i){
+            this.$axios.get(`/api/employeesindexpage/suggestion_num?type=${id}`).then(data=>{
+                this.nums[i]= data
+                // this.$set(this.nums, i, data)
             })
         },
-        suggest () {
-             this.show = true;
+        suggest (it) {
+            this.form.type= it._id
+            this.form.name= it.name
+            this.show = true;
         },
         save () {
              this.$axios.get("/api/feishu/base/client_culture_suggestion_bb_create",{params: this.form}).then(data=>{
                  this.show = false
             })
-        }
+        },
+        next(ref, back){
+            if(back){
+                this.$refs[ref].swiper.slidePrev()
+            }else{
+                this.$refs[ref].swiper.slideNext()
+            }
+        },
     }
 }
 </script>
@@ -90,7 +105,7 @@ export default {
 @import "common";
 .idea{
     @include block;
-    >div{
+    .ibox{
         padding-top: 40px;
         overflow: hidden;
         text-align: center;
@@ -111,14 +126,22 @@ export default {
             top: 50px;
         }
         img{
-            margin-top: 20px;
-            height: 160px;
-            margin-bottom: 20px;
+            margin: 10px 0;
+            height: 180px;
+        }
+        >span{
+            font-size: 16px;
+            font-weight: 600;
+            color: $color-black;
+            position: absolute;
+            top: 186px;
+            left: 50%;
+            transform: translateX(-50%);
         }
         p{
             font-size: 12px;
             color: $color-gray;
-            margin-bottom: 6px;
+            margin-bottom: 12px;
             cursor: pointer;
             b{color: $color-black;}
         }

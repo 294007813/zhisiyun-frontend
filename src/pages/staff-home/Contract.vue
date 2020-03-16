@@ -7,7 +7,7 @@
             <span>{{$t("index.signed_contract")}}</span>
         </li>
         <li @click="$f.href(userInfoUrl)">
-            <p v-show="notime">{{notime}}</p>
+            <p v-show="notime"><b>{{notime}}</b></p>
             <p v-show="!notime">
                 <template v-if="da.h.years"><b>{{Math.abs(da.h.years)}}</b>{{$t("index.year")}}</template>
                 <template v-if="da.h.months"><b>{{Math.abs(da.h.months)}}</b>{{$t("index.month")}}</template>

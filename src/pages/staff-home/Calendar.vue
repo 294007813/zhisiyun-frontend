@@ -608,7 +608,10 @@ export default {
         }
         &.vuecal--events-on-month-view{
             .vuecal__all-day{
-                padding-right: 15px;
+                /*padding-right: 15px;*/
+            }
+            .vuecal__bg{
+                overflow: overlay;
             }
         }
         .vuecal__event-title{
