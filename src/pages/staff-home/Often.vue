@@ -44,8 +44,9 @@
     <el-dialog
             :visible.sync="aishow"
             custom-class="ai-dialog"
+            width="480px"
             :append-to-body="true">
-        <div v-html="ai"></div>
+        <iframe src="/api/AI" style="width: 100%; height: 320px"></iframe>
     </el-dialog>
 
 </div>
