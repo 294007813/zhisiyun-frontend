@@ -89,6 +89,7 @@ export default {
     "birthday_blessing_wall":"Birthday blessing wall",
     "today":"today",
     "day":"today",
+    "day_time": "days",
     "month": "month",
     "num":"post",
     "star_company":"Star of company",

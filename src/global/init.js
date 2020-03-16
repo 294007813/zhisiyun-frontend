@@ -4,8 +4,8 @@ import cookie from 'js-cookie'
 
 if(process.env.VUE_APP_ENV=='dev'){
   axios.post("/login", {
-    client: "demo12",
-    username: "00001",
+    client: "001",
+    username: "0003",
     password: "000000"
 
     // client: "HYFZ",

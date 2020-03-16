@@ -9,7 +9,6 @@
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
 <!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
-                            <img class="head" :src="item._id"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>
@@ -23,7 +22,6 @@
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
 <!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
-                            <img class="head" :src="item._id"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>
@@ -88,7 +86,7 @@ export default {
             padding-top: 10px;
             border-bottom: 1px solid $color-border;
             position: relative;
-            min-height: 90px;
+            min-height: 70px;
             cursor: pointer;
             &:last-child{ border: 0}
             p{
@@ -99,7 +97,7 @@ export default {
             div{
                 display: table-cell;
                 position: relative;
-                padding-left: 50px;
+                /*padding-left: 50px;*/
                 img{
                     width: 40px;
                     height: 40px;

@@ -74,6 +74,9 @@ export default {
                         let t= moment().diff(date)
                         // console.log("diff", moment().diff(date).toObject())
                         this.da.h= moment.duration(t)._data
+                        if(Math.abs(this.da.h.years)>100){
+                            this.notime= arr[0].type_name
+                        }
                     }else{
                         this.notime= arr[0].type_name
                     }

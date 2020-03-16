@@ -105,9 +105,14 @@ export default {
         },
         revmon(){
             let arr=[]
-            for(let i in this.mon){
-                arr.unshift({year: i, item: this.mon[i]})
+            for(let y in this.mon){
+                let ys= this.mon[y], ms=[]
+                for(let m in ys){
+                    ms.unshift({mon: m, amount: ys[m]})
+                }
+                arr.unshift({year: y, item: ms})
             }
+            // console.log(JSON.stringify(arr))
             return arr
         }
     },
@@ -124,11 +129,16 @@ export default {
                 let arr= data.slice(-6)
                 this.mon= {}
                 for(let i = arr.length - 1; i >= 0; i--){
-                    let item= arr[i]
+                    let item= arr[i], addn= item.ci_items.length && (item.ci_items[0].amount ||0)
                     let {years, months}= moment(item.cpi.month).toObject()
-                    this.mon[years]? false: this.mon[years]= []
-                    this.mon[years].push({mon: months+1, amount: item.ci_items.length && (item.ci_items[0].amount ||0)})
+                    this.mon[years]= this.mon[years] ||{};
+                    if( this.mon[years].hasOwnProperty(months+1)){
+                        this.mon[years][months+1]+= addn
+                    }else{
+                        this.mon[years][months+1]= addn
+                    }
                 }
+                console.log("this.mon", JSON.stringify(this.mon))
 
                 let trend= data.slice(-18)
                 let xv=[], yv=[]
