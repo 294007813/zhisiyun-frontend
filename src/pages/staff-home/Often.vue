@@ -16,7 +16,7 @@
         <p slot="title" class="title">{{$t("index.add_app")}}</p>
         <div class="content">
             <el-tabs v-model="activeName">
-                <el-tab-pane label="可添加" name="yes">
+                <el-tab-pane :label="$t('index.can_added')" name="yes">
                     <ul style="padding: 0">
                     <li v-for="(item, key) in list" :key="key" @click="change(item, key)">
                         <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
@@ -24,7 +24,7 @@
                     </li>
                     </ul>
                 </el-tab-pane>
-                <el-tab-pane label="未购买" name="no">
+                <el-tab-pane :label="$t('index.not_purchased')" name="no">
                     <ul style="padding: 0">
                         <li v-for="(item, key) in dislist" :key="key" style="cursor: default">
                             <img :src="`./img/staff-home/${item.icon}`"/><p>{{item.name}}</p>
