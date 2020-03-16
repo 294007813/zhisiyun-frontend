@@ -100,6 +100,7 @@ export default {
         toquery(val){
              this.list = this.list.filter(v => {
                 return v.people_name.indexOf(val) > -1
+
             });
         },
         next(ref, back){

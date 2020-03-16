@@ -59,6 +59,7 @@ export default {
     },
     methods:{
         getTo(){
+            let n= this.$t("index.Nofixeddeadline")
             this.$axios.get("/api/feishu/agreement/list").then(data=>{
                 this.da.n1= data.newContract.length
                 this.da.n2= data.newContractAgreement.length
@@ -75,10 +76,10 @@ export default {
                         // console.log("diff", moment().diff(date).toObject())
                         this.da.h= moment.duration(t)._data
                         if(Math.abs(this.da.h.years)>100){
-                            this.notime= arr[0].type_name
+                            this.notime= n
                         }
                     }else{
-                        this.notime= arr[0].type_name
+                        this.notime= n
                     }
                 }
             })

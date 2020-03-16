@@ -97,6 +97,7 @@ export default  {
     "department_position": "部门/职位",
     "department": "部门",
     "position": "职位",
+    "Nofixeddeadline": "无固定期限",
    // "entry_data": "入职日期",
     "birth_day": "出生日期",
     "constellations":"星座",

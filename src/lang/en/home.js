@@ -97,6 +97,7 @@ export default {
     "department_position": "department/position",
     "department": "department",
     "position": "position",
+    "Nofixeddeadline": "No fixed deadline",
    // "entry_data": "入职日期",
     "birth_day": "Date of birth",
     "constellations":"Constellation",
