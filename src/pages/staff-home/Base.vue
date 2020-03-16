@@ -15,7 +15,9 @@
     <a v-if="field.look" @click="$f.href('/profile_user')">{{$t("index.view_files")}}<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)">
-            <avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar></span>
+            <img class="click-hand" :src="avatar"/>
+<!--            <avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar>-->
+        </span>
         <p v-if="field.medal" @click="openmedal">
             <i class="iconfont iconxunzhangtubiao"></i>{{info.numberOf_MEDALS}}{{$t("index.number")}}</p>
     </div>
@@ -182,10 +184,11 @@ export default {
             border-radius: 100%;
             overflow: hidden;
             width: 100%;
-            height: auto;
+            height: 100px;
             border: 1px solid $color-border;
             object-fit: cover;
             margin-bottom: 10px;
+            background-color: white;
         }
         p{
             display: inline-block;
@@ -217,7 +220,8 @@ export default {
         }
     }
     .click-hand {
-        cursor: pointer;
+        /*cursor: pointer;*/
+
     }
 
 }

@@ -9,7 +9,7 @@
                 <span>{{item.name}}</span>
                 <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{nums[i]|| 0}}</b>条意见</p>
                 <el-button size="small" type="primary" plain class="but"
-                       @click="suggest(item)">{{$t("index.delivery_advice")}}</el-button>
+                       @click="suggest(item, i)">{{$t("index.delivery_advice")}}</el-button>
             </div>
         </swiper-slide>
         <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('swiper', true)"></i>
@@ -29,7 +29,7 @@
                     v-model="form.desc"/>
         </div>
         <p slot="footer" class="footer">
-            <span style="float: left;line-height: 34px;">投递到：{{form.name}}
+            <span style="float: left;line-height: 34px;">投递到：{{name}}
 <!--                <el-select placeholder="请选择" size="small" class="select"-->
 <!--                           v-show="typeList.length>1" v-model="form.type">-->
 <!--                    <el-option v-for="(item, ind) in typeList"-->
@@ -46,20 +46,23 @@
 </template>
 
 <script>
+let form= JSON.stringify({
+    anonymous: false,
+    desc: "",
+    type: "",
+})
 export default {
     name: "Idea",
     data(){
         return{
             show: false,
-            form:{
-                anonymous: false,
-                desc: "",
-                type: "",
-                name: ""
-            },
+            form: JSON.parse(form),
             typeList: [],
-            type: "",
-            nums:{}
+            nums:{},
+            name: "",
+            i: null
+
+
         }
     },
     mounted(){
@@ -76,18 +79,21 @@ export default {
         },
         getData(id, i){
             this.$axios.get(`/api/employeesindexpage/suggestion_num?type=${id}`).then(data=>{
-                this.nums[i]= data
-                // this.$set(this.nums, i, data)
+                // this.nums[i]= data
+                this.$set(this.nums, i, data)
             })
         },
-        suggest (it) {
+        suggest (it, i) {
+            this.form= JSON.parse(form)
             this.form.type= it._id
-            this.form.name= it.name
+            this.name= it.name
+            this.i= i
             this.show = true;
         },
         save () {
-             this.$axios.get("/api/feishu/base/client_culture_suggestion_bb_create",{params: this.form}).then(data=>{
+             this.$axios.post("/api/feishu/base/client_culture_suggestion_bb_create", this.form).then(data=>{
                  this.show = false
+                 this.getData(data.type, this.i)
             })
         },
         next(ref, back){

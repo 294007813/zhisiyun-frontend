@@ -8,7 +8,8 @@
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
-                            <img class="head" src="~as/img/staff-home/head-M.png"/>
+<!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
+                            <img class="head" :src="item._id"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>
@@ -21,7 +22,8 @@
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
-                            <img class="head" src="~as/img/staff-home/head-M.png"/>
+<!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
+                            <img class="head" :src="item._id"/>
                             <span>{{item.msg}}</span>
                         </div>
                     </template>
