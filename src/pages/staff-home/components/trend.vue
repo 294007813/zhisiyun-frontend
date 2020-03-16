@@ -17,21 +17,19 @@
               ref="echars1"
               autoresize
               :options="option"
-              :style="{width: '100%','overflow': 'hidden'}"
+              :style="{width: maxWidth + 'px', 'overflow': 'hidden'}"
             />
           </div>
         </vuescroll>
       </div>
-        <div class="trend-section">
-          <p>
-            <span
-              v-if="dateInterval.length > 1"
-            >{{`${dateInterval[0].replace(/-/,$t(`index.year`))}${$t(`index.month`)}-${dateInterval[1].replace(/-/g,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
-            <span
-              v-else
-            >{{`${dateInterval[0].replace(/-/,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
-          </p>
-        </div>
+      <div class="trend-section">
+        <p>
+          <span
+            v-if="dateInterval.length > 1"
+          >{{`${dateInterval[0].replace(/-/,$t(`index.year`))}${$t(`index.month`)}-${dateInterval[1].replace(/-/g,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
+          <span v-else>{{`${dateInterval[0].replace(/-/,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -129,7 +127,7 @@ export default {
             backgroundColor: "#6a7985"
           }
         },
-        triggerOn: 'mousemove|click',
+        triggerOn: "mousemove|click",
         formatter: e => {
           this.lineObj = e[0].data;
         }
@@ -210,11 +208,12 @@ export default {
           symbolSize: 4,
           data: this.dataObj,
           itemStyle: {
-            emphasis:{ // 鼠标经过时拐点样式
-                color: "#fff",
-                borderColor: "#3aa7ff"
-            },
-          }, 
+            emphasis: {
+              // 鼠标经过时拐点样式
+              color: "#fff",
+              borderColor: "#3aa7ff"
+            }
+          },
           lineStyle: {
             normal: {
               width: 1,
@@ -248,10 +247,10 @@ export default {
         }
       ]
     };
-    
+
     this.resizeTheChart();
     window.addEventListener("resize", this.resizeTheChart);
-    this.delayAction()
+    this.delayAction();
   },
   methods: {
     getWidth() {
@@ -265,7 +264,7 @@ export default {
     },
     // 延时执行
     delayAction() {
-      clearTimeout(timer)
+      clearTimeout(timer);
       var timer = setTimeout(() => {
         this.$refs.echars1.dispatchAction({
           type: "showTip",
@@ -276,8 +275,8 @@ export default {
     },
     resizeTheChart() {
       if (this.$refs && this.$refs.echars1) {
-        this.getWidth()
-        this.$refs.echars1.resize()
+        this.getWidth();
+        this.$refs.echars1.resize();
       }
     }
   },
@@ -318,21 +317,21 @@ $bl: 320;
         height: 0;
       }
     }
-    #echars1{
-      height: $bl - 120 +px;
-      border-top: 1px #EEEEEE solid;
+    #echars1 {
+      height: $bl - 120 + px;
+      border-top: 1px #eeeeee solid;
     }
   }
-    .trend-section {
-      color: #666666;
-      text-align: center;
-      p {
-        width: 100%;
-        span {
-          display: block;
-          text-align: center;
-        }
+  .trend-section {
+    color: #666666;
+    text-align: center;
+    p {
+      width: 100%;
+      span {
+        display: block;
+        text-align: center;
       }
     }
+  }
 }
 </style>

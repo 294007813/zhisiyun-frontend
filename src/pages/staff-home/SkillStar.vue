@@ -10,7 +10,8 @@
             <swiper-slide v-for="(item, i) in list" :key="i">
                 <div :class="{ssb: true, size}">
                     <div class="left">
-                        <img :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`"/>
+                        <img :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`"
+                             @click="$f.href(`/admin/masterdata/people/form/${item._id}?mode=view`)"/>
 <!--                        <avatar :src="`${$conf.baseApi}/gridfs/get/${item.avatar}`" :sex="item.gender"></avatar>-->
                         <p>{{item.people_name}}</p>
                         <span>{{`${item.ou_name}/${item.position_name}`}}</span>
@@ -126,6 +127,7 @@ export default {
         .left{
             img{
                 margin-top: 40px;
+                cursor: pointer;
             }
             span{
                 display: inline-block;
