@@ -59,7 +59,7 @@ export default {
     },
     methods:{
         getTo(){
-            require("moment-precise-range-plugin");
+            require("li/moment-precise-range.js")
             let n= this.$t("index.Nofixeddeadline")
             this.$axios.get("/api/feishu/agreement/list").then(data=>{
                 this.da.n1= data.newContract.length
