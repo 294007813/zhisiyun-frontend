@@ -88,7 +88,7 @@ Vue.directive('drag', {
 Vue.directive('nodata', {
     bind(el, binding, vnode) {
         let params= binding.value
-        let { msg}= params
+        let { msg, have}= params
         // console.log("vnode", vnode)
         // console.log("el.style", el.style)
         let div = document.createElement("div")
@@ -100,6 +100,11 @@ Vue.directive('nodata', {
         p.setAttribute("style", "font-size: 14px;color: #999999;")
         img.setAttribute("src", "./img/common/no-pic.png")
         img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
+        if(!have){
+            div.style.display ="block";
+        }else{
+            div.style.display ="none";
+        }
         div.appendChild(img)
         div.appendChild(p)
         el.appendChild(div)

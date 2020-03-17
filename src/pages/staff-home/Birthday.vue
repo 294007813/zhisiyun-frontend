@@ -59,7 +59,8 @@
                 <p>{{moment(p.people.birthday).format("M月D日")}}是TA的生日</p>
             </div>
             <div class="photo" >
-                <avatar class="head"  :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>
+                <img class="head" :src="$f.getPic(p.people.avatar)"/>
+<!--                <avatar class="head" :src="$f.getPic(p.people.avatar)" :sex="p.people.gender"></avatar>-->
                 <img class="crown" src="~as/img/staff-home/crown.svg"/>
                 <p>{{p.people.people_name}} <span>{{p.people.people_no}}</span></p>
                 <span>{{`${p.people.ou_name}/${p.people.position_name}`}}</span>

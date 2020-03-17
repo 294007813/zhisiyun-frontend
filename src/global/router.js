@@ -24,6 +24,13 @@ const routes = [
     }
 ]
 
+if(process.env.VUE_APP_ENV=='dev'){
+    routes.push( {
+        path: '/test',
+        component: () => import('@/test/test')
+    })
+}
+
 const router = new VueRouter({
     routes,
     //mode: 'hash',

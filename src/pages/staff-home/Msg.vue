@@ -112,6 +112,7 @@ export default {
                     vertical-align: middle;
                     display: inline-block;
                     /*margin: 10px 0;*/
+                    margin-bottom: 10px;
                 }
             }
 

@@ -6,7 +6,7 @@
             <p><b>{{to.trainingRecord_number||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.in_train")}}</span>
         </li>
-        <li v-if="fito.doing"  @click="$f.href('/admin/course/train_plan/mylist')">
+        <li v-if="fito.doing"  @click="$f.href('/admin/course/train_plan/mylist?type=index')">
             <p><b>{{to.publicTraining_number||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.on_active")}}</span>
         </li>

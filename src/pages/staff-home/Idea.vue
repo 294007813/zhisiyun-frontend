@@ -12,8 +12,10 @@
                        @click="suggest(item, i)">{{$t("index.delivery_advice")}}</el-button>
             </div>
         </swiper-slide>
-        <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('swiper', true)"></i>
-        <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
+        <template v-if="typeList.length>1">
+            <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('swiper', true)"></i>
+            <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('swiper')"></i>
+        </template>
     </swiper>
 
     <el-dialog

@@ -15,7 +15,8 @@
     <a v-if="field.look" @click="$f.href('/profile_user')">{{$t("index.view_files")}}<i class="iconfont iconyoujiantou"></i></a>
     <div class="head">
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)">
-            <img class="click-hand" :src="avatar"/>
+            <img class="click-hand" :src="avatar"
+            @click="$f.href('/profile_user?type=index')"/>
 <!--            <avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar>-->
         </span>
         <p v-if="field.medal" @click="openmedal">
@@ -28,7 +29,7 @@
             custom-class="medalwall"
             :append-to-body="true"
             width="400px">
-        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:$t("index.no_medal")}">
+        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:$t('index.no_medal')}">
             <li v-for="(it, ind) in medal" :key="ind">
                 <i class="tag"><span>{{$t("index.prize")}}</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
@@ -220,7 +221,7 @@ export default {
         }
     }
     .click-hand {
-        /*cursor: pointer;*/
+        cursor: pointer;
 
     }
 

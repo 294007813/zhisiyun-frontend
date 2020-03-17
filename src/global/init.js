@@ -23,9 +23,3 @@ axios.get("/api/feishu/base/getlanguage").then(data => {
 axios.get("/api/feishu/base/info").then(data=>{
   store.commit("setUser", data[0]);
 })
-// let tsi= cookie.get('TY_SESSION_ID')
-// let sid= cookie.get()
-// if(tsi){
-//   store.commit("setTSI", tsi);
-// }
-// console.log("sid", tsi)

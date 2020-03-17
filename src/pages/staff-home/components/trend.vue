@@ -320,6 +320,7 @@ $bl: 320;
     #echars1 {
       height: $bl - 120 + px;
       border-top: 1px #eeeeee solid;
+      min-width: 100%;
     }
   }
   .trend-section {
