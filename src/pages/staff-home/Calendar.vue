@@ -667,7 +667,7 @@ export default {
         }
     }
 }
-.form-disable:not(a) *{
+.form-disable *:not(a){
     cursor: default!important;
 }
 

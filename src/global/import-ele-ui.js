@@ -45,6 +45,7 @@ Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
 Vue.component(Tooltip.name, Tooltip);
 Vue.component(Link.name, Link);
+Vue.use(Loading.directive);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$msg = Message;
 Vue.prototype.$loading = Loading.service;

@@ -34,6 +34,7 @@ Vue.prototype.$axios= axios
 Vue.prototype.$f= util
 window.async= async
 window.moment= moment
+require("moment-precise-range-plugin");
 window._= _
 Vue.prototype.$conf= conf
 

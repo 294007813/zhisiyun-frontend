@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import "moment-precise-range-plugin"
 export default {
     name: "Contract",
     props: ["conf"],

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import i18n from "la";
+import {Loading} from 'element-ui';
 /**
  * 拖拽指令。 参数对象： {
  * donecb|Function|: 拽结束后的回调，没有则不拖拽，
@@ -108,6 +109,7 @@ Vue.directive('nodata', {
         div.appendChild(img)
         div.appendChild(p)
         el.appendChild(div)
+        // el.dataset.loading= Loading.service({target: el})
 
     },
     update(el, binding, vnode) {
