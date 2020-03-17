@@ -73,7 +73,7 @@ export default {
             }).then(data=>{  
                 this.contract_modules = data.modules.contract_modules
                 this.list= this.contract_process(data.conf.home.show, data.modules.contract_modules)
-                console.log('list:', list)
+                console.log('list:', this.list)
                 load.close()
             })
         },
