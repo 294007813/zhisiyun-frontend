@@ -75,9 +75,9 @@ export default  {
     "todo":"待办事宜",
     "to_do_task": "待办",
     "done_task": "已办",
-    "monthly_pfm": "月绩效",
+    "monthly_pfm": "绩效",
     "recent_pfm":"近期绩效",
-    "performance_scores": "绩效分数:",
+    "performance_scores": "绩效分数: ",
     "excellent": "优秀",
     "good": "良好",
     "commonly": "一般",
@@ -98,7 +98,6 @@ export default  {
     "department": "部门",
     "position": "职位",
     "Nofixeddeadline": "无固定期限",
-   // "entry_data": "入职日期",
     "birth_day": "出生日期",
     "constellations":"星座",
     "please_enter_name_keyword":"请输姓名关键字",
@@ -165,6 +164,9 @@ export default  {
     "event": "事件",
     "nums":"次",
     "hour":"小时",
+    "fraction":"得分",
+    "grade":"等级",
+    "fraction_1":"分",
     
     "number":"枚",
     "people":"人",
@@ -257,7 +259,7 @@ export default  {
   },
   //绩效管理
   "pm":{
-    "monthly_pfm": "月绩效",
+    "monthly_pfm": "绩效",
     "recent_pfm":"近期绩效",
     "performance_scores": "绩效分数:",
     "excellent": "优秀",
@@ -387,7 +389,7 @@ export default  {
     minepage: "我的页面"
   },
   config:{
-    rgl: "职级、层级、等级",
+    "rgl": "职级、层级、等级",
     "medal": "勋章",
     "late": "迟到",
     "rest": "休息",
