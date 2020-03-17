@@ -78,13 +78,18 @@ export default {
             })
         },
 
-        contract_process(list,contract_modules){
-            return list.map(v=>{
+        contract_process(listData,contract_modules){
+            let result = []
+            listData.map(v=>{
                 for(let i=0;i<v.length;i++){
-                    if(!contract_modules[v[i].code]) delete v[i]
+                    if(!contract_modules[v[i].code]){
+                        console.log(' ==模块无权限:', v[i].code)
+                        delete v[i]
+                    } 
                 }
-                if(v.length) return v
+                if(v.length) result.push(v)
             })
+            return result
         }
 
     }
