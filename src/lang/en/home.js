@@ -41,7 +41,8 @@ export default {
       "add_notes":"Add notes",
       "fill_comments":"Fill in comments",	
       "submit_anonymously":"Submit anonymously",
-      
+      "comments_1":" idea",
+
    "like":"like",
     "search":"Search",
     "process":"Process",

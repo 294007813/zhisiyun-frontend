@@ -7,7 +7,7 @@
             <div class="ibox">
                 <img src="~as/img/staff-home/idea.svg">
                 <span>{{item.name}}</span>
-                <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{nums[i]|| 0}}</b>条意见</p>
+                <p @click="$f.href('/admin/culture/suggestion')">{{$t("index.exist")}}<b>{{nums[i]|| 0}}</b>{{$t("index.comments_1")}}</p>
                 <el-button size="small" type="primary" plain class="but"
                        @click="suggest(item, i)">{{$t("index.delivery_advice")}}</el-button>
             </div>
