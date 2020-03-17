@@ -4,7 +4,7 @@
         <template v-for="(item, i) in row">
             <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
                 <base-info v-if="item.code=='base'" :conf="item"></base-info>
-                <checkin v-if="item.code=='TM'  && contract_modules[item.code]" :conf="item"></checkin>
+                <checkin v-if="item.code=='TM'" :conf="item"></checkin>
                 <salary v-if="item.code=='PY'" :conf="item"></salary>
                 <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>
                 <birthday v-if="item.code=='birthday'" :conf="item"></birthday>
@@ -72,9 +72,10 @@ export default {
                 }
             }).then(data=>{  
                 this.contract_modules = data.modules.contract_modules
-                //this.list= this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                let testdata = this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                 console.log('test:', testdata)
+                 
                 this.list=data.conf.home.show
-                console.log('list:', this.list)
                 load.close()
             })
         },
@@ -83,7 +84,7 @@ export default {
             let result = []
             listData.map(v=>{
                 for(let i=0;i<v.length;i++){
-                    if(!contract_modules[v[i].code]){
+                    if(contract_modules[v[i].code]===false){
                         console.log(' ==模块无权限:', v[i].code)
                         delete v[i]
                     } 
