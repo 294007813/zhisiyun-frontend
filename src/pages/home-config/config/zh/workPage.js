@@ -20,7 +20,7 @@ export default {
   news: {
     unread: "未读",
     readed: "已读",
-    load_more: "点击加载更多",
+    load_more: "正在加载...",
     Loaded: "已加载完成",
     nodata: "暂无数据",
     read_all: "全部已读",
@@ -36,7 +36,7 @@ export default {
   all_app: {
     app_center: "应用中心"
   },
-  app_name:{
+  app_name: {
     "AI": "AI助手",
     "QDDK": "签到打卡",
     "WQQD": "外勤签到",
@@ -68,6 +68,6 @@ export default {
     "KAIPIAO": "开票信息",
     "PT": "积分激励",
     "TP": "脱普大学",
-    "undefined":""
+    "undefined": ""
   }
 };

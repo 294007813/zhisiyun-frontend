@@ -95,26 +95,29 @@ Vue.directive('nodata', {
         let div = document.createElement("div")
         let img = document.createElement("img")
         let p = document.createElement("p")
-        div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: block;");
+        div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: none;");
         div.setAttribute("class", "nodata");
         p.innerText=  msg ||i18n.t('index.no_data')
         p.setAttribute("style", "font-size: 14px;color: #999999;")
         img.setAttribute("src", "./img/common/no-pic.png")
         img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
-        if(!have){
-            div.style.display ="block";
-        }else{
-            div.style.display ="none";
-        }
+        // if(!have){
+        //     div.style.display ="block";
+        // }else{
+        //     div.style.display ="none";
+        // }
         div.appendChild(img)
         div.appendChild(p)
         el.appendChild(div)
-        // el.dataset.loading= Loading.service({target: el})
+        // let aaa= Loading.service({target: el})
+        // console.log("el.dataset.loading",aaa)
 
     },
     update(el, binding, vnode) {
         // let top = el.pageX + 'px'
         // let left = el.pageY + 'px'
+        // console.log("el.dataset.loading", JSON.stringify(el.dataset.loading))
+        // el.dataset.loading.close();
         let params= binding.value
         let dom= el.querySelector(".nodata")
         let { have}= params

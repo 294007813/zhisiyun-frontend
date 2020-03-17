@@ -17,6 +17,13 @@ export default {
     aiRobot: "AI Robot"
   },
   cdStatistics: {
+    mon: "Mon",
+    tue: "Tue",
+    wed: "Wed",
+    thu: "Thu",
+    fri: "Fri",
+    sat: "Sat",
+    sun: "Sun",
     calendar: "Calendar",
     // 出勤天数
     attendance_days: "Working",
@@ -68,8 +75,8 @@ export default {
     leave_off_time: "Adjust balance"
   },
   pc: {
-    checkin: "Working",
-    late: "Late leave early",
+    checkin: "Attendance Days",
+    late: "Late and early retirement",
     rest: "rest",
     early: "Early",
     miss: "Miss Card",

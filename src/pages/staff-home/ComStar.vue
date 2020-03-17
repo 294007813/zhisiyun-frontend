@@ -110,6 +110,7 @@ export default {
              this.list = this.list.filter(v => {
                 let flag= false
                  if(
+                     v.people.people_no.includes(val) ||
                      v.people.people_name.includes(val) ||
                      v.people.position_name.includes(val) ||
                      v.people.ou_name.includes(val) ||

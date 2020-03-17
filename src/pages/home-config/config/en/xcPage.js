@@ -14,15 +14,14 @@ export default {
   },
   month: {},
   trend: {
-    wages: "Real Wages"
+    wages: "Actual salary"
   },
   statistics: {
-    summary_statistics: "Summary Statistics",
+    summary_statistics: "summary",
     months: "months",
     grand_total: "Accumulative distribution",
     accumulated_wages: "Accumulated wages",
-    accumulated_individual_deduction:
-      "Accumulated individual income tax special deduction"
+    accumulated_individual_deduction: "Accumulated tax deductions"
   },
   common: {
     year: "year",

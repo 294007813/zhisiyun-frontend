@@ -26,6 +26,7 @@ export default {
     my_subordinates: "我的下属",
     monthly_pfm: "本月绩效",
     recent_performace: "近期绩效",
+    performance_score: "近期绩效",
     me_calendar: "我的日历",
     today: "今天",
     current_month: "本月",
@@ -33,16 +34,35 @@ export default {
     skill_star: "技能之星",
     training_num: "培训统计",
     process_num: "流程统计",
+    participated_train:"参与的培训",
+    ongoing_activities:"进行中的活动",
+    numberChangeCi: "场",
     contract: "我的合同",
     agreement: "我的协议",
     suggestion_box: "意见箱",
     noData: "暂无",
     keywords: "输入姓名关键词查询",
-    month: "月绩效",
+    month: "本月",
     near: "近期绩效",
     matters: "事宜",
     cancel: "取消",
-    confirm: "确定"
+    confirm: "确定",
+    eventName: "新事件",
+    allDay: "全天",
+    isOverTime: "超时",
+    completed: "完成",
+    normal: "正常",
+    sunday: "周日",
+    monday: "周一",
+    tuesday: "周二",
+    wednesday: "周三",
+    thursday: "周四",
+    friday: "周五",
+    saturday: "周六",
+    isGood: "符合预期",
+    bad: "不合格",
+    enterContent: "请输入内容",
+    anonymous: "匿名提交"
   },
   baseinfo: {
     ai_robot: "AI助手",
@@ -131,6 +151,8 @@ export default {
     search_btn: "搜索按钮",
     jobNumbner: "工号",
     dep_pos: "部门/职位",
+    dep: "部门",
+    pos: "职位",
     start_service_date: "入职日期",
     birthday: "出生日期",
     constellation: "星座",
@@ -168,7 +190,8 @@ export default {
   postComment: {
     postComment: "投递意见",
     have: "已有",
-    datas: "条数据"
+    datas: "条数据",
+    post: "投递意见"
   },
   contact: {
     singed: "已签合同",
@@ -180,7 +203,8 @@ export default {
   },
   performance_info:{
     "month": "月绩效",
-    "near": "近期绩效"
+    "near": "近期绩效",
+    "tips": "“双击”柱形图查看详情"
   },
   eventModule: {
     eventName: "事件名称",

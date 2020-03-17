@@ -102,7 +102,9 @@ export default {
                 let flag= false, skills= v.my_skills.map(it=> it.skill.skill_name.toLowerCase()).join("-")
                 if(
                     v.people_name.includes(val) ||
-                    skills.includes(val.toLowerCase())
+                    skills.includes(val.toLowerCase()) ||
+                    v.position_name.includes(val) ||
+                    v.ou_name.includes(val)
                 ){
                     flag= true
                 }

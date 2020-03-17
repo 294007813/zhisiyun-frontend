@@ -428,7 +428,7 @@ export default {
             }
             let param= this.form
             this.form.forward_people_new= this.forward_people_new.map(it=>{
-                return it.p_id
+                return it.p_id== this.$store.getters.userId ? null : it.p_id
             })
             param.has_alarms= true
             this.$axios[method]( url, {data: param}).then(data=>{

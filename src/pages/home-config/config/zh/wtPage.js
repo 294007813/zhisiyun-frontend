@@ -17,6 +17,13 @@ export default {
     aiRobot: "AI助手"
   },
   cdStatistics: {
+    mon: "一",
+    tue: "二",
+    wed: "三",
+    thu: "四",
+    fri: "五",
+    sat: "六",
+    sun: "七",
     calendar: "日历",
     // 出勤天数
     attendance_days: "出勤天数",

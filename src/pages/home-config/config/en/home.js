@@ -27,6 +27,7 @@ export default {
     birthday_blessing_wall: "Birthday blessing wall",
     monthly_pfm: "Monthly performance",
     recent_performace: "Recent performance",
+    performance_score: "Performance score",
     me_calendar: "My calendar",
     today: "Today",
     current_month: "Month",
@@ -35,6 +36,9 @@ export default {
     skill_star: "Skill star",
     training_num: "Training statistics",
     process_num: "Process statistics",
+    participated_train:"Participated training",
+    ongoing_activities:"Ongoing activities",
+    numberChangeCi: "number",
     contract: "Contract",
     agreement: "Agreement",
     suggestion_box: "Suggestion box",
@@ -43,7 +47,21 @@ export default {
     near: "near",
     matters: "matters",
     cancel: "cancel",
-    confirm: "confirm"
+    eventName: "New Events",
+    confirm: "confirm",
+    allDay: "All day",
+    isOverTime: "OverTime",
+    completed: "Completed",
+    normal: "Normal",
+    sunday: "Sunday",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    enterContent: "please enter the content",
+    anonymous: "Submitted anonymously"
   },
   baseinfo: {
     ai_robot: "AI Robot",
@@ -128,6 +146,8 @@ export default {
     search_btn: "Search button",
     jobNumbner: "job number",
     dep_pos: "Dep/position",
+    dep: "department",
+    pos: "position",
     start_service_date: "start date",
     birthday: "birthday",
     constellation: "constellation",
@@ -148,7 +168,7 @@ export default {
     start_by_myself: "Start By Myself",
     process_myself: "Process By Myself",
     in_process: "In process",
-    data: "uno"
+    data: "part"
   },
   contract: {
     signed_contract: "Signed contract",
@@ -159,25 +179,27 @@ export default {
   },
   suggestion_box: {},
   buttonObj: {
-    confirm: "确定",
-    cancel: "取消"
+    confirm: "confirm",
+    cancel: "cancel"
   },
   postComment: {
     postComment: "Post comments",
     have: "has",
-    datas: "datas"
+    datas: "datas",
+    post: "post",
   },
   contact: {
     singed: "Contact signed",
     vaildDate: "Contact validity",
-    num: "uno",
+    num: "part",
     year: "year",
     day: "day",
     months: "months"
   },
   performance_info:{
     "month": "month",
-    "near": "near"
+    "near": "near",
+    "tips": "'Double-click' bar chart for details"
   },
   eventModule: {
     eventName: "event Name",
