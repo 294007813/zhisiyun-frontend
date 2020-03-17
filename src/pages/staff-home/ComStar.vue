@@ -108,7 +108,17 @@ export default {
         },
         toquery(val){
              this.list = this.list.filter(v => {
-                return v.people.people_name.indexOf(val) > -1
+                let flag= false
+                 if(
+                     v.people.people_name.includes(val) ||
+                     v.people.position_name.includes(val) ||
+                     v.people.ou_name.includes(val) ||
+                     v.people.zodiac.includes(val)
+
+                 ){
+                     flag= true
+                 }
+                return flag
             });
         },
         next(ref, back){
