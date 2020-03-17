@@ -70,12 +70,23 @@ export default {
                     flag: "PC",
                     tp: new Date().getTime(),
                 }
-            }).then(data=>{
-                this.list= data.conf.home.show
+            }).then(data=>{  
                 this.contract_modules = data.modules.contract_modules
+                this.list= this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                console.log('list:', list)
                 load.close()
             })
+        },
+
+        contract_process(list,contract_modules){
+            return list.map(v=>{
+                for(let i=0;i<v.length;i++){
+                    if(!contract_modules[v[i].code]) delete v[i]
+                }
+                if(v.length) return v
+            })
         }
+
     }
 }
 </script>
