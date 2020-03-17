@@ -219,7 +219,7 @@ export default {
     methods:{
         propsTranslate(code) {
             return function(val) {
-                return this.$t(`mobileLang.${code}.pc.${val}`);
+                return this.$t(`index.${val}`);
             };
         },
         getCardrecord() {

@@ -186,7 +186,19 @@ export default  {
     "ongoing":"进行中的",
     "click_employee_cnf":"点击进入员工配置",
     "click_admin_cnf":"点击进入管理员配置",
-    "click_homepage":"点击进入首页"
+    "click_homepage":"点击进入首页",
+    checkin: "出勤",
+    late: "迟到早退",
+    rest: "休息",
+    early: "早退",
+    miss: "缺卡",
+    outside: "外勤",
+    absent: "旷工",
+
+    short: "缺勤",
+    trip: "出差",
+    official: "公干",
+    leave: "请假"
   },
   //导航
   "dh":{

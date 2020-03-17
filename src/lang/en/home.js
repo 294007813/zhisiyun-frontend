@@ -186,7 +186,19 @@ export default {
     "ongoing":"Ongoing",
     "click_employee_cnf":"Click to enter employee configuration",
     "click_admin_cnf":"Click to enter administrator configuration",
-    "click_homepage":"Click to enter the homepage" 
+    "click_homepage":"Click to enter the homepage",
+        checkin: "Working",
+        late: "Late leave early",
+        rest: "rest",
+        early: "Early",
+        miss: "Miss Card",
+        outside: "Outwork",
+        absent: "Absenteeism",
+
+        short: "Absence",
+        trip: "Trip Days",
+        official: "Official Days",
+        leave: "Leave"
 
   },
   //导航
