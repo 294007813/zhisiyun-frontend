@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import i18n from "./lang";
+import i18n from "la";
 /**
  * 拖拽指令。 参数对象： {
  * donecb|Function|: 拽结束后的回调，没有则不拖拽，

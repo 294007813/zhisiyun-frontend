@@ -25,6 +25,7 @@ export default {
     name: "Perf",
     props: ["conf"],
     data(){
+        let self= this
         return{
             activeTabs: 'now',
             ismounted: false,
@@ -121,7 +122,7 @@ export default {
                 tooltip: {
                     show: true,
                     formatter: function ({data: {level},value}, c) {
-                        return `${this.$t("index.fraction")}：${value}${this.$t("index.fraction_1")}<br />${this.$t("index.grade")}：${level}`
+                        return `${self.$t("index.fraction")}：${value}${self.$t("index.fraction_1")}<br />${self.$t("index.grade")}：${level}`
                     },
                     position: function (point, params, dom, rect, size) {
                         const {contentSize: { 0: domWidth}, viewSize} = size;
