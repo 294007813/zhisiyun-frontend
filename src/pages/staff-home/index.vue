@@ -89,6 +89,7 @@ export default {
                 }
                 if(v.length) result.push(v)
             })
+            console.log(result)
             return result
         }
 
