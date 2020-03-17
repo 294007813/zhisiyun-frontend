@@ -68,8 +68,8 @@ export default {
     leave_off_time: "Adjust balance"
   },
   pc: {
-    checkin: "Attendance Days",
-    late: "Late and early retirement",
+    checkin: "Working",
+    late: "Late leave early",
     rest: "rest",
     early: "Early",
     miss: "Miss Card",
