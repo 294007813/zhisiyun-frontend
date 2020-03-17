@@ -71,12 +71,30 @@ export default {
                     flag: "PC",
                     tp: new Date().getTime(),
                 }
-            }).then(data=>{
-                this.list= data.conf.home.show
+            }).then(data=>{  
                 this.contract_modules = data.modules.contract_modules
+                //this.list= this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                this.list=data.conf.home.show
+                console.log('list:', this.list)
                 load.close()
             })
+        },
+
+        contract_process(listData,contract_modules){
+            let result = []
+            listData.map(v=>{
+                for(let i=0;i<v.length;i++){
+                    if(!contract_modules[v[i].code]){
+                        console.log(' ==模块无权限:', v[i].code)
+                        delete v[i]
+                    } 
+                }
+                if(v.length) result.push(v)
+            })
+            console.log(result)
+            return result
         }
+
     }
 }
 </script>
