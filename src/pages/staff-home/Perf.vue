@@ -2,7 +2,7 @@
 <div class="perf">
     <h5>{{$t("index.perform")}}</h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
-        <el-tab-pane :label="(title ||'当前') +'绩效'" name="now" v-if="finow">
+        <el-tab-pane :label="(title ||$t('index.current')) +$t('index.monthly_pfm')" name="now" v-if="finow">
             <div class="now" v-if="ismounted">
                 <v-chart :options="nowChart" class="chart" ref="now" autoresize/>
                 <el-button size="small" type="primary" plain class="but"
@@ -121,7 +121,7 @@ export default {
                 tooltip: {
                     show: true,
                     formatter: function ({data: {level},value}, c) {
-                        return `得分：${value}分<br />等级：${level}`
+                        return `${this.$t("index.fraction")}：${value}${this.$t("index.fraction_1")}<br />${this.$t("index.grade")}：${level}`
                     },
                     position: function (point, params, dom, rect, size) {
                         const {contentSize: { 0: domWidth}, viewSize} = size;

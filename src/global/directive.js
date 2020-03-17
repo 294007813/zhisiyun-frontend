@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import i18n from "./lang";
 /**
  * 拖拽指令。 参数对象： {
  * donecb|Function|: 拽结束后的回调，没有则不拖拽，
@@ -96,7 +96,7 @@ Vue.directive('nodata', {
         let p = document.createElement("p")
         div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: block;");
         div.setAttribute("class", "nodata");
-        p.innerText=  msg || "暂无数据"
+        p.innerText=  msg ||i18n.t('index.no_data')
         p.setAttribute("style", "font-size: 14px;color: #999999;")
         img.setAttribute("src", "./img/common/no-pic.png")
         img.setAttribute("style", "width: 100px;margin-bottom: 10px;")

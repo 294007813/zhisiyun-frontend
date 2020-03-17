@@ -28,7 +28,7 @@
             custom-class="medalwall"
             :append-to-body="true"
             width="400px">
-        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:$t("index.no_medal")}">
+        <ul style="min-height: 200px" v-nodata="{have: medal.length, msg:$t('index.no_medal')}">
             <li v-for="(it, ind) in medal" :key="ind">
                 <i class="tag"><span>{{$t("index.prize")}}</span></i>
                 <img :src="$conf.linkUrl+it.reward_punish.rap_medal"/>
