@@ -2,8 +2,7 @@
 <div class="staff-home">
     <template v-for="(row, r) in list">
         <template v-for="(item, i) in row">
-            <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))"
-                v-if="!item.source|| (item.source &&contract_modules[item.code])">
+            <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
                 <base-info v-if="item.code=='base'" :conf="item"></base-info>
                 <checkin v-if="item.code=='TM'" :conf="item"></checkin>
                 <salary v-if="item.code=='PY'" :conf="item"></salary>
@@ -73,24 +72,26 @@ export default {
                 }
             }).then(data=>{  
                 this.contract_modules = data.modules.contract_modules
-                //this.list= this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                let testdata = this.contract_process(data.conf.home.show, data.modules.contract_modules)
+                 console.log('list:', testdata)
                 this.list=data.conf.home.show
-                console.log('list:', this.list)
+               
                 load.close()
             })
         },
 
         contract_process(listData,contract_modules){
             let result = []
-            listData.map(v=>{
-                for(let i=0;i<v.length;i++){
-                    if(!contract_modules[v[i].code]){
-                        console.log(' ==模块无权限:', v[i].code)
-                        delete v[i]
+            for(let i=0;i<listData.length;i++){
+                let v=listData[i]
+                for(let j=0;j<v.length;j++){
+                    if(contract_modules[v[j].code] ===false){
+                        console.log(' ==模块无权限:', v[j].code)
+                        delete v[j]
                     } 
                 }
                 if(v.length) result.push(v)
-            })
+            }
             console.log(result)
             return result
         }
