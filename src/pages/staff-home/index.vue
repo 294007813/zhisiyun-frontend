@@ -4,7 +4,7 @@
         <template v-for="(item, i) in row">
             <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
                 <base-info v-if="item.code=='base'" :conf="item"></base-info>
-                <checkin v-if="item.code=='TM'" :conf="item"></checkin>
+                <checkin v-if="item.code=='TM'  && contract_modules[item.code]" :conf="item"></checkin>
                 <salary v-if="item.code=='PY'" :conf="item"></salary>
                 <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>
                 <birthday v-if="item.code=='birthday'" :conf="item"></birthday>
@@ -55,6 +55,7 @@ export default {
             ismounted: false,
             // list: conf.home.show,
             list: [],
+            contract_modules:[]
         }
     },
     mounted() {
@@ -71,6 +72,7 @@ export default {
                 }
             }).then(data=>{
                 this.list= data.conf.home.show
+                this.contract_modules = data.modules.contract_modules
                 load.close()
             })
         }
