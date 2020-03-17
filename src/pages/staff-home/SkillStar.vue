@@ -98,9 +98,15 @@ export default {
             }
         },
         toquery(val){
-             this.list = this.list.filter(v => {
-                return v.people_name.indexOf(val) > -1
-
+            this.list = this.list.filter(v => {
+                let flag= false, skills= v.my_skills.map(it=> it.skill.skill_name.toLowerCase()).join("-")
+                if(
+                    v.people_name.includes(val) ||
+                    skills.includes(val.toLowerCase())
+                ){
+                    flag= true
+                }
+                return flag
             });
         },
         next(ref, back){

@@ -16,7 +16,7 @@
     <div class="head">
         <span @click="$f.href(`/admin/pm/pp_skill/${info._id}`)">
             <img class="click-hand" :src="avatar"
-            @click="$f.href('/profile_user?type=index')"/>
+            @click="$f.href('/profile_user?type=index#per_inf')"/>
 <!--            <avatar class="click-hand" :src="avatar" :sex="info.gender"></avatar>-->
         </span>
         <p v-if="field.medal" @click="openmedal">
