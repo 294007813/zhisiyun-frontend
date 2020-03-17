@@ -236,7 +236,7 @@ export default {
             return this.$store.state.user.lang=='zh' ? "zh-cn": "en"
         },
         disEdit(){
-            return !this.isMine
+            return !this.isMine && !!this.form._id
         }
     },
     mounted(){
