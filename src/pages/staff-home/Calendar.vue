@@ -41,25 +41,26 @@
             custom-class="dialog"
             width="600px">
         <p slot="title" class="title">{{form._id ?'修改' :'添加'}}{{$t("index.event")}}</p>
-        <div class="content">
-            <div :class="['check-tag pri',{on: form.is_private}]" @click="form.is_private=!form.is_private"
+        <div :class="['content',{'form-disable': disEdit}]">
+            <div :class="['check-tag pri',{on: form.is_private}]" @click="clitag('is_private')"
             ><i class="fa fa-check-circle"></i>{{$t("index.private")}}</div>
-            <div :class="['check-tag com',{on: form.is_complete}]" @click="form.is_complete=!form.is_complete"
+            <div :class="['check-tag com',{on: form.is_complete}]" @click="clitag('is_complete')"
             ><i class="fa fa-check-circle"></i>{{$t("index.complete")}}</div>
             <h2 v-if="form._id">{{subtitle}}</h2>
 
             <el-form ref="form" :model="form" label-width="80px" size="mini" class="form">
                 <el-form-item :label="$t('index.event_name')">
-                    <el-input v-model="form.title"></el-input>
+                    <el-input v-model="form.title" :disabled="disEdit"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_details')">
-                    <el-input v-model="form.description" type="textarea"></el-input>
+                    <el-input v-model="form.description" type="textarea" :disabled="disEdit"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_place')">
-                    <el-input v-model="form.location" type="textarea"></el-input>
+                    <el-input v-model="form.location" type="textarea" :disabled="disEdit"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.event_time')">
                     <el-switch
+                            :disabled="disEdit"
                             @change="changeallday"
                             v-model="form.allDay"
                             active-color="#13ce66"
@@ -68,6 +69,7 @@
                     </el-switch>
                     <div>
                         <el-date-picker
+                                :disabled="disEdit"
                                 @blur="changetime(true, $event)"
                                 v-model="form.start"
                                 type="datetime"
@@ -75,6 +77,7 @@
                                 default-time="12:00:00">
                         </el-date-picker>
                         <el-date-picker
+                                :disabled="disEdit"
                                 @blur="changetime(false, $event)"
                                 :picker-options="{disabledDate }"
                                 v-model="form.end"
@@ -87,6 +90,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('index.reminder_time')">
                     <el-switch
+                            :disabled="disEdit"
                             v-model="form.alarm_date_type"
                             active-value="R"
                             inactive-value="A"
@@ -96,6 +100,7 @@
                     </el-switch>
                     <div>
                         <el-select placeholder="请选择" size="mini"
+                                   :disabled="disEdit"
                                    v-show="form.alarm_date_type=='R'" v-model="form.alarm_date_offset" clearable>
                             <el-option label="不提醒" :value="0"></el-option>
                             <el-option label="提前5分钟" :value="-5"></el-option>
@@ -108,6 +113,7 @@
                             <el-option label="提前1星期" :value="-10080"></el-option>
                         </el-select>
                         <el-date-picker
+                                :disabled="disEdit"
                                 v-show="form.alarm_date_type=='A'"
                                 v-model="form.alarm_date_absolute"
                                 type="datetime"
@@ -117,22 +123,29 @@
                     </div>
                 </el-form-item>
                 <el-form-item :label="$t('index.shared_with')">
-                    <el-button type="primary" size="mini" @click="staffshow= true">{{$t("index.select")}}</el-button>
+                    <el-button type="primary" size="mini"
+                               :disabled="disEdit" @click="staffshow= true">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in forward_people_new" :key="i">
                         <span>{{item.name}}</span>
-                        <i class="el-icon-error" @click="forward_people_new.splice(i,1)"></i>
+                        <i class="el-icon-error"
+                           v-show="!disEdit" @click="forward_people_new.splice(i,1)"></i>
                     </li>
                     <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
+                              :disabled="disEdit"
                               placeholder="共享消息" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_attachments')">
-                    <el-button type="primary" size="mini" @click="upfile">{{$t("index.select")}}</el-button>
+                    <el-button type="primary" size="mini"
+                               :disabled="disEdit" @click="upfile">{{$t("index.select")}}</el-button>
                     <li v-for="(item, i) in form.attachments" :key="i">
-                        <span>{{item.filename}}</span> <i class="el-icon-delete-solid" @click="dfile(i)"></i>
+                        <el-link :href="$f.getPic(item._id)"
+                                 style="line-height: 16px;margin-top: 5px;" target="_blank">{{item.filename}}</el-link>
+                        <i class="el-icon-delete-solid" v-show="!disEdit" @click="dfile(i)"></i>
                     </li>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_notes')">
-                    <el-input v-model="form.comments" type="textarea"></el-input>
+                    <el-input v-model="form.comments"
+                              :disabled="disEdit" type="textarea"></el-input>
                 </el-form-item>
             </el-form>
         </div>
@@ -140,7 +153,7 @@
             <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
             <el-button type="danger" size="small" v-show="!!form._id && !isMine" @click="del(true)">{{$t("index.refuse")}}</el-button>
             <el-button type="danger" size="small" v-show="!!form._id && isMine" @click="del(false)">{{$t("index.delete")}}</el-button>
-            <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
+            <el-button type="primary" size="small" v-show="!disEdit" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
 
@@ -221,6 +234,9 @@ export default {
         },
         locale(){
             return this.$store.state.user.lang=='zh' ? "zh-cn": "en"
+        },
+        disEdit(){
+            return !this.isMine
         }
     },
     mounted(){
@@ -395,7 +411,9 @@ export default {
         upfile(){
             this.$f.upfile((res)=>{
                 // console.log(res)
-                this.form.attachments= this.form.attachments.concat(res.success)
+                if(!this.disEdit){
+                    this.form.attachments= this.form.attachments.concat(res.success)
+                }
             })
         },
         dfile(i){
@@ -456,6 +474,12 @@ export default {
             let d= moment(date)
             // console.log("data",data)
             return d.isBefore(st, "day");
+        },
+        clitag(key){
+            if(!this.disEdit){
+                this.form[key]= !this.form[key]
+            }
+
         }
     }
 }
@@ -643,7 +667,9 @@ export default {
         }
     }
 }
-
+.form-disable:not(a) *{
+    cursor: default!important;
+}
 
 
 </style>

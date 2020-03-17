@@ -27,7 +27,7 @@
 </template>
 
 <script>
-require("moment-precise-range-plugin");
+import "moment-precise-range-plugin"
 export default {
     name: "Contract",
     props: ["conf"],
@@ -73,9 +73,9 @@ export default {
                         }
                     })
                     if(date){
-                        this.da.h=moment.preciseDiff(moment().format("YYYY-MM-DD"), moment(date).format("YYYY-MM-DD"), true);
+                        this.da.h= moment.preciseDiff(moment().format("YYYY-MM-DD"), moment(date).format("YYYY-MM-DD"), true);
                         // let t= moment().diff(date)
-                        // console.log("diff", moment().diff(date).toObject())
+                        console.log("this.da.h", this.da.h)
                         // this.da.h= moment.duration(t)._data
                         if(Math.abs(this.da.h.years)>100){
                             this.notime= n

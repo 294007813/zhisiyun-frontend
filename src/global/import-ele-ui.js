@@ -17,6 +17,7 @@ import {
     Divider,
     Image,
     Tooltip,
+    Link,
 } from 'element-ui';
 
 Vue.component(Dialog.name, Dialog);
@@ -43,6 +44,7 @@ Vue.component(Card.name, Card);
 Vue.component(Divider.name, Divider);
 Vue.component(Image.name, Image);
 Vue.component(Tooltip.name, Tooltip);
+Vue.component(Link.name, Link);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$msg = Message;
 Vue.prototype.$loading = Loading.service;

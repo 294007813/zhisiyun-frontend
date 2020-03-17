@@ -161,8 +161,9 @@ export default {
                     }
                 }]
             },
+            trendData: [],
             od: {value: 0,  name: '暂无数据'},
-            title: ""
+            title: "",
         }
     },
     computed:{
@@ -174,6 +175,17 @@ export default {
             let data= this.conf.pages.trend
             return data.able && data.show && data.fields
         },
+        clickfun(){
+            let callOnce= null, self= this
+            if(this.ismounted && this.showTrend){
+                callOnce = this.$f.once(function() {
+                    self.$refs.trend.chart.on('click', (params) => {
+                        self.$f.href(self.trendData[params.dataIndex].pc_url)
+                    })
+                });
+            }
+            return callOnce
+        }
     },
     mounted() {
         this.activeTabs= this.finow && 'now' || this.fitrend && 'trend'
@@ -185,7 +197,7 @@ export default {
         tabClick({name}){
             switch (name) {
                 case 'trend':{
-                    this.showTrend= true;
+                    this.clickfun && this.clickfun();
                     break;
                 }
             }
@@ -231,11 +243,13 @@ export default {
                             level: item.ai_grade,
                             value: item.ai_score
                         })
+                        this.trendData.push(item)
                     }
                 }
 
                 this.trendChart.xAxis.data=xAxis
                 this.trendChart.series[0].data=series
+                this.showTrend= true;
             })
         }
     }
