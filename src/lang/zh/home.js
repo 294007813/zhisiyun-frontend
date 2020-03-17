@@ -41,6 +41,7 @@ export default  {
     "add_notes":"添加备注",	
     "fill_comments":"填写意见",	
     "submit_anonymously":"匿名提交",	
+    "comments_1":" 条意见",	
 
     "like":"点赞",
     "search":"搜索",
