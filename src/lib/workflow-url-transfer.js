@@ -87,10 +87,16 @@ const transfer = {
     },
 
     go_contract(url, point) {
+        if (url && url.indexOf("https://www.zhisiyun.com") == 0) //以 https://www.zhisiyun.com 开头的url，把它替换掉
+            url = url.replace(/^(https:\/\/www.zhisiyun.com)/g, '')
+
         return util.href(url + '&point=' + point)
     },
 
     go_contract_agreement(url, point) {
+        if (url && url.indexOf("https://www.zhisiyun.com") == 0) //以 https://www.zhisiyun.com 开头的url，把它替换掉
+            url = url.replace(/^(https:\/\/www.zhisiyun.com)/g, '')
+
         return util.href(url + '&point=' + point)
     },
 
