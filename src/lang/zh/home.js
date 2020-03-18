@@ -137,6 +137,7 @@ export default  {
     "refuse": "拒绝",
     "save": "保存",
     "close": "关闭",
+    "more": "更多",
     "salary_information_module":"薪资信息模块",
     "attendance_information_module":"考勤信息模块",
     "performance_information_module":"绩效信息模块",

@@ -72,7 +72,8 @@ export default {
         "doing": "index.on_active",
         "start": "index.self_init",
         "handle": "index.self_deal",
-        "doing2": "index.ongoing"
+        "doing2": "index.ongoing",
+        "more": "index.more",
     },
     "contract_agreement_module":{
         contract: "index.train",

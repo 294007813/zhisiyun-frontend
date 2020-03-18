@@ -97,6 +97,7 @@ export default {
     "day_time": "days",
     "month": "month",
     "num":"post",
+    "more": "More",
     "star_company":"Star of company",
     "work_number": "EmpNo.",
     "department_position": "department/position",
