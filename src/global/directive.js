@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import i18n from "la";
 import {Loading} from 'element-ui';
+import util from "./util"
+let {parseDom} = util
 /**
  * 拖拽指令。 参数对象： {
  * donecb|Function|: 拽结束后的回调，没有则不拖拽，
@@ -90,42 +92,31 @@ Vue.directive('nodata', {
     bind(el, binding, vnode) {
         let params= binding.value
         let { msg, have}= params
-        // console.log("vnode", vnode)
-        // console.log("el.style", el.style)
-        let div = document.createElement("div")
-        let img = document.createElement("img")
-        let p = document.createElement("p")
-        div.setAttribute("style", "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: none;");
-        div.setAttribute("class", "nodata");
-        p.innerText=  msg ||i18n.t('index.no_data')
-        p.setAttribute("style", "font-size: 14px;color: #999999;")
-        img.setAttribute("src", "./img/common/no-pic.png")
-        img.setAttribute("style", "width: 100px;margin-bottom: 10px;")
-        // if(!have){
-        //     div.style.display ="block";
-        // }else{
-        //     div.style.display ="none";
-        // }
-        div.appendChild(img)
-        div.appendChild(p)
-        el.appendChild(div)
-        // let aaa= Loading.service({target: el})
-        // console.log("el.dataset.loading",aaa)
+        let nodom= parseDom("<div class='nodata' style='position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);text-align: center;z-index: 1;display: none;'>" +
+            "<img src='./img/common/no-pic.png' style='width: 100px;margin-bottom: 10px;'/>" +
+            `<p style='font-size: 14px;color: #999999;'>${msg ||i18n.t('index.no_data')}</p></div>`
+        )
+        let loadom= parseDom(`<div class="el-loading-mask" style=""><div class="el-loading-spinner"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg></div></div>`)
+        // console.log(nodom)
+        // console.log(loadom)
+        el.appendChild(nodom)
+        el.appendChild(loadom)
 
     },
     update(el, binding, vnode) {
         // let top = el.pageX + 'px'
         // let left = el.pageY + 'px'
         // console.log("el.dataset.loading", JSON.stringify(el.dataset.loading))
-        // el.dataset.loading.close();
         let params= binding.value
-        let dom= el.querySelector(".nodata")
+        let nodom= el.querySelector(".nodata")
+        let loadom= el.querySelector(".el-loading-mask")
+        loadom.style.display ="none";
         let { have}= params
         // console.log("have", have)
         if(!have){
-            dom.style.display ="block";
+            nodom.style.display ="block";
         }else{
-            dom.style.display ="none";
+            nodom.style.display ="none";
         }
     }
 })

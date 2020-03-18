@@ -7,10 +7,9 @@
     <vue-cal class="vue-cal" :locale="locale" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="false" :editable-events="false"
-             :on-event-click="tagClick" @cell-click="create"
+             :on-event-click="tagClick" @cell-click="create" @view-change="vChange"
              @mousedown.native="md" @mousemove.native="mm">
 <!--        <template v-slot:events-count="{ events, view }">-->
-
 <!--        </template>-->
         <template v-slot:title="{ title, view }">
             <div class="title">
@@ -137,9 +136,9 @@
                 <el-form-item :label="$t('index.add_attachments')">
                     <el-button type="primary" size="mini"
                                :disabled="disEdit" @click="upfile">{{$t("index.select")}}</el-button>
-                    <li v-for="(item, i) in form.attachments" :key="i">
+                    <li v-for="(item, i) in form.attachments" :key="i" class="attachments">
                         <el-link :href="$f.getPic(item._id)"
-                                 style="line-height: 16px;margin-top: 5px;" target="_blank">{{item.filename}}</el-link>
+                                 target="_blank">{{item.filename}}</el-link>
                         <i class="el-icon-delete-solid" v-show="!disEdit" @click="dfile(i)"></i>
                     </li>
                 </el-form-item>
@@ -236,7 +235,7 @@ export default {
             return this.$store.state.user.lang=='zh' ? "zh-cn": "en"
         },
         disEdit(){
-            return !this.isMine && !!this.form._id
+            return !this.isMine && this.form.stype != "TASK"
         }
     },
     mounted(){
@@ -245,6 +244,7 @@ export default {
         setTimeout(()=>{
             this.staffMount= true
         },1000)
+        this.scrollTop()
     },
     methods:{
         getData(){
@@ -253,7 +253,6 @@ export default {
                     data.map(item=>{
                         this.pushEvent(item)
                     })
-
             })
             this.$axios.get("/api/feishu/calendar/get_holiday_day").then(data=>{
                 if(data)
@@ -427,9 +426,13 @@ export default {
                 msg= "修改"
             }
             let param= this.form
-            this.form.forward_people_new= this.forward_people_new.map(it=>{
-                return it.p_id== this.$store.getters.userId ? null : it.p_id
+            let fpn= []
+            this.forward_people_new.forEach((it)=>{
+                if(it.p_id!= this.$store.getters.userId){
+                    fpn.push(it.p_id)
+                }
             })
+            param.forward_people_new= fpn
             param.has_alarms= true
             this.$axios[method]( url, {data: param}).then(data=>{
                 this.dishow= false
@@ -461,7 +464,6 @@ export default {
                     break;
                 }
             }
-
         },
         time(val, format){
             return moment(val).format(format || "YYYY-MM-DD HH:mm:ss")
@@ -479,7 +481,14 @@ export default {
             if(!this.disEdit){
                 this.form[key]= !this.form[key]
             }
+        },
+        vChange(obj){
 
+        },
+        scrollTop(){
+            setTimeout(()=>{
+                document.querySelector(".vuecal--events-on-month-view .vuecal__bg").scrollTop= 320
+            },500)
         }
     }
 }
@@ -527,6 +536,11 @@ export default {
             }
             .form{
                 margin-top: 10px;
+                .attachments{
+                    margin-top: 5px;
+                    a{ line-height: 16px}
+                    i{ vertical-align: middle}
+                }
             }
             .el-icon-error, .el-icon-delete-solid{
                 font-size: 16px;
@@ -590,7 +604,7 @@ export default {
         .vuecal__today-btn{
             position: absolute;
             right: 54px;
-            padding: 0 4px;
+            margin: 0 4px;
             cursor: pointer;
             .today{font-size: 14px}
         }
@@ -602,6 +616,9 @@ export default {
         .vuecal__arrow{
             top: 50%;
             transform: translateY(-50%);
+            height: 15px;
+            line-height: 15px;
+            vertical-align: middle;
             i{
                 color: $color-gray-dark;
                 font-size: 12px;

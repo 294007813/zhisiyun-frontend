@@ -100,6 +100,15 @@ const util= {
         }
         s = s.replace(/,(\d\d)$/, ".$1");
         return (h + s.replace(/^\./, "0."));
+    },
+    /**
+     * 字符串转dom
+     */
+    parseDom(str) {
+        let objE = document.createElement("div"), res=null;
+        objE.innerHTML = str;
+        res= objE.childNodes
+        return res.length==1? res[0]: res;
     }
 }
 
