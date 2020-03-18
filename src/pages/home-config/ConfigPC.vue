@@ -48,7 +48,7 @@ export default {
             template: `
                 <div v-if="bemounted">
                     <div v-for="(citem, colind) in list" :key="citem.code" :class="['disable-block',{long: citem.long}]"
-                         v-if="access(citem) && (long? citem.long: !citem.long)">
+                         v-if="access(citem) && (long? citem.long: !citem.long) && !citem.noaccess">
                         <div class="content">
                             <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                             <div class="button">

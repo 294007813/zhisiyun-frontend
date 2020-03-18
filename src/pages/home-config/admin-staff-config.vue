@@ -38,7 +38,7 @@ import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
 import confpc from "pa/home-config/config/config-pc";
 import confmobile from "./config/config-mobile"
-import {accessPc} from "./fun"
+import {accessPc, accessMobile} from "./fun"
 export default {
     name:  "home-config-admin-staff",
     components: {ConfigPc, ConfigMobile},
@@ -91,7 +91,7 @@ export default {
                     flag: "Mobile", type
                 }}).then(data=>{
                     // console.log(type, this.confm[type], data.conf)
-                this.$set(this.confm,  type, this.getmd(data.conf))
+                this.$set(this.confm,  type, this.getmd(accessMobile(data)))
                     // this.confm[type]= data.conf
             })
         },

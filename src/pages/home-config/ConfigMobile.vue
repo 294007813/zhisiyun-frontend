@@ -33,7 +33,7 @@
     <div class="right">
         <div class="title"><h3>{{$t("index.module_not_added")}}</h3></div>
         <ul class="hide-body">
-            <li v-for="(item, ind) in list.hide" :key="item.name" >
+            <li v-for="(item, ind) in list.hide" :key="item.name" v-if="!item.noaccess">
                 <div class="content">
                     <p class="name">
                         {{$t(`tab.${tabname}.modules.${item.name}`)}}
