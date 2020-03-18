@@ -192,7 +192,7 @@ export default {
             display: inline-block;
             padding: 0 5px;
             font-size: 12px;
-            width: 50px;
+            width: auto;
             height: 20px;
             line-height: 20px;
             vertical-align: middle;
