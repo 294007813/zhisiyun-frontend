@@ -166,7 +166,7 @@ export default {
     "private":"private",
     "complete":"complete",
     "event": "Event",
-    "nums":"frequency",
+    "nums":" ",
     "hour":"hour",
     "fraction":"Fraction",
     "grade":"Grade",
