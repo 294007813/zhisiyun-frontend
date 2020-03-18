@@ -1,7 +1,7 @@
 export default {
     "basic_information_module":{
-        "default": "index.default",
-        // "status": "员工状态",
+        baseinfo: "my.basic_info",
+        "status": "index.e_status",
         "level": "config.rgl",
         "sub": "index.subordinate",
         "look": "index.view_files",
