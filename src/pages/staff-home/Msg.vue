@@ -1,6 +1,6 @@
 <template>
 <div class="msg">
-    <h5 class="unread-num" @click="$f.href('/pc_message_list')">{{$t("index.message_dynamics")}} <el-badge :value="gt.total" class="item" type="primary"></el-badge></h5>
+    <h5 class="unread-num" @click="$f.href('/pc_message_list')">{{$t("index.message_dynamics")}} <el-badge :value="message_count" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane :label="$t('index.unread')" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
@@ -53,6 +53,9 @@ export default {
             let data= this.conf.pages.at
             return data.able && data.show && data.fields
         },
+        message_count() {
+            return  this.$store.state.user.taskMessageCount.message_count || 0
+        }
     },
     mounted(){
         this.activeTabs= this.figt && 'gt' || this.fiat && 'at'
@@ -62,7 +65,7 @@ export default {
     methods:{
         tabClick(){},
         getData(status= 0){
-            this.$axios.get("/api/feishu/news/newslist",{params:{status}}).then(data=>{
+            this.$axios.get("/api/feishu/news/newslist",{params:{status, from: "new_pc_index"}}).then(data=>{
                 data.list = adapter.wx_data_adapter(data.list)
                 this[status? "at": "gt"]= data
             })
