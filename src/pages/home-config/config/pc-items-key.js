@@ -28,7 +28,7 @@ export default {
         "abnormal": "index.abnormal",
         "adjust": "index.adjust"
     },
-    "salary_information":{
+    "salary_information_module":{
         monthly: "xc.monthly",
         trend: "xc.trend",
         statistics: "xc.statistics",

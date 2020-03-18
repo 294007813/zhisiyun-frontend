@@ -409,5 +409,12 @@ export default  {
   config:{
     "rgl": "职级、层级、等级",
     "medal": "勋章",
-  }
+  },
+  mobile:{
+    home: "员工首页",
+    wtpage: "考勤首页",
+    xcpage: "薪酬首页",
+    workpage: "工作首页",
+    minepage: "我的页面"
+  },
 }

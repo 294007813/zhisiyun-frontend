@@ -409,5 +409,12 @@ export default {
     config:{
         "rgl": "Grade、Rank、Level",
         "medal": "Medal",
-    }
+    },
+    mobile:{
+        home: "Employee page",
+        wtpage: "Attendance page",
+        xcpage: "Salary page",
+        workpage: "Work page",
+        minepage: "Mine page"
+    },
 }
