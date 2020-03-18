@@ -38,6 +38,7 @@ import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
 import confpc from "pa/home-config/config/config-pc";
 import confmobile from "./config/config-mobile"
+import {accessPc, accessMobile} from "./fun"
 export default {
     name:  "home-config-admin-staff",
     components: {ConfigPc, ConfigMobile},
@@ -82,7 +83,7 @@ export default {
         getPc(){
             // this.conf= conf.home
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
-                this.confpc= data.conf.home
+                this.confpc= accessPc(data)
             })
         },
         getMobile(type= "home"){
@@ -90,7 +91,7 @@ export default {
                     flag: "Mobile", type
                 }}).then(data=>{
                     // console.log(type, this.confm[type], data.conf)
-                this.$set(this.confm,  type, this.getmd(data.conf))
+                this.$set(this.confm,  type, this.getmd(accessMobile(data)))
                     // this.confm[type]= data.conf
             })
         },
@@ -115,7 +116,7 @@ export default {
                 if(!ref){
                     continue
                 }
-                let arr= JSON.parse(JSON.stringify(ref.list.show)).concat(JSON.parse(JSON.stringify(ref.list.hide)))
+                let arr= this.$f.deepClone(ref.list.show).concat(this.$f.deepClone(ref.list.hide))
                 arr.forEach((mod)=>{
                     _.mapObject(mod.pages,(pa, pak)=>{
                         let arr=[]

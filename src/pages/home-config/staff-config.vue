@@ -16,6 +16,7 @@
 <script>
 import ConfigPc from './ConfigPC.vue'
 import conf from "pa/home-config/config/config-pc";
+import {accessPc} from "./fun"
 export default {
     name: 'home-config-staff',
     components: {ConfigPc},
@@ -135,7 +136,7 @@ export default {
                         }
                     })
                 }
-                console.log(JSON.stringify(my))
+                // console.log(JSON.stringify(my))
 
                 this.conf= my
             });
