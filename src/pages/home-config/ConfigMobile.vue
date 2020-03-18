@@ -2,7 +2,7 @@
 <div class="mobile-config">
     <div class="left">
         <div class="title">
-            <h3>已添加模块 <span><b>*</b>拖拽模块进行排序布局</span></h3>
+            <h3>{{$t("index.module_added")}} <span><b>*</b>{{$t("index.sort_layout_module")}}</span></h3> 
         </div>
         <ul class="drag-body" ref="dragbody">
             <li v-for="(item, ind) in left" :key="'l-'+ind" :class=" {fixed: item.fix}"
@@ -18,10 +18,10 @@
                     </p>
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
-                                   @click.self="remove(ind, false,$event)" v-if="!item.fix">隐藏</el-button>
+                                   @click.self="remove(ind, false,$event)" v-if="!item.fix">{{$t("index.hidden_module")}}</el-button>
                         <el-button type="primary" size="mini" round
                                    v-if="cansetup(item)"
-                                   @click="openModsetup(item)">配置</el-button>
+                                   @click="openModsetup(item)">{{$t("index.to_configure")}}</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>
@@ -31,7 +31,7 @@
         </ul>
     </div>
     <div class="right">
-        <div class="title"><h3>未添加模块</h3></div>
+        <div class="title"><h3>{{$t("index.module_not_added")}}</h3></div>
         <ul class="hide-body">
             <li v-for="(item, ind) in list.hide" :key="item.name" >
                 <div class="content">
@@ -40,7 +40,7 @@
                     </p>
                     <p class="button">
                         <el-button type="primary" size="mini" round plain
-                                   @click="remove(ind, true)">显示</el-button>
+                                   @click="remove(ind, true)">{{$t("index.show")}}</el-button>
                     </p>
                     <!--                <a class="hide" v-if="!citem.fixed" @click="tohide(rowind, colind, citem)">隐藏</a>-->
                 </div>

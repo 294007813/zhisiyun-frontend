@@ -1,20 +1,20 @@
 <template>
 <div class="home-config">
     <div class="head">
-        <h2>员工首页配置</h2>
+        <h2>{{$t("index.employee_page_config")}}</h2>
         <div class="button">
-            <el-button size="small" @click="back">返回</el-button>
-            <el-button size="small" type="success" @click="update">更新</el-button>
-            <el-button type="primary" size="small" @click="save">保存</el-button>
+            <el-button size="small" @click="back">{{$t("index.return")}}</el-button>
+            <el-button size="small" type="success" @click="update">{{$t("index.update")}}</el-button>
+            <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </div>
     </div>
     <el-tabs v-model="tabsVal" class="tbs zsy" >
-        <el-tab-pane label="PC端" name="pc" :lazy="true">
+        <el-tab-pane :label="$t('index.pc_terminal_config')" name="pc" :lazy="true"> 
             <div class="main">
                 <config-pc :conf="confpc" ref="pchome" :admin="true"></config-pc>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="移动端" name="mobile">
+        <el-tab-pane :label="$t('index.mobile_terminal_config')" name="mobile">
             <div class="main">
             <el-tabs  class="sub-tabs" v-model="subTabsVal">
                 <el-tab-pane v-for="(mod, name) in confmobile" :key="name"
@@ -141,8 +141,8 @@ export default {
         },
         update(){
             this.$msgbox.confirm( "",{
-                title: "确定要强制更新所有员工的配置和布局？",
-                message: "强制更新后不可撤回，请谨慎操作。",
+                title: this.$t("index.title_force_update"),
+                message: this.$t("index.msg_force_update"),
                 callback:(action)=>{
                     if(action=="confirm"){
                         this.topost(true)

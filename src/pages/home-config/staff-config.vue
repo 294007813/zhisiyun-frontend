@@ -1,10 +1,10 @@
 <template>
 <div class="home-config">
     <div class="head">
-        <h2>员工首页PC端布局及设置</h2>
+        <h2>{{$t("index.employee_cnf")}}</h2>
         <div class="button">
-            <el-button size="small" @click="back">返回</el-button>
-            <el-button type="primary" size="small" @click="save">保存</el-button>
+            <el-button size="small" @click="back">{{$t("index.return")}}</el-button>
+            <el-button type="primary" size="small" @click="save">{{$t("index.save")}}</el-button>
         </div>
     </div>
     <div class="main">
