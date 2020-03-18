@@ -43,7 +43,7 @@ export default {
             // })
 
             async.parallel({
-                user: (callback)=> {
+                userc: (callback)=> {
                     this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people",{
                         params:{
                             flag: "PC",
@@ -54,7 +54,7 @@ export default {
                         let rule= data.modules.contract_modules
                         this.mapMod(list, rule)
                         // this.conf= list
-                        callback(null, list);
+                        callback(null, {list, rule});
                     })
                 },
                 admin: (callback)=> {
@@ -69,7 +69,8 @@ export default {
                 }
             }, (err, res)=> {
                 // console.log(res)
-                let {user, admin} = res, distr="", my={}
+                let {userc, admin} = res, distr="", my={}
+                let user= userc.list, rule= userc.rule
 
                 _.mapObject(admin.disable[0],(it, key)=>{
                     distr+= "-"+it.code
@@ -88,8 +89,9 @@ export default {
                     let ms= d[name]
                     for(let i=ms.length-1; i>=0; i--){
                         for(let j=ms[i].length-1; j>=0; j--){
-                            if(distr.includes(ms[i][j].code)){
-                                d.disable[0].push(ms[i][j])
+                            let it= ms[i][j]
+                            if(distr.includes(it.code) || (it.source && !rule[it.code])){
+                                d.disable[0].push(it)
                                 ms[i].splice(j, 1)
                             }
                         }

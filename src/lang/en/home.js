@@ -206,8 +206,11 @@ export default {
         short: "Absence",
         trip: "Trip Days",
         official: "Official Days",
-        leave: "Leave"
-
+        leave: "Leave",
+        "late2": "Late",
+        "abnormal": "Overtime Adjustment",
+        "adjust": "Holiday Adjustment",
+        p_all_income: "All Income"
   },
   //导航
   "dh":{
@@ -400,7 +403,11 @@ export default {
     "click_page_to_enter":"Click the page to enter the detailed card configuration",
     "p_homepage_config":"Personal homepage configuration",
     "attendance_page_config":"Attendance page configuration",
-    "salary_page_config":"薪酬页配Salary page configuration置",
+    "salary_page_config":"Salary page configuration置",
     "my_page_config":"My page configuration"
-  }
+  },
+    config:{
+        "rgl": "Grade、Rank、Level",
+        "medal": "Medal",
+    }
 }

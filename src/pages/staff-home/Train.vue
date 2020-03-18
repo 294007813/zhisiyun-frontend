@@ -21,7 +21,7 @@
             <p><b>{{bo.process||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.self_deal")}}</span>
         </li>
-        <li v-if="fibo.doing" @click="$f.href('/admin/wf/process_instance/mylist')">
+        <li v-if="fibo.doing2" @click="$f.href('/admin/wf/process_instance/mylist')">
             <p><b>{{bo.ing||0}}</b>{{$t("index.nums")}}</p>
             <span>{{$t("index.ongoing")}}</span>
         </li>

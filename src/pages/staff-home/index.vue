@@ -3,20 +3,20 @@
     <template v-for="(row, r) in list">
         <template v-for="(item, i) in row">
             <li :class="'border '+ (item.long ? 'long' :(row.length==3? 'small': 'half'))">
-                <base-info v-if="item.code=='base'" :conf="item"></base-info>
-                <checkin v-if="item.code=='TM'" :conf="item"></checkin>
-                <salary v-if="item.code=='PY'" :conf="item"></salary>
-                <g-tasks v-if="item.code=='gtasks'" :conf="item"></g-tasks>
-                <birthday v-if="item.code=='birthday'" :conf="item"></birthday>
-                <often v-if="item.code=='often'" :conf="item"></often>
-                <msg v-if="item.code=='msg'" :conf="item"></msg>
-                <perf v-if="item.code=='PM'" :conf="item"></perf>
-                <idea v-if="item.code=='ADM'" :conf="item"></idea>
-                <train v-if="item.code=='TR'" :conf="item"></train>
-                <contract v-if="item.code=='PA'" :conf="item"></contract>
-                <com-star v-if="item.code=='comstar'" :conf="item"></com-star>
-                <skill-star v-if="item.code=='TA'" :conf="item"></skill-star>
-                <v-calendar v-if="item.code=='calendar'" :conf="item"></v-calendar>
+                <base-info v-if="item.name=='basic_information_module'" :conf="item"></base-info>
+                <checkin v-if="item.name=='attendance_information_module'" :conf="item"></checkin>
+                <salary v-if="item.name=='salary_information_module'" :conf="item"></salary>
+                <g-tasks v-if="item.name=='to_do_module'" :conf="item"></g-tasks>
+                <birthday v-if="item.name=='birthday_blessing_module'" :conf="item"></birthday>
+                <often v-if="item.name=='common_application_module'" :conf="item"></often>
+                <msg v-if="item.name=='message_dynamic_module'" :conf="item"></msg>
+                <perf v-if="item.name=='performance_information_module'" :conf="item"></perf>
+                <idea v-if="item.name=='suggestion_box_module'" :conf="item"></idea>
+                <train v-if="item.name=='training_process_module'" :conf="item"></train>
+                <contract v-if="item.name=='contract_agreement_module'" :conf="item"></contract>
+                <com-star v-if="item.name=='company_star_module'" :conf="item"></com-star>
+                <skill-star v-if="item.name=='skill_star_module'" :conf="item"></skill-star>
+                <v-calendar v-if="item.name=='me_calendar_module'" :conf="item"></v-calendar>
             </li>
         </template>
         <div></div>

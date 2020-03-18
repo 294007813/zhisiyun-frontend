@@ -36,7 +36,8 @@
 <script>
 import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
-import confpc from "pa/home-config/config/config-pc";
+// import confpc from "pa/home-config/config/config-pc";
+import confpc from "@/test/new_pc";
 import confmobile from "./config/config-mobile"
 import {accessPc, accessMobile} from "./fun"
 export default {
@@ -82,7 +83,12 @@ export default {
     methods:{
         getPc(){
             // this.conf= conf.home
+            // this.confpc= accessPc({conf: confpc})
             this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_client?flag=PC").then(data=>{
+                // this.confpc= accessPc({
+                //     conf: confpc,
+                //     modules:  data.modules
+                // })
                 this.confpc= accessPc(data)
             })
         },

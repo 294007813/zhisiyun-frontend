@@ -2,7 +2,8 @@ export default {
     "code": 200, "data": {
         "conf": {
             "home": {
-                "show": [[{
+                "show": [[
+                    {
                     "title": "基本信息模块(固定模块)",
                     "fixed": true,
                     "code": "base",
@@ -20,7 +21,8 @@ export default {
                     "top": 0,
                     "left": 0,
                     "width": 528
-                }, {
+                },
+                    {
                     "title": "考勤信息模块",
                     "code": "TM",
                     "name": "attendance",
@@ -71,7 +73,8 @@ export default {
                     "top": 0,
                     "left": 528,
                     "width": 528
-                }, {
+                },
+                    {
                     "title": "薪资信息模块",
                     "code": "PY",
                     "name": "my_salary",
@@ -99,7 +102,8 @@ export default {
                     "top": 0,
                     "left": 1056,
                     "width": 528
-                }], [{
+                }], [
+                    {
                     "title": "待办事宜模块",
                     "code": "gtasks",
                     "name": "todo",
@@ -112,7 +116,8 @@ export default {
                     "top": 80,
                     "left": 0,
                     "width": 528
-                }, {
+                },
+                    {
                     "title": "绩效信息模块",
                     "code": "PM",
                     "name": "performance_info",
@@ -130,7 +135,8 @@ export default {
                     "top": 80,
                     "left": 528,
                     "width": 528
-                }, {
+                },
+                    {
                     "title": "消息动态模块",
                     "code": "msg",
                     "source": false,
@@ -148,7 +154,8 @@ export default {
                     "top": 80,
                     "left": 1056,
                     "width": 528
-                }], [{
+                }], [
+                    {
                     "title": "生日祝福模块",
                     "code": "birthday",
                     "name": "birthday_blessing_wall",
@@ -161,7 +168,8 @@ export default {
                     "top": 160,
                     "left": 0,
                     "width": 792
-                }, {
+                },
+                    {
                     "title": "公司之星模块",
                     "code": "comstar",
                     "name": "star_company",
@@ -171,7 +179,8 @@ export default {
                     "top": 160,
                     "left": 792,
                     "width": 792
-                }], [{
+                }], [
+                    {
                     "title": "技能之星模块",
                     "code": "TA",
                     "name": "skill_star",

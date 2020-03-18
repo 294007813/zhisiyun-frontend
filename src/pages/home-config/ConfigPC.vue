@@ -161,7 +161,7 @@ export default {
     },
     methods: {
         mup(){
-            console.log("mup")
+            // console.log("mup")
             this.insCursorShow= true
         },
         openModsetup(item){

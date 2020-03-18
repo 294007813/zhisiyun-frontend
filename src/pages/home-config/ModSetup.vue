@@ -16,7 +16,7 @@
                              :disabled="specrule1 && specrule1[tk].disable || tk=='default'"
                              @click.native="dismsg(specrule1 && specrule1[tk].disable)"
                              @change="cltitle($event,tag)">
-                    {{tagName(tk)|| '基本信息'}}</el-checkbox>
+                    {{tagName(tk, false, tag.name)|| '基本信息'}}</el-checkbox>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in tag.fields" :key="key" >
@@ -62,6 +62,7 @@ let i18n={Tp}
 import men from "./config/en"
 import mzh from "./config/zh"
 import pmk from "./config/pc-module-key"
+import pik from "./config/pc-items-key"
 
 export default {
     name: "ModSetup",
@@ -96,7 +97,7 @@ export default {
         },
         t(){
             let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
-            console.log("t", t)
+            // console.log("t", t)
             return t
         },
         page(){
@@ -106,7 +107,10 @@ export default {
             return this.isp? "able": "disable"
         },
         title(){
-            return  this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
+            return this.$t(`tab.${this.tabname}.modules.${this.mod.name}`)
+        },
+        transitem(){
+            return pik[this.mod.name]
         },
         specrule1(){
             let rownum=0, res={}, dis={}, hasmore4= false, hasmore8= false
@@ -171,7 +175,7 @@ export default {
         }
     },
     methods:{
-        tagName(tk, key){
+        tagName(tk, key, paname){
             let str= ""
             // console.log(this.mod)
             if(this.ism){
@@ -182,12 +186,12 @@ export default {
                     str= this.$t(`tab.${this.tabname}.bookmarks.${tabhasname}`)
                 }
             }else{
-                // if(key){
-                //
-                // }else{
-                //     str= pmk[tk]
-                // }
-                str=  key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
+                if(key){
+                    str= this.$t(this.transitem[key])
+                }else{
+                    str= this.$t(this.transitem[paname])
+                }
+                // str=  key? (i18n[this.tb][key]|| this.t[tk].fields[key]) : this.t[tk].name;
             }
             return str
         },

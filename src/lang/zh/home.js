@@ -206,7 +206,11 @@ export default  {
     short: "缺勤",
     trip: "出差",
     official: "公干",
-    leave: "请假"
+    leave: "请假",
+    "late2": "迟到",
+    "abnormal": "加班调整",
+    "adjust": "假期调整",
+    p_all_income: "累计收入"
   },
   //导航
   "dh":{
@@ -402,22 +406,8 @@ export default  {
     "salary_page_config":"薪酬页配置",
     "my_page_config":"我的页配置"
   },
-  mobile:{
-    home: "员工首页",
-    wtpage: "考勤首页",
-    xcpage: "薪酬首页",
-    workpage: "工作首页",
-    minepage: "我的页面"
-  },
   config:{
     "rgl": "职级、层级、等级",
     "medal": "勋章",
-    "late": "迟到",
-    "rest": "休息",
-    "early": "早退",
-    "outside": "外勤",
-    "absent": "旷工",
-    "short": "缺勤",
-
   }
 }

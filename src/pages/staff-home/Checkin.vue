@@ -116,7 +116,7 @@ export default {
             return data.able && data.show && data.fields
         },
         fiba(){
-            let data= this.conf.pages.balance
+            let data= this.conf.pages.restbalance
             return data.able && data.show && data.fields
         },
         fifl(){

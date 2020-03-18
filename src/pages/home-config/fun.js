@@ -6,7 +6,7 @@ export const accessPc= (data)=>{
             disable: [[]],
         };
     for(let i = d.show.length - 1; i >= 0; i--){
-        let r= d.show[i], row=[]
+        let r= d.show[i], row=[];
         for(let j = r.length - 1; j >= 0; j--){
             let it= r[j]
             if(it.source && !m[it.code]){
@@ -31,6 +31,22 @@ export const accessPc= (data)=>{
             res.hide[0].unshift(it)
         }
     }
+    deal('hide')
+    deal('disable')
+
+    function deal(block) {
+        for(let i = d[block][0].length - 1; i >= 0; i--){
+            let it= d[block][0][i]
+            if(it.source && !m[it.code]){
+                it.noaccess= true
+                res.disable[0].push(it)
+            }else{
+                it.noaccess= false
+                res[block][0].unshift(it)
+            }
+        }
+    }
+    console.log("res", res)
     return res
 }
 
