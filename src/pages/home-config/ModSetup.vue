@@ -34,10 +34,10 @@
         <div v-if="admin">
         <p class="msg">未添加可选项</p>
         <ul class="hide-list"  v-for="(tag, tk) in page" :key="tk" v-if="!tag[an] || Object.keys(tag.disableFields).length">
-            <div class="item long" v-if="!tag.fixed && tagName(tk)">
+            <div class="item long" v-if="!tag.fixed">
                 <i class="fa fa-plus-circle"
                    v-if="!tag[an]" @click="deltitle(tag, true)"></i>
-                <p class="check-tag">{{tagName(tk)||tk}}</p>
+                <p class="check-tag">{{tagName(tk, false, tag.name)}}</p>
             </div>
             <template v-if="tag.fields">
                 <div class="item"  v-for="(val, key) in notlist(tag)" :key="key">
