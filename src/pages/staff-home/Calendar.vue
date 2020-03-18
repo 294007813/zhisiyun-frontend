@@ -39,7 +39,7 @@
             :lock-scroll="false"
             custom-class="dialog"
             width="600px">
-        <p slot="title" class="title">{{form._id ?'修改' :'添加'}}{{$t("index.event")}}</p>
+        <p slot="title" class="title">{{form._id ?'查看' :'编辑'}}{{$t("index.event")}}</p>
         <div :class="['content',{'form-disable': disEdit}]">
             <div :class="['check-tag pri',{on: form.is_private}]" @click="clitag('is_private')"
             ><i class="fa fa-check-circle"></i>{{$t("index.private")}}</div>
@@ -51,10 +51,12 @@
                 <el-form-item :label="$t('index.event_name')">
                     <el-input v-model="form.title" :disabled="disEdit"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('index.add_details')">
-                    <el-input v-model="form.description" type="textarea" :disabled="disEdit"></el-input>
+                <el-form-item :label="$t('index.event_details')">
+                    <el-input v-model="form.description" type="textarea"
+                              v-show="!disEdit" :disabled="disEdit"></el-input>
+                    <div v-show="disEdit" v-html="form.description"></div>
                 </el-form-item>
-                <el-form-item :label="$t('index.add_place')">
+                <el-form-item :label="$t('index.event_place')">
                     <el-input v-model="form.location" type="textarea" :disabled="disEdit"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.event_time')">
@@ -149,9 +151,9 @@
             </el-form>
         </div>
         <p slot="footer" class="footer">
-            <el-button plain size="small" @click="dishow= false">{{$t("index.cancel")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id && !isMine" @click="del(true)">{{$t("index.refuse")}}</el-button>
-            <el-button type="danger" size="small" v-show="!!form._id && isMine" @click="del(false)">{{$t("index.delete")}}</el-button>
+            <el-button plain size="small" @click="dishow= false">{{$t("index.close")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && !isMine && !disEdit" @click="del(true)">{{$t("index.refuse")}}</el-button>
+            <el-button type="danger" size="small" v-show="!!form._id && isMine && !disEdit" @click="del(false)">{{$t("index.delete")}}</el-button>
             <el-button type="primary" size="small" v-show="!disEdit" @click="save">{{$t("index.save")}}</el-button>
         </p>
     </el-dialog>
@@ -235,7 +237,7 @@ export default {
             return this.$store.state.user.lang=='zh' ? "zh-cn": "en"
         },
         disEdit(){
-            return !this.isMine && this.form.stype != "TASK"
+            return (this.form._id &&this.form.stype != "TASK")
         }
     },
     mounted(){
