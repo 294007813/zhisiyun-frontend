@@ -1,6 +1,6 @@
 <template>
 <div class="pc-config">
-    <div class="head">已添加模块 <span><b>*</b>长按“拖拽”模块进行排序布局</span></div>
+    <div class="head">{{$t("index.module_added")}} <span><b>*</b>{{$t("index.you_can_drag")}}</span></div> 
     <div class="drag-body" ref="dragbody">
         <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
             <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
@@ -19,9 +19,9 @@
                     </p>
                     <div class="button">
                         <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                   @click.self="tohide(rowind, colind, citem, $event)">隐藏</el-button>
+                                   @click.self="tohide(rowind, colind, citem, $event)">{{$t("index.hidden_module")}}</el-button>
                         <el-button type="primary" size="mini" round
-                                   v-if="citem.pages &&Object.keys(citem.pages).length" @click="openModsetup(citem)">配置</el-button>
+                                   v-if="citem.pages &&Object.keys(citem.pages).length" @click="openModsetup(citem)">{{$t("index.to_configure")}}</el-button>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
         <div class="row" v-for="ind in showlinenum" :key="ind"></div>
         <i class="ins-cursor" :style="{...cursorto, display: insCursorShow? cursorto.display: 'none'}"></i>
     </div>
-    <div class="head">未添加模块</div>
+    <div class="head">{{$t("index.module_not_added")}}</div>
     <div class="disable-body">
         <disable-block v-for="ind in 2" :key="ind" v-bind="{list: blockList.hide[0], long: !!(ind-1) , bemounted, openModsetup, toshow}"></disable-block>
     </div>

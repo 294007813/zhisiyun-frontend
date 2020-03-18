@@ -74,7 +74,7 @@ export default {
                 this.contract_modules = data.modules.contract_modules
                 let testdata = this.contract_process(data.conf.home.show, data.modules.contract_modules)
                  console.log('list:', testdata)
-                this.list=data.conf.home.show
+                this.list = testdata  // data.conf.home.show
                
                 load.close()
             })
@@ -83,14 +83,16 @@ export default {
         contract_process(listData,contract_modules){
             let result = []
             for(let i=0;i<listData.length;i++){
-                let v=listData[i]
+                let v=listData[i], tmparr = []
                 for(let j=0;j<v.length;j++){
                     if(contract_modules[v[j].code] ===false){
                         console.log(' ==模块无权限:', v[j].code)
-                        delete v[j]
-                    } 
+                        //delete v[j]
+                    } else {
+                        tmparr.push(v[j])
+                    }
                 }
-                if(v.length) result.push(v)
+                if(tmparr.length) result.push(tmparr)
             }
             console.log(result)
             return result
