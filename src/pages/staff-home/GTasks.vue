@@ -46,7 +46,6 @@ export default {
             return data.able && data.show && data.fields
         },
         task_count() {
-            console.log(this.$store.state.user.taskMessageCount, "....................")
             return this.$store.state.user.taskMessageCount.task_count || 0
         }
     },
