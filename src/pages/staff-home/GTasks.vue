@@ -1,6 +1,6 @@
 <template>
 <div class="gtasks">
-    <h5 class="todo-num" @click="$f.href('/admin/wf/todo_list')">{{$t("index.todo")}}<el-badge :value="gt.total||0" class="item" type="primary"></el-badge></h5>
+    <h5 class="todo-num" @click="$f.href('/admin/wf/todo_list')">{{$t("index.todo")}}<el-badge :value="task_count" class="item" type="primary"></el-badge></h5>
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane :label="$t('index.to_do_task')" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
@@ -45,6 +45,10 @@ export default {
             let data= this.conf.pages.at
             return data.able && data.show && data.fields
         },
+        task_count() {
+            console.log(this.$store.state.user.taskMessageCount, "....................")
+            return this.$store.state.user.taskMessageCount.task_count || 0
+        }
     },
     mounted(){
         this.activeTabs= this.figt && 'gt' || this.fiat && 'at'

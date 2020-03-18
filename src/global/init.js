@@ -23,3 +23,7 @@ axios.get("/api/feishu/base/getlanguage").then(data => {
 axios.get("/api/feishu/base/info").then(data=>{
   store.commit("setUser", data[0]);
 })
+
+axios.get("/pc/get_task_and_im_count", {dataLevel:'api'}).then(data=>{
+  store.commit("setTaskMessageCount", data);
+})

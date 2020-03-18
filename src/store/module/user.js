@@ -4,6 +4,7 @@ export default {
     state: {
         lang: "zh",
         userinfo: {},
+        taskMessageCount: {}
     },
     getters: {
         userId: state => {
@@ -20,6 +21,10 @@ export default {
         setUser(state, data){
             state.userinfo= data
         },
+        setTaskMessageCount(state, data) {
+            console.log(data, ".......")
+            state.taskMessageCount = data || {}
+        }
     },
     actions:{
 
