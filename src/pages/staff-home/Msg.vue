@@ -5,7 +5,7 @@
         <el-tab-pane :label="$t('index.unread')" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
                <div v-infinite-scroll="getData" :infinite-scroll-disabled="gt.disabled">
-                    <li v-for="(item, i) in gt.list" :key="i" :ll="item.pc_url" @click="$f.href(item.pc_url)">
+                    <li v-for="(item, i) in gt.list" :key="i" :ll="item.pc_url" @click="viewDetail(item._id, item.pc_url)">
                         <template>
                             <p>{{item.create_tm | relativedate}}前</p>
                             <div>
@@ -15,7 +15,7 @@
                         </template>
                     </li>
 
-                    <p class="view-all" v-if="gt.disabled" @click="$f.href('/pc_message_list')">点击查看全部</p>
+                    <p class="view-all" v-if="gt.disabled" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
                </div>
             </ul>
 
@@ -33,7 +33,7 @@
                         </template>
                     </li>
 
-                    <p class="view-all" v-if="at.disabled" @click="$f.href('/pc_message_list')">点击查看全部</p>
+                    <p class="view-all" v-if="at.disabled" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
                 </div>
             </ul>
         </el-tab-pane>
@@ -89,7 +89,7 @@ export default {
             let type = this.activeTabs       
             let page = this[type].page
 
-            this.$axios.get("/api/feishu/news/newslist",{params:{status: type == 'gt' ? 0 : 1, from: "new_pc_index", page: page + 1, limit: this.limit}}).then(data=>{               
+            this.$axios.get("/api/feishu/news/newslist", {params: {status: type == 'gt' ? 0 : 1, from: "new_pc_index", page: page + 1, limit: this.limit}}).then(data=>{               
                 if (Math.ceil(data.total / this.limit) <= this[type].page) {
                     this[type].disabled = true
                 } else {
@@ -99,6 +99,14 @@ export default {
                 data.list = adapter.wx_data_adapter(data.list)
                 this[type].list = this[type].list.concat(data.list)
             })
+        },
+        viewDetail(newsId, pc_url){ //TODO 点击后，未读消息数量 -1，需要重新调用全局的消息数量接口
+            if (this.activeTabs == "gt") //未读消息，点击设为已读
+                this.$axios.get("/api/feishu/news/setread", {params: {sign: "single", newsId}}, {dataLevel:'api'}).then(data => {
+                    if (data && data.num > 0) {
+                        this.$f.href(pc_url)
+                    }
+                })
         }
     }
 }
