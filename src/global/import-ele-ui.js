@@ -18,6 +18,7 @@ import {
     Image,
     Tooltip,
     Link,
+    InfiniteScroll,
 } from 'element-ui';
 
 Vue.component(Dialog.name, Dialog);
@@ -46,6 +47,7 @@ Vue.component(Image.name, Image);
 Vue.component(Tooltip.name, Tooltip);
 Vue.component(Link.name, Link);
 Vue.use(Loading.directive);
+Vue.use(InfiniteScroll);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$msg = Message;
 Vue.prototype.$loading = Loading.service;

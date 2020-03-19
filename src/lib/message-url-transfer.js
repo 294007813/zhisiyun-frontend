@@ -51,13 +51,13 @@ const adapter = {
         }
 
         , {
-            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getNotificationView\/(\w+)\?nf_id=(\w+)/,
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getNotificationView\/(\w+){0,1}\?nf_id=(\w+)/,
             name: '发送一条通知',
             format: "/admin/im/views/{2}"
         }
 
         , {
-            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getNotificationView2\/(\w+)\?nf_id=(\w+)/,
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getNotificationView2\/(\w+){0,1}\?nf_id=(\w+)/,
             name: '收到一条通知',
             format: "/admin/im/views/{2}"
         }

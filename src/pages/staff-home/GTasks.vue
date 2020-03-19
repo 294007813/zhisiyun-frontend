@@ -9,6 +9,7 @@
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
+                <p class="view-all" @click="$f.href('/admin/wf/todo_list')">点击查看全部</p>
             </ul>
         </el-tab-pane>
         <el-tab-pane :label="$t('index.done_task')" name="at" v-if="fiat">
@@ -18,6 +19,7 @@
 <!--                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>-->
 <!--                    <b>人事事件</b>-->
                 </li>
+                <p class="view-all" @click="$f.href('/admin/wf/finished_list')">点击查看全部</p>
             </ul>
         </el-tab-pane>
     </el-tabs>
@@ -106,6 +108,13 @@ export default {
                 top: 10px;
                 right: 0;
             }
+        }
+        .view-all{
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            color: #999;
         }
         &.at *{
             color: $color-gray;
