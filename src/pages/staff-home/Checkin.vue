@@ -113,15 +113,15 @@ export default {
         fich(){
             let data= this.conf.pages.checkin
             console.log("data::::", data)
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fiba(){
             let data= this.conf.pages.restbalance
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fifl(){
             let data= this.conf.pages.flow
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         }
     },
     mounted(){

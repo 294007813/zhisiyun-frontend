@@ -2,6 +2,25 @@
 <div class="birthday">
     <h5>{{$t("index.birthday_blessing_wall")}}</h5>
     <el-tabs v-model="activeTabs" class="block-tabs">
+        <el-tab-pane :label="`${$t('index.this_month')}(${mon.length||0}${$t('index.num')})`" name="mon" v-if="fimon">
+            <p class="mon-title">{{curMonth}}</p>
+            <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
+                    class="mon-swiper" ref="mon" @someSwiperEvent="callback">
+                <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
+                    <ul class="mon">
+                        <p class="title">{{moment(bd.end_date).format("D")}}<b>{{moment(bd.end_date).format("dd")}}</b></p>
+                        <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
+                            <img class="head"  :src="$f.getPic(item.people.avatar)"/>
+                            <!--<avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
+                            <span>{{item.people.people_name}}</span>
+                        </li>
+                    </ul>
+                </swiper-slide>
+                <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('mon', true)"></i>
+                <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('mon')"></i>
+            </swiper>
+            <div v-else v-nodata="{have: mon.peoples&& mon.peoples.length}"></div>
+        </el-tab-pane>
         <el-tab-pane :label="`${$t('index.today')}(${day.length||0}${$t('index.num')})`" name="day" v-if="fiday" >
             <swiper :options="dayOptions" v-if="day.peoples && day.peoples.length"
                     class="day-swiper" ref="day" @someSwiperEvent="callback">
@@ -25,25 +44,7 @@
             </swiper>
             <div v-else v-nodata="{have: day.peoples&& day.peoples.length}"></div>
         </el-tab-pane>
-        <el-tab-pane :label="`${$t('index.this_month')}(${mon.length||0}${$t('index.num')})`" name="mon" v-if="fimon">
-            <p class="mon-title">{{curMonth}}</p>
-            <swiper :options="monOptions" v-if="mon.peoples && mon.peoples.length"
-                    class="mon-swiper" ref="mon" @someSwiperEvent="callback">
-                <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
-                    <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}<b>{{moment(bd.end_date).format("dd")}}</b></p>
-                        <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
-                            <img class="head"  :src="$f.getPic(item.people.avatar)"/>
-<!--                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
-                            <span>{{item.people.people_name}}</span>
-                        </li>
-                    </ul>
-                </swiper-slide>
-                <i class="fa fa-angle-left swiper-button" slot="button-prev" @click="next('mon', true)"></i>
-                <i class="fa fa-angle-right swiper-button" slot="button-next" @click="next('mon')"></i>
-            </swiper>
-            <div v-else v-nodata="{have: mon.peoples&& mon.peoples.length}"></div>
-        </el-tab-pane>
+        
     </el-tabs>
 
     <el-dialog
@@ -86,7 +87,7 @@ export default {
     },
     data(){
         return{
-            activeTabs: 'day',
+            activeTabs: 'mon',
             dayOptions:{
                 watchOverflow: true,
                 // prevButton: '.swiper-button-prev',
@@ -109,18 +110,18 @@ export default {
     computed:{
         fiday(){
             let data= this.conf.pages.day
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fimon(){
             let data= this.conf.pages.mon
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         curMonth (){
             return new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
         }
     },
     mounted(){
-        this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'
+        this.activeTabs=  this.fimon && 'mon' || this.fiday && 'day'
         this.getData()
         this.getData("month")
     },

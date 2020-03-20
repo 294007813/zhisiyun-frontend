@@ -170,13 +170,6 @@ module.exports = {
                 show: false,
                 able: false,
                 "fields":{
-                  p_all_income: false,
-                  sum_tax: false,
-                  c_sb_total: false,
-                  p_sb_total: false,
-                  c_gjj_total: false,
-                  p_gjj_total: false,
-                  dikou_total: false,
                 },
                 disableFields:{}
               },
@@ -277,7 +270,6 @@ module.exports = {
                 "fields":{
                   participate: false,
                   doing: false,
-                  more: false,
                 },
                 disableFields:{}
               },
@@ -289,7 +281,6 @@ module.exports = {
                   start: false,
                   handle: false,
                   doing2: false,
-                  more: false,
                 },
                 disableFields:{}
               },

@@ -42,11 +42,11 @@ export default {
     computed:{
         fito(){
             let data= this.conf.pages.to
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fibo(){
             let data= this.conf.pages.bo
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         userInfoUrl() {
             return '/admin/masterdata/people/form/' + this.$store.getters.userId + '?mode=view'

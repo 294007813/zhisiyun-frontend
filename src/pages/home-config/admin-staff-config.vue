@@ -37,7 +37,7 @@
 import ConfigPc from './ConfigPC.vue'
 import ConfigMobile from './ConfigMobile.vue'
 // import confpc from "pa/home-config/config/config-pc";
-import confpc from "@/test/new_pc";
+// import confpc from "@/test/new_pc";
 import confmobile from "./config/config-mobile"
 import {accessPc, accessMobile} from "./fun"
 export default {
