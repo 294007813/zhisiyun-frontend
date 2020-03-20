@@ -4,7 +4,7 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane :label="$t('index.unread')" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
-               <div v-infinite-scroll="getData" :infinite-scroll-disabled="gt.disabled">
+               <!-- <div v-infinite-scroll="getData" :infinite-scroll-disabled="gt.disabled"> -->
                     <li v-for="(item, i) in gt.list" :key="i" :ll="item.pc_url" @click="viewDetail(item._id, item.pc_url)">
                         <template>
                             <p>{{item.create_tm | relativedate}}前</p>
@@ -15,8 +15,8 @@
                         </template>
                     </li>
 
-                    <p class="view-all" v-if="gt.disabled" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
-               </div>
+                    <p class="view-all" @click="gt.load ? getData() : $f.href(item.pc_url)">{{clickViewMore}}</p>
+               <!-- </div> -->
             </ul>
 
         </el-tab-pane>
@@ -33,7 +33,7 @@
                         </template>
                     </li>
 
-                    <p class="view-all" v-if="at.disabled" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
+                    <p class="view-all" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
                 </div>
             </ul>
         </el-tab-pane>
@@ -51,15 +51,17 @@ export default {
             activeTabs: 'gt',
             gt: {
                 list: [],
-                page: 0,
+                page: 1,
                 disabled: false,
+                load: true
             },
             at: {
                 list: [],
-                page: 0,
+                page: 1,
                 disabled: false,
+                load: true
             },
-            limit: 5
+            limit: 50
         }
     },
     computed:{
@@ -73,25 +75,29 @@ export default {
         },
         message_count() {
             return  this.$store.state.user.taskMessageCount.message_count || 0
+        },
+        clickViewMore() {
+            return this[this.activeTabs].load ? "点击查看下一页" : "点击查看更多消息" 
         }
     },
     mounted(){
         this.activeTabs= this.figt && 'gt' || this.fiat && 'at'
-        // this.getData()
+        this.getData()
         // this.getData(1)
     },
     methods:{
         tabClick(){
-            if (!this[this.activeTabs].disabled && !this[this.activeTabs].page)
+            if (!this[this.activeTabs].disabled && this[this.activeTabs].page == 1)
                 this.getData()
         },
         getData(){
             let type = this.activeTabs       
             let page = this[type].page
 
-            this.$axios.get("/api/feishu/news/newslist", {params: {status: type == 'gt' ? 0 : 1, from: "new_pc_index", page: page + 1, limit: this.limit}}).then(data=>{               
+            this.$axios.get("/api/feishu/news/newslist", {params: {status: type == 'gt' ? 0 : 1, from: "new_pc_index", page, limit: this.limit}}).then(data=>{               
                 if (Math.ceil(data.total / this.limit) <= this[type].page) {
                     this[type].disabled = true
+                    this[type].load = false
                 } else {
                     this[type].page++ 
                 }
@@ -100,14 +106,14 @@ export default {
                 this[type].list = this[type].list.concat(data.list)
             })
         },
-        viewDetail(newsId, pc_url){ //TODO 点击后，未读消息数量 -1，需要重新调用全局的消息数量接口
+        viewDetail(newsId, pc_url){
             if (this.activeTabs == "gt") //未读消息，点击设为已读
                 this.$axios.get("/api/feishu/news/setread", {params: {sign: "single", newsId}}, {dataLevel:'api'}).then(data => {
                     if (data && data.num > 0) {
                         this.$f.href(pc_url)
                     }
                 })
-        }
+        },
     }
 }
 </script>

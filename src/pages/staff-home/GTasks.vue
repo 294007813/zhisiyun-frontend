@@ -16,7 +16,7 @@
             <ul class="ul at" v-if="fiat" v-nodata="{have: at.list&& at.list.length}">
                 <li v-for="(item, i) in at.list" :key="i" @click="goFun(item.operation)">
                     <p><em>{{item.title}}</em></p>
-<!--                    <span>{{item.due_date}}&nbsp;|&nbsp;限时{{item.delta}}</span>-->
+                    <span>{{item.task_end}}&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
                 <p class="view-all" @click="$f.href('/admin/wf/finished_list')">点击查看更多已办</p>
@@ -49,7 +49,7 @@ export default {
         },
         task_count() {
             return this.$store.state.user.taskMessageCount.task_count || 0
-        }
+        },
     },
     mounted(){
         this.activeTabs= this.figt && 'gt' || this.fiat && 'at'
@@ -65,6 +65,10 @@ export default {
         },
         getAt(){
             this.$axios.get("/api/feishu/news/donelist?from=new_pc_index").then(data=>{
+                for (let v of data.list) {
+                    v.task_end = moment(v.task_end || v.createDate).fromNow()
+                }
+                console.log(data.length, ">>>>>>>>>")
                 this.at= data
             })
         },
