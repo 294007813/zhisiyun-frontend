@@ -57,7 +57,7 @@ export default {
                 disabled: false,
                 load: true
             },
-            limit: 50
+            limit: 10
         }
     },
     computed:{
