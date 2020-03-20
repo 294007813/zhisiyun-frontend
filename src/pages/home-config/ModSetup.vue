@@ -50,7 +50,7 @@
     </div>
     <p slot="footer" class="footer">
 <!--        <el-button plain size="small" @click="close">取消</el-button>-->
-        <el-button type="primary" size="small"  @click="close">关闭</el-button>
+    <el-button type="primary" size="small"  @click="close">关闭</el-button>
     </p>
 </el-dialog>
 </template>
@@ -95,11 +95,11 @@ export default {
         tb(){
             return "Tp"
         },
-        t(){
-            let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
-            // console.log("t", t)
-            return t
-        },
+        // t(){
+        //     let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
+        //     // console.log("t", t)
+        //     return t
+        // },
         page(){
             return this.mod.pages || {}
         },
@@ -171,7 +171,7 @@ export default {
 
             })
 
-            return this.mod.name=="attendance" && dis
+            return (this.mod.name=="attendance_information_module" || this.mod.name=="attendance") && dis
         }
     },
     methods:{
@@ -308,6 +308,8 @@ export default {
     }
     .body{
         padding: 10px;
+        min-height: 200px;
+        position: relative;
         .msg{
             font-size: 14px;
             color: $color-black;

@@ -30,7 +30,7 @@
                 <p>{{bl.year| toFixed(2, true)}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
-            <li v-if="fiba.rest"
+            <li v-if="fiba.restbalance"
                 @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
 
             >
@@ -113,15 +113,15 @@ export default {
         fich(){
             let data= this.conf.pages.checkin
             console.log("data::::", data)
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fiba(){
-            let data= this.conf.pages.restbalance
-            return data.able && data.show && data.fields
+            let data= this.conf.pages.balance
+            return data&& data.able && data.show && data.fields
         },
         fifl(){
             let data= this.conf.pages.flow
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         }
     },
     mounted(){
@@ -329,7 +329,7 @@ export default {
     padding: 6px 20px;
     ul{
         // padding-top: 10px;
-        height: 1/3*100%;
+        min-height: 1/3*100%;
         &:not(:last-child){border-bottom: 1px solid $color-border;}
         h5{
             margin-bottom: 10px;
@@ -350,6 +350,9 @@ export default {
                 transform: translateY(-50%);
                 vertical-align: middle;
             }
+        }
+        >div{
+            padding-bottom: 10px;
         }
     }
     /deep/.sta > div ,.balance, .flow {

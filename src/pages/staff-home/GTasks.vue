@@ -41,11 +41,11 @@ export default {
     computed:{
         figt(){
             let data= this.conf.pages.gt
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fiat(){
             let data= this.conf.pages.at
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         task_count() {
             return this.$store.state.user.taskMessageCount.task_count || 0

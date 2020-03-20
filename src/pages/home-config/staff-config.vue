@@ -15,8 +15,8 @@
 
 <script>
 import ConfigPc from './ConfigPC.vue'
-import conf from "pa/home-config/config/config-pc";
-import {accessPc} from "./fun"
+// import conf from "pa/home-config/config/config-pc";
+// import {accessPc} from "./fun"
 export default {
     name: 'home-config-staff',
     components: {ConfigPc},
@@ -35,13 +35,6 @@ export default {
     },
     methods:{
         getData(){
-            // console.log("moment", moment)
-            // this.conf= conf.home
-            // this.$axios.post("/api/feishu_index_page/homePageConfControl/add_home_page_configuration_client",{
-            //     "flag":"PC",
-            //     datas: conf
-            // })
-
             async.parallel({
                 userc: (callback)=> {
                     this.$axios.get("/api/feishu_index_page/homePageConfControl/get_home_page_configuration_people",{
@@ -52,7 +45,7 @@ export default {
                     }).then(data=>{
                         let list= data.conf.home
                         let rule= data.modules.contract_modules
-                        this.mapMod(list, rule)
+                        // this.mapMod(list, rule)
                         // this.conf= list
                         callback(null, {list, rule});
                     })
@@ -69,78 +62,100 @@ export default {
                 }
             }, (err, res)=> {
                 // console.log(res)
-                let {userc, admin} = res, distr="", my={}
+                let {userc, admin} = res
                 let user= userc.list, rule= userc.rule
-
-                _.mapObject(admin.disable[0],(it, key)=>{
-                    distr+= "-"+it.code
-                })
-                // console.log("distr", distr)
-                my={
-                    show: user.show,
-                    hide: [user.hide[0].concat( user.disable[0])],
-                    disable: [[]],
+                let u= {
+                    sl: [], hl: user.hide[0], dl: user.disable[0]
                 }
-                dis(my, 'show')
-                dis(my, 'hide')
+                let msl={}, del=[], rel={sl:[],hl:[],dl:[]};
+                user.show.forEach((row, i)=>{
+                    row.forEach((it, j)=>{
+                        u.sl.push({
+                            i,j,
+                            ...it
+                        })
+                    })
+                })
 
-                function dis(d, name) {
-                    //禁用模块
-                    let ms= d[name]
-                    for(let i=ms.length-1; i>=0; i--){
-                        for(let j=ms[i].length-1; j>=0; j--){
-                            let it= ms[i][j]
-                            if(distr.includes(it.code) || (it.source && !rule[it.code])){
-                                d.disable[0].push(it)
-                                ms[i].splice(j, 1)
+                //管理员开放模块
+                admin.show.forEach((row, i)=>{
+                    row.forEach((it, j)=>{
+                        msl[it.name]= it
+                    })
+                })
+
+                let showns= move("sl", "dl", false, true, false).undo.join("-")
+                move("hl", "dl", false, true, false)
+                let disns=move("dl", "hl", true, true, true).undo.join("-")
+
+                function move( f, t, haveAdmin= true, judgeAccess, hasAccess){
+                    let todo= [], undo=[]
+                    u[f].forEach( (si, i)=> {
+                        let mshow= msl.hasOwnProperty(si.name) //管理员开放的模块
+                        let togo= false
+                        if( !si.fixed){
+                            if(judgeAccess && si.source && (hasAccess? rule[si.code] : !rule[si.code])){
+                                togo= true
+                            }
+                            if(haveAdmin? mshow: !mshow){
+                                togo= true
+                            }else{
+                                togo= false
+                            }
+                            if( haveAdmin){
+                                _.mapObject(si.pages, (pit, pk)=>{
+                                    pit.able= msl[si.name] && msl[si.name].hasOwnProperty(pk)? msl[si.name][pk].able: false
+                                    for( let fk in pit.fields){
+                                        pit.fields[fk]= false
+                                    }
+                                })
                             }
                         }
-                        if(!ms[i].length){
-                            ms.splice(i, 1)
+                        if(togo){
+                            rel[t].push( si)
+                            todo.push( si.name)
+                        } else{
+                            undo.push( si.name)
                         }
+                    })
+                    return {todo, undo}
+                }
+
+
+                for(let i= u.dl.length-1; i>=0; i--){
+                    if(disns.includes(u.dl[i].name)){
+                        rel.dl.unshift(u.dl[i])
                     }
-                    if(!ms.length) ms.push([])
                 }
 
-                let ais= _.flatten(admin.show)
-                // console.log("ais", ais)
+                user.show.forEach(row=>{
+                    let arr=[]
+                    row.forEach(it=>{
+                        let itn= it.name
+                        if(showns.includes(itn)){
+                            _.mapObject(it.pages, (pit, pk)=>{
+                                if(msl[it.name] && msl[it.name].hasOwnProperty(pk) && !msl[it.name][pk].able){
 
-                my.show.forEach((row)=>{
-                    row.forEach((item)=>{
-                        setitem(item)
-                    })
-                })
-                my.hide.forEach((row)=>{
-                    row.forEach((item)=>{
-                        setitem(item)
-                    })
-                })
-
-                function setitem(it) {
-                    ais.forEach((ai)=>{
-                        if(it.name== ai.name){
-                            _.mapObject(ai.pages, (ap, apk)=>{
-                                let itp= it.pages[apk]
-                                    itp.able= ap.able //页签的禁用状态
-                                    _.mapObject(ap.fields, (apf, apfk)=>{
-                                        if(!itp.fields.hasOwnProperty(apfk)){
-                                            itp.fields[apfk]= false
-                                        }
-                                    })
-                                    _.mapObject(ap.disableFields, (apf, apfk)=>{
-                                        if(itp.fields.hasOwnProperty(apfk)){
-                                            delete itp.fields[apfk]
-                                        }
-                                        itp.disableFields[apfk]= apf
-                                    })
-
+                                }
+                                pit.able= msl[it.name] && msl[it.name].hasOwnProperty(pk) ? msl[it.name][pk].able: false
+                                for( let fk in pit.fields){
+                                    pit.fields[fk]= false
+                                }
                             })
+                            arr.push(it)
                         }
                     })
-                }
-                // console.log(JSON.stringify(my))
+                    if(arr.length){
+                        rel.sl.push(arr)
+                    }
+                })
 
-                this.conf= my
+                this.conf= {
+                    show: rel.sl,
+                    hide: [rel.hl],
+                    disable: [rel.dl],
+                }
+                console.log(rel)
             });
         },
         mapMod(list, rule){
@@ -155,15 +170,13 @@ export default {
                 list.forEach((it)=>{
                     ind= []
                     it.forEach((mod, i)=>{
-                        _.mapObject(rule,(ru, key)=>{
-                            if(mod.code==key && !ru){
-                                mod.access=false
-                                noaccess.push(mod)
-                                ind.shift(i)
-                            }else{
-                                mod.access=true
-                            }
-                        })
+                        if(rule.hasOwnProperty(mod.code) && !rule[mod.code]){
+                            mod.access=false
+                            noaccess.push(mod)
+                            ind.unshift(i)
+                        }else{
+                            mod.access=true
+                        }
                     })
                     ind.forEach((i)=>{
                         it.splice(i, 1)
