@@ -267,7 +267,7 @@ export default {
                 method: "post",
                 url: API_LIKE + id,
                 data: {
-                    self_like: state,
+                    self_like: "" + state,
                     type: "wishwell"
                 }
             }).then((res) => {
