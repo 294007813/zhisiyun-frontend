@@ -4,37 +4,33 @@
     <el-tabs v-model="activeTabs" @tab-click="tabClick" class="block-tabs">
         <el-tab-pane :label="$t('index.unread')" name="gt" v-if="figt">
             <ul class="ul" v-nodata="{have: gt.list&& gt.list.length}">
-               <!-- <div v-infinite-scroll="getData" :infinite-scroll-disabled="gt.disabled"> -->
-                    <li v-for="(item, i) in gt.list" :key="i" :ll="item.pc_url" @click="viewDetail(item._id, item.pc_url)">
-                        <template>
-                            <p>{{item.create_tm | relativedate}}前</p>
-                            <div>
-    <!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
-                                <span>{{item.msg}}</span>
-                            </div>
-                        </template>
-                    </li>
+                <li v-for="(item, i) in gt.list" :key="i" :ll="item.pc_url" @click="viewDetail(item._id, item.pc_url)">
+                    <template>
+                        <p>{{item.create_tm | relativedate}}前</p>
+                        <div>
+<!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
+                            <span>{{item.msg}}</span>
+                        </div>
+                    </template>
+                </li>
 
-                    <p class="view-all" @click="gt.load ? getData() : $f.href(item.pc_url)">{{clickViewMore}}</p>
-               <!-- </div> -->
+                <p class="view-all" @click="gt.load ? getData() : $f.href(item.pc_url)">{{clickViewMore}}</p>
             </ul>
 
         </el-tab-pane>
         <el-tab-pane :label="$t('index.readed')" name="at" v-if="fiat">
             <ul class="ul at" v-nodata="{have: at.list&& at.list.length}">
-                <div v-infinite-scroll="getData" :infinite-scroll-disabled="at.disabled">
-                    <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.pc_url)">
-                        <template>
-                            <p>{{item.create_tm | relativedate}}前</p>
-                            <div>
-    <!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
-                                <span>{{item.msg}}</span>
-                            </div>
-                        </template>
-                    </li>
+                <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.pc_url)">
+                    <template>
+                        <p>{{item.create_tm | relativedate}}前</p>
+                        <div>
+<!--                            <img class="head" src="~as/img/staff-home/head-M.png"/>-->
+                            <span>{{item.msg}}</span>
+                        </div>
+                    </template>
+                </li>
 
-                    <p class="view-all" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
-                </div>
+                <p class="view-all" @click="$f.href('/pc_message_list')">点击查看更多消息</p>
             </ul>
         </el-tab-pane>
     </el-tabs>
