@@ -113,7 +113,7 @@ export default {
             })
             return arr
         },
-        setmd(){
+        setmd(update){
             let res={}
             for(let key in confmobile){
                 // console.log("key", "["+key+"]")
@@ -124,6 +124,9 @@ export default {
                 }
                 let arr= this.$f.deepClone(ref.list.show).concat(this.$f.deepClone(ref.list.hide))
                 arr.forEach((mod)=>{
+                    if(update && mod.disable){
+                        mod.isuse= true
+                    }
                     _.mapObject(mod.pages,(pa, pak)=>{
                         let arr=[]
                         _.mapObject(pa.fields, (fi, fik)=>{
@@ -159,7 +162,7 @@ export default {
         },
         topost(update){
             let tasks= []
-            let mdata= this.setmd()
+            let mdata= this.setmd(update)
             tasks.push((callback)=> {
                 this.toreq({
                     "flag":"PC",

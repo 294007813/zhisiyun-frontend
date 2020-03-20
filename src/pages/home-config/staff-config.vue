@@ -62,7 +62,7 @@ export default {
                 }
             }, (err, res)=> {
                 // console.log(res)
-                let {userc, admin} = res, distr="", my={}
+                let {userc, admin} = res
                 let user= userc.list, rule= userc.rule
                 let u= {
                     sl: [], hl: user.hide[0], dl: user.disable[0]
@@ -77,19 +77,31 @@ export default {
                     })
                 })
 
+                //管理员开放模块
                 admin.show.forEach((row, i)=>{
                     row.forEach((it, j)=>{
                         msl[it.name]= it
                     })
                 })
 
+                let showns= move("sl", "dl", false, true, false).undo.join("-")
+                move("hl", "dl", false, true, false)
+                let disns=move("dl", "hl", true, true, true).undo.join("-")
+
                 function move( f, t, haveAdmin= true, judgeAccess, hasAccess){
                     let todo= [], undo=[]
                     u[f].forEach( (si, i)=> {
-                        let flag= msl.hasOwnProperty(si.name)
-                        if( !si.fixed &&
-                            ((( haveAdmin? flag: !flag) && !judgeAccess) ||
-                            (!si.source || (hasAccess? rule[si.code] : !rule[si.code])))){
+                        let mshow= msl.hasOwnProperty(si.name) //管理员开放的模块
+                        let togo= false
+                        if( !si.fixed){
+                            if(judgeAccess && si.source && (hasAccess? rule[si.code] : !rule[si.code])){
+                                togo= true
+                            }
+                            if(haveAdmin? mshow: !mshow){
+                                togo= true
+                            }else{
+                                togo= false
+                            }
                             if( haveAdmin){
                                 _.mapObject(si.pages, (pit, pk)=>{
                                     pit.able= msl[si.name] && msl[si.name].hasOwnProperty(pk)? msl[si.name][pk].able: false
@@ -98,6 +110,8 @@ export default {
                                     }
                                 })
                             }
+                        }
+                        if(togo){
                             rel[t].push( si)
                             todo.push( si.name)
                         } else{
@@ -107,9 +121,6 @@ export default {
                     return {todo, undo}
                 }
 
-                let showns= move("sl", "dl", false, true, false).undo.join("-")
-                move("hl", "dl", false)
-                let disns=move("dl", "hl", true, true, true).undo.join("-")
 
                 for(let i= u.dl.length-1; i>=0; i--){
                     if(disns.includes(u.dl[i].name)){

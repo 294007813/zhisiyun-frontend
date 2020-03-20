@@ -95,11 +95,11 @@ export default {
         tb(){
             return "Tp"
         },
-        t(){
-            let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
-            // console.log("t", t)
-            return t
-        },
+        // t(){
+        //     let mod= this.mod.code, t= i18n[this.tb][this.tabname][mod]
+        //     // console.log("t", t)
+        //     return t
+        // },
         page(){
             return this.mod.pages || {}
         },
@@ -171,7 +171,7 @@ export default {
 
             })
 
-            return this.mod.name=="attendance" && dis
+            return (this.mod.name=="attendance_information_module" || this.mod.name=="attendance") && dis
         }
     },
     methods:{
