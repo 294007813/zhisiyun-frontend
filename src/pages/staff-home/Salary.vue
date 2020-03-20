@@ -14,7 +14,8 @@
                 <template v-for="(it, key) in revmon">
                     <p class="title">{{it.year}}{{$t("index.year")}}</p>
                     <ul>
-                        <li v-for="(item, i) in it.item" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li>
+                        <li v-for="(item, i) in it.item" :key="i"><label>{{item.mon}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li>
+                        <!-- <li v-for="(item, i) in it.item" :key="i"><label>{{item.mon}}{{$t("index.month")}}</label><p>{{hidstr || $f.currencyFilter(item.amount)}}</p></li> -->
                     </ul>
                 </template>
             </div>
