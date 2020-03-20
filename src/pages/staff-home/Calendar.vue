@@ -12,15 +12,15 @@
 <!--        <template v-slot:events-count="{ events, view }">-->
 <!--        </template>-->
         <template v-slot:title="{ title, view }">
-            <div class="title">
-                <span v-show="view.id === 'month'">{{ view.startDate.format('YYYY年MM月') }}</span>
+            <div class="title" style="left: 115px;">
+                <span v-show="view.id === 'month'">{{ view.startDate.format('YYYY-MM') }}</span>
                 <span v-show="view.id === 'week'">{{getWeek(view)}}</span>
-                <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY年MM月DD日') }}</span>
+                <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY-MM-DD') }}</span>
             </div>
             <div class="switch">
-                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.month")}}</p>
+                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.the_month")}}</p>
                 <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
-                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day")}}</p>
+                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.nowday")}}</p>
             </div>
         </template>
         <i slot="arrow-prev" class="fa fa-chevron-left"></i>
@@ -602,19 +602,19 @@ export default {
         }
         .vuecal__arrow--prev{
             position: absolute;
-            right: 87px;
+            right: 110px;
             padding: 0 4px;
         }
         .vuecal__today-btn{
             position: absolute;
-            right: 54px;
+            right: 45px;
             margin: 0 4px;
             cursor: pointer;
             .today{font-size: 14px}
         }
         .vuecal__arrow--next{
             position: absolute;
-            right: 34px;
+            right: 26px;
             padding: 0 4px;
         }
         .vuecal__arrow{

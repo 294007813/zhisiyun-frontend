@@ -2,7 +2,7 @@
   <div class="trend-content">
     <div class="trend-title">
       <div class="titleInfo" :style="{opacity: lineObj.length? 1: 0}">
-        {{lineObj[0] && lineObj[0].replace("-",$t(`index.year`))}}{{$t(`index.month`)}}
+        {{lineObj[0] && lineObj[0]}}
         <span>{{$t('xc.real_wage')}}：{{ eyes || $f.currencyFilter(lineObj[1])}}</span>
       </div>
       <div class="trend-graph" ref="trendGraph">
@@ -26,7 +26,7 @@
         <p>
           <span
             v-if="dateInterval.length > 1"
-          >{{`${dateInterval[0].replace(/-/,$t(`index.year`))}${$t(`index.month`)}-${dateInterval[1].replace(/-/g,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
+          >{{`${dateInterval[0]}--${dateInterval[1]}`}}</span>
           <span v-else>{{`${dateInterval[0].replace(/-/,$t(`index.year`))}`}}{{$t(`index.month`)}}</span>
         </p>
       </div>
