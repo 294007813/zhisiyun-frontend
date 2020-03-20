@@ -30,7 +30,7 @@
                 <p>{{bl.year| toFixed(2, true)}}<b>{{$t("index.hour")}}</b></p>
                 <span>{{$t("index.Annualleavebalance")}}</span>
             </li>
-            <li v-if="fiba.rest"
+            <li v-if="fiba.restbalance"
                 @click="$f.href('/admin/tm/absence/report_emp_leave_list')"
 
             >
@@ -116,7 +116,7 @@ export default {
             return data&& data.able && data.show && data.fields
         },
         fiba(){
-            let data= this.conf.pages.restbalance
+            let data= this.conf.pages.balance
             return data&& data.able && data.show && data.fields
         },
         fifl(){
