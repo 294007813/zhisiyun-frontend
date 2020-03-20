@@ -109,18 +109,18 @@ export default {
     computed:{
         fiday(){
             let data= this.conf.pages.day
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fimon(){
             let data= this.conf.pages.mon
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         curMonth (){
             return new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
         }
     },
     mounted(){
-        this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'
+        this.activeTabs=  this.fimon && 'mon' || this.fiday && 'day'
         this.getData()
         this.getData("month")
     },

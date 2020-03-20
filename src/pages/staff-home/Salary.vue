@@ -93,15 +93,15 @@ export default {
         },
         fimon(){
             let data= this.conf.pages.mon
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fitrend(){
             let data= this.conf.pages.trend
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fista(){
             let data= this.conf.pages.sta
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         revmon(){
             let arr=[]

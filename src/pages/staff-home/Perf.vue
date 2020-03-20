@@ -169,11 +169,11 @@ export default {
     computed:{
         finow(){
             let data= this.conf.pages.now
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         fitrend(){
             let data= this.conf.pages.trend
-            return data.able && data.show && data.fields
+            return data&& data.able && data.show && data.fields
         },
         clickfun(){
             let callOnce= null, self= this
