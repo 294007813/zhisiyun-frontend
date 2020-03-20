@@ -22,7 +22,6 @@ export default {
             state.userinfo= data
         },
         setTaskMessageCount(state, data) {
-            console.log(data, ".......")
             state.taskMessageCount = data || {}
         }
     },
