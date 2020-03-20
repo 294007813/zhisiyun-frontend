@@ -3,9 +3,9 @@
     <div class="head">{{$t("index.module_added")}} <span><b>*</b>{{$t("index.you_can_drag")}}</span></div> 
     <div class="drag-body" ref="dragbody">
         <template v-for="(ritem, rowind) in blockList.show" v-if="bemounted">
-            <div v-for="(citem, colind) in ritem" :key="ritem.code" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
+            <div v-for="(citem, colind) in ritem" :key="ritem.name" :class="['drag-block',[citem.size], {fixed: citem.fixed}]"
                  :style="{top: citem.top +'px', left: citem.left + 'px', width: citem.width+ 'px'}"
-            :ref="'drag-'+citem.code">
+            :ref="'drag-'+citem.name">
                 <div class="content" v-drag="{
                     donecb: citem.fixed? false: movedone,
                     movecb: moving,
@@ -53,7 +53,7 @@ export default {
                             <p class="title">{{citem.title}}<b v-if="citem.subtitle">{{citem.subtitle}}</b></p>
                             <div class="button">
                                 <el-button type="primary" size="mini" round plain v-if="!citem.fixed"
-                                           @click="toshow(citem.code)">显示</el-button>
+                                           @click="toshow(citem.name)">显示</el-button>
                             </div>
                         </div>
                     </div>
@@ -184,10 +184,10 @@ export default {
             // },10)
 
         },
-        toshow(code) {
+        toshow(name) {
             let s= this.$f.deepClone(this.list.show) , h= this.$f.deepClone(this.list[this.hideKey][0]), ind;
             h.forEach((it, i)=>{
-                if(it.code== code){
+                if(it.name== name){
                     ind=i
                 }
             })
