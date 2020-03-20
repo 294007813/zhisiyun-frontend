@@ -329,7 +329,7 @@ export default {
     padding: 6px 20px;
     ul{
         // padding-top: 10px;
-        height: 1/3*100%;
+        min-height: 1/3*100%;
         &:not(:last-child){border-bottom: 1px solid $color-border;}
         h5{
             margin-bottom: 10px;
@@ -350,6 +350,9 @@ export default {
                 transform: translateY(-50%);
                 vertical-align: middle;
             }
+        }
+        >div{
+            padding-bottom: 10px;
         }
     }
     /deep/.sta > div ,.balance, .flow {
