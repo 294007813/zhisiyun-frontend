@@ -20,8 +20,8 @@
                                 <i class="fa fa-heart" :class="{'active': it.likes.includes(userId)}"></i>
                                 <span>{{it.likes.length}}</span>
                             </div>
-                            <div class="label-item">
-                                <i class="fa fa-comment" @click="handleComment(it)"></i>
+                            <div class="label-item" @click="handleComment(it)">
+                                <i class="fa fa-comment"></i>
                                 <span>{{it.comments.length}}</span>
                             </div>
                         </div>
@@ -60,31 +60,33 @@
         </p>
     </el-dialog>
     <el-dialog
-        title="每日之星"
+        :title='$t("index.star_company")'
         :visible.sync="showCommentsModal"
         :append-to-body="true"
         width="640px">
         <div v-if="selectUser" class="comment-container">
             <div class="user-info left">
-                <img :src="`${$conf.baseApi}/gridfs/get/${selectUser.people.avatar}`"/>
+                <div class="img">
+                    <img :src="$f.getPic(selectUser.people.avatar)"/>
+                </div>
                 <p class="name">{{selectUser.people.people_name}}</p>
                 <div class="interaction">
-                    <div class="label-item" @click.stop="handleLike(selectUser._id, selectUser.likes)">
+                    <div class="label-item" style="background:transparent;"  @click.stop="handleLike(selectUser._id, selectUser.likes)">
                         <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
                         <span>{{selectUser.likes.length}}</span>
                     </div>
-                    <div class="label-item">
+                    <div class="label-item" style="background:transparent;" >
                         <i class="fa fa-comment" @click="showCommentsModal=true"></i>
                         <span>{{this.comments.length}}</span>
                     </div>
                 </div>
                 <ul class="info">
-                    <li><label>{{$t("index.work_number")}}：</label>{{selectUser.people.people_no}}</li>
-                    <li><label>{{$t("index.position")}}：</label>{{selectUser.people.position_name}}</li>
-                    <li><label>{{$t("index.department")}}：</label>{{selectUser.people.ou_name}}</li>
-                    <li><label>{{$t("index.entry_data")}}：</label>{{moment(selectUser.people.start_service_date).format("YYYY-MM")}}</li>
-                    <li><label>{{$t("index.birthday")}}：</label>{{moment(selectUser.people.birthday).format("MM月DD日")}}</li>
-                    <li><label>{{$t("index.constellation")}}：</label>{{selectUser.people.zodiac}}</li>
+                    <li :title="selectUser.people.people_no"><label>{{$t("index.work_number")}}：</label>{{selectUser.people.people_no}}</li>
+                    <li :title="selectUser.people.position_name"><label>{{$t("index.position")}}：</label>{{selectUser.people.position_name}}</li>
+                    <li :title="selectUser.people.ou_name"><label>{{$t("index.department")}}：</label>{{selectUser.people.ou_name}}</li>
+                    <li :title="moment(selectUser.people.start_service_date).format('YYYY-MM')"><label>{{$t("index.entry_data")}}：</label>{{moment(selectUser.people.start_service_date).format("YYYY-MM")}}</li>
+                    <li :title="moment(selectUser.people.birthday).format('MM月DD日')"><label>{{$t("index.birthday")}}：</label>{{moment(selectUser.people.birthday).format("MM月DD日")}}</li>
+                    <li :title="selectUser.people.zodiac"><label>{{$t("index.constellation")}}：</label>{{selectUser.people.zodiac}}</li>
                 </ul>
             </div>
             <div class="comment right">
@@ -98,7 +100,7 @@
                     <ul style="height: 320px;overflow-y: auto;" class="comments_list" type="star">
                         <li v-for="item in comments" :key="item._id">
                             <div class="img">
-                                <img :src="`${$conf.baseApi}/gridfs/get/${item.people.avatar}`"/>
+                                <img :src="$f.getPic(selectUser.people.avatar)"/>
                             </div>
                             <div class="meida-body">
                                 <div class="media-body">
@@ -362,6 +364,12 @@ export default {
             font-size: 14px;
             margin-top: 5px;
         }
+        .img {
+            display: inline-block;
+            box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+            width: 80px;
+            height: 80px;
+        }
         border-right: 1px solid #ddd;
     }
     .right {
@@ -414,7 +422,7 @@ export default {
                 font-size: 12px;
                 border-bottom: 1px solid #eee;
             }
-            img {
+            .img {
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
@@ -454,7 +462,9 @@ export default {
             font-size: 12px;
             text-align: left;
             margin-top: 20px;
-            word-wrap: none;
+            overflow:hidden; //超出的文本隐藏
+            text-overflow:ellipsis; //溢出用省略号显示
+            white-space:nowrap; //溢出不换行
             label{
                 color: $color-gray;
             }
