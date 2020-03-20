@@ -270,7 +270,6 @@ module.exports = {
                 "fields":{
                   participate: false,
                   doing: false,
-                  more: false,
                 },
                 disableFields:{}
               },
@@ -282,7 +281,6 @@ module.exports = {
                   start: false,
                   handle: false,
                   doing2: false,
-                  more: false,
                 },
                 disableFields:{}
               },

@@ -126,7 +126,8 @@ export default {
     methods:{
         getMon(){
             this.$axios.get("/api/feishu/xc/allBaseinfo").then(data=>{
-                let arr= data.slice(-6)
+                // let arr= data.slice(-6)
+                let arr= data
                 this.mon= {}
                 for(let i = arr.length - 1; i >= 0; i--){
                     let item= arr[i], addn= item.ci_items.length && (item.ci_items[0].amount ||0)
@@ -140,7 +141,8 @@ export default {
                 }
                 console.log("this.mon", JSON.stringify(this.mon))
 
-                let trend= data.slice(-18)
+                // let trend= data.slice(-18)
+                let trend= data
                 let xv=[], yv=[]
                 trend.map(item =>{
                     xv.push(item.cpi.month)

@@ -7,7 +7,7 @@
     <div class="title" v-if="field.level">{{`${info.ou_name}/${info.position_name}`}}
         <b>{{`${get_full_jobname}`}}</b>
     </div>
-    <p><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
+    <p @click="$f.href('/pc/my_stars')"><label>{{$t("index.constellation")}}：</label>{{info.zodiac.zodiac}}</p>
     <p><label>{{$t("index.zodiac")}}：</label>{{info.zodiac.shengxiao}}</p>
     <p><label>{{$t("index.birthday")}}：</label>{{info.zodiac.shengri}}</p>
     <p><label>{{$t("index.entry_data")}}：</label>{{start_service_date}}
