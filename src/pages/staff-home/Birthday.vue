@@ -36,6 +36,16 @@
                             <img class="head"  :src="$f.getPic(item.people.avatar)"/>
 <!--                            <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
                             <span>{{item.people.people_name}}</span>
+                            <div class="interaction">
+                                <div class="label-item" @click.stop="handleLike(item._id, item.likes)">
+                                    <i class="fa fa-heart" :class="{'active': item.likes.includes(userId)}"></i>
+                                    <span>{{item.likes.length}}</span>
+                                </div>
+                                <div class="label-item">
+                                    <i class="fa fa-comment" @click.stop="handleComment(item)"></i>
+                                    <span>{{item.comments.length}}</span>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </swiper-slide>
@@ -72,10 +82,74 @@
             <el-button type="primary" size="small" @click="pshow=false">{{$t("index.know")}}</el-button>
         </p>
     </el-dialog>
+        <el-dialog
+        title="每日之星"
+        :visible.sync="showCommentsModal"
+        :append-to-body="true"
+        width="640px">
+        <div v-if="selectUser" class="comment-container">
+            <div class="user-info left">
+                <img :src="`${$conf.baseApi}/gridfs/get/${selectUser.people.avatar}`"/>
+                <p class="name">{{selectUser.people.people_name}}</p>
+                <div class="interaction">
+                    <div class="label-item" @click.stop="handleLike(selectUser._id, selectUser.likes)">
+                        <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
+                        <span>{{selectUser.likes.length}}</span>
+                    </div>
+                    <div class="label-item">
+                        <i class="fa fa-comment" @click="showCommentsModal=true"></i>
+                        <span>{{this.comments.length}}</span>
+                    </div>
+                </div>
+                <ul class="info">
+                    <li><label>{{$t("index.work_number")}}：</label>{{selectUser.people.people_no}}</li>
+                    <li><label>{{$t("index.position")}}：</label>{{selectUser.people.position_name}}</li>
+                    <li><label>{{$t("index.department")}}：</label>{{selectUser.people.ou_name}}</li>
+                    <li><label>{{$t("index.entry_data")}}：</label>{{moment(selectUser.people.start_service_date).format("YYYY-MM")}}</li>
+                    <li><label>{{$t("index.birthday")}}：</label>{{moment(selectUser.people.birthday).format("MM月DD日")}}</li>
+                    <li><label>{{$t("index.constellation")}}：</label>{{selectUser.people.zodiac}}</li>
+                </ul>
+            </div>
+            <div class="comment right">
+                    <div class="comments_wrap">
+                        <textarea placeholder="说点什么" class="desc" v-model="currentComments"></textarea>
+                        <div>
+                            <span class="btn-emotion"><i class="icon-smile"></i>表情</span>
+                            <button class="btn_save btn-blue pull-right" style="cursor:pointer;" @click="toComment">评论</button>
+                        </div>
+                    </div>
+                    <ul style="height: 320px;overflow-y: auto;" class="comments_list" type="star">
+                        <li v-for="item in comments" :key="item._id">
+                            <div class="img">
+                                <img :src="`${$conf.baseApi}/gridfs/get/${item.people.avatar}`"/>
+                            </div>
+                            <div class="meida-body">
+                                <div class="media-body">
+                                    <div class="title">
+                                        <span class="people_name">
+                                            {{item.people.people_name}}
+                                        </span>
+                                        <span class="date">
+                                            {{moment(item.date).format('YYYY-MM-DD hh:mm:ss')}}
+                                        </span>
+                                    </div>
+                                    <div class="comment_content">
+                                        {{item.desc}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </el-dialog>
 </div>
 </template>
 
 <script>
+const API_LIKE = '/admin/culture/likes/bb/';
+const API_COMMENT = '/admin/culture/comment/bb';
+
 export default {
     name: "Birthday",
     props: {
@@ -104,6 +178,12 @@ export default {
             p:{},
             day: {},
             mon: {},
+            // 点赞和评论
+            userId: "",
+            showCommentsModal: false,
+            selectUser: null,
+            currentComments: "",
+            comments: []
         }
     },
     computed:{
@@ -121,10 +201,75 @@ export default {
     },
     mounted(){
         this.activeTabs= this.fiday && 'day' || this.fimon && 'mon'
-        this.getData()
-        this.getData("month")
+        this.getData();
+        this.getData("month");
+        this.getLikesStatus();
     },
     methods:{
+        switchGetData () {
+            if (this.activeTabs == 'day') {
+                this.getData();
+            } else {
+                this.getData("month");
+            }
+        },
+        toComment() {
+            if (!this.currentComments) return;
+            this.$axios({
+                url: API_COMMENT,
+                method: "post",
+                data: {
+                    desc: this.currentComments,
+                    tid: this.selectUser._id,
+                    type: "wishwell"
+                }
+            }).then(res => {
+                this.currentComments = "";
+                this.getComments();
+            }).then(() => {
+                this.switchGetData();
+            })
+        },
+        getComments () {
+            this.$axios.get(API_COMMENT, {params: {tid: this.selectUser._id, type: 'wishwell'}, dataLevel: 'all'}).then(res => {
+                console.log("res:::", res);
+                this.comments = res.data;
+            })
+        },
+        // 获取点赞状态
+        getLikesStatus () {
+            // 假设可以获取到 userinfo，如果获取不到就要去重新请求接口
+            const userId = this.$store.state.user.userinfo._id;
+            if (!userId) {
+                console.error("userinfo is not defined")
+            }
+            this.userId = userId;
+        },
+        // 点赞或许取消点赞
+        handleLike (id, likes) {
+            let state;
+            if (likes.includes(this.userId)) {
+                state = true;
+            } else {
+                state = false;
+            }
+            this.$axios({
+                method: "post",
+                url: API_LIKE + id,
+                data: {
+                    self_like: state,
+                    type: "wishwell"
+                }
+            }).then((res) => {
+                console.log(res);
+                this.switchGetData();
+            })
+        },
+        handleComment (data) {
+            this.selectUser = data;
+            this.showCommentsModal = true;
+            this.getComments();
+        },
         callback(){},
         getData(month){
             this.$axios.get("/api/feishu/user/birthdaydata_index",{params:{index: month||''}}).then(data=>{
@@ -276,6 +421,34 @@ position: relative;
             width: auto;
         }
     }
+    .interaction {
+        margin-left: -14px;
+        .label-item {
+            display: inline-block;
+            margin: 0 2px;
+            width: 40px;
+            line-height: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            i {
+                color: #aaaaaa;
+                margin-right: 4px;
+                &.active {
+                    color: #f66;
+                }
+            }
+            span {
+                display: inline !important;
+                font-size: 12px;
+            }
+        }
+    }
 }
 .birthday-detail{
     .day{
@@ -296,6 +469,144 @@ position: relative;
         .left{
             left: auto;
             right: 60px;
+        }
+    }
+}
+/deep/.comment-container{
+    -moz-user-select: none;
+    display: flex;
+    .left{
+        background-color: #fff;
+        padding: 40px;
+        text-align: center;
+        width: 340px;
+        height: 400px;
+        .name {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        border-right: 1px solid #ddd;
+    }
+    .right {
+        width: 300px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        .comments_wrap {
+            padding: 10px;
+            background: #fff;
+        }
+        .comments_wrap .desc {
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 0;
+            height: 30px;
+            border-color: #ddd;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 4px 6px;
+        }
+        .comments_wrap .btn-emotion {
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .comments_wrap .btn_save {
+            font-size: 12px;
+            width: 48px;
+            height: 24px;
+        }
+        .btn-blue {
+            width: 90px;
+            height: 30px;
+            border-radius: 2px;
+            background-color: #54c7fc;
+            outline: none;
+            font-size: 14px;
+            color: #ffffff;
+            border: none;
+        }
+        .comments_list {
+            overflow-y: auto;
+            font-size: 12px;
+            flex: 1;
+            li {
+                margin: 0 10px;
+                padding: 10px 0;
+                font-size: 12px;
+                border-bottom: 1px solid #eee;
+            }
+            img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-right: 8px;
+                float: left;
+            }
+            .media-body {
+                overflow: hidden;
+                .title {
+                    font-size: 12px;
+                    .date {
+                        color: #999;
+                        font-size: inherit;
+                    }
+                    > span {
+                        font-size: inherit;
+                    }
+                }
+                .comment_content {
+                    color: #666;
+                    line-height: 14px;
+                }
+            }
+
+        }
+    }
+    .info{
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-content: space-around;
+        padding: 10px 20px;
+        margin-top: 20px;
+        li{
+            height: 20px;
+            line-height: 20px;
+            width: 50%;
+            font-size: 12px;
+            text-align: left;
+            margin-top: 20px;
+            word-wrap: none;
+            label{
+                color: $color-gray;
+            }
+            span {
+                white-space:nowrap;
+            }
+        }
+    }
+    .interaction {
+        .label-item {
+            display: inline-block;
+            margin: 0 5px;
+            width: 40px;
+            line-height: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            i {
+                color: #aaaaaa;
+                &.active {
+                    color: #f66;
+                }
+                margin-right: 4px;
+            }
         }
     }
 }
