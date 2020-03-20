@@ -55,7 +55,7 @@
                     <el-input v-model="form.description" type="textarea"
                               v-show="!disEdit" :disabled="disEdit"></el-input>
                     <div v-show="disEdit" v-html="form.description"></div>
-                    <el-link :href="$f.href(form.url)" v-if="form.url"
+                    <el-link @click="$f.href(form.url)" v-if="form.url"
                              type="primary" target="_blank">查看详情</el-link>
                 </el-form-item>
                 <el-form-item :label="$t('index.event_place')">
@@ -491,7 +491,11 @@ export default {
         },
         scrollTop(){
             setTimeout(()=>{
-                document.querySelector(".vuecal--events-on-month-view .vuecal__bg").scrollTop= 320
+                let cont= document.querySelector(".vuecal--events-on-month-view .vuecal__bg")
+                let dh= cont.querySelector(".vuecal__flex").offsetHeight
+                let l= dh/24 * moment().hour()
+                // cont.scrollTop= 320
+                cont.scrollTop= l
             },500)
         }
     }
@@ -632,8 +636,13 @@ export default {
         .event{
             cursor: pointer;
             opacity: .8;
-            &:hover{
+            &:hover:not(.vuecal__event--all-day){
                 overflow: visible;
+                .vuecal__event-title,.vuecal__event-time{
+                /**{*/
+                    background-color: rgba(0, 0, 0, .6);
+                    color: white;
+                }
             }
             &.red{
                 background-color: #f5babc;
