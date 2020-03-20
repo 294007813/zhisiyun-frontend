@@ -56,7 +56,7 @@
                               v-show="!disEdit" :disabled="disEdit"></el-input>
                     <div v-show="disEdit" v-html="form.description"></div>
                     <el-link :href="$f.getPic(form.url)" v-if="form.url"
-                             target="_blank">查看详情</el-link>
+                             type="primary" target="_blank">查看详情</el-link>
                 </el-form-item>
                 <el-form-item :label="$t('index.event_place')">
                     <el-input v-model="form.location" type="textarea" :disabled="disEdit"></el-input>
