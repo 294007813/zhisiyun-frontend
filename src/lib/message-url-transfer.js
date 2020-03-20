@@ -542,6 +542,13 @@ const adapter = {
             rule: /^\/wxapp\/004\/busi_wf\/renewal_edit\/(\w+)\/edit/,
             name: '合同续签征询',
             format: '/admin/contract/renewal_leader/wf/edit_form/{1}'
+        },
+        // /admin/pm/mobile_resource_calendar/list
+        // https://www.zhisiyun.com/wxapp/007/getCalendarDetail/wx3bd6f3aa75c0c7e7?wp_id=5e74b4f73d5958535075b1e4&cal_date=2020-03-20
+        {
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/007\/getCalendarDetail\/(\w+)\?wp_id=(\w+)/,
+            name: '资源预定',
+            format: '/admin/pm/mobile_resource_calendar/list'
         }
     ],
     wx_data_adapter(data) {
