@@ -73,7 +73,7 @@ export default {
             return  this.$store.state.user.taskMessageCount.message_count || 0
         },
         clickViewMore() {
-            return this[this.activeTabs].load ? "点击查看下一页" : "点击查看更多消息" 
+            return this[this.activeTabs].load ? "点击加载更多" : "点击查看更多消息" 
         }
     },
     mounted(){

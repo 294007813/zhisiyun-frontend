@@ -68,7 +68,6 @@ export default {
                 for (let v of data.list) {
                     v.task_end = moment(v.task_end || v.createDate).fromNow()
                 }
-                console.log(data.length, ">>>>>>>>>")
                 this.at= data
             })
         },
