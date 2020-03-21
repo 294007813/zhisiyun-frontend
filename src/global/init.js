@@ -8,6 +8,7 @@ window.moment= moment
 window._= _
 // import cookie from 'js-cookie'
 
+if(process.env.VUE_APP_ENV=='dev'){
 axios.post("/login", {
   client: "demo12",
   username: "00001",
@@ -16,6 +17,7 @@ axios.post("/login", {
   // username: "000003",
   // password: "000000"
 });
+}
 
 //获取显示语言
 axios.get("/api/feishu/base/getlanguage").then(data => {
