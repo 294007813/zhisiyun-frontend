@@ -96,6 +96,7 @@ export default {
     "day":"today",
     "day_time": "days",
     "month": "month",
+    "month_v2":"",
     "month_list":{
       "1":"January",
       "2":"February",
