@@ -132,6 +132,7 @@ export default {
     "week":"Week",
     "birthday_week":" ",
     "birthday_day":" ",
+    "day_timeday_time": "Day",
     "full_screen":"Full screen",  
     "contract":"contract",
     "signed_contract":"Signed contract",

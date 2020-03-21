@@ -18,7 +18,7 @@
                 <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY-MM-DD') }}</span>
             </div>
             <div class="switch">
-                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.month")}}</p>
+                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.the_month")}}</p>
                 <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
                 <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day_timeday_time")}}</p>
             </div>
@@ -636,7 +636,7 @@ export default {
             right: 26px;
             padding: 0 4px;
         }
-        &.ch{
+        &.zh{
             .vuecal__arrow--prev{
                 right: 92px;
             }
