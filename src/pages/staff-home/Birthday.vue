@@ -8,7 +8,7 @@
                     class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}<b>{{moment(bd.end_date).format("dd")}}</b></p>
+                        <p class="title">{{moment(bd.end_date).format("D")}}<b>{{$t('index.birthday_week')}}{{moment(bd.end_date).format("dd")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
                             <img class="head"  :src="$f.getPic(item.people.avatar)"/>
                             <!--<avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
@@ -624,7 +624,7 @@ position: relative;
         display: inline-flex;
         flex-wrap: wrap;
         align-content: space-around;
-        padding: 10px 20px;
+        padding: 10px 3px;
         margin-top: 20px;
         li{
             height: 20px;

@@ -130,6 +130,7 @@ export default {
     //"month": "月",
     "nowday":"Today",
     "week":"Week",
+    "birthday_week":" ",
     "full_screen":"Full screen",  
     "contract":"contract",
     "signed_contract":"Signed contract",
