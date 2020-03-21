@@ -67,13 +67,14 @@ export default {
                 let u= {
                     sl: [], hl: user.hide[0], dl: user.disable[0]
                 }
-                let msl={}, del=[], rel={sl:[],hl:[],dl:[]};
+                let msl={},mal={}, del=[], rel={sl:[],hl:[],dl:[]}, usls="";
                 user.show.forEach((row, i)=>{
                     row.forEach((it, j)=>{
                         u.sl.push({
-                            i,j,
+                            // i,j,
                             ...it
                         })
+                        usls+= (it.name+ "-")
                     })
                 })
 
@@ -81,35 +82,34 @@ export default {
                 admin.show.forEach((row, i)=>{
                     row.forEach((it, j)=>{
                         msl[it.name]= it
+                        mal[it.name]= it
                     })
                 })
+                admin.hide[0].forEach((it, i)=>{
+                    mal[it.name]= it
+                })
+                admin.disable[0].forEach((it, i)=>{
+                    mal[it.name]= it
+                })
+                // console.log(mal)
 
-                let showns= move("sl", "dl", false, true, false).undo.join("-")
-                move("hl", "dl", false, true, false)
-                let disns=move("dl", "hl", true, true, true).undo.join("-")
+                let showns= move("sl", "dl").undo.join("-")
+                let hides= move("hl", "dl").undo.join("-")
+                let disas= move("dl", "hl", true).undo.join("-")
 
-                function move( f, t, haveAdmin= true, judgeAccess, hasAccess){
+                function move( f, t, hasaccgo){
                     let todo= [], undo=[]
                     u[f].forEach( (si, i)=> {
                         let mshow= msl.hasOwnProperty(si.name) //管理员开放的模块
                         let togo= false
                         if( !si.fixed){
-                            if(judgeAccess && si.source && (hasAccess? rule[si.code] : !rule[si.code])){
-                                togo= true
-                            }
-                            if(haveAdmin? mshow: !mshow){
-                                togo= true
-                            }else{
+                            let hasaccess= (!si.source || (si.source && rule[si.code])) && mshow
+                            if( hasaccgo? !hasaccess: hasaccess){
                                 togo= false
+                            }else{
+                                togo= true
                             }
-                            if( haveAdmin){
-                                _.mapObject(si.pages, (pit, pk)=>{
-                                    pit.able= msl[si.name] && msl[si.name].hasOwnProperty(pk)? msl[si.name][pk].able: false
-                                    for( let fk in pit.fields){
-                                        pit.fields[fk]= false
-                                    }
-                                })
-                            }
+                            setpageitem(si)
                         }
                         if(togo){
                             rel[t].push( si)
@@ -120,35 +120,49 @@ export default {
                     })
                     return {todo, undo}
                 }
-
-
-                for(let i= u.dl.length-1; i>=0; i--){
-                    if(disns.includes(u.dl[i].name)){
-                        rel.dl.unshift(u.dl[i])
+                u.dl.forEach(it=>{
+                    if(disas.includes(it.name)){
+                        rel.dl.push(it)
                     }
-                }
-
+                })
+                u.hl.forEach(it=>{
+                    if(hides.includes(it.name)){
+                        // it.noaccess= true
+                        rel.hl.push(it)
+                    }
+                })
                 user.show.forEach(row=>{
                     let arr=[]
                     row.forEach(it=>{
                         let itn= it.name
                         if(showns.includes(itn)){
-                            _.mapObject(it.pages, (pit, pk)=>{
-                                if(msl[it.name] && msl[it.name].hasOwnProperty(pk) && !msl[it.name][pk].able){
-
-                                }
-                                pit.able= msl[it.name] && msl[it.name].hasOwnProperty(pk) ? msl[it.name][pk].able: false
-                                for( let fk in pit.fields){
-                                    pit.fields[fk]= false
-                                }
-                            })
-                            arr.push(it)
+                            setpageitem(it)
+                            if(usls.includes(itn)){
+                                arr.push(it)
+                            }else{
+                                rel.hl.push(it)
+                            }
                         }
                     })
                     if(arr.length){
                         rel.sl.push(arr)
                     }
                 })
+
+                function setpageitem(it) {
+                    let itn= it.name
+                    _.mapObject(it.pages, (pit, pk)=>{
+                        let mpage= mal[itn].pages[pk]
+                        it.able= mpage.able
+                        let tf= pit.fields
+                        pit.fields= {}
+                        pit.disableFields= mpage.disableFields
+                        for( let fk in mpage.fields){
+                            pit.fields[fk]= !!tf[fk]
+                        }
+                    })
+
+                }
 
                 this.conf= {
                     show: rel.sl,
@@ -158,34 +172,34 @@ export default {
                 console.log(rel)
             });
         },
-        mapMod(list, rule){
-            let l1= list.show
-            let l2= list.hide
-            let l3= list.disable
-            let a1= access(l1, rule)
-            let a2= access(l2, rule)
-            list.hide[0]= list.hide[0].concat(a1, a2)
-            function  access(list, rule){
-                let noaccess= [], ind=[];
-                list.forEach((it)=>{
-                    ind= []
-                    it.forEach((mod, i)=>{
-                        if(rule.hasOwnProperty(mod.code) && !rule[mod.code]){
-                            mod.access=false
-                            noaccess.push(mod)
-                            ind.unshift(i)
-                        }else{
-                            mod.access=true
-                        }
-                    })
-                    ind.forEach((i)=>{
-                        it.splice(i, 1)
-                    })
-                })
-                return noaccess
-            }
-        },
 
+        // mapMod(list, rule){
+        //     let l1= list.show
+        //     let l2= list.hide
+        //     let l3= list.disable
+        //     let a1= access(l1, rule)
+        //     let a2= access(l2, rule)
+        //     list.hide[0]= list.hide[0].concat(a1, a2)
+        //     function  access(list, rule){
+        //         let noaccess= [], ind=[];
+        //         list.forEach((it)=>{
+        //             ind= []
+        //             it.forEach((mod, i)=>{
+        //                 if(rule.hasOwnProperty(mod.code) && !rule[mod.code]){
+        //                     mod.access=false
+        //                     noaccess.push(mod)
+        //                     ind.unshift(i)
+        //                 }else{
+        //                     mod.access=true
+        //                 }
+        //             })
+        //             ind.forEach((i)=>{
+        //                 it.splice(i, 1)
+        //             })
+        //         })
+        //         return noaccess
+        //     }
+        // },
         save(){
             // this.$msgbox.confirm( "",{
             //     title: "确定保存？",

@@ -71,12 +71,12 @@
                 </div>
                 <p class="name">{{selectUser.people.people_name}}</p>
                 <div class="interaction">
-                    <div class="label-item" style="background:transparent;"  @click.stop="handleLike(selectUser._id, selectUser.likes)">
+                    <div class="label-item" style="background:transparent;"  @click.stop="handleLike(selectUser._id, selectUser.likes, 'modal')">
                         <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
                         <span>{{selectUser.likes.length}}</span>
                     </div>
-                    <div class="label-item" style="background:transparent;" >
-                        <i class="fa fa-comment" @click="showCommentsModal=true"></i>
+                    <div class="label-item" style="background:transparent;" @click="showCommentsModal=true">
+                        <i class="fa fa-comment"></i>
                         <span>{{this.comments.length}}</span>
                     </div>
                 </div>
@@ -221,7 +221,6 @@ export default {
         },
         getComments () {
             this.$axios.get(API_COMMENT, {params: {tid: this.selectUser._id, type: 'star'}, dataLevel: 'all'}).then(res => {
-                console.log("res:::", res);
                 this.comments = res.data;
             })
         },
@@ -235,12 +234,15 @@ export default {
             this.userId = userId;
         },
         // 点赞或许取消点赞
-        handleLike (id, likes) {
+        handleLike (id, likes, type) {
             let state;
             if (likes.includes(this.userId)) {
                 state = true;
+                var ind = likes.findIndex(item => item == this.userId);
+                likes.splice(ind, 1);
             } else {
                 state = false;
+                likes.push(this.userId);
             }
             this.$axios({
                 method: "post",
@@ -248,10 +250,10 @@ export default {
                 data: {
                     self_like: "" + state,
                     type: "star"
-                }
+                },
+                dataLevel: 'all'
             }).then((res) => {
-                console.log(res);
-                this.getData();
+                // this.getData();
             })
         },
         handleComment (data) {
