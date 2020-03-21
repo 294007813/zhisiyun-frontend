@@ -130,6 +130,7 @@ export default  {
     "nowday":"日",
     "week":"周",
     "birthday_week":"周",
+    "birthday_day":"日",
     "full_screen":"全屏",
     "contract":"合同",
     "signed_contract":"已签合同",

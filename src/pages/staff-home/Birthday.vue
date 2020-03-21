@@ -9,6 +9,8 @@
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
                         <p class="title">{{moment(bd.end_date).format("D")+ zh?"日": "th"}}<b>{{$t('index.birthday_week')}}{{moment(bd.end_date).format("dd")}}</b></p>
+<!--                        <p class="title">{{moment(bd.end_date).format("D")}}{{$t('index.birthday_day')}}<b>{{$t('index.birthday_week')}}{{moment(bd.end_date).format("dd")}}</b></p>-->
+
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
                             <img class="head"  :src="$f.getPic(item.people.avatar)"/>
                             <!--<avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
@@ -18,8 +20,8 @@
                                     <i class="fa fa-heart" :class="{'active': item.likes.includes(userId)}"></i>
                                     <span>{{item.likes.length}}</span>
                                 </div>
-                                <div class="label-item">
-                                    <i class="fa fa-comment" @click.stop="handleComment(item)"></i>
+                                <div class="label-item" @click.stop="handleComment(item)">
+                                    <i class="fa fa-comment"></i>
                                     <span>{{item.comments.length}}</span>
                                 </div>
                             </div>
@@ -105,7 +107,7 @@
                 </div>
                 <p class="name">{{selectUser.people.people_name}}</p>
                 <div class="interaction">
-                    <div class="label-item" style="background:transparent; box-shadow:none;" @click.stop="handleLike(selectUser._id, selectUser.likes)">
+                    <div class="label-item" style="background:transparent; box-shadow:none;" @click.stop="handleLike(selectUser._id, selectUser.likes,'modal')">
                         <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
                         <span>{{selectUser.likes.length}}</span>
                     </div>
@@ -275,7 +277,6 @@ export default {
         },
         getComments () {
             this.$axios.get(API_COMMENT, {params: {tid: this.selectUser._id, type: 'wishwell'}, dataLevel: 'all'}).then(res => {
-                console.log("res:::", res);
                 this.comments = res.data;
             })
         },
@@ -289,12 +290,15 @@ export default {
             this.userId = userId;
         },
         // 点赞或许取消点赞
-        handleLike (id, likes) {
+        handleLike (id, likes, type) {
             let state;
             if (likes.includes(this.userId)) {
                 state = true;
+                var ind = likes.findIndex(item => item == this.userId);
+                likes.splice(ind, 1);
             } else {
                 state = false;
+                likes.push(this.userId);
             }
             this.$axios({
                 method: "post",
@@ -302,10 +306,13 @@ export default {
                 data: {
                     self_like: "" + state,
                     type: "wishwell"
-                }
+                },
+                dataLevel: "all"
             }).then((res) => {
-                console.log(res);
-                this.switchGetData();
+                // if (type == 'modal') {
+                //     this.selectUser.likes = res.data.likes;
+                // }
+                // this.switchGetData();
             })
         },
         handleComment (data) {
