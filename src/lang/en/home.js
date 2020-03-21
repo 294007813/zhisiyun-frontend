@@ -225,7 +225,20 @@ export default {
         "late2": "Late",
         "abnormal": "Overtime Adjustment",
         "adjust": "Holiday Adjustment",
-        p_all_income: "All Income"
+        p_all_income: "All Income",
+        "allday": "All day",
+        "starttime": "Start time",
+        "endtime": "End time",
+        "relativetime": "Relative time",
+        "noprompt": "No prompt",
+        "before": "Before",
+        "min": "min",
+        "hr": "hr",
+        "details": "Details",
+        "edit": "Edit",
+        "plselect": "Please select",
+        "shmsg": "Share msg",
+        "wkcalendar": "Work calendar",
   },
   //导航
   "dh":{

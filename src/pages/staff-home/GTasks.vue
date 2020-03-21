@@ -9,7 +9,8 @@
                     <span>{{item.createDate | relativedate}}前创建&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
-                <p class="view-all" @click="$f.href('/admin/wf/todo_list')">点击查看更多待办</p>
+                <p class="view-all"
+                   @click="$f.href('/admin/wf/todo_list')" v-show="gt.list&& gt.list.length">>点击查看更多待办</p>
             </ul>
         </el-tab-pane>
         <el-tab-pane :label="$t('index.done_task')" name="at" v-if="fiat">
@@ -19,7 +20,8 @@
                     <span>{{item.task_end}}&nbsp;|&nbsp;限时{{item.due_date}}</span>
 <!--                    <b>人事事件</b>-->
                 </li>
-                <p class="view-all" @click="$f.href('/admin/wf/finished_list')">点击查看更多已办</p>
+                <p class="view-all"
+                   @click="$f.href('/admin/wf/finished_list')" v-show="at.list&& at.list.length">点击查看更多已办</p>
             </ul>
         </el-tab-pane>
     </el-tabs>
@@ -126,6 +128,7 @@ export default {
     }
     /deep/ .el-badge{
         vertical-align: text-bottom;
+        line-height: normal;
         sup{
             vertical-align: top;
         }

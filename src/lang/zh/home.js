@@ -94,7 +94,7 @@ export default  {
     "birthday_blessing_wall":"生日祝福墙",
     "today":"今日",
     "day":"日",
-    "day_time": "天",
+    "day_timeday_time": "天",
     "month": "月",
     "num":"位",
     "star_company":"公司之星",
@@ -211,7 +211,21 @@ export default  {
     "late2": "迟到",
     "abnormal": "加班调整",
     "adjust": "假期调整",
-    p_all_income: "累计收入"
+    p_all_income: "累计收入",
+    "allday": "全天",
+    "starttime": "开始时间",
+    "endtime": "结束时间",
+    "relativetime": "相对时间",
+    "noprompt": "不提醒",
+    "before": "提前",
+    "min": "分钟",
+    "hr": "小时",
+    "details": "查看详情",
+    "edit": "编辑",
+    "plselect": "请选择",
+    "shmsg": "共享消息",
+    "wkcalendar": "工作日历",
+
   },
   //导航
   "dh":{

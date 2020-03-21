@@ -1,7 +1,7 @@
 <template>
 <div class="calendar">
     <h5>{{$t("index.me_calendar")}}</h5>
-    <el-tooltip class="work-calendar" effect="dark" content="工作日历" placement="top-start">
+    <el-tooltip class="work-calendar" effect="dark" :content="$t('index.wkcalendar')" placement="top-start">
         <i class="iconfont iconquanping" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
     </el-tooltip>
     <vue-cal class="vue-cal" :locale="locale" ref="vcal"
@@ -18,9 +18,9 @@
                 <span v-show="view.id === 'day'">{{ view.startDate.format('YYYY-MM-DD') }}</span>
             </div>
             <div class="switch">
-                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.the_month")}}</p>
+                <p :class="view.id === 'month'&&'on'" @click="switchCal($event, 'month')">{{$t("index.month")}}</p>
                 <p :class="view.id === 'week'&&'on'" @click="switchCal($event, 'week')">{{$t("index.week")}}</p>
-                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.nowday")}}</p>
+                <p :class="view.id === 'day'&&'on'" @click="switchCal($event, 'day')">{{$t("index.day_timeday_time")}}</p>
             </div>
         </template>
         <i slot="arrow-prev" class="fa fa-chevron-left"></i>
@@ -39,7 +39,7 @@
             :lock-scroll="false"
             custom-class="dialog"
             width="600px">
-        <p slot="title" class="title">{{form._id ?'查看' :'编辑'}}{{$t("index.event")}}</p>
+        <p slot="title" class="title">{{(form._id ? $t('wt.see') : $t('index.edit')) + $t("index.event")}}</p>
         <div :class="['content',{'form-disable': disEdit}]">
             <div :class="['check-tag pri',{on: form.is_private}]" @click="clitag('is_private')"
             ><i class="fa fa-check-circle"></i>{{$t("index.private")}}</div>
@@ -56,7 +56,7 @@
                               v-show="!disEdit" :disabled="disEdit"></el-input>
                     <div v-show="disEdit" v-html="form.description"></div>
                     <el-link @click="$f.href(form.url)" v-if="form.url"
-                             type="primary" target="_blank">查看详情</el-link>
+                             type="primary" target="_blank">{{$t("index.details")}}</el-link>
                 </el-form-item>
                 <el-form-item :label="$t('index.event_place')">
                     <el-input v-model="form.location" type="textarea" :disabled="disEdit"></el-input>
@@ -68,7 +68,7 @@
                             v-model="form.allDay"
                             active-color="#13ce66"
                             inactive-color="#409eff"
-                            :active-text="form.allDay? '全天' :'自定义'">
+                            :active-text="form.allDay? $t('index.allday') : $t('index.customize') ">
                     </el-switch>
                     <div>
                         <el-date-picker
@@ -76,7 +76,7 @@
                                 @blur="changetime(true, $event)"
                                 v-model="form.start"
                                 type="datetime"
-                                placeholder="开始时间"
+                                :placeholder="$t('index.starttime')"
                                 default-time="12:00:00">
                         </el-date-picker>
                         <el-date-picker
@@ -85,7 +85,7 @@
                                 :picker-options="{disabledDate }"
                                 v-model="form.end"
                                 type="datetime"
-                                placeholder="结束时间"
+                                :placeholder="$t('index.endtime')"
                                 default-time="12:00:00">
                         </el-date-picker>
                     </div>
@@ -99,28 +99,28 @@
                             inactive-value="A"
                             active-color="#13ce66"
                             inactive-color="#409eff"
-                            :active-text="form.alarm_date_type=='A'? '自定义': '相对时间'">
+                            :active-text="form.alarm_date_type=='A'?  $t('index.customize'): $t('index.relativetime')">
                     </el-switch>
                     <div>
-                        <el-select placeholder="请选择" size="mini"
+                        <el-select :placeholder="$t('index.plselect')" size="mini"
                                    :disabled="disEdit"
                                    v-show="form.alarm_date_type=='R'" v-model="form.alarm_date_offset" clearable>
-                            <el-option label="不提醒" :value="0"></el-option>
-                            <el-option label="提前5分钟" :value="-5"></el-option>
-                            <el-option label="提前15分钟" :value="-15"></el-option>
-                            <el-option label="提前30分钟" :value="-30"></el-option>
-                            <el-option label="提前1小时" :value="-60"></el-option>
-                            <el-option label="提前2小时" :value="-120"></el-option>
-                            <el-option label="提前1天" :value="-1440"></el-option>
-                            <el-option label="提前2天" :value="-2880"></el-option>
-                            <el-option label="提前1星期" :value="-10080"></el-option>
+                            <el-option :label="$t('index.noprompt')" :value="0"></el-option>
+                            <el-option :label="$t('index.before')+5+$t('index.min')" :value="-5"></el-option>
+                            <el-option :label="$t('index.before')+15+$t('index.min')" :value="-15"></el-option>
+                            <el-option :label="$t('index.before')+30+$t('index.min')" :value="-30"></el-option>
+                            <el-option :label="$t('index.before')+1+$t('index.hr')" :value="-60"></el-option>
+                            <el-option :label="$t('index.before')+2+$t('index.hr')"  :value="-120"></el-option>
+                            <el-option :label="$t('index.before')+1+$t('index.day_time')" :value="-1440"></el-option>
+                            <el-option :label="$t('index.before')+2+$t('index.day_time')" :value="-2880"></el-option>
+                            <el-option :label="$t('index.before')+1+$t('index.week')" :value="-10080"></el-option>
                         </el-select>
                         <el-date-picker
                                 :disabled="disEdit"
                                 v-show="form.alarm_date_type=='A'"
                                 v-model="form.alarm_date_absolute"
                                 type="datetime"
-                                placeholder="提醒时间"
+                                :placeholder="$t('index.reminder_time')"
                                 default-time="12:00:00">
                         </el-date-picker>
                     </div>
@@ -135,7 +135,7 @@
                     </li>
                     <el-input v-show="forward_people_new.length" v-model="form.forward_summary"
                               :disabled="disEdit"
-                              placeholder="共享消息" type="textarea"></el-input>
+                              :placeholder="$t('index.shmsg')" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('index.add_attachments')">
                     <el-button type="primary" size="mini"
@@ -240,6 +240,9 @@ export default {
         },
         disEdit(){
             return (this.form._id &&this.form.stype != "TASK")
+        },
+        isen(){
+            return this.$store.state.user.lang=='en'
         }
     },
     mounted(){
@@ -332,7 +335,7 @@ export default {
             let {startDate, endDate}= view
             let s= moment(startDate)
             let e= moment(endDate)
-            let ss="", se="", et="DD日"
+            let ss="", se="", et="DD日", res= ""
             // console.log(s)
             ss= s.format('YYYY年MM月DD日')
             if(s.toObject().years==e.toObject().years){
@@ -344,7 +347,11 @@ export default {
             }else{
                 se= e.format("YYYY年MM月DD日"+et)
             }
-            return ss+"～"+se
+            res= ss+"～"+se
+            if(this.$store.state.user.lang=="en"){
+                res= res.replace(/[年月]/g, "-").replace(/日/g, "th")
+            }
+            return res
         },
         changeallday(status){
             if(status){
@@ -620,6 +627,17 @@ export default {
             position: absolute;
             right: 26px;
             padding: 0 4px;
+        }
+        &.ch{
+            .vuecal__arrow--prev{
+                right: 110px;
+            }
+            .vuecal__today-btn{
+                right: 45px;
+            }
+            .vuecal__arrow--next{
+                right: 26px;
+            }
         }
         .vuecal__arrow{
             top: 50%;

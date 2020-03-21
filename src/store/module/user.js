@@ -15,6 +15,7 @@ export default {
     mutations: {
         setLang(state, lan){
             i18n.locale= state.lang = lan|| 'zh';
+
             moment.locale(lan == "zh" ? "zh-cn" : lan)
             // console.log("moment.locales()", moment.locales())
         },

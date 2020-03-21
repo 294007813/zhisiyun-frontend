@@ -4,9 +4,6 @@ import conf from '~/proj-config'
 import App from './global/App.vue'
 import router from './global/router'
 import axios from './global/axios'
-import moment from "moment";
-import async from "async";
-import _ from "underscore"
 import util from './global/util'
 import i18n from "./lang";
 import './global/directive'
@@ -32,10 +29,9 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$axios= axios
 Vue.prototype.$f= util
-window.async= async
-window.moment= moment
+
 // require("moment-precise-range-plugin");
-window._= _
+
 Vue.prototype.$conf= conf
 
 new Vue({

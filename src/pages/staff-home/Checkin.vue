@@ -326,17 +326,17 @@ export default {
 @import "common";
 .checkin{
     @include block;
-    padding: 6px 20px;
+    padding: 0 20px;
     ul{
         // padding-top: 10px;
         min-height: 1/3*100%;
         &:not(:last-child){border-bottom: 1px solid $color-border;}
         h5{
-            margin-bottom: 10px;
+            /*margin-bottom: 10px;*/
             position: relative;
-            height: 28px;
+            /*height: 28px;*/
             left: 0;
-            top: 10px;
+            /*top: 10px;*/
             flex-basis: 100%;
             i{
                 font-weight: 400;
@@ -346,9 +346,10 @@ export default {
                 right: -10px;
                 padding: 10px;
                 cursor: pointer;
-                top: 30%;
+                top: 50%;
                 transform: translateY(-50%);
                 vertical-align: middle;
+                line-height: normal;
             }
         }
         >div{
