@@ -24,7 +24,7 @@ export default {
     to_do_task: "待办",
     done_task: "已办",
     my_subordinates: "我的下属",
-    monthly_pfm: "本月绩效",
+    monthly_pfm: "当前绩效",
     recent_performace: "近期绩效",
     performance_score: "近期绩效",
     me_calendar: "我的日历",
@@ -127,7 +127,7 @@ export default {
     people: "人"
   },
   monthly_pfm: {
-    month_performance: "本月绩效"
+    month_performance: "当前绩效"
   },
   recent_performace: {
     recent_performace: "近期绩效"

@@ -255,6 +255,11 @@ export default {
 .salary{
     @include block;
     h5{
+        .tooltip{
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 20px;
+        }
         .open{
             font-size: 12px;
             color: $color-gray;
@@ -265,7 +270,7 @@ export default {
             width: 17px;
             margin-left: 4px;
             cursor: pointer;
-            margin-top: 4px;
+            vertical-align: top;
         }
     }
     .mon{

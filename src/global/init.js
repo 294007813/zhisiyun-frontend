@@ -10,8 +10,8 @@ window._= _
 
 if(process.env.VUE_APP_ENV=='dev'){
 axios.post("/login", {
-  client: "001",
-  username: "0003",
+  client: "demo12",
+  username: "00001",
   password: "000000"
   // client: "HYFZ",
   // username: "000003",
