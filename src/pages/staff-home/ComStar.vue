@@ -238,8 +238,11 @@ export default {
             let state;
             if (likes.includes(this.userId)) {
                 state = true;
+                var ind = likes.findIndex(item => item == this.userId);
+                likes.splice(ind, 1);
             } else {
                 state = false;
+                likes.push(this.userId);
             }
             this.$axios({
                 method: "post",
@@ -250,10 +253,7 @@ export default {
                 },
                 dataLevel: 'all'
             }).then((res) => {
-                if (type == 'modal') {
-                    this.selectUser.likes = res.data.likes;
-                }
-                this.getData();
+                // this.getData();
             })
         },
         handleComment (data) {

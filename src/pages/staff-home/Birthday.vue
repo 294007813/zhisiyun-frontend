@@ -18,8 +18,8 @@
                                     <i class="fa fa-heart" :class="{'active': item.likes.includes(userId)}"></i>
                                     <span>{{item.likes.length}}</span>
                                 </div>
-                                <div class="label-item">
-                                    <i class="fa fa-comment" @click.stop="handleComment(item)"></i>
+                                <div class="label-item" @click.stop="handleComment(item)">
+                                    <i class="fa fa-comment"></i>
                                     <span>{{item.comments.length}}</span>
                                 </div>
                             </div>
@@ -288,8 +288,11 @@ export default {
             let state;
             if (likes.includes(this.userId)) {
                 state = true;
+                var ind = likes.findIndex(item => item == this.userId);
+                likes.splice(ind, 1);
             } else {
                 state = false;
+                likes.push(this.userId);
             }
             this.$axios({
                 method: "post",
@@ -300,10 +303,10 @@ export default {
                 },
                 dataLevel: "all"
             }).then((res) => {
-                if (type == 'modal') {
-                    this.selectUser.likes = res.data.likes;
-                }
-                this.switchGetData();
+                // if (type == 'modal') {
+                //     this.selectUser.likes = res.data.likes;
+                // }
+                // this.switchGetData();
             })
         },
         handleComment (data) {
