@@ -14,8 +14,8 @@
                     </template>
                 </li>
 
-                <p class="view-all" @click="gt.load ? getData() : $f.href(item.pc_url)"
-                   v-show="at.list&& at.list.length">{{clickViewMore}}</p>
+                <p class="view-all" @click="gt.load ? getData() : $f.href('/pc_message_list')"
+                   v-show="gt.list && gt.list.length">{{clickViewMore}}</p>
             </ul>
 
         </el-tab-pane>
@@ -31,8 +31,8 @@
                     </template>
                 </li>
 
-                <p class="view-all"
-                   @click="$f.href('/pc_message_list')" v-show="at.list&& at.list.length">点击查看更多消息</p>
+                <p class="view-all" @click="at.load ? getData() : $f.href('/pc_message_list')"
+                   v-show="at.list && at.list.length">{{clickViewMore}}</p>
             </ul>
         </el-tab-pane>
     </el-tabs>
