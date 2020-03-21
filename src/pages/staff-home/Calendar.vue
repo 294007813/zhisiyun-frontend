@@ -229,9 +229,17 @@ export default {
         subtitle(){
             let msg="", da= this.form
             if(this.isMine){
-                msg= `由${da.creator.people_name} ${this.$f.getRelativeDate(da.createDate)}前创建`
+                if(this.lang=='en'){
+                    msg= `Created by ${da.creator.people_name} ${this.$f.getRelativeDate(da.createDate, true)}`
+                }else{
+                    msg= `由${da.creator.people_name} ${this.$f.getRelativeDate(da.createDate)}前创建`
+                }
             }else{
-                msg= `收到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
+                if(this.lang=='en'){
+                    msg= `Invited by${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate, true)}`
+                }else{
+                    msg= `收到${da.creator.people_name}/${da.creator.position_name} ${this.$f.getRelativeDate(da.createDate)}前邀请`
+                }
             }
             return msg
         },

@@ -47,7 +47,7 @@ const util= {
     },
 
     /**获取相对时间**/
-    getRelativeDate(date){
+    getRelativeDate(date, en){
         let tid= moment(date).toNow(true),
         res= tid.replace("seconds","秒")
             .replace("minute","分钟")
@@ -60,7 +60,7 @@ const util= {
             .replace(" ","")
             .replace("a","1")
         // console.log("tid", tid)
-        return res
+        return en? tid: res
     },
     getPic(id){
         return `${conf.linkUrl}/gridfs/get/${id}`
