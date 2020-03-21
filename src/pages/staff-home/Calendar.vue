@@ -4,7 +4,7 @@
     <el-tooltip class="work-calendar" effect="dark" :content="$t('index.wkcalendar')" placement="top-start">
         <i class="iconfont iconquanping" @click="$f.href('/admin/pm/work_plan/bbform')"></i>
     </el-tooltip>
-    <vue-cal class="vue-cal" :locale="locale" ref="vcal"
+    <vue-cal :class="'vue-cal '+ lang" :locale="locale" ref="vcal"
              resize-x show-all-day-events events-on-month-view  today-button hide-view-selector
              :events="events" :transitions="false" :cell-click-hold="false" :editable-events="false"
              :on-event-click="tagClick" @cell-click="create" @view-change="vChange"
@@ -241,8 +241,8 @@ export default {
         disEdit(){
             return (this.form._id &&this.form.stype != "TASK")
         },
-        isen(){
-            return this.$store.state.user.lang=='en'
+        lang(){
+            return this.$store.state.user.lang
         }
     },
     mounted(){
@@ -630,13 +630,13 @@ export default {
         }
         &.ch{
             .vuecal__arrow--prev{
-                right: 110px;
+                right: 92px;
             }
             .vuecal__today-btn{
-                right: 45px;
+                right: 55px;
             }
             .vuecal__arrow--next{
-                right: 26px;
+                right: 31px;
             }
         }
         .vuecal__arrow{
