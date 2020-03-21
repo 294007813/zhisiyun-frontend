@@ -131,6 +131,7 @@ export default {
     "nowday":"Today",
     "week":"Week",
     "birthday_week":" ",
+    "birthday_week":" ",
     "full_screen":"Full screen",  
     "contract":"contract",
     "signed_contract":"Signed contract",

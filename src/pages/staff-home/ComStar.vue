@@ -493,7 +493,7 @@ export default {
         display: inline-flex;
         flex-wrap: wrap;
         align-content: space-around;
-        padding: 10px 20px;
+        padding: 10px 3px;
         margin-top: 20px;
         li{
             height: 20px;
