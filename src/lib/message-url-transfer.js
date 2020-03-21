@@ -545,12 +545,13 @@ const adapter = {
         },
         // /admin/pm/mobile_resource_calendar/list
         // https://www.zhisiyun.com/wxapp/007/getCalendarDetail/wx3bd6f3aa75c0c7e7?wp_id=5e74b4f73d5958535075b1e4&cal_date=2020-03-20
+        // https://www.zhisiyun.com/wxapp/007/getCalendarDetail/?wp_id=5e74aea97398261c045bd4db&cal_date=2020-03-19
         {
-            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/007\/getCalendarDetail\/(\w+)\?wp_id=(\w+)/,
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/007\/getCalendarDetail\/(\w+){0,1}\?wp_id=(\w+)/,
             name: '资源预定',
             format: '/admin/pm/mobile_resource_calendar/list'
         },
-        {   // https://www.zhisiyun.com/wxapp/005/getMrView/?mr_id=5e7495e7ab86ab703a62fb4f
+        { // https://www.zhisiyun.com/wxapp/005/getMrView/?mr_id=5e7495e7ab86ab703a62fb4f
             rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getMrView\/(\w+){0,1}\?mr_id=(\w+)/,
             name: '资源预定',
             format: '/admin/pm/mobile_resource_calendar/list'
