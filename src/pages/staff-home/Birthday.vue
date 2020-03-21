@@ -66,7 +66,6 @@
         </el-tab-pane>
         
     </el-tabs>
-
     <el-dialog
             :title="(p.people &&p.people.people_name)+'的生日'"
             :visible.sync="pshow"
@@ -127,8 +126,10 @@
                     <div class="comments_wrap">
                         <textarea placeholder="说点什么" class="desc" v-model="currentComments"></textarea>
                         <div>
-                            <span class="btn-emotion"><i class="icon-smile"></i>表情</span>
-                            <button class="btn_save btn-blue pull-right" style="cursor:pointer;" @click="toComment">评论</button>
+                            <button class="btn_save btn-blue pull-right" style="cursor:pointer; float:right; z-index:9;" @click="toComment">评论</button>
+                            <span class="btn-emotion"><i class="icon-smile"></i>
+                                <emotion :visible.sync="visible" @send-face="reciveFace" />
+                            </span>
                         </div>
                     </div>
                     <ul style="height: 320px;overflow-y: auto;" class="comments_list" type="star">
@@ -146,8 +147,7 @@
                                             {{moment(item.date).format('YYYY-MM-DD hh:mm:ss')}}
                                         </span>
                                     </div>
-                                    <div class="comment_content">
-                                        {{item.desc}}
+                                    <div class="comment_content" v-html="parseEmotion(item.desc)">
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +162,14 @@
 <script>
 const API_LIKE = '/admin/culture/likes/bb/';
 const API_COMMENT = '/admin/culture/comment/bb';
+
+import emotion from "@/components/emotion";
+import emotionData from "@/components/emotions.js";
+
+const emotionsMap = {};
+emotionData.forEach(element => {
+    emotionsMap[element.phrase] = element.url;
+});
 
 export default {
     name: "Birthday",
@@ -196,7 +204,8 @@ export default {
             showCommentsModal: false,
             selectUser: null,
             currentComments: "",
-            comments: []
+            comments: [],
+            visible: false
         }
     },
     computed:{
@@ -219,6 +228,23 @@ export default {
         this.getLikesStatus();
     },
     methods:{
+        parseEmotion (text) {
+            var html = text.replace(/<.*?>/g, function ($1) {
+                $1 = $1.replace('[', '&#91;');
+                $1 = $1.replace(']', '&#93;');
+                return $1;
+            }).replace(/\[[^\[\]]*?]/g, function ($1) {
+                var url = emotionsMap[$1];
+                if (url) {
+                    return '<img class="sina-emotion" src="' + url + '" alt="' + $1 + '" />';
+                }
+                return $1;
+            });
+            return html;
+        },
+        reciveFace (face) {
+            this.currentComments += face.title;
+        },
         switchGetData () {
             if (this.activeTabs == 'day') {
                 this.getData();
@@ -301,6 +327,9 @@ export default {
             }
         },
         moment: window.moment
+    },
+    components: {
+        emotion
     }
 }
 </script>
@@ -530,6 +559,8 @@ position: relative;
             color: #666;
             font-size: 12px;
             cursor: pointer;
+            display: inline-block;
+            width: 120px;
         }
         .comments_wrap .btn_save {
             font-size: 12px;
@@ -573,11 +604,17 @@ position: relative;
                     }
                     > span {
                         font-size: inherit;
+                        font-weight: bold;
                     }
                 }
                 .comment_content {
                     color: #666;
                     line-height: 14px;
+                    .sina-emotion {
+                        height: 22px;
+                        border: 0;
+                        vertical-align: text-bottom;
+                    }
                 }
             }
 
