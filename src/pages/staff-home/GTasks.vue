@@ -27,7 +27,8 @@
             <span>{{item.task_end}}完成</span>
             <!--                    <b>人事事件</b>-->
           </li>
-          <p class="view-all" @click="$f.href('/admin/wf/finished_list')">点击查看更多已办</p>
+          <p class="view-all" @click="$f.href('/admin/wf/finished_list')"
+             v-show="at.list&& at.list.length">点击查看更多已办</p>
         </ul>
       </el-tab-pane>
     </el-tabs>
@@ -139,6 +140,7 @@ export default {
   }
   /deep/ .el-badge {
     vertical-align: text-bottom;
+    line-height: normal;
     sup {
       vertical-align: top;
     }
