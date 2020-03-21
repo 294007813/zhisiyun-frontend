@@ -3,7 +3,7 @@
     <ul :class="{to: true, single: !fibo}" v-if="fito">
         <h6>{{$t("index.contract")}}<i class="iconfont iconyoujiantou" @click="$f.href(userInfoUrl)"></i></h6>
         <li  @click="$f.href(userInfoUrl)">
-            <p><b>{{da.n1}}</b>{{$t("index.signed_contract")}}</p>
+            <p><b>{{da.n1}}</b>{{$t("index.numbers")}}{{$t("index.signed_contract")}}</p>
         </li>
         <li @click="$f.href(userInfoUrl)">
             <p v-show="notime"><b>{{notime}}</b></p>

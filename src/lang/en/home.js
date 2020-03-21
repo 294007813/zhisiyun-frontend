@@ -52,7 +52,7 @@ export default {
     "process":"Process",
     "train":"Train",
     "this_month":"this month",
-    "this_week":"This week",
+    "this_week":"week",
     "current": "current",
     "default": "default",
     "gisi": "GISI",
@@ -193,7 +193,7 @@ export default {
 
     "number":" ",
     "people":"people",
-    "numbers":"number",
+    "numbers":" ",
     "year":" ",
     "exist":"Already existing",
     "page_config":"Home page",
