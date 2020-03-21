@@ -6,7 +6,7 @@
     <div class="content">
         <el-button size="small" @click="toexpand(true)">{{$t('ptree.open')}}</el-button>
         <el-button size="small" style="margin-right: 10px" @click="toexpand(false)">{{$t('ptree.close')}}</el-button>
-        <el-input size="small" style="width: 300px" placeholder="{{$t('ptree.placeholder')}}"
+        <el-input size="small" style="width: 300px" :placeholder="$t('ptree.placeholder')"
                   v-model="value" @change="query">
             <el-button slot="append" icon="el-icon-search" @click="query"></el-button>
         </el-input>
@@ -16,7 +16,7 @@
     </div>
     <p slot="footer" class="footer">
         <el-button plain size="small" @click="close">{{$t('ptree.cancel')}}</el-button>
-        <el-button type="primary" size="small" @click="ok">{{$t('ptree.Confirm')}}</el-button>
+        <el-button type="primary" size="small" @click="ok"> {{$t('ptree.confirm')}} </el-button>
     </p>
 </el-dialog>
 </template>
