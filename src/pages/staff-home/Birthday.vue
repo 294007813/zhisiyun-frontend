@@ -104,7 +104,7 @@
                 </div>
                 <p class="name">{{selectUser.people.people_name}}</p>
                 <div class="interaction">
-                    <div class="label-item" style="background:transparent; box-shadow:none;" @click.stop="handleLike(selectUser._id, selectUser.likes)">
+                    <div class="label-item" style="background:transparent; box-shadow:none;" @click.stop="handleLike(selectUser._id, selectUser.likes,'modal')">
                         <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
                         <span>{{selectUser.likes.length}}</span>
                     </div>
@@ -271,7 +271,6 @@ export default {
         },
         getComments () {
             this.$axios.get(API_COMMENT, {params: {tid: this.selectUser._id, type: 'wishwell'}, dataLevel: 'all'}).then(res => {
-                console.log("res:::", res);
                 this.comments = res.data;
             })
         },
@@ -285,7 +284,7 @@ export default {
             this.userId = userId;
         },
         // 点赞或许取消点赞
-        handleLike (id, likes) {
+        handleLike (id, likes, type) {
             let state;
             if (likes.includes(this.userId)) {
                 state = true;
@@ -298,9 +297,12 @@ export default {
                 data: {
                     self_like: "" + state,
                     type: "wishwell"
-                }
+                },
+                dataLevel: "all"
             }).then((res) => {
-                console.log(res);
+                if (type == 'modal') {
+                    this.selectUser.likes = res.data.likes;
+                }
                 this.switchGetData();
             })
         },
