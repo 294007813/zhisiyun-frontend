@@ -75,8 +75,8 @@
                         <i class="fa fa-heart" :class="{'active': selectUser.likes.includes(userId)}"></i>
                         <span>{{selectUser.likes.length}}</span>
                     </div>
-                    <div class="label-item" style="background:transparent;" >
-                        <i class="fa fa-comment" @click="showCommentsModal=true"></i>
+                    <div class="label-item" style="background:transparent;" @click="showCommentsModal=true">
+                        <i class="fa fa-comment"></i>
                         <span>{{this.comments.length}}</span>
                     </div>
                 </div>
