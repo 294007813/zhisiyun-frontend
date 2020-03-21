@@ -52,7 +52,7 @@ export default {
     "process":"Process",
     "train":"Train",
     "this_month":"this month",
-    "this_week":"This week",
+    "this_week":"week",
     "current": "current",
     "default": "default",
     "gisi": "GISI",
@@ -96,6 +96,7 @@ export default {
     "day":"today",
     "day_time": "days",
     "month": "month",
+    "month_v2":"",
     "month_list":{
       "1":"January",
       "2":"February",
@@ -192,7 +193,7 @@ export default {
 
     "number":" ",
     "people":"people",
-    "numbers":"number",
+    "numbers":" ",
     "year":" ",
     "exist":"Already existing",
     "page_config":"Home page",
@@ -327,6 +328,14 @@ export default {
   //我的日历
   "mc":{
     "me_calendar": "My calendar"
+  },
+  "ptree":{
+    "title":"Select the staff",
+    "open": "Expand all",
+    "close": "Collapse all",
+    "placeholder":"Search",
+    "cancel":"Cancel",
+    "confirm":"Confirm"
   },
   //生日祝福墙
   "bb":{

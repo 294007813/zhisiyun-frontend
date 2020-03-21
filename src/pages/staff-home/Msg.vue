@@ -21,7 +21,7 @@
         </el-tab-pane>
         <el-tab-pane :label="$t('index.readed')" name="at" v-if="fiat">
             <ul class="ul at" v-nodata="{have: at.list&& at.list.length}">
-                <li v-for="(item, i) in at.list" :key="i" @click="$f.href(item.pc_url)">
+                <li v-for="(item, i) in at.list" :key="i" :ll="item.pc_url" @click="$f.href(item.pc_url)">
                     <template>
                         <p>{{item.create_tm | relativedate}}前</p>
                         <div>
@@ -59,7 +59,7 @@ export default {
                 disabled: false,
                 load: true
             },
-            limit: 50
+            limit: 10
         }
     },
     computed:{
@@ -75,7 +75,7 @@ export default {
             return  this.$store.state.user.taskMessageCount.message_count || 0
         },
         clickViewMore() {
-            return this[this.activeTabs].load ? "点击查看下一页" : "点击查看更多消息" 
+            return this[this.activeTabs].load ? "点击加载更多" : "点击查看更多消息" 
         }
     },
     mounted(){

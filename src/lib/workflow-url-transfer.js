@@ -55,11 +55,11 @@ const transfer = {
     },
 
     go_self_entry(id) {
-        return util.href('admin/self_entry/creat_self_entry_view')
+        return util.href('/admin/self_entry/creat_self_entry_view')
     },
 
     go_approval_qt(id) {
-        return util.href('admin/pm/questionnair_template/approval_questionnaire?q_id=' + id)
+        return util.href('/admin/pm/questionnair_template/approval_questionnaire?q_id=' + id)
     },
 
     go_candidate(id) {

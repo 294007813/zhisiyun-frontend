@@ -17,7 +17,7 @@ export default  {
     "subordinate": "下属",
     "hide_salary":"隐藏薪资",
     "view_salary":"查看薪资",
-    "the_month":"个月",
+    "the_month":"月",
     "calendar_translate_english_calendar":"日历自行翻译英文版日历",
     "time_out":"[超时]",
     "just":"刚刚",
@@ -96,6 +96,21 @@ export default  {
     "day":"日",
     "day_timeday_time": "天",
     "month": "月",
+    "month_v2":"月",
+    "month_list":{
+      "1":"1",
+      "2":"2",
+      "3":"3",
+      "4":"4",
+      "5":"5",
+      "6":"6",
+      "7":"7",
+      "8":"8",
+      "9":"9",
+      "10":"10",
+      "11":"11",
+      "12":"12"
+    },
     "num":"位",
     "star_company":"公司之星",
     "work_number": "工号",
@@ -112,7 +127,7 @@ export default  {
     "process_num":"流程统计",
     "me_calendar": "我的日历",
     //"month": "月",
-    "nowday":"今",
+    "nowday":"日",
     "week":"周",
     "full_screen":"全屏",
     "contract":"合同",
@@ -314,6 +329,14 @@ export default  {
   //我的日历
   "mc":{
     "me_calendar": "我的日历"
+  },
+  "ptree":{
+    "title":"选择人员",
+    "open": "展开全部",
+    "close": "折叠全部",
+    "placeholder":"搜索",
+    "cancel":"取消",
+    "confirm":"确认"
   },
   //生日祝福墙
   "bb":{

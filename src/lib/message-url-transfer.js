@@ -155,7 +155,7 @@ const adapter = {
         , {
             rule: /^https:\/\/www.zhisiyun.com\/wxapp\/007\/getWorkReportDetail\/(\w+)\?wr_id=(\w+)/,
             name: '工作报告尚未提交',
-            format: "admin/pm/work_report/form_new?wr_id={2}"
+            format: "/admin/pm/work_report/form_new?wr_id={2}"
         }
 
         , {
@@ -411,7 +411,7 @@ const adapter = {
         }, {
             rule: /^https:\/\/www.zhisiyun.com\/wxapp\/004\/get_ai_summary\/(\w+)\?ai_id=(\w+)/,
             name: '绩效总结消息',
-            format: "admin/pm/assessment_instance/edit/{2}?mode=view"
+            format: "/admin/pm/assessment_instance/edit/{2}?mode=view"
         }, {
             rule: /^https:\/\/www.zhisiyun.com\/wxapp\/004\/leave_manage_list\/(Q|L)\/(\w+)/,
             name: '假期余额列表',
@@ -485,19 +485,19 @@ const adapter = {
         }, {
             rule: /^http:\/\/qas.zhisiyun.com\/admin\/contract\/operation\/form\?action=stop&oid=(\w+)/,
             name: '合同续签征询',
-            format: 'admin/contract/operation/form?action=stop&oid={1}'
+            format: '/admin/contract/operation/form?action=stop&oid={1}'
         }, {
             rule: /^http:\/\/qas.zhisiyun.com\/admin\/contract\/operation\/form\?action=edit&oid=(\w+)/,
             name: '新合同编辑',
-            format: 'admin/contract/operation/form?action=edit&oid={1}'
+            format: '/admin/contract/operation/form?action=edit&oid={1}'
         }, {
             rule: /^http:\/\/qas.zhisiyun.com\/admin\/contract\/operation\/form\?action=terminate&oid=(\w+)/,
             name: '合同解除',
-            format: 'admin/contract/operation/form?action=terminate&oid={1}'
+            format: '/admin/contract/operation/form?action=terminate&oid={1}'
         }, {
             rule: /^http:\/\/qas.zhisiyun.com\/admin\/contract\/operation\/form\?action=continue&oid=(\w+)\&status=111/,
             name: '合同续签',
-            format: 'admin/contract/operation/form?action=continue&oid={1}&status=111'
+            format: '/admin/contract/operation/form?action=continue&oid={1}&status=111'
         }, {
             rule: /^https:\/\/www.zhisiyun.com\/admin\/pm\/work_report\/form_new\/(\w+)\?wr_id=(\w+)/,
             name: '工作报告分配事项',
@@ -542,6 +542,19 @@ const adapter = {
             rule: /^\/wxapp\/004\/busi_wf\/renewal_edit\/(\w+)\/edit/,
             name: '合同续签征询',
             format: '/admin/contract/renewal_leader/wf/edit_form/{1}'
+        },
+        // /admin/pm/mobile_resource_calendar/list
+        // https://www.zhisiyun.com/wxapp/007/getCalendarDetail/wx3bd6f3aa75c0c7e7?wp_id=5e74b4f73d5958535075b1e4&cal_date=2020-03-20
+        // https://www.zhisiyun.com/wxapp/007/getCalendarDetail/?wp_id=5e74aea97398261c045bd4db&cal_date=2020-03-19
+        {
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/007\/getCalendarDetail\/(\w+){0,1}\?wp_id=(\w+)/,
+            name: '资源预定',
+            format: '/admin/pm/mobile_resource_calendar/list'
+        },
+        { // https://www.zhisiyun.com/wxapp/005/getMrView/?mr_id=5e7495e7ab86ab703a62fb4f
+            rule: /^https:\/\/www.zhisiyun.com\/wxapp\/005\/getMrView\/(\w+){0,1}\?mr_id=(\w+)/,
+            name: '资源预定',
+            format: '/admin/pm/mobile_resource_calendar/list'
         }
     ],
     wx_data_adapter(data) {

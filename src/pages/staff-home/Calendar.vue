@@ -618,7 +618,7 @@ export default {
         }
         .vuecal__today-btn{
             position: absolute;
-            right: 45px;
+            right: 60px;
             margin: 0 4px;
             cursor: pointer;
             .today{font-size: 14px}
