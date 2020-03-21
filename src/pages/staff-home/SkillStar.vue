@@ -85,12 +85,14 @@ export default {
             return star
         },
         like(people, skill_id, skill_name) {
-            this.$axios.put('/admin/pm/skill/people_bb/' + people, {
-                skill_id: skill_id,
-                skill_name: skill_name
-            }).then(res => {
-                this.getData()
-            })
+            if(this.field.like){
+                this.$axios.put('/admin/pm/skill/people_bb/' + people, {
+                    skill_id: skill_id,
+                    skill_name: skill_name
+                }).then(res => {
+                    this.getData()
+                })
+            }
         },
         enter(e){
             if (e.keyCode == 13) {

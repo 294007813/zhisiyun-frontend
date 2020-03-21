@@ -8,7 +8,7 @@
                     class="mon-swiper" ref="mon" @someSwiperEvent="callback">
                 <swiper-slide class="mon-slide" v-for="(bd, i) in mon.peoples" :key="i">
                     <ul class="mon">
-                        <p class="title">{{moment(bd.end_date).format("D")}}<b>{{$t('index.birthday_week')}}{{moment(bd.end_date).format("dd")}}</b></p>
+                        <p class="title">{{moment(bd.end_date).format("D")+ zh?"日": "th"}}<b>{{$t('index.birthday_week')}}{{moment(bd.end_date).format("dd")}}</b></p>
                         <li  v-for="(item, j) in bd.items" :key="i+'-'+j" @click="select(item)">
                             <img class="head"  :src="$f.getPic(item.people.avatar)"/>
                             <!--<avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>-->
@@ -39,7 +39,8 @@
                         <div class="left">
                             <img class="hb" src="~as/img/staff-home/happy-birthday.svg"/>
                             <img class="cake" src="~as/img/staff-home/cake.svg"/>
-                            <p>今天是TA的生日</p>
+                            <p v-if="zh">今天是TA的生日</p>
+                            <p v-if="!zh">Today is hir birthday</p>
                         </div>
                         <div class="photo">
                             <avatar class="head"  :src="$f.getPic(item.people.avatar)" :sex="item.people.gender"></avatar>
@@ -219,6 +220,9 @@ export default {
         },
         curMonth (){
             return new Date().getFullYear() + "年" + (new Date().getMonth() + 1) + "月"
+        },
+        zh(){
+            return this.$store.state.user.lang== "zh"
         }
     },
     mounted(){

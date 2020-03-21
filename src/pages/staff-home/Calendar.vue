@@ -659,6 +659,9 @@ export default {
                 vertical-align: middle;
             }
         }
+        .vuecal__no-event{
+            display: none;
+        }
         .event{
             cursor: pointer;
             opacity: .8;

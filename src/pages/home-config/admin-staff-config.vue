@@ -17,7 +17,7 @@
         <el-tab-pane :label="$t('index.mobile_terminal_config')" name="mobile">
             <div class="main">
             <el-tabs  class="sub-tabs" v-model="subTabsVal">
-                <el-tab-pane v-for="(mod, name) in confmobile" :key="name"
+                <el-tab-pane v-for="(mod, name) in confmobile" :key="name" v-if="mod.show"
                         :label="$t(`mobile.${name}`)" :name="name" :lazy="true">
                     <config-mobile
                         v-bind="{
@@ -55,11 +55,28 @@ export default {
             },
             // confm: confmobile,
             confm: {},
+            access: {}
         }
     },
     computed:{
         confmobile(){
-            return confmobile
+            let conf= {
+                home: {},
+                wtpage: {
+                    code: "TM"
+                },
+                xcpage: {
+                    code: "PY"
+                },
+                minepage: {},
+            }
+            for(let key in conf){
+                let code= conf[key].code
+                if(!code || (code && this.access[code])){
+                    conf[key].show= true
+                }
+            }
+            return conf
         }
     },
     watch:{
@@ -71,16 +88,12 @@ export default {
         this.getPc()
 
         this.getMobile()
-        // for(let key in confmobile){
-        //     this.toupdate({
-        //         "flag":"Mobile",
-        //         type: key,
-        //         datas: confmobile[key]
-        //     })
-        // }
-        // this.$set(this.confm,  "home", this.getmd(confmobile.home))
     },
     methods:{
+        modaccess(name){
+            console.log(name)
+
+        },
         getPc(){
             // this.conf= conf.home
             // this.confpc= accessPc({conf: confpc})
@@ -98,6 +111,7 @@ export default {
                 }}).then(data=>{
                     // console.log(type, this.confm[type], data.conf)
                 this.$set(this.confm,  type, this.getmd(accessMobile(data)))
+                this.access= Object.assign({}, data.modules.contract_modules)
                     // this.confm[type]= data.conf
             })
         },
