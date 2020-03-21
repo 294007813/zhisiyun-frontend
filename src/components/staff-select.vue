@@ -16,7 +16,7 @@
     </div>
     <p slot="footer" class="footer">
         <el-button plain size="small" @click="close">{{$t('ptree.cancel')}}</el-button>
-        <el-button type="primary" size="small" @click="ok">{{$t('ptree.Confirm')}}</el-button>
+        <el-button type="primary" size="small" @click="ok"> {{$t('ptree.confirm')}} </el-button>
     </p>
 </el-dialog>
 </template>
