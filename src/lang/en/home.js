@@ -316,6 +316,14 @@ export default {
   "mc":{
     "me_calendar": "My calendar"
   },
+  "ptree":{
+    "title":"Select the staff",
+    "open": "Expand all",
+    "close": "Collapse all",
+    "placeholder":"Search",
+    "cancel":"Cancel",
+    "confirm":"Confirm"
+  },
   //生日祝福墙
   "bb":{
       "birthday_blessing_wall":"Birthday blessing wall",

@@ -316,6 +316,14 @@ export default  {
   "mc":{
     "me_calendar": "我的日历"
   },
+  "ptree":{
+    "title":"选择人员",
+    "open": "展开全部",
+    "close": "折叠全部",
+    "placeholder":"搜索",
+    "cancel":"取消",
+    "confirm":"确认"
+  },
   //生日祝福墙
   "bb":{
       "birthday_blessing_wall":"生日祝福墙",

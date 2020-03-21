@@ -2,11 +2,11 @@
 <el-dialog
     :visible="visible" :before-close="close"
     custom-class="staff-select" width="600px">
-    <p slot="title" class="title">{{title}}</p>
+    <p slot="title" class="title">{{$t('ptree.title')}}  </p>
     <div class="content">
-        <el-button size="small" @click="toexpand(true)">展开全部</el-button>
-        <el-button size="small" style="margin-right: 10px" @click="toexpand(false)">折叠全部</el-button>
-        <el-input size="small" style="width: 300px" placeholder="搜索"
+        <el-button size="small" @click="toexpand(true)">{{$t('ptree.open')}}</el-button>
+        <el-button size="small" style="margin-right: 10px" @click="toexpand(false)">{{$t('ptree.close')}}</el-button>
+        <el-input size="small" style="width: 300px" placeholder="{{$t('ptree.placeholder')}}"
                   v-model="value" @change="query">
             <el-button slot="append" icon="el-icon-search" @click="query"></el-button>
         </el-input>
@@ -15,8 +15,8 @@
                 :setting="setting" :nodes="tree"></g-tree>
     </div>
     <p slot="footer" class="footer">
-        <el-button plain size="small" @click="close">取消</el-button>
-        <el-button type="primary" size="small" @click="ok">确认</el-button>
+        <el-button plain size="small" @click="close">{{$t('ptree.cancel')}}</el-button>
+        <el-button type="primary" size="small" @click="ok">{{$t('ptree.Confirm')}}</el-button>
     </p>
 </el-dialog>
 </template>
