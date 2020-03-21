@@ -127,14 +127,6 @@ export default {
         right: 0;
       }
     }
-<<<<<<< HEAD
-    /deep/ .el-badge{
-        vertical-align: text-bottom;
-        line-height: normal;
-        sup{
-            vertical-align: top;
-        }
-=======
     .view-all {
       padding: 16px;
       text-align: center;
@@ -148,9 +140,9 @@ export default {
   }
   /deep/ .el-badge {
     vertical-align: text-bottom;
+    line-height: normal;
     sup {
       vertical-align: top;
->>>>>>> b6e00353d52b4e10ddc00c876d3df69885342963
     }
   }
 }
