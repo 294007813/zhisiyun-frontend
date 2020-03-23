@@ -436,7 +436,7 @@ position: relative;
             height: 180px;
             border-radius:10px;
             background-color: $color-gray-light;
-            padding: 70px 20px 20px;
+            padding: 55px 20px 20px;
             overflow: hidden;
             white-space: nowrap;
             display: inline-block;
@@ -543,6 +543,12 @@ position: relative;
             box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
             width: 80px;
             height: 80px;
+            border-radius: 50%;
+            background-color: #fff;
+            img {
+                width: 80px;
+                border-radius: 50%;
+            }
         }
         border-right: 1px solid #ddd;
     }
@@ -604,6 +610,10 @@ position: relative;
                 border-radius: 50%;
                 margin-right: 8px;
                 float: left;
+                img {
+                    width: 30px;
+                    border-radius: 50%;
+                }
             }
             .media-body {
                 overflow: hidden;
